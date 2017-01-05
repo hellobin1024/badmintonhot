@@ -98,7 +98,7 @@ var MyEvents = React.createClass({
                                 <td>时间：{item.eventTime}</td>
                             </tr>
                             <tr>
-                                <td>地点：{item.eventAddr}</td>
+                                <td>地点：{item.eventPlaceName}</td>
                                 <td>创建者：{item.eventManager}</td>
                                 <td>成员：{item.eventMember}</td>
                             </tr>
