@@ -13,7 +13,6 @@
     <link href="animate/css/animate.css" rel="stylesheet">
     <link rel="stylesheet" href="datetimepicker/css/bootstrap-datetimepicker.css"/>
     <link href="css/user.css" rel="stylesheet">
-    <link rel="stylesheet" href="react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
 
     <style>
         table.center > tbody > tr > th {
@@ -51,8 +50,10 @@
     <script type="text/javascript" src="zepto.js"></script>
     <script type="text/javascript" src="image-zoomer/js/zoomsl-3.0.min.js"></script>
     <script type="text/javascript" src="jquery-media/jquery.media.js"></script>
-    <script type="text/javascript" src="react-bootstrap-table/dist/react-bootstrap-table.js"/>
-
+    <script src="react-bootstrap-table/dist/react-bootstrap-table.min.js"/>
+    <script>
+        var ReactBsTable = window.BootstrapTable;
+    </script>
     <script>
       $(document).ready(function(){
           window.App.remodal.inst=$('[data-remodal-id="re-modal"]').remodal({
@@ -61,6 +62,7 @@
           });
       });
     </script>
+
 </head>
 <body style="line-height: 2;height:100%">
 <div class="modal fade" id="root_modal" style="display:none">
