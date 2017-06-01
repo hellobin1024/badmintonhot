@@ -1,0 +1,22 @@
+[
+  {
+    "label":"基本信息",
+    "pageRoute":"/personInfo"
+  },
+  {
+  "label":"培养信息",
+  "pageRoute":"/trainInfo"
+  },
+  {
+    "label":"入学前信息",
+    "pageRoute":"/beforeEntryInfo"
+  },
+  {
+    "label":"家庭成员",
+    "pageRoute":"/families"
+  },
+  {
+    "label":"工作经历",
+    "pageRoute":"/resume"
+  }
+]

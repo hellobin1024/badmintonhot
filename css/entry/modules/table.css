@@ -1,0 +1,16 @@
+.myTable {
+    border-style: solid;
+    border-width: thin;
+    border-color: cornflowerblue;
+    width: 100%;
+}
+.myTable td{
+    border-style: solid;
+    border-width: thin;
+    border-color: cornflowerblue;
+    text-indent: 10px;
+}
+.myTable .myTdText{
+    width: 160px;
+    text-align: right;
+}

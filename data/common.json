@@ -1,0 +1,38 @@
+[
+  {
+  "img": "function1.png",
+  "label": "学术规范承诺书",
+  "route": "/app"
+  },
+  {
+
+    "img": "function2.png",
+    "label": "学籍信息",
+    "route": "/workspaceStudentStatusInfo"
+  },
+  {
+    "img": "function3.png",
+    "label": "免修英语申请",
+    "route": "/englishApply"
+  },
+  {
+    "img": "function4.png",
+    "label": "申请绿色通道",
+    "route": "/greenChannelApply"
+  },
+  {
+    "img": "function5.png",
+    "label": "出行计划",
+    "route": "/tripPlan"
+  },
+  {
+    "img": "function6.png",
+    "label": "填写既往病史",
+    "route": "/anamnesis"
+  },
+  {
+    "img": "function7.png",
+    "label": "打印体检表",
+    "route": "/questionnaire/student_questionnaire_init.do"
+  }
+]
