@@ -400,11 +400,7 @@ var Nav=React.createClass({
                     <div className="header_box">
                         <div className="header">
                             {logo}
-                            {this.state.isLogin ?
-                                null
-                                :
-                                {nav}
-                            }
+                            {nav}
                         </div>
                     </div>
                 </div>);

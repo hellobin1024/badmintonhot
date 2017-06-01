@@ -34,6 +34,7 @@ data={data}表内数据以title内的id为对照
  */
 import React from 'react';
 import {render} from 'react-dom';
+
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var ReactBsTable  = require('react-bootstrap-table');
 var BootstrapTable = ReactBsTable.BootstrapTable;
@@ -63,7 +64,10 @@ var MyTable=React.createClass ({
     },
 
     render:function () {
-
+        const selectRow = {
+            mode: 'checkbox',
+            cliclToSelct: true
+        };
         var title=this.state.title;
 
         var contains=null;
@@ -79,9 +83,9 @@ var MyTable=React.createClass ({
         contains=
             <BootstrapTable data={ this.props.data }
                             remote={ true }
-                            selectRow={ { mode: 'radio' }}
-                            deleteRow={ true }
-                            insertRow ={true}
+                            selectRow={selectRow}
+                            deleteRow
+                            insertRow
                             options={ {
                                 onDeleteRow: this.props.onDeleteRow,
                                 onAddRow: this.props.onAddRow

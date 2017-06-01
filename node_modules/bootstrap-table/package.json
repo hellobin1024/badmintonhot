@@ -1,0 +1,110 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "bootstrap-table",
+        "scope": null,
+        "escapedName": "bootstrap-table",
+        "name": "bootstrap-table",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/apple-1/Downloads/Gradms"
+    ]
+  ],
+  "_from": "bootstrap-table@latest",
+  "_id": "bootstrap-table@1.11.2",
+  "_inCache": true,
+  "_location": "/bootstrap-table",
+  "_nodeVersion": "4.3.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/bootstrap-table-1.11.2.tgz_1487895405488_0.30424843821674585"
+  },
+  "_npmUser": {
+    "name": "wenzhixin",
+    "email": "wenzhixin2010@gmail.com"
+  },
+  "_npmVersion": "2.14.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "bootstrap-table",
+    "scope": null,
+    "escapedName": "bootstrap-table",
+    "name": "bootstrap-table",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/bootstrap-table/-/bootstrap-table-1.11.2.tgz",
+  "_shasum": "5f5f8414c97d95a40e56d3d364523da432b3c0b1",
+  "_shrinkwrap": null,
+  "_spec": "bootstrap-table",
+  "_where": "/Users/apple-1/Downloads/Gradms",
+  "author": {
+    "name": "wenzhixin",
+    "email": "wenzhixin2010@gmail.com",
+    "url": "http://wenzhixin.net.cn/"
+  },
+  "bugs": {
+    "url": "https://github.com/wenzhixin/bootstrap-table/issues"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {},
+  "description": "An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3).",
+  "devDependencies": {
+    "cz-conventional-changelog": "^1.1.5",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-release": "^0.13.0"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "dist": {
+    "shasum": "5f5f8414c97d95a40e56d3d364523da432b3c0b1",
+    "tarball": "https://registry.npmjs.org/bootstrap-table/-/bootstrap-table-1.11.2.tgz"
+  },
+  "gitHead": "214a349bf1393f0b5fc6d0026c5d832ed8ca3fb4",
+  "homepage": "https://github.com/wenzhixin/bootstrap-table",
+  "keywords": [
+    "bootstrap",
+    "table",
+    "radio",
+    "checkbox",
+    "sort",
+    "pagination",
+    "editable"
+  ],
+  "license": "MIT",
+  "main": "./dist/bootstrap-table.js",
+  "maintainers": [
+    {
+      "name": "wenzhixin",
+      "email": "wenzhixin2010@gmail.com"
+    }
+  ],
+  "name": "bootstrap-table",
+  "optionalDependencies": {},
+  "readme": "# [Bootstrap Table](http://bootstrap-table.wenzhixin.net.cn)\n\n[![Build Status](https://travis-ci.org/wenzhixin/bootstrap-table.svg)](https://travis-ci.org/wenzhixin/bootstrap-table) \n[![GitHub version](https://badge.fury.io/gh/wenzhixin%2Fbootstrap-table.svg)](http://badge.fury.io/gh/wenzhixin%2Fbootstrap-table)\n[![Bower version](https://badge.fury.io/bo/bootstrap-table.svg)](http://badge.fury.io/bo/bootstrap-table)\n[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZDHP676FQDUT6)\n\nAn extended Bootstrap table with radio, checkbox, sort, pagination, extensions and other added features.\n\nTo get started, check out:\n\n* [Docs](http://bootstrap-table.wenzhixin.net.cn)\n* [Examples](https://github.com/wenzhixin/bootstrap-table-examples)\n* [Questions/Helps](http://stackoverflow.com/questions/tagged/bootstrap-table)\n* [问题/帮助](http://segmentfault.com/t/bootstrap-table)\n\n\n[**List of donators**](https://github.com/wenzhixin/bootstrap-table/blob/master/DONATORS.md)\n\n## LICENSE\n\n**NOTE:** Bootstrap Table is licensed under the [The MIT License](https://github.com/wenzhixin/bootstrap-table/blob/master/LICENSE). Completely free, you can arbitrarily use and modify this plugin. If this plugin is useful to you, you can **Star** this repo, your support is my biggest motive force, thanks.\n\n## Features\n\n* Created for Bootstrap 3 (Bootstrap 2 supported)\n* Responsive web design\n* Scrollable Table with fixed headers\n* Fully configurable\n* Via data attributes\n* Show/Hide columns\n* Show/Hide headers\n* Show/Hide footers\n* Get data in JSON format using AJAX\n* Simple column sorting with a click\n* Format column\n* Single or multiple row selection\n* Powerful pagination\n* Card view\n* Detail view\n* Localization\n* Extensions\n\n## How to get it\n\n### Manual download\n\nUse [Releases page](https://github.com/wenzhixin/bootstrap-table/releases) or [the source](https://github.com/wenzhixin/bootstrap-table/archive/master.zip).\n\n### Bower\n\n```\nbower install bootstrap-table\n```\n\n### Npm\n\n```\nnpm install bootstrap-table\n```\n\n### CDN\n\nYou can source bootstrap-table directly from a CDN like [CDNJS](http://www.cdnjs.com/libraries/bootstrap-table) or [bootcss](http://open.bootcss.com/bootstrap-table/) or [jsdelivr](http://www.jsdelivr.com/#!bootstrap.table).\n\n\n## Contributing\n\nFor feature requests, bug reports or submitting pull requests, please ensure you first read [CONTRIBUTING.md](https://github.com/wenzhixin/bootstrap-table/blob/master/CONTRIBUTING.md).\n\n\n## Reporting Issues\n\nAs stated above, please read [CONTRIBUTING.md](https://github.com/wenzhixin/bootstrap-table/blob/master/CONTRIBUTING.md), especially [Bug Reports](https://github.com/wenzhixin/bootstrap-table/blob/master/CONTRIBUTING.md#bug-reports)\n\nAnd as stated there, please provide jsFiddle when creating issues!\n\nIt's really saves much time.\n\nYou can also use these for templates:\n\n[jsFiddle Bootstrap Table](http://bootstrap-table.wenzhixin.net.cn/examples/#basic)\n\nYour feedback is very appreciated!\n\n\n## Acknowledgements\n\nThanks to everyone who have given feedback and submitted pull requests. A list of all the contributors can be found [here](https://github.com/wenzhixin/bootstrap-table/graphs/contributors).\n\n## Release History\n\nLook at the [Change Log](https://github.com/wenzhixin/bootstrap-table/blob/master/CHANGELOG.md)\n\n## Local build\n\nTo build bootstrap-table locally please run:\n\n```\ngrunt build\n```\n\nResult will appear in `dist` directory.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenzhixin/bootstrap-table.git"
+  },
+  "scripts": {},
+  "version": "1.11.2"
+}

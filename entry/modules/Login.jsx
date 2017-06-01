@@ -32,6 +32,8 @@ var Login =React.createClass({
         // })
 
 
+
+
         // ProxyQ.query({
         //     url: "/login",
         //     data: {
@@ -139,15 +141,12 @@ var Login =React.createClass({
                                                 </table>
                                             </td>
                                         </tr>
+
                                         <tr >
                                             <td>
-
-                                                <button className="login-btn" tabIndex="3" onClick={this.login}>
-                                                    <a style={{color:'#ffffff'}}>登录</a>
-                                                    <Link to={window.App.getAppRoute() + "/app"} id="goToOther"></Link>
-                                                </button>
-
-
+                                                <Link to={window.App.getAppRoute() + "/app"}>
+                                                    <button className="login-btn" onClick={this.login}>登录</button>
+                                                </Link>
                                             </td>
                                         </tr>
                                         </tbody>
