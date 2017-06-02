@@ -28,7 +28,6 @@ var Login=React.createClass({
     },
 
     login:function(){
-
         if(flag==0) {
             var loginPage = this.refs['loginPage'];
             var username = $(loginPage).find("input[name='username']").val();
@@ -359,6 +358,7 @@ var Login=React.createClass({
                     var re = ob.re;
                     if(re != undefined && re != null ){
                         this.setState({view: 'login'})
+
                     }
                 }.bind(this),
                 function(xhr, status, err) {
@@ -580,6 +580,7 @@ var Login=React.createClass({
                                             <input type="text" name="email" className="passport-txt xl w-full" tabIndex="4" autoComplete="off" placeholder="请输入邮箱地址，本项选填"/>
                                         </div>
                                     </div>
+
 
                                     <div className="form-item form-mcode mb-25">
                                         <div className="form-cont">

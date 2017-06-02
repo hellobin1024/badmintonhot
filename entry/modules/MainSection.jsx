@@ -16,48 +16,12 @@ var MainSection = React.createClass({
         target.height=height;
         //height=document.body.scrollHeight;
     },
-    // syncHandle     : function (ob) {
-    //     //TODO:create new ob or update...
-    //     var route = this.state.route[0];
-    //     var label;
-    //     switch (route)
-    //     {
-    //         case "/password/modify":
-    //             label = "密码修改";
-    //             break;
-    //         case "/allCourseQuery":
-    //             label = "成绩查询";
-    //             break;
-    //         case "/news":
-    //             label = "查看新闻";
-    //             break;
-    //         default:
-    //             label = "";
-    //             break;
-    //     }
-    //     if (ob.completed) {
-    //         SyncActions.cleanRoute(route);
-    //     }
-    //     else
-    //         SyncActions.updateData(route, ob.required, label);
-    // },
     getInitialState: function () {
         var route = new Array();
         route.push(undefined);
         return ({route: route});
     },
-    // testTab:function (e) {
-    //
-    //
-    //             // Get the name of active tab
-    //             var activeTab = $(e.target).text();
-    //             // Get the name of previous tab
-    //             var previousTab = $(e.relatedTarget).text();
-    //             $(".active-tab span").html(activeTab);
-    //             $(".previous-tab span").html(previousTab);
-    //
-    //
-    // },
+
     render:function(){
         var path=this.props.route.path;
         var ctrl;
@@ -101,82 +65,9 @@ var MainSection = React.createClass({
                     label = "制定培养计划";
                     break;
                 default:
-                    // var reg=/.*\.do.*[\.do|\.jsp]?.*/;
-                    //
-                    // var re=reg.exec(path);
-                    // console.log('data===' + data);
-                    // console.log('origin path==='+path);
-                    // var proxyServer="";
-                    // if(window.App.getModel()=="debug")
-                    // {
-                    //     if(window.App.getAppRoute()=="")
-                    //     {
-                    //         console.log('......');
-                    //         var proxy=config.devServer.proxy;
-                    //         for (var field in proxy)
-                    //         {
-                    //             var re = /\/(.*?)\//;
-                    //             proxyServer= re.exec(field)[1];
-                    //             break;
-                    //         }
-                    //     }
-                    //     else if(window.App.getAppRoute().indexOf("/")!=-1)
-                    //     {
-                    //         var re = /^(\/.*?)\//;
-                    //         proxyServer= re.exec(window.App.getAppRoute())[1];
-                    //     }
-                    // }else{
-                    //     proxyServer='';
-                    // }
-                    //
-                    //
-                    // if(re!==undefined&&re!==null)
-                    // {
-                    //     //TODO:iframe component render
-                    //     path=path.replace(App.getAppRoute(),"");
-                    //     console.log('iframe in mainsection,path=' + path);
-                    //     ctrl=
-                    //         <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
-                    //                  frameBorder="0" scrolling="no" src={"/"+proxyServer+path+(data!=null&&data!==undefined?data:"")} onLoad={this.iframeLoad}
-                    //             />
-
-                    // }else{
-                    //
-                    // }
                     break;
             }
-            // ctrl=
-            //     <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
-            //             frameBorder="0" scrolling="no" src={"../../entry/modules/test.jsx"} onLoad={this.iframeLoad}
-            //     />
 
-            // var paths=path.split("/");
-            // var spans=new Array();
-            // if(paths[0]==""&&paths[1]=="")
-            // {
-            //     spans.push(<span className="separator" key={0}>/</span>);
-            // }else{
-            //     var k=0;
-            //     paths.map(function(item,i) {
-            //         if(i==0)
-            //             spans.push(<span className="separator" key={k++}></span>);
-            //         else
-            //         {
-            //             spans.push(<span className="path-segment" key={k++}>{item}</span>);
-            //             if(i!==paths.length-1)
-            //                 spans.push(<span className="separator" key={k++}>/</span>);
-            //         }
-            //
-            //     });
-            // }
-            // breadcrumb =
-            //     <div className="crumb_box">
-            //         <div className="crumb_title">
-            //             <span className="crumb_title_content">{spans}</span>
-            //
-            //             <div className="crumb_detail">{label}</div>
-            //         </div>
-            //     </div>
         }
 
         //remove breadcrumb by zyy,yeah i am so native

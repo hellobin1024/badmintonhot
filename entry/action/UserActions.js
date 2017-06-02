@@ -19,31 +19,30 @@ export let loginAction=function(){
 
             var accessToken=null;
             var topMenue=null;
-            Proxy.query({
-                url: "/login",
-                data: {
-                    username: '201613508',
-                    password: 'qindong33491486'
-                },
+            var params = {
+                        'loginName' :'root',
+                        'password' : 1
+                    };
+            Proxy.queryHandle({
+                type:'POST',
+                url:'/func/auth/webLogin',
+                params:JSON.stringify(params),
+                dataType:null
             }).then((json)=> {
-                accessToken = json.access_token;
+                reCode = json.reCode;
                 //菜单
-                return Proxy.query({
-                    headers:{
-                        "Authorization":"Bearer "+accessToken,
-                    },
-                    url:"/node/menue",
-                    data:{
-                        request:"getTopMenue"
-                    },
-
-                }).then((json)=>{
-                    topMenue=json
-                })
+                // return Proxy.queryHandle({
+                //         type:'POST',
+                //         url:'',
+                //         params:JSON.stringify(params),
+                //         dataType:null
+                // }).then((json)=>{
+                //     topMenue=json
+                // })
             }).then((json)=>{
 
-                dispatch(getAccessToken(accessToken));
-                dispatch(getTopMenue(topMenue));
+                dispatch(getReCode(reCode));
+                // dispatch(getTopMenue(topMenue));
 
             }).catch((err)=> {
 
@@ -52,19 +51,12 @@ export let loginAction=function(){
     }
 
 }
-let getAccessToken= (accessToken)=>{
+let getReCode= (reCode)=>{
 
         return {
             type: ACCESS_TOKEN_ACK,
-            accessToken: accessToken,
+            reCode: reCode,
             auth:true,
             validate:true
         };
-}
-let getTopMenue=(topMenue)=>{
-
-    return {
-        type: GRT_TOPMENUE,
-        topMenue:topMenue
-    };
 }
