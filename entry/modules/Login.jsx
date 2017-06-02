@@ -3,10 +3,10 @@ import Footer from './Footer.jsx';
 import {Link} from 'react-router';
 import Nav from '../../components/basic/Nav.jsx';
 import MENU from '../../data/menus.json';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+
 var ProxyQ=require('../../components/proxy/ProxyQ.js');
 var SyncStore = require('../../components/flux/stores/SyncStore');
-
 var UserActions=require('../action/UserActions');
 import '../../css/entry/modules/login.css'
 
@@ -14,7 +14,9 @@ var Login =React.createClass({
 
     login:function(){
 
+
         this.props.dispatch(UserActions.loginAction());
+
 
     },
 
