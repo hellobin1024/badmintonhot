@@ -5,8 +5,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import {Link} from 'react-router';
 import '../../css/components/basic/passport.css';
+import { connect } from 'react-redux'
 var ProxyQ = require('../../components/proxy/ProxyQ');
 var SyncStore = require('../../components/flux/stores/SyncStore');
+var UserActions=require('../action/UserActions');
 var flag=0;
 var Login=React.createClass({
 
@@ -44,60 +46,7 @@ var Login=React.createClass({
             //    alert('请填写验证码！');
             //}
             else {
-
-                var url = "/func/auth/webLogin";
-                var params = {
-                    loginName:'root',
-                    password:'1'
-                };
-                ProxyQ.queryHandle(
-                    'post',
-                    url,
-                    JSON.stringify(params),
-                    null,
-                    function (res) {
-                        var re = res.reCode;
-                        if (re !== undefined && re !== null && (re == 0 || re == "0")) { //登陆成功
-                            console.log("登陆成功！");
-                            flag = 1;
-                        }
-                    }.bind(this),
-                    function (xhr, status, err) {
-                        console.error(this.props.url, status, err.toString());
-                    }.bind(this)
-                );
-
-
-
-                //var url = "/bsuims/bsMainFrameInit.do";
-                //var params = {
-                //    login_strLoginName: username,
-                //    login_strPassword: password,
-                //    login_validate: validate
-                //};
-                //
-                //ProxyQ.queryHandle(
-                //    'post',
-                //    url,
-                //    params,
-                //    null,
-                //    function (res) {
-                //        var re = res.re;
-                //        var realName = res.realName;
-                //        if (re !== undefined && re !== null && (re == 1 || re == "1")) { //登陆成功
-                //            SyncStore.setNote(); //设置全局登录状态为true
-                //            SyncStore.setResult(true);
-                //            SyncStore.setLoginName(realName);
-                //
-                //            console.log("登陆成功！");
-                //            flag = 1;
-                //            document.getElementById("goToOther").click();
-                //        }
-                //    }.bind(this),
-                //    function (xhr, status, err) {
-                //        console.error(this.props.url, status, err.toString());
-                //    }.bind(this)
-                //);
+                 this.props.dispatch(UserActions.loginAction());
             }
         }
     },
@@ -722,7 +671,7 @@ var Login=React.createClass({
     },
 
 });
-module.exports=Login;
+export default connect()(Login);
 
 
 
