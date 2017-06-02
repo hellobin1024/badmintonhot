@@ -13,44 +13,9 @@ import '../../css/entry/modules/login.css'
 var Login =React.createClass({
 
     login:function(){
-        // var name=$('#login_strLoginName').val()
-        // var psw=$('#login_strPassword').val()
-        // ProxyQ.query({
-        //     url:"/login",
-        //     data:{
-        //         username:name,
-        //         password:psw
-        //     },
-        //
-        // }).then(function(res){
-        //
-        //     var re=res;
-        //     alert("登陆成功！拿到的token：" + re.access_token);
-        //     SyncStore.setToken(re.access_token);
-        // }).catch(function(e){
-        //     alert(e);
-        // })
 
-
-
-
-        // ProxyQ.query({
-        //     url: "/login",
-        //     data: {
-        //         username: '201613508',
-        //         password: 'qindong33491486'
-        //     },
-        //
-        // }).then(function (json) {
-        //
-        //     var a = json;
-        //     SyncStore.setToken(a.access_token);
-        //     alert("登陆成功！拿到的token：" + a.access_token);
-        //
-        // }).catch(function (e) {
-        //     alert(e);
-        // })
         this.props.dispatch(UserActions.loginAction());
+
     },
 
     banner:function () {
@@ -160,36 +125,6 @@ var Login =React.createClass({
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div id="LoginNav">
-                    <div className="LoginNavTitle">
-                        <i className="labaIoc" style={{float:'left'}}></i>
-                        <span className="InfoTitle" style={{float:'left', marginLeft:'3px'}}></span>
-				        <span className="Infocontent">
-				            <marquee style={{float:'left', marginTop:'11px', marginLeft:'5px', width:'800px'}} onmouseover="this.stop();this.scrollDelay=50;"
-				                onmouseout="this.start();this.scrollDelay=1" scrollAmount="4" scrollDelay="1" direction="left" >
-                                欢迎来到山东大学
-                            </marquee>
-				        </span>
-                    </div>
-                    <div style={{clear:'both'}}></div>
-
-                    <div className="LoginNavContent clearfix">
-                        <div className="LoginNavContent_left">
-                            <div className="list list1">
-                                <dl>
-                                    <dt>
-                                        <i></i>
-                                        <span>友情提示：</span>
-                                    </dt>
-                                    <dd>（1）学生登陆为学生学号，缺省密码为前缀D（博士）/ 硕士（M）+证件号码后7位，证件号码中的字母为大写字母</dd>
-                                    <dd>（2）建议使用9.0以上的IE浏览器或google浏览器,360浏览器请选用极速模式</dd>
-                                </dl>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
     "port":3000,
     "hot":true,
     "proxy":{
-      "/gradms/*":{
+      "/badmintonhot/*":{
         "model": "on",
         "secure": false
       }

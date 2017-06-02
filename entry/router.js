@@ -5,7 +5,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import App from './modules/App.jsx';
-import WorkSpace from './modules/WorkSpace.jsx'
 import Login from './modules/Login';
 import MainSection from './modules/MainSection.jsx';
 import {Component} from 'react'
@@ -17,7 +16,7 @@ class AppRouter extends Component {
             <Router history={browserHistory}>
                 <Route path="/" component={App}>
                     <IndexRoute component={Login}/>
-                    <Route path={window.App.getAppRoute() + "/app"} component={WorkSpace}/>
+                    <Route path={window.App.getAppRoute() + "/app"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/changePassword.jsp"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/allCourseQuery"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
