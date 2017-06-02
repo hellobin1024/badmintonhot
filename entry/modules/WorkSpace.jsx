@@ -1,6 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/entry/modules/mainSection.css';
+
+import LetterOfCommitment from '../modules/LetterOfCommitment'
 import Brief from './Brief.jsx';
 import Footer from './Footer.jsx';
 import Nav from '../../components/basic/Nav.jsx';
@@ -97,7 +99,7 @@ var WorkSpace =React.createClass({
                     </div>
                 </div>
                 <div className="bottom">
-                    <CommonFunction auto={true} />
+
                 </div>
             </div>
             <div style={{margin: "0px auto 0 auto",paddingBottom:"200px",width:"100%"}} className="baba">
@@ -107,7 +109,7 @@ var WorkSpace =React.createClass({
                     {ctrl}
                 </div>
             </div>
-            <ScaleBar data={Scales}/>
+
             <Footer/>
         </div>
 

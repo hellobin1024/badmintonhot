@@ -3,54 +3,39 @@ import Footer from './Footer.jsx';
 import {Link} from 'react-router';
 import Nav from '../../components/basic/Nav.jsx';
 import MENU from '../../data/menus.json';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+
 var ProxyQ=require('../../components/proxy/ProxyQ.js');
 var SyncStore = require('../../components/flux/stores/SyncStore');
-
 var UserActions=require('../action/UserActions');
 import '../../css/entry/modules/login.css'
 
 var Login =React.createClass({
 
     login:function(){
-        // var name=$('#login_strLoginName').val()
-        // var psw=$('#login_strPassword').val()
-        // ProxyQ.query({
-        //     url:"/login",
-        //     data:{
-        //         username:name,
-        //         password:psw
-        //     },
-        //
-        // }).then(function(res){
-        //
-        //     var re=res;
-        //     alert("登陆成功！拿到的token：" + re.access_token);
-        //     SyncStore.setToken(re.access_token);
-        // }).catch(function(e){
-        //     alert(e);
-        // })
+        var url = "/func/auth/webLogin";
+        var params = {
+            loginName:'root',
+            password:'1'
+        };
+        ProxyQ.queryHandle(
+            'post',
+            url,
+            JSON.stringify(params),
+            null,
+            function (res) {
+                var re = res.re;
+                if (re !== undefined && re !== null && (re == 1 || re == "1")) { //登陆成功
+                    console.log("登陆成功！");
+                    flag = 1;
+                }
+            }.bind(this),
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
 
-
-
-
-        // ProxyQ.query({
-        //     url: "/login",
-        //     data: {
-        //         username: '201613508',
-        //         password: 'qindong33491486'
-        //     },
-        //
-        // }).then(function (json) {
-        //
-        //     var a = json;
-        //     SyncStore.setToken(a.access_token);
-        //     alert("登陆成功！拿到的token：" + a.access_token);
-        //
-        // }).catch(function (e) {
-        //     alert(e);
-        // })
-        this.props.dispatch(UserActions.loginAction());
+        //this.props.dispatch(UserActions.loginAction());
     },
 
     banner:function () {
