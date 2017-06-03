@@ -9,7 +9,7 @@ var App =React.createClass({
     render:function(){
 
      return (
-         <div className="total" style={{minHeight:"650px",marginTop:"0px",paddingBottom:"30px"}} >
+         <div className="total" style={{minHeight:"650px",marginTop:"0px"}} >
              {this.props.children}
          </div>
      )}

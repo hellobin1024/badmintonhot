@@ -142,7 +142,6 @@ ul, li, ol {
 }
 
 .topbg {
-    background: url(../../../build/images/shadow.png) repeat-x left top;
     height: 40px;
     position: absolute;
     top: 101px;
@@ -183,7 +182,6 @@ ul, li, ol {
     padding-left: 20px;
     height: 32px;
     line-height: 32px;
-    background: url(../../../build/images/sq.png) left 11px no-repeat;
 }
 
 .side_list2 .province {

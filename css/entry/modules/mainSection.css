@@ -39,7 +39,6 @@
 }
 
 .crumb_detail{
-    background: url(../../../build/images/index_title_box.gif);
     width: 308px;
     height: 32px;
     line-height: 32px;
@@ -50,5 +49,4 @@
     color: #fff;
 }
 .baba{
-    background: url("../../../build/images/body.gif")
 }

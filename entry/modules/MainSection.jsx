@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 
 var config=require('../../config.json');
 import '../../css/entry/modules/mainSection.css';
+import MainPage from '../../entry/modules/MainPage'
+import CkEdit from '../../entry/modules/ckEdit'
 var SyncActions = require('../../components/flux/actions/SyncActions');
 
 
@@ -38,12 +40,10 @@ var MainSection = React.createClass({
             {
                 case App.getAppRoute() + "/app":
                     ctrl =
-                        <div>qqq</div>
+                        <MainPage/>
                     break;
-                case App.getAppRoute() + "/englishApply":
-                    ctrl = <iframe style={{width:"100%",position:"relative"}} id="mainFrame"
-                            frameBorder="0" scrolling="no" src={"/englishApply"} onLoad={this.iframeLoad}
-                    />
+                case App.getAppRoute() + "/ckedit":
+                    ctrl =<CkEdit/>
                     break;
                 case App.getAppRoute() + "/news":
                     //ctrl = <News query={{
@@ -75,9 +75,9 @@ var MainSection = React.createClass({
 
 
         return (
-            <div style={{margin: "0px auto 0 auto",paddingBottom:"200px",width:"100%"}} className="baba">
+            <div style={{margin: "0px auto 0 auto",width:"100%"}} className="baba">
                 <div ref="mainSection" className="mainSection"
-                     style={{display:"none",width:"1024px",marginLeft:"auto",marginRight:"auto"}}>
+                     style={{display:"none",marginLeft:"auto",marginRight:"auto"}}>
 
                     {ctrl}
                 </div>

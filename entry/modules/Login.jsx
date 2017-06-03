@@ -481,7 +481,7 @@ var Login=React.createClass({
                             <div className="passport-third">
                                 <header className="hd">
                                     <div className="layout-inner">
-                                        <h3>捷惠保</h3>
+                                        <h3>BadmintonHot</h3>
                                     </div>
                                 </header>
                                 <div className="links">
@@ -563,7 +563,7 @@ var Login=React.createClass({
                             <div className="passport-third">
                                 <header className="hd">
                                     <div className="layout-inner">
-                                        <h3>捷惠保</h3>
+                                        <h3>BadmintonHot</h3>
                                     </div>
                                 </header>
                                 <div className="links">
@@ -637,7 +637,7 @@ var Login=React.createClass({
                             <div className="passport-third">
                                 <header className="hd">
                                     <div className="layout-inner">
-                                        <h3>捷惠保</h3>
+                                        <h3>BadmintonHot</h3>
                                     </div>
                                 </header>
                                 <div className="links">
