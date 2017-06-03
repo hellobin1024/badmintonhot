@@ -4,7 +4,6 @@
 
 .total{
     width: 100%;
-    background: url(../../../build/images/total.png) no-repeat center;
 }
 .vcc-index_title_box {
     overflow: hidden;
@@ -37,7 +36,6 @@
 }
 
 .vcc-index_title_box2 {
-    background: url(../../../build/images/index_title_box.gif);
     width: 308px;
     height: 32px;
     line-height: 32px;
