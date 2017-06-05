@@ -3,8 +3,13 @@ import {render} from 'react-dom';
 
 var config=require('../../config.json');
 import '../../css/entry/modules/mainSection.css';
-import MainPage from '../../entry/modules/MainPage'
+import News from '../../entry/modules/News'
 import CkEdit from '../../entry/modules/ckEdit'
+import Heard from '../modules/Heard'
+import Banner from '../modules/Banner'
+import '../../build/css/JFFormStyle-1.css'
+import '../../build/css/jquery-ui.css'
+import '../../build/css/style.css'
 var SyncActions = require('../../components/flux/actions/SyncActions');
 
 
@@ -38,23 +43,12 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
-                case App.getAppRoute() + "/app":
-                    ctrl =
-                        <MainPage/>
-                    break;
+
                 case App.getAppRoute() + "/ckedit":
                     ctrl =<CkEdit/>
                     break;
                 case App.getAppRoute() + "/news":
-                    //ctrl = <News query={{
-                    //                         url:"/bsuims/reactPageDataRequest.do",
-                    //                        params:{
-                    //                            reactPageName:"groupNewsReactPage",
-                    //                            reactActionName:"listTypeNewsUseReact"
-                    //                        }
-                    //                     }}
-                    //             auto={true}/>;
-                    label = "新闻查询业务";
+                    ctrl =<News/>
                     break;
                 case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
                     //ctrl = <AllCourseQuery/>;
@@ -75,13 +69,27 @@ var MainSection = React.createClass({
 
 
         return (
-            <div style={{margin: "0px auto 0 auto",width:"100%"}} className="baba">
-                <div ref="mainSection" className="mainSection"
-                     style={{display:"none",marginLeft:"auto",marginRight:"auto"}}>
+            <div>
+                <Heard/>
 
-                    {ctrl}
+                <Banner/>
+
+                <div className="clearfix"> </div>
+
+
+                <div className="move-text">
+                    <div className="marquee">欢迎来到"羽毛球热"</div>
+                </div>
+
+                <div style={{margin: "0px auto 0 auto",width:"100%"}} className="baba">
+                    <div ref="mainSection" className="mainSection"
+                         style={{display:"none",marginLeft:"auto",marginRight:"auto"}}>
+
+                        {ctrl}
+                    </div>
                 </div>
             </div>
+
         );
 
 
@@ -89,6 +97,7 @@ var MainSection = React.createClass({
     componentDidMount: function() {
         //TodoStore.addChangeListener(this._onChange);
         $(this.refs["mainSection"]).slideDown(300);
+        $('.marquee').marquee({ pauseOnHover: true });
     },
     componentWillUnmount: function() {
         //TODO:emit change

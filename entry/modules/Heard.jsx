@@ -3,30 +3,8 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
+import {Link} from 'react-router';
 var Heard = React.createClass({
-
-
-    getInitialState: function () {
-        $(window).load(function(){
-            $('.flexslider').flexslider({
-                animation: "slide",
-                start: function(slider){
-                    $('body').removeClass('loading');
-                }
-            });
-            $( "span.menu" ).click(function() {
-                $( "ul.nav1" ).slideToggle( 300, function() {
-                    // Animation complete.
-                });
-            });
-
-        });
-
-        return ({
-
-        });
-    },
-
 
     render:function() {
         var contains = null;
@@ -53,7 +31,11 @@ var Heard = React.createClass({
                             <span className="menu"><img src="images/menu.png" alt="" /></span>
                             <ul className="nav1">
                                 <li className="active"><a href="#">首页</a></li>
-                                <li><a href="#">咨询</a></li>
+                                <li>
+                                    <Link to={window.App.getAppRoute() + "/news"}>
+                                        资讯
+                                    </Link>
+                                </li>
                                 <li><a href="#">活动</a></li>
                                 <li><a href="#">视频</a></li>
                                 <li><a href="#">群圈</a></li>
@@ -110,6 +92,32 @@ var Heard = React.createClass({
                 </div>
         </div>;
         return contains;
+    },
+    componentDidMount(){
+        // $( "span.menu" ).click(function() {
+        //     $( "ul.nav1" ).slideToggle( 300, function() {
+        //         // Animation complete.
+        //     });
+        // });
+        $("#loginButton").click(function() {
+            var button = $('#loginButton');
+            var box = $('#loginBox');
+            var form = $('#loginForm');
+            button.removeAttr('href');
+            button.mouseup(function(login) {
+                box.toggle();
+                button.toggleClass('active');
+            });
+            form.mouseup(function() {
+                return false;
+            });
+            $(this).mouseup(function(login) {
+                if(!($(login.target).parent('#loginButton').length > 0)) {
+                    button.removeClass('active');
+                    box.hide();
+                }
+            });
+        });
     }
 });
 module.exports = Heard;

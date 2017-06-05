@@ -4,9 +4,7 @@
 import 'babel-polyfill';
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { render, } from 'react-dom'
-
-
+import { render} from 'react-dom'
 import configureStore from './store.dev.js';
 import Root from './Root'
 
