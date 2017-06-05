@@ -112,7 +112,6 @@ table {
 }
 
 a:hover {
-    color: #51cc73;
     text-decoration: underline;
 }
 
@@ -355,8 +354,8 @@ input[type=radio][disabled]:hover {
 }*/
 
 .passport-btn-def {
-    border-color: #00a8ff;
-    background: #00a8ff;
+    border-color: #6fd508;
+    background: #6fd508;
     color: #fff;
 }
 
@@ -585,14 +584,14 @@ input[type=radio][disabled]:hover {
 }
 
 .passport-header {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 #logo {
     margin-right: auto;
     margin-left: auto;
-    width: 370px;
-    height: 96px;
+    width: 505px;
+    height: 190px;
 }
 
 #warning {
@@ -731,7 +730,7 @@ input[type=radio][disabled]:hover {
 .passport-wrapper {
     margin-right: auto;
     margin-left: auto;
-    padding-top: 100px;
+    padding-top: 60px;
     padding-bottom: 20px;
     width: 820px;
 }
@@ -780,6 +779,11 @@ input[type=radio][disabled]:hover {
 
 .passport-sign .passport-goto.mg-b100 {
     margin-bottom: 100px;
+}
+
+.direct{
+    color: #6fd508;
+    cursor: pointer;
 }
 
 .passport-sign .sendgift {
@@ -841,12 +845,13 @@ input[type=radio][disabled]:hover {
 }
 
 .passport-sign .passport-tab .tabs li.active {
-    border-bottom: 2px solid #00a8ff;
-    color: #00a8ff;
+    border-bottom: 2px solid #6fd508;
+    color: #000000;
 }
 
 .passport-form .form-item {
     margin-bottom: 30px;
+    color: #000000;
 }
 
 .passport-form .form-cont {
@@ -927,7 +932,7 @@ input[type=radio][disabled]:hover {
     -moz-border-radius: 2px;
     border-radius: 2px;
     text-overflow: initial;
-    background-color: #ff8c00;
+    background-color: #6fd508;
 }
 
 .passport-form .form-mcode .passport-note {

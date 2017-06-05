@@ -442,7 +442,7 @@ var Login=React.createClass({
                                                 <tr >
                                                     <td>验证码: </td>
                                                     <td><input type="text" name="verify" id="verify" className="passport-txt xl w-full" /></td>
-                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="/validatecode.jpg"/></td>
+                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="/badmintonhot/validatecode.jpg"/></td>
                                                     <td><img style={{paddingLeft:'5px'}} onClick={this.repaintImage} src={window.App.getResourceDeployPrefix()+"/images/refresh1.png"} ></img></td>
                                                     <td><span id="verifyMsg" className="errorMessage"></span></td>
                                                 </tr>
@@ -475,7 +475,7 @@ var Login=React.createClass({
 
                         <div className="aside">
                             <div className="passport-goto">没有账号?
-                                <a tabIndex="6" onClick={this.viewSwitch.bind(this,'register')}>新用户注册</a>
+                                <a tabIndex="6" className="direct" onClick={this.viewSwitch.bind(this,'register')}>新用户注册</a>
                             </div>
                             <div className="sendgift"></div>
                             <div className="passport-third">
@@ -485,7 +485,7 @@ var Login=React.createClass({
                                     </div>
                                 </header>
                                 <div className="links">
-                                    <img src={window.App.getResourceDeployPrefix()+"/images/loginCar.jpg"} />
+                                    <img src={window.App.getResourceDeployPrefix()+"/images/ayk.png"} />
                                 </div>
                             </div>
                         </div>
@@ -548,6 +548,16 @@ var Login=React.createClass({
                                             <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
                                         </div>
                                     </div>
+
+
+                                    <div className="form-item">
+                                        <span>是否注册为教练</span>
+                                        <span className="form-cont">
+                                            <input name="checkbox" type="checkbox" value="checkbox" checked="checked" className="123" tabIndex="7" />
+                                        </span>
+                                    </div>
+
+
                                     <div className="form-item">
                                         <div className="form-cont">
                                             <button type="button" name="register" id="register" className="passport-btn passport-btn-def xl w-full" tabIndex="7" onClick={this.register}>注册</button>
@@ -559,7 +569,8 @@ var Login=React.createClass({
 
                         <div className="aside">
                             <div className="passport-goto mg-b100">已有帐号
-                                <a tabIndex="6" onClick={this.viewSwitch.bind(this,'login')}>直接登录</a></div>
+                                <a tabIndex="6" className="direct" onClick={this.viewSwitch.bind(this,'login')}>直接登录</a>
+                            </div>
                             <div className="passport-third">
                                 <header className="hd">
                                     <div className="layout-inner">
@@ -567,7 +578,7 @@ var Login=React.createClass({
                                     </div>
                                 </header>
                                 <div className="links">
-                                    <img src={window.App.getResourceDeployPrefix()+"/images/loginCar.jpg"} />
+                                    <img src={window.App.getResourceDeployPrefix()+"/images/ayk.png"} />
                                 </div>
                             </div>
                         </div>
@@ -653,7 +664,7 @@ var Login=React.createClass({
         return(
             <div className="passport-wrapper">
                 <header id="header" className="passport-header">
-                    <div id="logo"><a><img src={window.App.getResourceDeployPrefix()+"/images/logo_02.png"} /></a></div>
+                    <div id="logo"><a><img src={window.App.getResourceDeployPrefix()+"/images/badminton_top.png"} /></a></div>
                 </header>
                 <div id="container" ref='login-register-forget'>
                     <div className="passport-sign">
