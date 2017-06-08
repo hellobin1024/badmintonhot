@@ -20,7 +20,7 @@ class AppRouter extends Component {
                     <IndexRoute  component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
                     <Route path={window.App.getAppRoute() + "/main"} component={MainSection}/>
-                    <Route path={window.App.getAppRoute() + "/ckedit"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/ckedit"} component={ckEditor}/>
                     <Route path={window.App.getAppRoute() + "/events"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/newsContain"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
