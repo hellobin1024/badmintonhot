@@ -7,6 +7,11 @@ import News from '../../entry/modules/News'
 import CkEdit from '../../entry/modules/ckEdit'
 import Heard from '../modules/Heard'
 import Banner from '../modules/Banner'
+import Foot from '../modules/Foot'
+import Events from '../modules/Events'
+import Main from '../modules/MainPage'
+import NewsContain from '../modules/NewsContain'
+import Login from '../modules/Login';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
@@ -35,6 +40,7 @@ var MainSection = React.createClass({
         var breadcrumb;
         var label;
         var data=this.props.route.data;
+        var contains=null;
         if(path!==undefined&&path!==null)
         {
             var route = this.state.route;
@@ -50,27 +56,26 @@ var MainSection = React.createClass({
                 case App.getAppRoute() + "/news":
                     ctrl =<News/>
                     break;
-                case App.getAppRoute() + "/newCultivateAllCourseQueryPage":
-                    //ctrl = <AllCourseQuery/>;
-                    label = "课程查询业务";
+                case App.getAppRoute() + "/events":
+                    ctrl =<Events/>
                     break;
-                case App.getAppRoute() + "/diminishMain":
-                    //ctrl = <DiminishMain/>;
-                    label = "制定培养计划";
+                case App.getAppRoute() + "/main":
+                    ctrl =<Main/>
+                    break;
+                case App.getAppRoute() + "/newsContain":
+                    ctrl =<NewsContain/>
                     break;
                 default:
                     break;
             }
 
+        }else{
+            ctrl = <Main/>
+            path = '/main'
         }
-
-        //remove breadcrumb by zyy,yeah i am so native
-
-
-
-        return (
+        contains =
             <div>
-                <Heard/>
+                <Heard path={path}/>
 
                 <Banner/>
 
@@ -88,10 +93,13 @@ var MainSection = React.createClass({
                         {ctrl}
                     </div>
                 </div>
+                <Foot/>
             </div>
 
-        );
 
+        //remove breadcrumb by zyy,yeah i am so native
+
+        return contains;
 
     },
     componentDidMount: function() {

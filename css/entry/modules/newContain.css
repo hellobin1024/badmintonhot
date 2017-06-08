@@ -1,0 +1,35 @@
+
+.news_content h1 {
+    font-family: 'Microsoft YaHei';
+    font-weight: 400;
+    color: #000;
+    font-size: 26px;
+}
+.news_info {
+    font-size: 12px;
+    margin-bottom: 20px;
+    color: #5A5A5A;
+}
+.news_info span {
+    display: inline-block;
+    float: left;
+    height: 25px;
+    margin-right: 10px;
+}
+.news_info span.news_date {
+    width: 130px;
+}
+.news_content_body {
+    color: #303030;
+    line-height: 26px;
+    font-size: 16px;
+    text-indent: 25px;
+}
+.news_content_body p {
+    margin: 0 0 26px;
+    line-height: 26px;
+    text-indent: 2em;
+}
+strong {
+    font-weight: 700;
+}

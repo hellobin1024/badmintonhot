@@ -17,36 +17,15 @@ var MainPage =React.createClass({
 
             contains=
                 <div >
-                    <Heard/>
 
-                    <Banner/>
-
-                    <div className="clearfix"> </div>
-
-
-                    <div className="move-text">
-                        <div className="marquee">欢迎来到"羽毛球热"</div>
-                    </div>
 
                     <ContainSpace/>
 
-                    <Foot/>
                 </div>
 
             return contains;
 
-        },
-
-    componentDidMount: function() {
-
-        $('.flexslider').flexslider({
-            animation: "slide",
-            start: function(slider){
-                $('body').removeClass('loading');
-            }
-        });
-        $('.marquee').marquee({ pauseOnHover: true });
-    },
+        }
 
 })
 module.exports=MainPage;

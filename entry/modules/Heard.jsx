@@ -6,6 +6,10 @@ import '../../build/css/style.css'
 import {Link} from 'react-router';
 var Heard = React.createClass({
 
+    getInitialState: function () {
+        var path=this.props.path;
+        return({router:path})
+    },
     render:function() {
         var contains = null;
         contains =
@@ -30,18 +34,24 @@ var Heard = React.createClass({
                         <div className="top-nav">
                             <span className="menu"><img src="images/menu.png" alt="" /></span>
                             <ul className="nav1">
-                                <li className="active"><a href="#">首页</a></li>
-                                <li>
+                                <li ref="main">
+                                    <Link to={window.App.getAppRoute() + "/main"}>
+                                        首页
+                                    </Link>
+                                </li>
+                                <li ref="news">
                                     <Link to={window.App.getAppRoute() + "/news"}>
                                         资讯
                                     </Link>
                                 </li>
-                                <li><a href="#">活动</a></li>
-                                <li><a href="#">视频</a></li>
-                                <li><a href="#">群圈</a></li>
-                                <li><a href="#">TEST</a></li>
-                                <li><a href="#">TEST</a></li>
-                                <li><a href="#">TEST</a></li>
+                                <li ref="events">
+                                    <Link to={window.App.getAppRoute() + "/events"}>
+                                        活动
+                                    </Link>
+                                </li>
+                                <li ref="video"><a href="#">视频</a></li>
+                                <li ref="group"><a href="#">直播</a></li>
+                                <li ref="group"><a href="#">商城</a></li>
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
@@ -53,20 +63,20 @@ var Heard = React.createClass({
                                             <div className="login-grid-left">
                                                 <fieldset id="body">
                                                     <fieldset>
-                                                        <label for="email">Email Address</label>
+                                                        <label for="email">登录名</label>
                                                         <input type="text" name="email" id="email"/>
                                                     </fieldset>
                                                     <fieldset>
-                                                        <label for="password">Password</label>
+                                                        <label for="password">密码</label>
                                                         <input type="password" name="password" id="password"/>
                                                     </fieldset>
-                                                    <input type="submit" id="login" value="Sign in"/>
+                                                    <input type="submit" id="login" value="登录"/>
                                                     <label for="checkbox">
                                                         <input type="checkbox" id="checkbox"/>
-                                                        <i>Remember me</i>
+                                                        <span style={{float:'left',padding:'5px'}}>记住密码</span>
                                                     </label>
                                                 </fieldset>
-                                                <span><a href="#">Forgot your password?</a></span>
+                                                <span><a href="#">忘记密码?</a></span>
                                                 <div className="or-grid">
                                                     <p>OR</p>
                                                 </div>
@@ -78,7 +88,7 @@ var Heard = React.createClass({
                                                         <a href="#">Connect with Google</a>
                                                     </div>
                                                     <div className="button-bottom">
-                                                        <p>New account? <a href="signup.html">Signup</a></p>
+                                                        <i>新人报道? </i><a href="#">注册</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,11 +104,30 @@ var Heard = React.createClass({
         return contains;
     },
     componentDidMount(){
-        // $( "span.menu" ).click(function() {
-        //     $( "ul.nav1" ).slideToggle( 300, function() {
-        //         // Animation complete.
-        //     });
-        // });
+        $( "span.menu" ).click(function() {
+            $("ul.nav1").slideToggle(300, function () {
+                // Animation complete.
+
+            });
+        });
+        //顶部tab高亮与路由同步
+        $("ul.nav1").click(function (e) {
+            $("ul.nav1 li").each(function () {
+                $(this).attr('class','')
+            })
+            $(e.target.parentNode).attr('class', 'active');
+        });
+        var element=this.state.router;
+        var a=element.substring(1,element.length);
+        switch (a){
+            case 'newsContain':
+                a = 'news';
+                break
+            default:
+                break
+        }
+        $(this.refs[a]).attr("class","active")
+
         $("#loginButton").click(function() {
             var button = $('#loginButton');
             var box = $('#loginBox');

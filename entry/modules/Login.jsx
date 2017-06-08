@@ -682,7 +682,7 @@ var Login=React.createClass({
     },
 
 });
-export default connect()(Login);
-
+// export default connect()(Login);
+module.exports = Login;
 
 

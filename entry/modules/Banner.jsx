@@ -18,29 +18,21 @@ var Banner=React.createClass({
     render: function () {
         var contains = null;
         contains =
-            <div>
-                <section className="slider2">
-                    <div className="flexslider">
+
+                    <div className="flexslider" directionNav={false}>
                         <ul className="slides">
                             <li>
-                                <div className="slider-info">
-                                    <img src="/images/test.jpg" alt=""/>
-                                </div>
+                                <img src="/images/test.jpg" alt=""/>
                             </li>
                             <li>
-                                <div className="slider-info">
-                                    <img src="/images/test1.jpg" alt=""/>
-                                </div>
+                                <img src="/images/test1.jpg" alt=""/>
                             </li>
                             <li>
-                                <div className="slider-info">
-                                    <img src="/images/test2.jpg" alt=""/>
-                                </div>
+                                <img src="/images/test2.jpg" alt=""/>
                             </li>
                         </ul>
                     </div>
-                </section>
-            </div>
+
         return contains;
     }
 });

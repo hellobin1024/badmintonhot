@@ -11,14 +11,14 @@ var ContainSpace = React.createClass({
         contains =
             <div className="banner-bottom">
                 <div className="container">
-                    <div className="banner-bottom-info">
-                        <h3>Today's Top Deals</h3>
-                    </div>
                     <div className="banner-bottom-grids">
                         <div className="col-md-4 banner-bottom-grid">
-                            <div className="destinations">
+                            <div className="choose-info">
+                                <h4>资讯热点</h4>
+                            </div>
+                            <div className="destinations" style={{ paddingTop:'15px' }}>
                                 <ul>
-                                    <li className="button"><a href="#">Goa Popular Hotels</a>
+                                    <li className="button"><a href="#">资讯热点</a>
                                         <li className="dropdown active">
                                             <a href="products.html">
                                                 <div className="destinations-grid">
@@ -138,8 +138,12 @@ var ContainSpace = React.createClass({
                                 </div>
                             </div>
                         </div>
+
                         <div className="col-md-4 banner-bottom-grid">
-                            <div className="banner-bottom-middle">
+                            <div className="choose-info">
+                                <h4>Why Choose Us</h4>
+                            </div>
+                            <div className="banner-bottom-middle" style={{ paddingTop: '14px'}}>
                                 <a href="products.html">
                                     <img src="images/a2.jpg" alt="" />
                                     <div className="destinations-grid-info tours">
@@ -224,7 +228,10 @@ var ContainSpace = React.createClass({
                             </div>
                         </div>
                         <div className="col-md-4 banner-bottom-grid">
-                            <div className="banner-bottom-right">
+                            <div className="choose-info">
+                                <h4>Why Choose Us</h4>
+                            </div>
+                            <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
                                 <a href="products.html">
                                     <img src="images/a3.jpg" alt="" />
                                     <div className="destinations-grid-info tours">
