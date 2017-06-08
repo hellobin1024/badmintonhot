@@ -3,23 +3,24 @@
  */
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import App from './modules/App.jsx';
 import Login from './modules/Login';
 import MainSection from './modules/MainSection.jsx';
 import ckEditor from './modules/CKEditorWapper.jsx';
+import MainPage from './modules/MainPage'
 import {Component} from 'react'
 
 class AppRouter extends Component {
     render() {
 
         return (
-            <Router history={browserHistory}>
+            <Router history={hashHistory}>
                 <Route path="/" component={App}>
-                    <IndexRoute component={ckEditor}/>
+                    <IndexRoute component={MainPage}/>
+                    <Route path={window.App.getAppRoute() + "/app"} component={MainPage}/>
+                    <Route path={window.App.getAppRoute() + "/ckeditor"} component={ckEditor}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
-                    <Route path={window.App.getAppRoute() + "/app"} component={MainSection}/>
-                    <Route path={window.App.getAppRoute() + "/ckedit"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/changePassword.jsp"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/allCourseQuery"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>

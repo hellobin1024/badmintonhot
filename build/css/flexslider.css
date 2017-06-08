@@ -55,7 +55,7 @@ html[xmlns] .slides {display: block;}
 	width: 100%;
     position: absolute;
     bottom: 1%;
-    left: 2%;
+    left: 50%;
 }
 .flex-control-nav li {    margin: 0 4px;
     display: inline-block;
