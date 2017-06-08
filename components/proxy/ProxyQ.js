@@ -78,8 +78,6 @@ var ProxyQ = {
                 data    : params,
                 cache   : false,
                 contentType:'application/json',
-
-
                 success : function (response) {
                     //取消加载遮罩
                     if (App.getLoadModel() == "true") {

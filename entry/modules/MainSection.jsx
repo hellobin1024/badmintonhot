@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 var config=require('../../config.json');
 import '../../css/entry/modules/mainSection.css';
 import MainPage from '../../entry/modules/MainPage'
-import CkEdit from '../../entry/modules/ckEdit'
+//import CkEdit from '../../entry/modules/ckEdit'
 var SyncActions = require('../../components/flux/actions/SyncActions');
 
 
@@ -42,9 +42,9 @@ var MainSection = React.createClass({
                     ctrl =
                         <MainPage/>
                     break;
-                case App.getAppRoute() + "/ckedit":
-                    ctrl =<CkEdit/>
-                    break;
+                //case App.getAppRoute() + "/ckedit":
+                //    ctrl =<CkEdit/>
+                //    break;
                 case App.getAppRoute() + "/news":
                     //ctrl = <News query={{
                     //                         url:"/bsuims/reactPageDataRequest.do",

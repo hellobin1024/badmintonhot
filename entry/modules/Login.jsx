@@ -551,9 +551,9 @@ var Login=React.createClass({
 
 
                                     <div className="form-item">
-                                        <span>是否注册为教练</span>
+                                        <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
-                                            <input name="checkbox" type="checkbox" value="checkbox" checked="checked" className="123" tabIndex="7" />
+                                            <input name="checkbox" type="checkbox" value="checkbox" checked="" className="123" tabIndex="7" />
                                         </span>
                                     </div>
 

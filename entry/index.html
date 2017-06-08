@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>bootstrap template</title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="fakeLoader/css/fakeLoader.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="remodal/remodal-default-theme.css">
+    <link rel="stylesheet" href="remodal/remodal.css">
+    <link href="animate/css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="datetimepicker/css/bootstrap-datetimepicker.css"/>
+    <link href="css/user.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/flexslider.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+
+
+
+    <style>
+        table.center > tbody > tr > th {
+            text-align: center border : 1 px solid #336699;
+        }
+        body {
+        }
+        .icon-switcher {
+            background: #F9F7F6;
+            margin-left: 0px;
+            margin-top: -5px;
+            padding: 12px 12px;
+            position: absolute;
+            font-size: 22px;
+        }
+
+        .icon-switcher {
+            color: #3B5998 !important;
+        }
+    </style>
+    <!-- ע��:Respond.js��֧��file:// ��ʽ�ķ��� -->
+    <script type="text/javascript" src="js/ie-hack.js"></script>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="bootstrap/js/html5shiv.js"></script>
+    <script type="text/javascript" src="bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="bootstrap/js/jquery-latest.js"></script>
+    <script type="text/javascript" src="fakeLoader/js/fakeLoader.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="pdf.js"></script>
+    <script type="text/javascript" src="remodal/remodal.js"></script>
+    <script type="text/javascript" src="zepto.js"></script>
+    <script type="text/javascript" src="image-zoomer/js/zoomsl-3.0.min.js"></script>
+    <script type="text/javascript" src="jquery-media/jquery.media.js"></script>
+    <script type="text/javascript" src="js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/jquery.marquee.min.js"></script>
+    <!--<script src="//cdn.ckeditor.com/4.7.0/full/ckeditor.js"></script>-->
+    <script type="text/javascript" src="js/menu_jquery.js"></script>
+    <!--<script type="text/javascript" src="js/jquery.flexisel.js"></script>-->
+    <!--<script type="text/javascript" src="js/modernizr.custom.js"></script>-->
+    <!--<script type="text/javascript" src="js/easyResponsiveTabs.js"></script>-->
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          window.App.remodal.inst=$('[data-remodal-id="re-modal"]').remodal({
+          });
+          window.App.fieldRemodal.inst=$('[data-remodal-id="field-re-modal"]').remodal({
+          });
+      });
+    </script>
+
+</head>
+<body style="line-height: 2;height:100%">
+<div class="modal fade" id="root_modal" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-remodal-id="re-modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div>
+        <h2 id="modal1Title">业务办理完成</h2>
+    </div>
+    <table data-toggle="table"></table>
+    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+    <button data-remodal-action="confirm" class="remodal-confirm">OK</button>
+</div>
+
+
+<div data-remodal-id="field-re-modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+    <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+    <div class="modal-content">
+         <span id="field-re-modal-Title">字段</span>
+         <input id="field-re-modal-content" type='text'/>
+    </div>
+    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+    <button data-remodal-action="confirm" class="remodal-confirm" onClick={window.App.addTable()}>Add</button>
+</div>
+
+<div id="loading"></div>
+<div id="_mustdone"></div>
+<div id="mapper_re_modal"></div>
+<div id="root" style="height:100%"></div>
+<div id="list-render"></div>
+<script src="bundle.js"></script>
+<p>从比分的交替可以看出，韩国队在开局进入状态比中国队要快，开局连续得分，最大分差时达到了五分，奠定了韩国队后面胜利的基础。11分交换场地时，分数是11:7，韩国队领先。</p>
+
+<p>11分间歇后，中国队明显进入了比赛状态，连续得到3分，比分来到11：10，这时出现了全场比赛的第一个关键分，具体关键分是什么定义，我后面再讲。但是大家务必要记住关键分的时间点。这一分关键分是韩国队获胜。</p>
+
+<p>然后比赛进入了胶着期，双方基本上是势均力敌，但这一阶段中国队的表现明显要优于韩国队，但就是因为比赛开始时丢分太多。胶着阶段双方争夺很激烈，比分从10:12一直打到了17:18。</p>
+
+<p>这中间出现了全场比赛我认为最关键的三分球，中国队13:14落后的情况下，连续得分，从而反超比分至15：14领先。</p>
+
+</body>
+</html>
