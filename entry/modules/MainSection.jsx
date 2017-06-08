@@ -4,7 +4,6 @@ import {render} from 'react-dom';
 var config=require('../../config.json');
 import '../../css/entry/modules/mainSection.css';
 import News from '../../entry/modules/News'
-import CkEdit from '../../entry/modules/ckEdit'
 import Heard from '../modules/Heard'
 import Banner from '../modules/Banner'
 import Foot from '../modules/Foot'
@@ -49,10 +48,6 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
-
-                case App.getAppRoute() + "/ckedit":
-                    ctrl =<CkEdit/>
-                    break;
                 case App.getAppRoute() + "/news":
                     ctrl =<News/>
                     break;
@@ -69,11 +64,13 @@ var MainSection = React.createClass({
                     break;
             }
 
+
         }else{
             ctrl = <Main/>
             path = '/main'
         }
         contains =
+
             <div>
                 <Heard path={path}/>
 

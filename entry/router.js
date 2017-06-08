@@ -7,8 +7,8 @@ import { Router, Route, hashHistory,browserHistory, IndexRoute } from 'react-rou
 import App from './modules/App.jsx';
 import Login from './modules/Login';
 import MainSection from './modules/MainSection.jsx';
+import ckEditor from './modules/CKEditorWapper.jsx';
 import MainPage from './modules/MainPage'
-
 import {Component} from 'react'
 
 class AppRouter extends Component {
