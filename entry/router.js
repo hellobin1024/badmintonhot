@@ -14,6 +14,8 @@ import {Component} from 'react'
 class AppRouter extends Component {
     render() {
 
+
+
         return (
             <Router history={browserHistory}>
                 <Route path="/" component={App}>
