@@ -48,6 +48,7 @@ var Login=React.createClass({
             else {
                  this.props.dispatch(UserActions.loginAction());
             }
+
         }
     },
 
@@ -662,16 +663,16 @@ var Login=React.createClass({
 
 
         return(
+            <div className="container" style={{position: 'absolute',height: '100%', width: '100%',background:'url(../images/loginbg.jpeg)'}}>
             <div className="passport-wrapper">
-                <header id="header" className="passport-header">
-                    <div id="logo"><a><img src={window.App.getResourceDeployPrefix()+"/images/badminton_top.png"} /></a></div>
-                </header>
+
                 <div id="container" ref='login-register-forget'>
                     <div className="passport-sign">
 
                         {mainContent}
 
                     </div>
+                </div>
                 </div>
             </div>
         )

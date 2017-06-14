@@ -23,7 +23,7 @@ var NewsContain = React.createClass({
     },
 
     getNewsContain:function (id) {
-        var url = "/func/auth/getNewsContent";
+        var url = "/func/allow/getNewsContent";
         var param={
             id:id
         }

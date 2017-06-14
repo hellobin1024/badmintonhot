@@ -8,7 +8,7 @@ import DevTools from './DevTools.jsx'
 
 class Root extends Component {
     render() {
-        const { store, } = this.props
+        const { store } = this.props
         return (
             <Provider store={store}>
                 <div style={{width:'100%',height:'100%'}}>

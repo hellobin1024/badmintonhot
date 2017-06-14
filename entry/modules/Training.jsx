@@ -1,12 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../build/css/style.css'
-import { connect } from 'react-redux'
-
 import RightSlide from '../../entry/modules/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
-var UserActions=require('../action/UserActions');
-var Event = React.createClass({
+
+var Training = React.createClass({
 
 
     getInitialState: function () {
@@ -48,33 +46,32 @@ var Event = React.createClass({
 
     render:function() {
         var contains = null;
-        var a=store.getState();
         if(this.state.data!==null&&this.state.data!==undefined) {
             var data = this.state.data;
             var trs = [];
             var ref = this;
             data.map(function (item,i) {
-               trs.push(
-                   <div className="basic" key={i}>
+                trs.push(
+                    <div className="basic" key={i}>
 
-                    <div className="business">
-                        <h2>{item.eventName}</h2>
-                        <p><span>地点：</span>{item.badmintonVenueUnit.name}</p>
-                    </div>
-                    <div className="value">
-                        <p><span>组织者：</span>{item.infoPersonInfo.perName}</p>
-                    </div>
-                    <ul>
-                        <li><span>时间：</span> {item.eventTime}</li>
-                        <li><span>已报名：</span> {item.eventNowMemNum}人</li>
-                        <li><span>简介：</span> {item.eventBrief}</li>
+                        <div className="business">
+                            <h2>{item.eventName}</h2>
+                            <p><span>介绍：</span>{item.badmintonVenueUnit.name}</p>
+                        </div>
+                        <div className="value">
+                            <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
+                        </div>
+                        <ul>
+                            <li><span>课时：</span> {item.eventTime}</li>
+                            <li><span>已报名：</span> {item.eventNowMemNum}人</li>
+                            <li><span>费用：</span> {item.eventBrief}</li>
 
-                    </ul>
-                    <div className="buy-me">
-                        <a onClick={ref.showEventsDetail}>参加</a>
+                        </ul>
+                        <div className="buy-me">
+                            <a onClick={ref.showEventsDetail}>参加</a>
+                        </div>
                     </div>
-                </div>
-               )
+                )
 
             })
             contains =
@@ -144,5 +141,4 @@ var Event = React.createClass({
 
     }
 });
-// module.exports = Event;
-export default connect()(Event);
+module.exports = Training;

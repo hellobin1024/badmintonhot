@@ -730,9 +730,10 @@ input[type=radio][disabled]:hover {
 .passport-wrapper {
     margin-right: auto;
     margin-left: auto;
-    padding-top: 60px;
+    padding-top: 200px;
     padding-bottom: 20px;
     width: 820px;
+    min-width: 300px;
 }
 
 .passport-sign {

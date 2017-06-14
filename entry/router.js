@@ -24,6 +24,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/events"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/newsContain"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/training"} component={MainSection}/>
                 </Route>
             </Router>
         )
