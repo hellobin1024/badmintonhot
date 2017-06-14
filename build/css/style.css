@@ -2207,108 +2207,8 @@ top:0;
 span.menu {
     display: none;
 }
-.basic{
-    float:left;
-    width:29.59%;
-    text-align:center;
-    margin: 1em 1em;
-}
-.basic:hover{
-    transform:scale(1.1);
-    transition:.5s all;
-    -webkit-transition:.5s all;
-    -moz-transition:.5s all;
-    -o-transition:.5s all;
-    -ms-transition:.5s all;
-}
-
-.business{
-    background:#344859;
-    padding:1.5em 0em;
-}
-.business h2{
-    font-size:26px;
-    color:#D1D5D8;
-    margin:0;
-    font-family: 'Nunito', sans-serif;
-}
-.business p{
-    color:#D1D5D8;
-    font-size:16px;
-    margin:3px 0 0;
-    font-family: 'Nunito', sans-serif;
-}
-.value{
-    padding:0.5em 0;
-    background:#0b7409;
-}
-.value p{
-    color:#fff;
-    font-size:19px;
-    margin:0;
-}
-.basic ul{
-    padding:2em 0 1em;
-    margin:0;
-    display:block;
-    box-shadow: 0px 2px 0px #D7D7D7;
-}
-.basic ul li{
-    color:#5B6873;
-    border-bottom: 1px dotted #5B6873;
-    padding-bottom:.5em;
-}
-.basic ul li span{
-    color:#000000;
-    font-weight: 500;
-}
-.basic ul li.gd{
-    border-bottom:none;
-}
-.buy-me{
-    text-align:center;
-}
-.buy-me a{
-    padding: 7px 25px;
-    background: #0b7409;
-    color: #fff;
-    font-size: 12px;
-    font-family: 'Nunito', sans-serif;
-    transition:.5s all;
-    -webkit-transition:.5s all;
-    -moz-transition:.5s all;
-    -o-transition:.5s all;
-    -ms-transition:.5s all;
-    box-shadow:0px 2px 0px #604944;
-}
-.buy-me a:hover{
-    text-decoration:none;
-    color:#fff;
-    background:#f14e2f;
-    box-shadow: 0px 2px 0px #604944;
-}
-.modalEventDetail ul li {
-    color: #5B6873;
-    border-bottom: 1px dotted #5B6873;
-    padding-bottom: .5em;
-}
-.modalEventDetail ul {
-    padding: 2em 0 1em;
-    margin: 0;
-    display: block;
-    box-shadow: 0px 2px 0px #D7D7D7;
-    background-color: #ece9e6;
-}
-.modalEventDetail ul li button{
-    padding: 10px 45px;
-    background-color: #adb3b8;
-    margin: 16px;
-}
 /*-- responsive-start-here --*/
 @media (max-width:1080px){
-    .basic {
-        width: 29.9%;
-    }
 	.top-nav ul li a {
 		padding: .5em 1em;
 	}
@@ -2367,16 +2267,6 @@ span.menu {
 	}
 }
 @media (max-width:991px){
-    .basic ul li {
-        margin: 0.5em 3em;
-    }
-    .basic {
-        width: 30.3%;
-    }
-    .price h2 {
-        margin: 0 0 1em;
-        width: 14%;
-    }
 	.nav-top {
 		margin: 1em 0 0 0;
 	}
@@ -2570,22 +2460,6 @@ span.menu {
 	}
 }
 @media (max-width:640px){
-    .business h2 {
-        font-size: 20px;
-    }
-    .business p {
-        font-size: 13px;
-    }
-    .basic {
-        width: 29.2%;
-    }
-    .value {
-        padding: 0.5em 0;
-    }
-    .buy-me a {
-        padding: 10px 30px;
-        font-size: 12px;
-    }
 	.banner-left {
 		float: none;
 		width: 100%;
@@ -2659,14 +2533,6 @@ span.menu {
 	}
 }
 @media (max-width:480px){
-    .basic {
-        width: 60%;
-        float: none;
-        margin: 0 auto 2em;
-    }
-    .price h2 {
-        width: 22%;
-    }
 	.header-dropdown {
 		width: 51%;
 	}
@@ -2739,23 +2605,6 @@ span.menu {
 	}
 }
 @media (max-width:320px){
-    .basic {
-        width: 90%;
-    }
-    .basic ul {
-        height: 177px;
-        padding:1em 0 0;
-    }
-    .basic ul li{
-        font-size: 13px;
-    }
-    .basic ul li {
-        margin: 0.5em 5em;
-    }
-    .buy-me a {
-        padding: 8px 26px;
-        font-size: 11px;
-    }
 	.emergency-grid ul li.call {
 		font-size: 1em;
 	}
