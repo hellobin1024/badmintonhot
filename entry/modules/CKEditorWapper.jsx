@@ -22,16 +22,14 @@ var CkEdit = React.createClass({
 
     submit:function(){
         var content = this.state.content;
-        console.log(content);
-        alert(content);
         var url="/func/auth/news_submit";
 
-        //var params = {
-        //    'loginName' :'root',
-        //    'password':1
-        //};
+        content=content.replace("&amp;","&") //把被转义的字符替换回来
+        content=content.replace("&lt;","<")
+        console.log(content);
+        alert(content);
         var params = {
-            'content' :content
+            'editContent' :content
         };
 
         ProxyQ.queryHandle({

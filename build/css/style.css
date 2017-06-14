@@ -2207,6 +2207,7 @@ top:0;
 span.menu {
     display: none;
 }
+
 .basic{
     float:left;
     width:29.59%;
@@ -2305,11 +2306,9 @@ span.menu {
     background-color: #adb3b8;
     margin: 16px;
 }
+
 /*-- responsive-start-here --*/
 @media (max-width:1080px){
-    .basic {
-        width: 29.9%;
-    }
 	.top-nav ul li a {
 		padding: .5em 1em;
 	}
@@ -2368,16 +2367,6 @@ span.menu {
 	}
 }
 @media (max-width:991px){
-    .basic ul li {
-        margin: 0.5em 3em;
-    }
-    .basic {
-        width: 30.3%;
-    }
-    .price h2 {
-        margin: 0 0 1em;
-        width: 14%;
-    }
 	.nav-top {
 		margin: 1em 0 0 0;
 	}
@@ -2571,22 +2560,6 @@ span.menu {
 	}
 }
 @media (max-width:640px){
-    .business h2 {
-        font-size: 20px;
-    }
-    .business p {
-        font-size: 13px;
-    }
-    .basic {
-        width: 29.2%;
-    }
-    .value {
-        padding: 0.5em 0;
-    }
-    .buy-me a {
-        padding: 10px 30px;
-        font-size: 12px;
-    }
 	.banner-left {
 		float: none;
 		width: 100%;
@@ -2660,14 +2633,6 @@ span.menu {
 	}
 }
 @media (max-width:480px){
-    .basic {
-        width: 60%;
-        float: none;
-        margin: 0 auto 2em;
-    }
-    .price h2 {
-        width: 22%;
-    }
 	.header-dropdown {
 		width: 51%;
 	}
@@ -2740,23 +2705,6 @@ span.menu {
 	}
 }
 @media (max-width:320px){
-    .basic {
-        width: 90%;
-    }
-    .basic ul {
-        height: 177px;
-        padding:1em 0 0;
-    }
-    .basic ul li{
-        font-size: 13px;
-    }
-    .basic ul li {
-        margin: 0.5em 5em;
-    }
-    .buy-me a {
-        padding: 8px 26px;
-        font-size: 11px;
-    }
 	.emergency-grid ul li.call {
 		font-size: 1em;
 	}

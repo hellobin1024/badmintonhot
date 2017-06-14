@@ -17,62 +17,36 @@ export let loginAction=function(){
 
         return new Promise((resolve, reject) => {
 
-
-
-            var url = "/func/auth/webLogin";
+            var accessToken=null;
+            var topMenue=null;
             var params = {
-                'loginName' :'root',
-                'password' : 1
-            };
+                        'loginName' :'root',
+                        'password' : 1
+                    };
+            Proxy.queryHandle({
+                type:'POST',
+                url:'/func/auth/webLogin',
+                params:JSON.stringify(params),
+                dataType:null
+            }).then((json)=> {
+                reCode = json.reCode;
+                //菜单
+                // return Proxy.queryHandle({
+                //         type:'POST',
+                //         url:'',
+                //         params:JSON.stringify(params),
+                //         dataType:null
+                // }).then((json)=>{
+                //     topMenue=json
+                // })
+            }).then((json)=>{
 
-            Proxy.query(
-                'POST',
-                url,
-                params,
-                null,
-                function (response) {
-                    var reCode = response.reCode;
-                    dispatch(getReCode(reCode));
-                },
+                dispatch(getReCode(reCode));
+                // dispatch(getTopMenue(topMenue));
 
-                function (xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }
-            );
+            }).catch((err)=> {
 
-
-
-
-            // var accessToken=null;
-            // var topMenue=null;
-            // var params = {
-            //             'loginName' :'root',
-            //             'password' : 1
-            //         };
-            // Proxy.queryHandle({
-            //     type:'POST',
-            //     url:'/func/auth/webLogin',
-            //     params:JSON.stringify(params),
-            //     dataType:null
-            // }).then((json)=> {
-            //     reCode = json.reCode;
-            //     //菜单
-            //     // return Proxy.queryHandle({
-            //     //         type:'POST',
-            //     //         url:'',
-            //     //         params:JSON.stringify(params),
-            //     //         dataType:null
-            //     // }).then((json)=>{
-            //     //     topMenue=json
-            //     // })
-            // }).then((json)=>{
-            //
-            //     dispatch(getReCode(reCode));
-            //     // dispatch(getTopMenue(topMenue));
-            //
-            // }).catch((err)=> {
-            //
-            // });
+            });
         });
     }
 

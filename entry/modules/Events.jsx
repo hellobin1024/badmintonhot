@@ -1,11 +1,14 @@
 import React from 'react';
 import {render} from 'react-dom';
+import '../../build/css/JFFormStyle-1.css'
+import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
-import { connect } from 'react-redux'
+
+
 
 import RightSlide from '../../entry/modules/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
-var UserActions=require('../action/UserActions');
+
 var Event = React.createClass({
 
 
@@ -17,6 +20,7 @@ var Event = React.createClass({
 
         this.getAllEvents();
 
+
     },
     showEventsDetail:function () {
         var successModal = this.refs['successModal'];
@@ -26,6 +30,7 @@ var Event = React.createClass({
         var successModal = this.refs['successModal'];
         $(successModal).modal('hide');
     },
+
 
     getAllEvents:function () {
         var url = "/func/allow/getAllEvents";
@@ -48,7 +53,7 @@ var Event = React.createClass({
 
     render:function() {
         var contains = null;
-        var a=store.getState();
+
         if(this.state.data!==null&&this.state.data!==undefined) {
             var data = this.state.data;
             var trs = [];
@@ -140,8 +145,8 @@ var Event = React.createClass({
         }else{
             this.initialData();
         }
-        return contains;
 
+        return contains;
     }
 });
 // module.exports = Event;

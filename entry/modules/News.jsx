@@ -3,31 +3,11 @@ import {render} from 'react-dom';
 
 import {Link} from 'react-router';
 import RightSlide from '../../entry/modules/RightSilde'
-var Proxy = require('../../components/proxy/ProxyQ');
-import PageNavigator from '../../components/basic/PageNavigator.jsx';
 
-var Page = require('../../components/basic/Page');
 var News = React.createClass({
-    paginationData:function (data,pageIndex) {
-        let capacity=data.length;
-        var slices=null;
-        Page.getInitialDataIndex(8,capacity,pageIndex,function(ob){
-                slices=data.slice(ob.begin,ob.end);
-            }
-        );
-        return slices;
-    },
-    previousCb:function (index,isChange) { //向前跳页
-        this.setState({pageIndex:index,isChange:isChange});
-    },
 
-    pageCb:function(index,isChange) { //进入指定页的列表
-        this.setState({pageIndex:index,isChange:isChange});
-    },
-    nextCb:function(index,isChange){ //向后跳页,isChange为true
-        this.setState({pageIndex:index,isChange:isChange});
-    },
     getInitialState:function () {
+
         return ({
             pageIndex: 0,
             isChange: false,
@@ -50,12 +30,11 @@ var News = React.createClass({
                 console.error(this.props.url, status, err.toString());
             }
         );
-    },
-    initialData:function(){
 
-       this.getNewsTheme();
+        return ({});
 
     },
+
     render: function () {
         var contains = null;
         if(this.state.data!==null&&this.state.data!==undefined) {
@@ -112,13 +91,12 @@ var News = React.createClass({
                                     paginate={Page}
                                     />
                                 </div>
-                                <RightSlide/>
-                                <div className="clearfix"></div>
                             </div>
+                            <RightSlide/>
+                            <div className="clearfix"> </div>
                         </div>
                     </div>
                 </div>
-        
 
         return contains
 
