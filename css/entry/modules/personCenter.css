@@ -73,6 +73,7 @@
 }
 #aside dl dd a {
     color: #757575;
+    cursor:pointer;
 }
 
 :link, :visited, ins {
@@ -80,7 +81,7 @@
 }
 
 #content {
-    width: 970px;
+    width: 900px;
     min-height: 900px;
     background-color: #fff;
     overflow: auto;

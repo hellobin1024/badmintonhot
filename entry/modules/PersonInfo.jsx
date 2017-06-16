@@ -39,7 +39,7 @@ var PersonCenter = React.createClass({
                 <Header path={path}/>
 
                 <div id="pjax-container" className="container clearfix">
-                    <div id="aside" className="l" style={{height:'900px'}}>
+                    <div id="aside" className="l" style={{height:'900px',border: '1px solid #1C6'}}>
                         <dl className="st">
                             <dt><i className="icon-credit-card"></i>我的钱包</dt>
                             <dd className="current">
@@ -83,13 +83,14 @@ var PersonCenter = React.createClass({
                             <dt className=""><i className="iconfont"></i><a data-pjax="true" >系统消息</a></dt>
                         </dl>
                     </div>
-                </div>
 
-                <div id="content" className="r" data-tag="wallet-balance" data-title="" style={{height: '900px'}}>
-                    <div className="wrap" id="balance">
 
-                        {mainContent}
+                    <div id="content" className="r" data-tag="wallet-balance" data-title="" style={{height: '900px'}}>
+                        <div className="wrap" id="balance">
 
+                            {mainContent}
+
+                        </div>
                     </div>
                 </div>
             </div>
