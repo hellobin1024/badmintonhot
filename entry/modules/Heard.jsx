@@ -1,8 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
-import '../../build/css/JFFormStyle-1.css'
-import '../../build/css/jquery-ui.css'
-import '../../build/css/style.css'
+import '../../build/css/JFFormStyle-1.css';
+import '../../build/css/jquery-ui.css';
+import '../../build/css/style.css';
 import {Link} from 'react-router';
 var Heard = React.createClass({
 
@@ -96,7 +96,7 @@ var Heard = React.createClass({
             default:
                 break
         }
-        $(this.refs[a]).attr("class","active")
+        $(this.refs[a]).attr("class","active");
 
         $("#loginButton").click(function() {
             var button = $('#loginButton');

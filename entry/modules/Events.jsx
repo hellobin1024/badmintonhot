@@ -149,5 +149,5 @@ var Event = React.createClass({
         return contains;
     }
 });
-// module.exports = Event;
-export default connect()(Event);
+ module.exports = Event;
+//export default connect()(Event);

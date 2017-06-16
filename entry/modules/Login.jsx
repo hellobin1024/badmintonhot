@@ -683,7 +683,17 @@ var Login=React.createClass({
     },
 
 });
-// export default connect()(Login);
-module.exports = Login;
+
+const mapStateToProps = (state, ownProps) => {
+
+    const props = {
+        token: state.userInfoReducer.accessToken
+    }
+
+    return props
+};
+
+export default connect(mapStateToProps)(Login)
+
 
 
