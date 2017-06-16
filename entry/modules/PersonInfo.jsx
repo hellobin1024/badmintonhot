@@ -5,6 +5,8 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Header from '../modules/heard.jsx';
+import SelfBaseInfo from '../modules/SelfBaseInfo.jsx';
+
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
 
@@ -25,39 +27,9 @@ var PersonCenter = React.createClass({
 
         let mainContent=null;
         switch (this.state.current) {
-            case 'carOrder':
-                mainContent =(
-                    <CarOrder />
-                );
-                break;
-            case 'lifeOrder':
-                mainContent =(
-                    <LifeOrder />
-                );
-                break;
-            case 'serviceOrder':
-                mainContent =(
-                    <ServiceOrder />
-                );
-                break;
-            case 'score':
-                mainContent =(
-                    <OrderCenterScore />
-                );
-                break;
             case 'baseInfo':
                 mainContent =(
                     <SelfBaseInfo />
-                );
-                break;
-            case 'relatedInfo':
-                mainContent =(
-                    <RelatedPersonInfo />
-                );
-                break;
-            case 'carInfo':
-                mainContent =(
-                    <RelatedCarInfo />
                 );
                 break;
         }
@@ -102,25 +74,26 @@ var PersonCenter = React.createClass({
                             <dd className=""><div><a data-pjax="true" >账号绑定</a></div></dd>
                             <dd className=""><div><a data-pjax="true" >修改密码</a></div></dd>
 
-                            <dt className=""><i className="iconfont2"></i><a data-pjax="true" href="?rm=SSO&amp;rc=Vip">会员中心</a></dt>
+                            <dt className=""><i className="iconfont2"></i><a data-pjax="true">会员中心</a></dt>
 
-                            <dt className=""><i className="iconfont"></i><a data-pjax="true" href="?rm=SSO&amp;rc=Personal&amp;ra=GetHistory">最近浏览</a></dt>
+                            <dt className=""><i className="iconfont"></i><a data-pjax="true" >最近浏览</a></dt>
 
-                            <dt className=""><i className="iconfont"></i><a data-pjax="true" href="?rm=SSO&amp;rc=Personal&amp;ra=GetCollect">我的收藏</a></dt>
+                            <dt className=""><i className="iconfont"></i><a data-pjax="true" >我的收藏</a></dt>
 
-                            <dt className=""><i className="iconfont"></i><a data-pjax="true" href="?rm=SSO&amp;rc=Personal&amp;ra=MessageIndex">系统消息</a></dt>
+                            <dt className=""><i className="iconfont"></i><a data-pjax="true" >系统消息</a></dt>
                         </dl>
                     </div>
+                </div>
 
-                    <div id="content" className="r" data-tag="wallet-balance" data-title="我的余额 - 个人中心 - 体育社" style={{height: '900px'}}>
-                        <div className="wrap" id="balance">
+                <div id="content" className="r" data-tag="wallet-balance" data-title="" style={{height: '900px'}}>
+                    <div className="wrap" id="balance">
 
-                            {mainContent}
+                        {mainContent}
 
-                        </div>
                     </div>
                 </div>
             </div>
+
         );
     },
 });
