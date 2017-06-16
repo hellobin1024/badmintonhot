@@ -9,7 +9,6 @@ import Login from './modules/Login';
 import MainSection from './modules/MainSection.jsx';
 import ckEditor from './modules/CKEditorWapper.jsx';
 import MainPage from './modules/MainPage';
-import PersonalCenter from './modules/PersonalCenter.jsx';
 import PersonInfo from './modules/PersonInfo.jsx'
 import {Component} from 'react'
 
