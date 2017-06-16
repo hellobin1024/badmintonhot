@@ -3,8 +3,6 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import '../../css/entry/modules/personInfoBase.css';
-import '../../css/entry/modules/personInfoLayout.css';
 
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
@@ -115,48 +113,42 @@ var SelfBaseInfo=React.createClass({
         var mainContent;
         var data;
 
-        if(this.state.data!==undefined&&this.state.data!==null) {
-            data=this.state.data;
-            mainContent=
-                <div ref="selfPersonInfo" style={{marginTop:'20px'}}>
-                    <div className="self_control_group">
-                        <span className="self_label">用户名</span>
-                        <div className="self_controls">
-                            <input name="perName" defaultValue={data.perName || ""} className="self_input" />
-                        </div>
-                    </div>
-                    <div className="self_control_group">
-                        <span className="self_label">身份证</span>
-                        <div className="self_controls">
-                            <input name="perIdCard" defaultValue={data.perIdCard || ""} className="self_input" maxLength='18'/>
-                        </div>
-                    </div>
-                    <div className="self_control_group">
-                        <span className="self_label">电话</span>
-                        <div className="self_controls">
-                            <input name="phoneNum" defaultValue={data.phoneNum || ""} className="self_input" maxLength='11'/>
-                        </div>
-                    </div>
-                    <div className="self_control_group">
-                        <span className="self_label">邮编</span>
-                        <div className="self_controls">
-                            <input name="postCode" defaultValue={data.postCode || ""}  className="self_input" maxLength='6'/>
-                        </div>
-                    </div>
-                    <div className="self_control_group">
-                        <span className="self_label">地址</span>
-                        <div className="self_controls">
-                            <input name="address" defaultValue={data.address || ""} className="self_input"/>
-                        </div>
-                    </div>
-                    <div className="toolBar">
-                        <a className="saveBtn btn_primary" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</a>
+        mainContent=
+            <div ref="selfPersonInfo" style={{marginTop:'20px'}}>
+                <div className="self_control_group">
+                    <span className="self_label">用户名</span>
+                    <div className="self_controls">
+                        <input name="perName" defaultValue="" className="self_input" />
                     </div>
                 </div>
-        }else{
-            //初始化内容详情
-            this.initialData();
-        }
+                <div className="self_control_group">
+                    <span className="self_label">身份证</span>
+                    <div className="self_controls">
+                        <input name="perIdCard" defaultValue="" className="self_input" maxLength='18'/>
+                    </div>
+                </div>
+                <div className="self_control_group">
+                    <span className="self_label">电话</span>
+                    <div className="self_controls">
+                        <input name="phoneNum" defaultValue="" className="self_input" maxLength='11'/>
+                    </div>
+                </div>
+                <div className="self_control_group">
+                    <span className="self_label">邮编</span>
+                    <div className="self_controls">
+                        <input name="postCode" defaultValue=""  className="self_input" maxLength='6'/>
+                </div>
+                </div>
+                <div className="self_control_group">
+                    <span className="self_label">地址</span>
+                    <div className="self_controls">
+                        <input name="address" defaultValue="" className="self_input"/>
+                    </div>
+                </div>
+                <div className="toolBar">
+                    <a className="saveBtn btn_primary" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</a>
+                </div>
+            </div>
 
         return(
             <div >
