@@ -4,7 +4,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Link} from 'react-router';
-import Header from '../modules/heard.jsx';
+import Header from '../modules/Heard.jsx';
 import SelfBaseInfo from '../modules/SelfBaseInfo.jsx';
 
 import '../../css/entry/modules/personCenter.css';
