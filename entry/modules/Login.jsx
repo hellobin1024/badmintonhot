@@ -411,7 +411,7 @@ var Login=React.createClass({
     render:function(){
         var mainContent;
         var view=this.state.view;
-
+        var a=this.props.token;
         switch(view){
             case 'login':
                 mainContent=
@@ -683,7 +683,15 @@ var Login=React.createClass({
     },
 
 });
-// export default connect()(Login);
-module.exports = Login;
+
+const mapStateToProps = (state, ownProps) => {
+
+    const props = {
+        token: state.userInfo.accessToken
+    }
+
+    return props
+}
+ export default connect(mapStateToProps)(Login);
 
 

@@ -6,5 +6,5 @@ import _ from 'lodash';
 module.exports={
 
     'ACCESS_TOKEN_ACK':'ACCESS_TOKEN_ACK',
-    'GRT_TOPMENUE':'GRT_TOPMENUE'
+    'UPDATE_ROUTER':'UPDATE_ROUTER'
 }
