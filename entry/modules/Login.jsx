@@ -687,11 +687,13 @@ var Login=React.createClass({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
+
         token: state.userInfo.accessToken
     }
 
     return props
 }
  export default connect(mapStateToProps)(Login);
+
 
 

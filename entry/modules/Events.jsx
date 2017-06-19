@@ -205,4 +205,6 @@ var Event = React.createClass({
         return contains;
     }
 });
+
 module.exports = Event;
+

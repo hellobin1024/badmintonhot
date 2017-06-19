@@ -8,7 +8,8 @@ import App from './modules/App.jsx';
 import Login from './modules/Login';
 import MainSection from './modules/MainSection.jsx';
 import ckEditor from './modules/CKEditorWapper.jsx';
-import MainPage from './modules/MainPage'
+import MainPage from './modules/MainPage';
+import PersonInfo from './modules/PersonInfo.jsx'
 import {Component} from 'react'
 
 class AppRouter extends Component {
@@ -25,6 +26,8 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/newsContain"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/training"} component={MainSection}/>
+
+                    <Route path={window.App.getAppRoute() + "/PersonInfo"} component={PersonInfo}/>
                 </Route>
             </Router>
         )
