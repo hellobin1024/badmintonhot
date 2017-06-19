@@ -94,7 +94,7 @@ var Heard = React.createClass({
                 a = 'news';
                 break
             default:
-                break
+                break;
         }
         $(this.refs[a]).attr("class","active");
 
