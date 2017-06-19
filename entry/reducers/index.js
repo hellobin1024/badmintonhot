@@ -6,7 +6,7 @@ import userInfoReducer from './userInfoReducer';
 
 
 var rootReducer=combineReducers({
-    userInfoReducer:userInfoReducer,
+    userInfo:userInfoReducer,
     routing: routeReducer,
 });
 

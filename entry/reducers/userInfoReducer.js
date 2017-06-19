@@ -4,7 +4,7 @@
 // import * as types from '../action/types';
 import {
     ACCESS_TOKEN_ACK,
-    GRT_TOPMENUE
+
 } from '../constants/UserConstants';
 //
 // import {
@@ -15,7 +15,7 @@ import {
 
 const initialState = {
     accessToken: null,
-    topMenue:null
+
 };
 
 let user = (state = initialState, action) => {
@@ -29,13 +29,7 @@ let user = (state = initialState, action) => {
 
             })
             break;
-        case GRT_TOPMENUE:
 
-            return Object.assign({}, state, {
-                topMenue: action.topMenue,
-
-            })
-            break;
         default:
             return state;
     }
