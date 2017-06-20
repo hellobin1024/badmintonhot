@@ -98,16 +98,37 @@ var Login=React.createClass({
         }
     },
 
+    isRegisterAsTrainer:function(){
+
+        var registerPage = this.refs['registerPage'];
+        var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+
+        if(isTrainer!== undefined || isTrainer!==null){
+            Proxy.queryHandle({
+                type:'POST',
+                url:'/func/auth/getAthleteLevel',
+                params:null,
+                dataType:null
+            }).then((json)=> {
+                reCode = json.reCode;
+
+            }).then((json)=>{
+
+            }).catch((err)=> {
+
+            });
+        }
+
+    },
+
     register:function(){
         var registerPage = this.refs['registerPage'];
         var userName = $(registerPage).find("input[name='userName']").val();
         var password = $(registerPage).find("input[name='password']").val();
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
-        var email = $(registerPage).find("input[name='email']").val();
         var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
-        var verifyCode = $(registerPage).find("input[name='verifyCode']").val();
+
         var phoneReg = /^1[34578]\d{9}$/;
-        var emailReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
 
         if (userName == "") {
             this.showTips('请填写用户名~');
@@ -117,43 +138,33 @@ var Login=React.createClass({
             this.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
             this.showTips('请再次输入密码~');
-        } else if(email != "" && !(emailReg.test(email))){
-            this.showTips("邮箱填写有误，请重新填写~");
         } else if (phoneNum == "") {
             this.showTips('请填写手机号~');
         } else if(!(phoneReg.test(phoneNum))){
             this.showTips("手机号码有误，请重新填写~");
         } else if (verifyCode == "") {
             this.showTips('请填写验证码~');
-        } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
-            this.showTips('验证码失效，请重新获取~');
-        } else if(verifyCode!==this.state.verifyCode) {
-            this.showTips('验证码不正确~');
         } else{
-            var url="/insurance/insuranceReactPageDataRequest.do";
+
             var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'customerRegister',
                 userName:userName,
                 password:password,
-                email:email,
                 phoneNum:phoneNum,
+
             };
-            ProxyQ.queryHandle(
-                'post',
-                url,
-                params,
-                null,
-                function(ob) {
-                    var re = ob.re;
-                    if(re != undefined && re != null ){
-                        this.setState({view: 'login'})
-                    }
-                }.bind(this),
-                function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            );
+            Proxy.queryHandle({
+                type:'POST',
+                url:'/func/auth/userRegister',
+                params:JSON.stringify(params),
+                dataType:null
+            }).then((json)=> {
+                reCode = json.reCode;
+
+            }).then((json)=>{
+
+            }).catch((err)=> {
+
+            });
         }
     },
 
@@ -411,7 +422,7 @@ var Login=React.createClass({
     render:function(){
         var mainContent;
         var view=this.state.view;
-
+        var a=this.props.token;
         switch(view){
             case 'login':
                 mainContent=
@@ -525,36 +536,17 @@ var Login=React.createClass({
                                             <input type="password" name="ackPassword" className="passport-txt xl w-full" tabIndex="3" autoComplete="off" onBlur={this.ackPassword} placeholder="请再次输入密码"/>
                                         </div>
                                     </div>
-                                    <div className="form-item">
-                                        <div className="form-cont">
-                                            <input type="text" name="email" className="passport-txt xl w-full" tabIndex="4" autoComplete="off" placeholder="请输入邮箱地址，本项选填"/>
-                                        </div>
-                                    </div>
-
 
                                     <div className="form-item form-mcode mb-25">
                                         <div className="form-cont">
                                             <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
-                                            <div className="btn-getcode">
-                                                <button type="button" className="passport-btn js-getcode" id="J_getCode" onClick={this.getVerifyCode}>发送验证码</button>
-                                            </div>
-                                            <div className="btn-getcode">
-                                                <button type="button" className="passport-btn js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="form-item">
-                                        <div className="form-cont">
-                                            <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
-                                        </div>
-                                    </div>
-
-
-                                    <div className="form-item">
+                                    <div className="form-item" >
                                         <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
-                                            <input name="checkbox" type="checkbox" value="checkbox" checked="" className="123" tabIndex="7" />
+                                            <input name="isTrainer" type="checkbox" tabIndex="7" onClick={this.isRegisterAsTrainer}/>
                                         </span>
                                     </div>
 
@@ -687,13 +679,12 @@ var Login=React.createClass({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        token: state.userInfoReducer.accessToken
+        token: state.userInfo.accessToken
     }
 
     return props
-};
-
-export default connect(mapStateToProps)(Login)
+}
+ export default connect(mapStateToProps)(Login);
 
 
 

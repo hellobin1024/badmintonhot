@@ -49,7 +49,7 @@ var PersonCenter = React.createClass({
             <div>
                 <Header path={path}/>
 
-                <div id="pjax-container" className="container clearfix">
+                <div id="pjax-container" className="person-container clearfix">
                     <div id="aside" className="l" style={{height:'900px',border: '1px solid #1C6'}}>
                         <dl className="st">
                             <dt><i className="icon-credit-card"></i>我的钱包</dt>

@@ -2213,6 +2213,8 @@ span.menu {
     width:29.59%;
     text-align:center;
     margin: 1em 1em;
+    min-width: 206px;
+    height: 326px;
 }
 .basic:hover{
     transform:scale(1.1);
