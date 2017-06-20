@@ -3,10 +3,10 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import '../../css/entry/modules/selleBase.css';
+import '../../css/entry/modules/modifyPassword.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var SelfBaseInfo=React.createClass({
+var ModifyPassword=React.createClass({
 
     //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
     showTips:function(txt,time,status) {
@@ -114,77 +114,40 @@ var SelfBaseInfo=React.createClass({
         var data;
 
         mainContent=
-                <div ref="selfPersonInfo" style={{marginTop:'50px'}}>
+            <div ref="modifyPersonInfo" style={{marginTop:'50px'}}>
 
-                    <div className="self_control_group">
-                    <div className="self_label" style={{float:'left'}}>
-                        <span className="self_label" >用户名</span>
+                <div className="modify_control_group">
+                    <div className="modify_label" style={{float:'left',width:'60px'}}>
+                        <span className="modify_label" >原密码</span>
                     </div>
-                    <div className="self_conte" style={{float:'left'}} >
-                        <input name="perName" defaultValue="" maxLength="25" className="inputStyle"/>
+                    <div className="modify_conte" style={{float:'left'}} >
+                        <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle"/>
                     </div>
+                    <div className="modify_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                        <span className="modify_span" >忘记密码？</span>
                     </div>
-
-                    <div className="clear"></div>
-                    <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
-                            <span className="self_label">性别</span>
-                        </div>
-                        <div className="self_conte" style={{float:'left',color:'#000000'}}>
-                            <input name="genderCode" type="radio" value="男" checked="true" style={{fontSize:'15px'}}/>男
-                            <input name="genderCode" type="radio" value="女"  checked="false"  style={{fontSize:'15px',marginLeft:'20px'}} />女
-                        </div>
+                </div>
+                <div className="clear"></div>
+                <div className="modify_control_group" >
+                    <div className="modify_label" style={{float:'left',width:'60px'}}>
+                        <span className="modify_label">新密码</span>
                     </div>
-                    <div className="clear"></div>
-                    <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
-                            <span className="self_label">电话</span>
-                        </div>
-                        <div className="self_conte" style={{float:'left',width:'198px'}}>
-                            <input name="phoneNum" defaultValue="" className="inputStyle" />
-                        </div>
+                    <div className="modify_conte" style={{float:'left',width:'198px'}}>
+                        <input name="newpwd" defaultValue="" className="inputStyle" />
                     </div>
-                    <div className="clear"></div>
-                    <div className="self_label">
-                    <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                        <span className="self_label">邮编</span>
+                </div>
+                <div className="clear"></div>
+                <div className="modify_label">
+                    <div className="modify_control_group"  style={{float:'left',width:'60px'}}>
+                        <span className="modify_label">确认密码</span>
                     </div>
-                    <div className="self_conte"  style={{float:'left'}}>
-                            <input name="postCode" defaultValue="" className="inputStyle"/>
+                    <div className="modify_conte"  style={{float:'left'}}>
+                        <input name="repwd" defaultValue="" className="inputStyle"/>
                     </div>
-                    </div>
-                    <div className="clear"></div>
-
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">地址</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="address" defaultValue="" className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">QQ</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="qq" defaultValue="" className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">微信</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="wechat" defaultValue=""  className="inputStyle" className="inputStyle"/>
-                        </div>
-                    </div>
-                    <div className="clear"></div>
+                </div>
+                <div className="clear"></div>
                 <div className="toolBar">
-                    <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                    <button className="modifyBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>确认修改</button>
                 </div>
             </div>
 
@@ -195,7 +158,7 @@ var SelfBaseInfo=React.createClass({
         );
     },
 });
-module.exports=SelfBaseInfo;
+module.exports=ModifyPassword;
 /**
  * Created by douxiaobin on 2016/10/27.
  */

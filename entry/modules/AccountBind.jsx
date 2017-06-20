@@ -3,10 +3,10 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import '../../css/entry/modules/selleBase.css';
+import '../../css/entry/modules/accountBind.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var SelfBaseInfo=React.createClass({
+var accountBind=React.createClass({
 
     //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
     showTips:function(txt,time,status) {
@@ -114,78 +114,32 @@ var SelfBaseInfo=React.createClass({
         var data;
 
         mainContent=
-                <div ref="selfPersonInfo" style={{marginTop:'50px'}}>
+            <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-                    <div className="self_control_group">
-                    <div className="self_label" style={{float:'left'}}>
-                        <span className="self_label" >用户名</span>
+                <div className="acc_control_group">
+                    <div className="acc_conte" style={{float:'left'}} >
+                        <img style={{paddingLeft:'5px'}} src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"} ></img>
                     </div>
-                    <div className="self_conte" style={{float:'left'}} >
-                        <input name="perName" defaultValue="" maxLength="25" className="inputStyle"/>
+                    <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                        <span className="acc_span" >微信绑定</span>
                     </div>
-                    </div>
-
-                    <div className="clear"></div>
-                    <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
-                            <span className="self_label">性别</span>
-                        </div>
-                        <div className="self_conte" style={{float:'left',color:'#000000'}}>
-                            <input name="genderCode" type="radio" value="男" checked="true" style={{fontSize:'15px'}}/>男
-                            <input name="genderCode" type="radio" value="女"  checked="false"  style={{fontSize:'15px',marginLeft:'20px'}} />女
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-                    <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
-                            <span className="self_label">电话</span>
-                        </div>
-                        <div className="self_conte" style={{float:'left',width:'198px'}}>
-                            <input name="phoneNum" defaultValue="" className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-                    <div className="self_label">
-                    <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                        <span className="self_label">邮编</span>
-                    </div>
-                    <div className="self_conte"  style={{float:'left'}}>
-                            <input name="postCode" defaultValue="" className="inputStyle"/>
-                    </div>
-                    </div>
-                    <div className="clear"></div>
-
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">地址</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="address" defaultValue="" className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">QQ</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="qq" defaultValue="" className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">微信</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="wechat" defaultValue=""  className="inputStyle" className="inputStyle"/>
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-                <div className="toolBar">
-                    <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
                 </div>
+                <div className="toolBar">
+                    <button className="accBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>去绑定</button>
+                </div>
+                <div className="clear"></div>
+                <div className="acc_control_group" style={{marginTop:'40px'}}>
+                    <div className="acc_conte" style={{float:'left'}} >
+                        <img style={{paddingLeft:'5px'}} src={window.App.getResourceDeployPrefix()+"/images/phone.png"} ></img>
+                    </div>
+                    <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                        <span className="acc_span" >手机绑定</span>
+                    </div>
+                </div>
+                <div className="toolBar">
+                    <button className="baccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>去绑定</button>
+                </div>
+                <div className="clear"></div>
             </div>
 
         return(
@@ -195,7 +149,7 @@ var SelfBaseInfo=React.createClass({
         );
     },
 });
-module.exports=SelfBaseInfo;
+module.exports=accountBind;
 /**
  * Created by douxiaobin on 2016/10/27.
  */
