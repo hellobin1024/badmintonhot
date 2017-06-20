@@ -24,7 +24,10 @@ var accountBind=React.createClass({
             setTimeout(function(){ $('.tipsBox').remove(); },time);
         }
     },
-
+    viewSwitch:function(ob){
+        var view=ob;
+        this.setState({view:view});
+    },
     doSaveSelfInfo:function(ob){
         var customerId=ob;
         var selfPersonInfo = this.refs.selfPersonInfo;
@@ -105,43 +108,111 @@ var accountBind=React.createClass({
     },
 
     getInitialState:function(){
-        return ({data:null,
+        return ({view:'bindall',data:null,
             customerId:null,});
     },
 
     render:function(){
         var mainContent;
         var data;
+        switch(this.state.view) {
+            case 'bindall':
+                mainContent =
+                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-        mainContent=
-            <div ref="accPersonInfo" style={{marginTop:'50px'}}>
+                        <div className="acc_control_group">
+                            <div className="acc_conte" style={{float:'left'}}>
+                                <img style={{paddingLeft:'5px'}}
+                                     src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"}></img>
+                            </div>
+                            <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                                <span className="acc_span">微信绑定</span>
+                            </div>
+                        </div>
+                        <div className="toolBar">
+                            <button className="accBtn" href="javascript:;"
+                                    onClick={this.viewSwitch.bind(this,'bindwechat')}>去绑定
+                            </button>
+                        </div>
+                        <div className="clear"></div>
+                        <div className="acc_control_group" style={{marginTop:'40px'}}>
+                            <div className="acc_conte" style={{float:'left'}}>
+                                <img style={{paddingLeft:'5px'}}
+                                     src={window.App.getResourceDeployPrefix()+"/images/phone.png"}></img>
+                            </div>
+                            <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                                <span className="acc_span">手机绑定</span>
+                            </div>
+                        </div>
+                        <div className="toolBar">
+                            <button className="baccBtn" href="javascript:;" onClick={this.viewSwitch.bind(this,'bindphone')}>去绑定</button>
+                        </div>
+                        <div className="clear"></div>
+                    </div>
+                break;
+            case 'bindwechat':
+                mainContent =
+                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-                <div className="acc_control_group">
-                    <div className="acc_conte" style={{float:'left'}} >
-                        <img style={{paddingLeft:'5px'}} src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"} ></img>
+                        <div className="acc_control_group">
+                            <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                <span className="acc_label" >微信号：</span>
+                            </div>
+                            <div className="acc_conte" style={{float:'left'}} >
+                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入正确的微信号"/>
+                            </div>
+                            <div className="toolBar">
+                                <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
+                                </button>
+                            </div>
+                        </div>
+                        <div className="clear"></div>
+                        <div className="acc_control_group">
+                            <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                <span className="acc_label" >验证码：</span>
+                            </div>
+                            <div className="acc_conte" style={{float:'left'}} >
+                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入收到的验证码"/>
+                            </div>
+                        </div>
+                        <div className="clear"></div>
+                        <div className="toolBar">
+                            <button className="wechatBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>完成绑定</button>
+                        </div>
                     </div>
-                    <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
-                        <span className="acc_span" >微信绑定</span>
-                    </div>
-                </div>
-                <div className="toolBar">
-                    <button className="accBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>去绑定</button>
-                </div>
-                <div className="clear"></div>
-                <div className="acc_control_group" style={{marginTop:'40px'}}>
-                    <div className="acc_conte" style={{float:'left'}} >
-                        <img style={{paddingLeft:'5px'}} src={window.App.getResourceDeployPrefix()+"/images/phone.png"} ></img>
-                    </div>
-                    <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
-                        <span className="acc_span" >手机绑定</span>
-                    </div>
-                </div>
-                <div className="toolBar">
-                    <button className="baccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>去绑定</button>
-                </div>
-                <div className="clear"></div>
-            </div>
+                break;
+            case 'bindphone':
+                mainContent =
+                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
+                        <div className="acc_control_group">
+                            <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                <span className="acc_label" >手机号：</span>
+                            </div>
+                            <div className="acc_conte" style={{float:'left'}} >
+                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入正确的手机号"/>
+                            </div>
+                            <div className="toolBar">
+                                <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
+                                </button>
+                            </div>
+                        </div>
+                        <div className="clear"></div>
+                        <div className="acc_control_group">
+                            <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                <span className="acc_label" >验证码：</span>
+                            </div>
+                            <div className="acc_conte" style={{float:'left'}} >
+                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入收到的验证码"/>
+                            </div>
+                        </div>
+                        <div className="clear"></div>
+                        <div className="toolBar">
+                            <button className="wechatBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>完成绑定</button>
+                        </div>
+                    </div>
+                break;
+        }
         return(
             <div >
                 {mainContent}

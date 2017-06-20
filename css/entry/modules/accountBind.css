@@ -40,7 +40,7 @@
 }
 
 .accBtn{
-    height: 30px;
+    height: 40px;
     font-size: 15px;
     border-color: #6fd508;
     background: #94ea95;
@@ -49,13 +49,22 @@
     margin-left: 430px;
 }
 .baccBtn{
-    height: 30px;
+    height: 40px;
     font-size: 15px;
     border-color: #6fd508;
     background: #94ea95;
     width: 80px;
     border-radius: 5px;
     margin-left: 430px;
+}
+.caccBtn{
+    height: 40px;
+    font-size: 15px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 90px;
+    border-radius: 5px;
+    margin-left: 15px;
 }
 
 .acc_span {
@@ -64,4 +73,12 @@
     font-size: 15px;
 
 
+}
+.wechatBtn{
+    height: 40px;
+    font-size: 18px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 300px;
+    border-radius: 5px;
 }
