@@ -103,20 +103,22 @@ var Login=React.createClass({
         var registerPage = this.refs['registerPage'];
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
 
-        if(isTrainer!== undefined || isTrainer!==null){
-            Proxy.queryHandle({
-                type:'POST',
-                url:'/func/auth/getAthleteLevel',
-                params:null,
-                dataType:null
-            }).then((json)=> {
-                reCode = json.reCode;
+        var url = '/func/register/getAthleteLevel';
+        if(isTrainer!== undefined && isTrainer!==null){
 
-            }).then((json)=>{
+            ProxyQ.query(
+                'GET',
+                url,
+                null,
+                null,
+                function (res) {
+                    var a = res;
+                },
 
-            }).catch((err)=> {
-
-            });
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
         }
 
     },

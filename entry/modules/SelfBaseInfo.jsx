@@ -26,10 +26,10 @@ var SelfBaseInfo=React.createClass({
     },
 
     doSaveSelfInfo:function(ob){
-        var customerId=ob;
+        var personId=ob;
         var selfPersonInfo = this.refs.selfPersonInfo;
         var perName=$(selfPersonInfo).find("input[name='perName']").val();
-        var perIdCard=$(selfPersonInfo).find("input[name='perIdCard']").val();
+        var genderCode=$(selfPersonInfo).find("input[name='genderCode']:checked").val();
         var phoneNum=$(selfPersonInfo).find("input[name='phoneNum']").val();
         var postCode=$(selfPersonInfo).find("input[name='postCode']").val();
         var address=$(selfPersonInfo).find("input[name='address']").val();
@@ -45,15 +45,11 @@ var SelfBaseInfo=React.createClass({
         } else if (address == '') {
             this.showTips('请输入您的地址~');
         } else {
-            //this.showTips('提交成功~', 2500, 1);
-
-            var url="/insurance/insuranceReactPageDataRequest.do";
+            var url="/func/manageBean/doSave";
             var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'setInsuranceCustomerInfo',
-                customerId:this.state.customerId,
+                personId:personId,
                 perName:perName,
-                perIdCard:perIdCard,
+                genderCode:genderCode,
                 phoneNum:phoneNum,
                 postCode:postCode,
                 address:address
@@ -65,7 +61,10 @@ var SelfBaseInfo=React.createClass({
                 params,
                 null,
                 function(ob) {
-
+                    var reCode = ob.reCode;
+                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //数据获取失败
+                        alert("信息修改成功！");
+                    }
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -88,15 +87,13 @@ var SelfBaseInfo=React.createClass({
             null,
             function(ob) {
                 var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //登录信息为空
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
                     return;
                 }
 
-                //var reList=ob.reList;
                 var data=ob.resList[0];
-                this.setState({
-                    data:data,
-                });
+                var genderCode = data.genderCode;
+                this.setState({data:data, genderCode:genderCode});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -105,19 +102,11 @@ var SelfBaseInfo=React.createClass({
     },
 
     getInitialState:function(){
-        return ({data:null});
+        return ({data:null,gender:null});
     },
 
     render:function(){
         var mainContent;
-
-        var genderCode = this.state.data.genderCode;
-        var gender="";
-        if(genderCode==2){
-            gender="男";
-        }else{
-            gender="女";
-        }
 
         if(this.state.data!==undefined && this.state.data!==null){
             mainContent=
@@ -137,10 +126,19 @@ var SelfBaseInfo=React.createClass({
                         <div className="self_label" style={{float:'left',width:'45px'}}>
                             <span className="self_label">性别</span>
                         </div>
-                        <div className="self_conte" style={{float:'left',color:'#000000'}}>
-                            <input name="genderCode" type="radio" value="男" checked="" style={{fontSize:'15px'}}/>男
-                            <input name="genderCode" type="radio" value="女"  checked=""  style={{fontSize:'15px',marginLeft:'20px'}} />女
-                        </div>
+
+                        {this.state.genderCode=='1' ?
+                            <div className="self_conte" style={{float:'left',color:'#000000'}}>
+                                <input name="genderCode" type="radio" value="1" defaultChecked="checked" style={{fontSize:'15px'}}/>男
+                                <input name="genderCode" type="radio" value="2"  defaultChecked=""  style={{fontSize:'15px',marginLeft:'20px'}} />女
+                            </div>
+                            :
+                            <div className="self_conte" style={{float:'left',color:'#000000'}}>
+                                <input name="genderCode" type="radio" value="1" defaultChecked="" style={{fontSize:'15px'}}/>男
+                                <input name="genderCode" type="radio" value="2"  defaultChecked="checked"  style={{fontSize:'15px',marginLeft:'20px'}} />女
+                            </div>
+                        }
+
                     </div>
                     <div className="clear"></div>
                     <div className="self_control_group" >
@@ -191,7 +189,7 @@ var SelfBaseInfo=React.createClass({
                     </div>
                     <div className="clear"></div>
                     <div className="toolBar">
-                        <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                        <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.data.personId)}>保存</button>
                     </div>
                 </div>
         }else{
