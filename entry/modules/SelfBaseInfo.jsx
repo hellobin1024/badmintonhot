@@ -75,27 +75,27 @@ var SelfBaseInfo=React.createClass({
     },
 
     initialData:function(){
-        var url="/insurance/insuranceReactPageDataRequest.do";
+        var url="/func/manageBean/modify";
         var params={
-            reactPageName:'insurancePersonalCenterPersonInfo',
-            reactActionName:'getInsuranceCustomerInfo',
+            userName:'root',
+            reactActionName:'1',
         };
 
-        ProxyQ.queryHandle(
+        ProxyQ.query(
             'post',
             url,
             params,
             null,
             function(ob) {
-                var re = ob.re;
-                if(re!==undefined && re!==null && (re ==2 || re =="2")) { //登录信息为空
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //登录信息为空
                     return;
                 }
-                var data=ob.data;
-                var customerId=ob.customerId;
+
+                //var reList=ob.reList;
+                var data=ob.resList[0];
                 this.setState({
                     data:data,
-                    customerId:customerId
                 });
             }.bind(this),
             function(xhr, status, err) {
@@ -105,24 +105,31 @@ var SelfBaseInfo=React.createClass({
     },
 
     getInitialState:function(){
-        return ({data:null,
-            customerId:null,});
+        return ({data:null});
     },
 
     render:function(){
         var mainContent;
-        var data;
 
-        mainContent=
+        var genderCode = this.state.data.genderCode;
+        var gender="";
+        if(genderCode==2){
+            gender="男";
+        }else{
+            gender="女";
+        }
+
+        if(this.state.data!==undefined && this.state.data!==null){
+            mainContent=
                 <div ref="selfPersonInfo" style={{marginTop:'50px'}}>
 
                     <div className="self_control_group">
-                    <div className="self_label" style={{float:'left'}}>
-                        <span className="self_label" >用户名</span>
-                    </div>
-                    <div className="self_conte" style={{float:'left'}} >
-                        <input name="perName" defaultValue="" maxLength="25" className="inputStyle"/>
-                    </div>
+                        <div className="self_label" style={{float:'left'}}>
+                            <span className="self_label" >用户名</span>
+                        </div>
+                        <div className="self_conte" style={{float:'left'}} >
+                            <input name="perName" defaultValue={this.state.data.perName} maxLength="25" className="inputStyle"/>
+                        </div>
                     </div>
 
                     <div className="clear"></div>
@@ -131,8 +138,8 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">性别</span>
                         </div>
                         <div className="self_conte" style={{float:'left',color:'#000000'}}>
-                            <input name="genderCode" type="radio" value="男" checked="true" style={{fontSize:'15px'}}/>男
-                            <input name="genderCode" type="radio" value="女"  checked="false"  style={{fontSize:'15px',marginLeft:'20px'}} />女
+                            <input name="genderCode" type="radio" value="男" checked="" style={{fontSize:'15px'}}/>男
+                            <input name="genderCode" type="radio" value="女"  checked=""  style={{fontSize:'15px',marginLeft:'20px'}} />女
                         </div>
                     </div>
                     <div className="clear"></div>
@@ -141,17 +148,17 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">电话</span>
                         </div>
                         <div className="self_conte" style={{float:'left',width:'198px'}}>
-                            <input name="phoneNum" defaultValue="" className="inputStyle" />
+                            <input name="mobilePhone" defaultValue={this.state.data.mobilePhone} className="inputStyle" />
                         </div>
                     </div>
                     <div className="clear"></div>
                     <div className="self_label">
-                    <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                        <span className="self_label">邮编</span>
-                    </div>
-                    <div className="self_conte"  style={{float:'left'}}>
-                            <input name="postCode" defaultValue="" className="inputStyle"/>
-                    </div>
+                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
+                            <span className="self_label">邮编</span>
+                        </div>
+                        <div className="self_conte"  style={{float:'left'}}>
+                            <input name="perPostalCode" defaultValue={this.state.data.perPostalCode} className="inputStyle"/>
+                        </div>
                     </div>
                     <div className="clear"></div>
 
@@ -160,7 +167,7 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">地址</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
-                            <input name="address" defaultValue="" className="inputStyle" />
+                            <input name="perAddress" defaultValue={this.state.data.perAddress} className="inputStyle" />
                         </div>
                     </div>
                     <div className="clear"></div>
@@ -170,7 +177,7 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">QQ</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
-                            <input name="qq" defaultValue="" className="inputStyle" />
+                            <input name="QQ" defaultValue={this.state.data.QQ} className="inputStyle" />
                         </div>
                     </div>
                     <div className="clear"></div>
@@ -179,14 +186,17 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">微信</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
-                            <input name="wechat" defaultValue=""  className="inputStyle" className="inputStyle"/>
+                            <input name="wechat" defaultValue={this.state.data.wechat}  className="inputStyle" className="inputStyle"/>
                         </div>
                     </div>
                     <div className="clear"></div>
-                <div className="toolBar">
-                    <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                    <div className="toolBar">
+                        <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                    </div>
                 </div>
-            </div>
+        }else{
+            this.initialData();
+        }
 
         return(
             <div >
