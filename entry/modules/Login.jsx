@@ -46,7 +46,7 @@ var Login=React.createClass({
             //    alert('请填写验证码！');
             //}
             else {
-                 this.props.dispatch(UserActions.loginAction());
+                 this.props.dispatch(UserActions.loginAction(username,password));
             }
 
         }

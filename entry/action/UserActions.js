@@ -13,18 +13,18 @@ import {
 } from '../constants/UserConstants';
 
 
-export let loginAction=function(){
+export let loginAction=function(name,psw){
 
     return dispatch=> {
 
         return new Promise((resolve, reject) => {
 
-            var accessToken=null;
-            var topMenue=null;
+            var loginName=name;
+            var password=psw;
             var url = "/func/auth/webLogin";
             var param={
-                'loginName' :'root',
-                'password' : 1
+                'loginName' :loginName,
+                'password' : password
             };
             var ref = this;
             Proxy.query(

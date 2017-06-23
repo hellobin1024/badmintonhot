@@ -73,6 +73,7 @@ var Event = React.createClass({
                 }else {
                     alert(res.response);
                 }
+                ref.closeModal();
             },
 
             function (xhr, status, err) {
