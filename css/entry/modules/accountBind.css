@@ -1,0 +1,84 @@
+
+.acc_label {
+    margin-bottom: 30px;
+    color: #000000;
+    font-size: 15px;
+
+
+
+}
+
+
+.acc_conte {
+    position: relative;
+    margin-left: 4px;
+    line-height: 30px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+
+}
+.bacc_conte {
+    position: relative;
+    margin-left: 4px;
+    margin-bottom: 30px;
+    line-height: 30px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+
+}
+
+.clear{
+    clear: both;
+}
+.acc_control_group{
+    margin-bottom: 30px;
+
+}
+
+.accBtn{
+    height: 40px;
+    font-size: 15px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 80px;
+    border-radius: 5px;
+    margin-left: 430px;
+}
+.baccBtn{
+    height: 40px;
+    font-size: 15px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 80px;
+    border-radius: 5px;
+    margin-left: 430px;
+}
+.caccBtn{
+    height: 40px;
+    font-size: 15px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 90px;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.acc_span {
+
+    color: #000000;
+    font-size: 15px;
+
+
+}
+.wechatBtn{
+    height: 40px;
+    font-size: 18px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 300px;
+    border-radius: 5px;
+}

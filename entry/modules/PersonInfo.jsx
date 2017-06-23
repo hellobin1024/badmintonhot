@@ -6,7 +6,8 @@ import {render} from 'react-dom';
 import {Link} from 'react-router';
 import Header from '../modules/Heard.jsx';
 import SelfBaseInfo from '../modules/SelfBaseInfo.jsx';
-
+import ModifyPassword from '../modules/ModifyPassword.jsx';
+import AccountBind from '../modules/AccountBind.jsx';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
 
@@ -30,6 +31,16 @@ var PersonCenter = React.createClass({
             case 'baseInfo':
                 mainContent =(
                     <SelfBaseInfo />
+                );
+                break;
+            case 'modifyPwd':
+                mainContent =(
+                    <ModifyPassword />
+                );
+                break;
+            case 'accountBind':
+                mainContent =(
+                    <AccountBind />
                 );
                 break;
         }
@@ -71,8 +82,8 @@ var PersonCenter = React.createClass({
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className=""><div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>个人资料</a></div></dd>
                             <dd className=""><div><a data-pjax="true" >修改头像</a></div></dd>
-                            <dd className=""><div><a data-pjax="true" >账号绑定</a></div></dd>
-                            <dd className=""><div><a data-pjax="true" >修改密码</a></div></dd>
+                            <dd className=""><div><a data-pjax="true" onClick={this.tabChange.bind(this,'accountBind')}>账号绑定</a></div></dd>
+                            <dd className=""><div><a data-pjax="true" onClick={this.tabChange.bind(this,'modifyPwd')}>修改密码</a></div></dd>
 
                             <dt className=""><i className="iconfont2"></i><a data-pjax="true">会员中心</a></dt>
 
