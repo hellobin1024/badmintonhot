@@ -102,23 +102,30 @@ var Login=React.createClass({
 
         var registerPage = this.refs['registerPage'];
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+        var sportsLevel = $(registerPage).find('#sportsLevel');
 
+        var inThis=this;
         var url = '/func/register/getAthleteLevel';
         if(isTrainer!== undefined && isTrainer!==null){
-
+            sportsLevel.css('display','');
             ProxyQ.query(
                 'GET',
                 url,
                 null,
                 null,
-                function (res) {
-                    var a = res;
+                function (re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                        var sportsLevel=re.resList;
+                        inThis.setState({sportsLevel:sportsLevel});
+                    }
                 },
-
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
             );
+        }else{
+            sportsLevel.css('display','none');
         }
 
     },
@@ -130,7 +137,13 @@ var Login=React.createClass({
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
         var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
 
-        var phoneReg = /^1[34578]\d{9}$/;
+        var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+        var sportsLevel = "";
+        if(isTrainer!== undefined && isTrainer!==null){
+            sportsLevel = $('#sportsLevel option:selected').val();
+        }
+
+        //var phoneReg = /^1[34578]\d{9}$/;
 
         if (userName == "") {
             this.showTips('请填写用户名~');
@@ -140,33 +153,32 @@ var Login=React.createClass({
             this.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
             this.showTips('请再次输入密码~');
-        } else if (phoneNum == "") {
-            this.showTips('请填写手机号~');
-        } else if(!(phoneReg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
-        } else if (verifyCode == "") {
-            this.showTips('请填写验证码~');
+        } else if (sportsLevel == "-1" || sportsLevel == -1) {
+            this.showTips('请选择运动员水平~');
         } else{
 
+            var url = '/func/register/userRegister';
             var params={
                 userName:userName,
                 password:password,
                 phoneNum:phoneNum,
-
+                sportsLevel:sportsLevel
             };
-            Proxy.queryHandle({
-                type:'POST',
-                url:'/func/auth/userRegister',
-                params:JSON.stringify(params),
-                dataType:null
-            }).then((json)=> {
-                reCode = json.reCode;
-
-            }).then((json)=>{
-
-            }).catch((err)=> {
-
-            });
+            ProxyQ.query(
+                'POST',
+                url,
+                JSON.stringify(params),
+                null,
+                function (re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                       alert("注册成功！");
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
         }
     },
 
@@ -177,7 +189,7 @@ var Login=React.createClass({
         if(password==ackPassword){
             return;
         }else{
-            alert("两次输入密码不一致！");
+            this.showTips('两次输入密码不一致！');
         }
     },
 
@@ -413,7 +425,7 @@ var Login=React.createClass({
         var path='/app'
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
-        return ({view:'login', path:path, verifyCode: null});
+        return ({view:'login', path:path, verifyCode: null, sportsLevel: null});
     },
 
     repaintImage:function (){
@@ -507,6 +519,15 @@ var Login=React.createClass({
                     </div>
                 break;
             case 'register':
+
+                var sportsLevel=this.state.sportsLevel;
+                if(sportsLevel !==undefined && sportsLevel !==null){
+                    var relative_add_trs=[];
+                    sportsLevel.map(function(item, i){
+                        relative_add_trs.push(<option key={i} value={item.value}>{item.label}</option>);
+                    });
+                }
+
                 mainContent=
                     <div ref="registerPage">
                         <div className="main-form">
@@ -549,7 +570,13 @@ var Login=React.createClass({
                                         <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
                                             <input name="isTrainer" type="checkbox" tabIndex="7" onClick={this.isRegisterAsTrainer}/>
+
+                                            <select style={{marginLeft:'5px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
+                                                <option value={-1}>请选择运动水平</option>
+                                                {relative_add_trs}
+                                            </select>
                                         </span>
+
                                     </div>
 
 
@@ -647,7 +674,7 @@ var Login=React.createClass({
                                     </div>
                                 </header>
                                 <div className="links">
-                                    <img src={window.App.getResourceDeployPrefix()+"/images/loginCar.jpg"} />
+                                    <img src={window.App.getResourceDeployPrefix()+"/images/ayk.png"} />
                                 </div>
                             </div>
                         </div>
