@@ -34,8 +34,9 @@ export let loginAction=function(name,psw){
                 null,
                 function (res) {
                     var reCode = res.reCode;
+                    var loninName = res.loginName;
                     if(reCode==0){
-                        dispatch(getReCode(reCode));
+                        dispatch(getReCode(reCode,loninName));
                         const path = "/main";
                         browserHistory.push(path);
                     }else {
@@ -47,43 +48,16 @@ export let loginAction=function(name,psw){
                     console.error(this.props.url, status, err.toString());
                 }
             );
-            // var params = {
-            //             'loginName' :'root',
-            //             'password' : 1
-            //         };
-            // Proxy.queryHandle({
-            //     type:'POST',
-            //     url:'/func/auth/webLogin',
-            //     params:JSON.stringify(params),
-            //     dataType:null
-            // }).then((json)=> {
-            //     reCode = json.reCode;
-            //     //菜单
-            //     // return Proxy.queryHandle({
-            //     //         type:'POST',
-            //     //         url:'',
-            //     //         params:JSON.stringify(params),
-            //     //         dataType:null
-            //     // }).then((json)=>{
-            //     //     topMenue=json
-            //     // })
-            // }).then((json)=>{
-            //
-            //     dispatch(getReCode(reCode));
-            //     // dispatch(getTopMenue(topMenue));
-            //
-            // }).catch((err)=> {
-            //
-            // });
         });
     }
 
 }
-let getReCode= (reCode)=>{
+let getReCode= (reCode,loginName)=>{
 
         return {
             type: ACCESS_TOKEN_ACK,
             accessToken: reCode,
+            loginName:loginName,
             auth:true,
             validate:true
         };

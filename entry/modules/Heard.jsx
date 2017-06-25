@@ -3,14 +3,44 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
+
 import {Link} from 'react-router';
+import { connect } from 'react-redux';
+
 var Heard = React.createClass({
+
+    exit:function () {
+        var url = "/auth/logout.do";
+        var params = {};
+
+        ProxyQ.queryHandle(
+            'post',
+            url,
+            params,
+            null,
+            function (res) {
+                var a = res.reCode;
+                console.log("退出成功！");
+                //document.getElementById("goToOther").click();
+            }.bind(this),
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
 
     getInitialState: function () {
         var path=this.props.path;
-        return({router:path})
+        var token = this.props.token;
+        var name= this.props.name;
+        var loginState = false;
+        if(token=='0' || token==0){
+            var loginState = true;
+        }
+        return({router:path, loginState:loginState, userName:name})
     },
     render:function() {
+
         var contains = null;
         contains =
             <div className="header">
@@ -60,13 +90,31 @@ var Heard = React.createClass({
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
-                        <div className="dropdown-grids">
-                            <div id="loginContainer">
-                                <Link to={window.App.getAppRoute() + "/login"}>
-                                    <span>登录</span>
-                                </Link>
+
+                        {this.state.loginState ?
+                            <div className="user-info">
+                                <span className="user-name">
+                                    <Link to={window.App.getAppRoute() + "/personInfo"}>
+                                        <i className='icon-user' style={{color: 'green'}}></i>
+                                        <strong style={{marginLeft:'10px'}}>{this.state.userName}</strong>
+                                    </Link>
+                                </span>
+
+                                <span className="logout" onClick={this.exit}>
+                                    <i className='icon-off'></i>
+                                    <Link to={window.App.getAppRoute() + "/main"}></Link>
+                                </span>
                             </div>
-                        </div>
+                            :
+                            <div className="dropdown-grids">
+                                <div id="loginContainer">
+                                    <Link to={window.App.getAppRoute() + "/login"}>
+                                        <span>登录</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        }
+
                         <div className="clearfix"> </div>
                     </div>
                 </div>
@@ -119,4 +167,12 @@ var Heard = React.createClass({
         });
     }
 });
-module.exports = Heard;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+        name: state.userInfo.loginName
+    }
+    return props
+}
+export default connect(mapStateToProps)(Heard);

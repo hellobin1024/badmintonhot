@@ -5,11 +5,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import {Link} from 'react-router';
 import '../../css/components/basic/passport.css';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var UserActions=require('../action/UserActions');
-var flag=0;
+
 var Login=React.createClass({
 
     //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
@@ -30,25 +30,23 @@ var Login=React.createClass({
     },
 
     login:function(){
-        if(flag==0) {
-            var loginPage = this.refs['loginPage'];
-            var username = $(loginPage).find("input[name='username']").val();
-            var password = $(loginPage).find("input[name='password']").val();
+        var loginPage = this.refs['loginPage'];
+        var username = $(loginPage).find("input[name='username']").val();
+        var password = $(loginPage).find("input[name='password']").val();
 
-            var validate = $(loginPage).find("input[name='verify']").val();
-            this.loginSetCookie(username,password);
-            if (username == ''||username==null) {
-                alert('请填写用户名！');
-            } else if(password ==''||password == null){
-                alert('请填写密码！');
-            }
-            //else if(validate == ''||validate == null){
-            //    alert('请填写验证码！');
-            //}
-            else {
-                 this.props.dispatch(UserActions.loginAction(username,password));
-            }
-
+        //var validate = $(loginPage).find("input[name='verify']").val();
+        this.loginSetCookie(username,password);
+        if (username == ''||username==null) {
+            alert('请填写用户名！');
+        } else if(password ==''||password == null){
+            alert('请填写密码！');
+        }
+        //else if(validate == ''||validate == null){
+        //    alert('请填写验证码！');
+        //}
+        else {
+            this.props.dispatch(UserActions.loginAction(username,password));
+            //alert(this.props.token);
         }
     },
 
@@ -172,7 +170,9 @@ var Login=React.createClass({
                 function (re) {
                     var reCode = re.reCode;
                     if(reCode==0 || reCode=='0'){
-                       alert("注册成功！");
+                       alert(re.response);
+                    }else{
+                        alert(re.response);
                     }
                 },
                 function (xhr, status, err) {
@@ -421,7 +421,6 @@ var Login=React.createClass({
     },
 
     getInitialState:function(){
-        flag=0;
         var path='/app'
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
@@ -708,7 +707,8 @@ var Login=React.createClass({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        token: state.userInfo.accessToken
+        token: state.userInfo.accessToken,
+        name: state.userInfo.loginName
     }
 
     return props
