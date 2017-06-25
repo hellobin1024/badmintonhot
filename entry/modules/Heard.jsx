@@ -4,41 +4,40 @@ import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
 
+var UserActions=require('../action/UserActions');
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
 
 var Heard = React.createClass({
 
     exit:function () {
-        var url = "/auth/logout.do";
-        var params = {};
-
-        ProxyQ.queryHandle(
-            'post',
-            url,
-            params,
-            null,
-            function (res) {
-                var a = res.reCode;
-                console.log("退出成功！");
-                //document.getElementById("goToOther").click();
-            }.bind(this),
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        );
+        this.props.dispatch(UserActions.logoutAction());
     },
 
     getInitialState: function () {
         var path=this.props.path;
         var token = this.props.token;
-        var name= this.props.name;
+        var loginName= this.props.loginName;
+        var personId=this.props.personId;
         var loginState = false;
         if(token=='0' || token==0){
             var loginState = true;
         }
-        return({router:path, loginState:loginState, userName:name})
+        return({router:path, loginState:loginState, userName:loginName, personId:personId})
     },
+
+    componentWillReceiveProps: function (props) {
+        var path=props.path;
+        var token = props.token;
+        var loginName= props.loginName;
+        var personId=props.personId;
+        var loginState = false;
+        if(token=='0' || token==0){
+            var loginState = true;
+        }
+        this.setState({router:path, loginState:loginState, userName:loginName, personId:personId})
+    },
+
     render:function() {
 
         var contains = null;
@@ -171,7 +170,8 @@ var Heard = React.createClass({
 const mapStateToProps = (state, ownProps) => {
     const props = {
         token: state.userInfo.accessToken,
-        name: state.userInfo.loginName
+        loginName: state.userInfo.loginName,
+        personId: state.userInfo.personId
     }
     return props
 }

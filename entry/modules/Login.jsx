@@ -34,19 +34,17 @@ var Login=React.createClass({
         var username = $(loginPage).find("input[name='username']").val();
         var password = $(loginPage).find("input[name='password']").val();
 
-        //var validate = $(loginPage).find("input[name='verify']").val();
+        var validate = $(loginPage).find("input[name='verify']").val();
         this.loginSetCookie(username,password);
         if (username == ''||username==null) {
             alert('请填写用户名！');
         } else if(password ==''||password == null){
             alert('请填写密码！');
+        } else if(validate == ''||validate == null){
+            alert('请填写验证码！');
         }
-        //else if(validate == ''||validate == null){
-        //    alert('请填写验证码！');
-        //}
         else {
-            this.props.dispatch(UserActions.loginAction(username,password));
-            //alert(this.props.token);
+            this.props.dispatch(UserActions.loginAction(username,password,validate));
         }
     },
 
@@ -165,7 +163,7 @@ var Login=React.createClass({
             ProxyQ.query(
                 'POST',
                 url,
-                JSON.stringify(params),
+                params,
                 null,
                 function (re) {
                     var reCode = re.reCode;
@@ -708,12 +706,13 @@ const mapStateToProps = (state, ownProps) => {
 
     const props = {
         token: state.userInfo.accessToken,
-        name: state.userInfo.loginName
+        name: state.userInfo.loginName,
+        personId:state.userInfo.personId
     }
 
     return props
 }
- export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Login);
 
 
 

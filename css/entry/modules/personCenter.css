@@ -11,8 +11,7 @@
 
 #aside {
     width: 230px;
-    min-height: 900px;
-    height: 900px;
+    height: 800px;
     background-color: #fff;
     -webkit-transition: height 0.5s;
     transition: height 0.5s;
@@ -81,8 +80,7 @@
 }
 
 #content {
-    width: 900px;
-    min-height: 900px;
+    width: 800px;
     background-color: #fff;
     overflow: auto;
     -webkit-transition: height 0.5s;

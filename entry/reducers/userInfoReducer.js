@@ -15,7 +15,8 @@ import {
 
 const initialState = {
     accessToken: null,
-    loginName: null
+    loginName: null,
+    personId:null
 };
 
 let user = (state = initialState, action) => {
@@ -26,7 +27,8 @@ let user = (state = initialState, action) => {
 
             return Object.assign({}, state, {
                 accessToken: action.accessToken,
-                loginName: action.loginName
+                loginName: action.loginName,
+                personId:action.personId
             })
             break;
 

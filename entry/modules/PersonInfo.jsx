@@ -8,10 +8,13 @@ import Header from '../modules/Heard.jsx';
 import SelfBaseInfo from '../modules/SelfBaseInfo.jsx';
 import ModifyPassword from '../modules/ModifyPassword.jsx';
 import AccountBind from '../modules/AccountBind.jsx';
+import Group from '../modules/Group.jsx';
+
+import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
 
-var PersonCenter = React.createClass({
+var PersonInfo = React.createClass({
 
     tabChange:function(tab){
         this.setState({current:tab});
@@ -20,12 +23,17 @@ var PersonCenter = React.createClass({
     getInitialState: function () {
         var route = new Array();
         route.push(undefined);
-        return ({route: route});
+
+        var loginName= this.props.loginName;
+        var personId=this.props.personId;
+
+        return({router:route, userName:loginName, personId:personId})
     },
 
     render:function(){
         var path=this.props.route.path;
 
+        var personId=this.state.personId;
         let mainContent=null;
         switch (this.state.current) {
             case 'baseInfo':
@@ -35,12 +43,17 @@ var PersonCenter = React.createClass({
                 break;
             case 'modifyPwd':
                 mainContent =(
-                    <ModifyPassword />
+                    <ModifyPassword personId={personId}/>
                 );
                 break;
             case 'accountBind':
                 mainContent =(
-                    <AccountBind />
+                    <AccountBind personId={personId}/>
+                );
+                break;
+            case 'myGroup':
+                mainContent =(
+                    <Group personId={personId}/>
                 );
                 break;
         }
@@ -54,7 +67,7 @@ var PersonCenter = React.createClass({
                         <dl className="st">
                             <dt><i className="icon-user-md"></i>群圈</dt>
                             <dd className="my-group">
-                                <div><a data-pjax="true" >我的群圈</a></div>
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>我的群圈</a></div>
                             </dd>
                             <dt><i className="icon-calendar"></i>活动</dt>
                             <dd className="my-activity">
@@ -88,4 +101,12 @@ var PersonCenter = React.createClass({
     },
 });
 
-module.exports=PersonCenter;
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+        loginName: state.userInfo.loginName,
+        personId: state.userInfo.personId
+    }
+    return props
+}
+export default connect(mapStateToProps)(PersonInfo);

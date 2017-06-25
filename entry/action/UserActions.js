@@ -12,8 +12,7 @@ import {
 
 } from '../constants/UserConstants';
 
-
-export let loginAction=function(name,psw){
+export let loginAction=function(name,psw,validate){
 
     return dispatch=> {
 
@@ -24,7 +23,8 @@ export let loginAction=function(name,psw){
             var url = "/func/auth/webLogin";
             var param={
                 'loginName' :loginName,
-                'password' : password
+                'password' : password,
+                'validateCode' :validate
             };
             var ref = this;
             Proxy.query(
@@ -34,15 +34,16 @@ export let loginAction=function(name,psw){
                 null,
                 function (res) {
                     var reCode = res.reCode;
-                    var loninName = res.loginName;
+                    var loginName = res.loginName;
+                    var personId = res.personId;
                     if(reCode==0){
-                        dispatch(getReCode(reCode,loninName));
+                        dispatch(getReCode(reCode,loginName,personId));
                         const path = "/main";
                         browserHistory.push(path);
                     }else {
-                        alert("登录失败！");
+                        var errorMsg = res.errorMessageList[1];
+                        alert("登录失败！"+errorMsg);
                     }
-
                 },
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -50,14 +51,52 @@ export let loginAction=function(name,psw){
             );
         });
     }
-
 }
-let getReCode= (reCode,loginName)=>{
+
+
+export let logoutAction=function(){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+
+            var url = "/func/auth/webLogout";
+            var param={};
+            Proxy.query(
+                'GET',
+                url,
+                param,
+                null,
+                function (res) {
+                    var reCode = res.reCode;
+                    if(reCode==0){
+                        var reCode = null;
+                        var loginName = null;
+                        var personId = null;
+                        dispatch(getReCode(reCode,loginName,personId));
+                        const path = "/main";
+                        browserHistory.push(path);
+                    }else {
+                        var errorMsg = res.errorMessageList[1];
+                        alert("登出失败！"+errorMsg);
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        });
+    }
+}
+
+
+let getReCode= (reCode,loginName,personId)=>{
 
         return {
             type: ACCESS_TOKEN_ACK,
             accessToken: reCode,
             loginName:loginName,
+            personId:personId,
             auth:true,
             validate:true
         };
