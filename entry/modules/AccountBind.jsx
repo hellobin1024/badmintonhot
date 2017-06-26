@@ -243,7 +243,7 @@ var accountBind=React.createClass({
         }
 
         return(
-            <div>
+            <div style={{marginLeft:'100pX'}}>
                 {mainContent}
             </div>
         );

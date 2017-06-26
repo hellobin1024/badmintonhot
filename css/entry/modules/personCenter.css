@@ -80,7 +80,7 @@
 }
 
 #content {
-    width: 800px;
+    width: 700px;
     background-color: #fff;
     overflow: auto;
     -webkit-transition: height 0.5s;
@@ -88,7 +88,7 @@
 }
 
 .r {
-    float: right;
+    float: left;
 }
 
 .my-group:hover{
