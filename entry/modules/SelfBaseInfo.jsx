@@ -164,7 +164,7 @@ var SelfBaseInfo=React.createClass({
                             <span className="self_label">微信</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
-                            <input name="wechat" defaultValue={this.state.data.wechat}  className="inputStyle" className="inputStyle"/>
+                            <input name="wechat" defaultValue={this.state.data.wechat}  className="inputStyle"/>
                         </div>
                     </div>
                     <div className="clear"></div>

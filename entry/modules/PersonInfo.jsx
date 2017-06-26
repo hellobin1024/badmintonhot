@@ -73,6 +73,10 @@ var PersonInfo = React.createClass({
                             <dd className="my-activity">
                                 <div><a data-pjax="true" >我的活动</a></div>
                             </dd>
+                            <dt><i className="icon-calendar"></i>课程</dt>
+                            <dd className="my-activity">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>我的课程</a></div>
+                            </dd>
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className="base-info">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>个人资料</a></div>
