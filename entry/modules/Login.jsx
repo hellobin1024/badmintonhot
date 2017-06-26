@@ -681,7 +681,8 @@ var Login=React.createClass({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        token: state.userInfo.accessToken
+        token: state.userInfo.accessToken,
+        name:state.userInfo.loginName
     }
 
     return props

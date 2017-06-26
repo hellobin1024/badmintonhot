@@ -34,8 +34,9 @@ export let loginAction=function(name,psw){
                 null,
                 function (res) {
                     var reCode = res.reCode;
+                    var loginName = res.loginName;
                     if(reCode==0){
-                        dispatch(getReCode(reCode));
+                        dispatch(getReCode(reCode,loginName));
                         const path = "/main";
                         browserHistory.push(path);
                     }else {
@@ -79,11 +80,12 @@ export let loginAction=function(name,psw){
     }
 
 }
-let getReCode= (reCode)=>{
+let getReCode= (reCode,loginName)=>{
 
         return {
             type: ACCESS_TOKEN_ACK,
             accessToken: reCode,
+            loginName:loginName,
             auth:true,
             validate:true
         };

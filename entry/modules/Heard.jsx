@@ -46,7 +46,7 @@ var Heard = React.createClass({
                                 </li>
                                 <li ref="events">
                                     <Link to={window.App.getAppRoute() + "/events"}>
-                                        活动
+                                        活动/群圈
                                     </Link>
                                 </li>
                                 <li ref="training">
