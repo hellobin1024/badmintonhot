@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
-
+import { connect } from 'react-redux';
 
 
 import RightSlide from '../../entry/modules/RightSilde'
@@ -13,9 +13,9 @@ var Event = React.createClass({
 
 
     getInitialState: function () {
-
+        var token=this.props.token;
         return ({
-
+            token:token
         });
     },
     initialData:function(){
@@ -67,7 +67,8 @@ var Event = React.createClass({
         $(successModal).modal('hide');
     },
 
-    signUp:function (item) {
+    eventSignUp:function (item) {
+        if(this.state.token!==null&&this.state.token!==undefined){
         var url = "/func/allow/eventSignUp";
         var param={
             id:item
@@ -91,6 +92,39 @@ var Event = React.createClass({
                 console.error(this.props.url, status, err.toString());
             }
         );
+        }else{
+            alert("您尚未登录！");
+        }
+
+    },
+    groupSignUp:function (item) {
+        if(this.state.token!==null&&this.state.token!==undefined){
+            var url = "/func/allow/groupSignUp";
+            var param={
+                id:item
+            }
+            var ref = this;
+            Proxy.query(
+                'POST',
+                url,
+                param,
+                null,
+                function (res) {
+                    if(res.reCode==0){
+                        alert(res.response);
+                    }else {
+                        alert(res.response);
+                    }
+                    ref.closeModal();
+                },
+
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }else{
+            alert("您尚未登录！");
+        }
 
     },
     getAllEvents:function () {
@@ -202,7 +236,7 @@ var Event = React.createClass({
                                     <li><span>简介：</span> {item.groupBrief}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    <a>加入</a>
+                                    <a onClick={ref.groupSignUp.bind(null,item.groupId)}>加入</a>
                                 </div>
                             </div>
                         )
@@ -221,7 +255,7 @@ var Event = React.createClass({
                                     <li><span>简介：</span> {item.groupBrief}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    <a>加入</a>
+                                    <a onClick={ref.groupSignUp.bind(null,item.groupId)}>加入</a>
                                 </div>
                             </div>
                         )
@@ -248,7 +282,7 @@ var Event = React.createClass({
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
                         </ul>
                         <div className="buy-me">
-                            <a onClick={this.signUp.bind(null,item.eventId)}>报名</a>
+                            <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>
                         </div>
                     </div>
 
@@ -323,5 +357,12 @@ var Event = React.createClass({
 
 });
 
-module.exports = Event;
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+    }
+    return props
+}
+export default connect(mapStateToProps)(Event);
+
 
