@@ -12,21 +12,13 @@ import Foot from '../modules/Foot'
 import ContainSpace from '../modules/ContainSpace'
 var MainPage =React.createClass({
 
-
     render:function () {
         var contains=null;
-
             contains=
                 <div >
-
-
                     <ContainSpace/>
-
                 </div>
-
             return contains;
-
         },
-
 })
 module.exports=MainPage;

@@ -24,10 +24,12 @@ var accountBind=React.createClass({
             setTimeout(function(){ $('.tipsBox').remove(); },time);
         }
     },
+
     viewSwitch:function(ob){
         var view=ob;
         this.setState({view:view});
     },
+
     doSaveSelfInfo:function(ob){
         var customerId=ob;
         var selfPersonInfo = this.refs.selfPersonInfo;
@@ -78,28 +80,33 @@ var accountBind=React.createClass({
     },
 
     initialData:function(){
-        var url="/insurance/insuranceReactPageDataRequest.do";
-        var params={
-            reactPageName:'insurancePersonalCenterPersonInfo',
-            reactActionName:'getInsuranceCustomerInfo',
-        };
+        var url="/func/manageBean/accountBindInit";
+        var params={};
 
-        ProxyQ.queryHandle(
-            'post',
+        ProxyQ.query(
+            'get',
             url,
             params,
             null,
             function(ob) {
-                var re = ob.re;
-                if(re!==undefined && re!==null && (re ==2 || re =="2")) { //登录信息为空
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
                     return;
                 }
-                var data=ob.data;
-                var customerId=ob.customerId;
+                var weichat=ob.resList.weichat;
+                var phoneNum=ob.resList.phoneNum;
+                var weichatBind=false;
+                var phoneBind=false;
+                if(weichat!==null && weichat!==""){
+                    weichatBind=true;
+                }
+                if(phoneNum!==null && phoneNum!==""){
+                    phoneBind=true;
+                }
                 this.setState({
-                    data:data,
-                    customerId:customerId
-                });
+                    init:true,
+                    weichat:weichat, weichatBind:weichatBind,
+                    phoneNum:phoneNum ,phoneBind:phoneBind});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -108,113 +115,135 @@ var accountBind=React.createClass({
     },
 
     getInitialState:function(){
-        return ({view:'bindall',data:null,
-            customerId:null,});
+        return ({view:'bindall', init:null});
     },
 
     render:function(){
         var mainContent;
         var data;
-        switch(this.state.view) {
-            case 'bindall':
-                mainContent =
-                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-                        <div className="acc_control_group">
-                            <div className="acc_conte" style={{float:'left'}}>
-                                <img style={{paddingLeft:'5px'}}
-                                     src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"}></img>
-                            </div>
-                            <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
-                                <span className="acc_span">微信绑定</span>
-                            </div>
-                        </div>
-                        <div className="toolBar">
-                            <button className="accBtn" href="javascript:;"
-                                    onClick={this.viewSwitch.bind(this,'bindwechat')}>去绑定
-                            </button>
-                        </div>
-                        <div className="clear"></div>
-                        <div className="acc_control_group" style={{marginTop:'40px'}}>
-                            <div className="acc_conte" style={{float:'left'}}>
-                                <img style={{paddingLeft:'5px'}}
-                                     src={window.App.getResourceDeployPrefix()+"/images/phone.png"}></img>
-                            </div>
-                            <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
-                                <span className="acc_span">手机绑定</span>
-                            </div>
-                        </div>
-                        <div className="toolBar">
-                            <button className="baccBtn" href="javascript:;" onClick={this.viewSwitch.bind(this,'bindphone')}>去绑定</button>
-                        </div>
-                        <div className="clear"></div>
-                    </div>
-                break;
-            case 'bindwechat':
-                mainContent =
-                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
+        if(this.state.init!==undefined && this.state.init!==null){
+            switch(this.state.view) {
+                case 'bindall':
+                    mainContent =
+                        <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-                        <div className="acc_control_group">
-                            <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                <span className="acc_label" >微信号：</span>
-                            </div>
-                            <div className="acc_conte" style={{float:'left'}} >
-                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入正确的微信号"/>
+                            <div className="acc_control_group">
+                                <div className="acc_conte" style={{float:'left'}}>
+                                    <img style={{paddingLeft:'5px'}}
+                                         src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"}></img>
+                                </div>
+                                <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                                    <span className="acc_span">微信绑定</span>
+                                </div>
                             </div>
                             <div className="toolBar">
-                                <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
-                                </button>
+                                {this.state.weichatBind ?
+                                    <div>
+                                        <span className="tag"> {this.state.weichat}</span>
+                                        <span>
+                                            <a className="update" onClick={this.viewSwitch.bind(this,'bindwechat')}>更换微信号>></a>
+                                        </span>
+                                    </div>
+                                    :
+                                    <button className="accBtn" onClick={this.viewSwitch.bind(this,'bindwechat')}>去绑定</button>
+                                }
                             </div>
-                        </div>
-                        <div className="clear"></div>
-                        <div className="acc_control_group">
-                            <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                <span className="acc_label" >验证码：</span>
-                            </div>
-                            <div className="acc_conte" style={{float:'left'}} >
-                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入收到的验证码"/>
-                            </div>
-                        </div>
-                        <div className="clear"></div>
-                        <div className="toolBar">
-                            <button className="wechatBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>完成绑定</button>
-                        </div>
-                    </div>
-                break;
-            case 'bindphone':
-                mainContent =
-                    <div ref="accPersonInfo" style={{marginTop:'50px'}}>
-
-                        <div className="acc_control_group">
-                            <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                <span className="acc_label" >手机号：</span>
-                            </div>
-                            <div className="acc_conte" style={{float:'left'}} >
-                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入正确的手机号"/>
+                            <div className="clear"></div>
+                            <div className="acc_control_group" style={{marginTop:'40px'}}>
+                                <div className="acc_conte" style={{float:'left'}}>
+                                    <img style={{paddingLeft:'5px'}}
+                                         src={window.App.getResourceDeployPrefix()+"/images/phone.png"}></img>
+                                </div>
+                                <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
+                                    <span className="acc_span">手机绑定</span>
+                                </div>
                             </div>
                             <div className="toolBar">
-                                <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
-                                </button>
+
+                                {this.state.phoneBind ?
+                                    <div>
+                                        <span className="tag">{this.state.phoneNum}</span>
+                                        <span>
+                                            <a className="update" onClick={this.viewSwitch.bind(this,'bindphone')}>更换手机号>></a>
+                                        </span>
+                                    </div>
+                                    :
+                                    <button className="baccBtn" onClick={this.viewSwitch.bind(this,'bindphone')}>去绑定</button>
+                                }
+                            </div>
+                            <div className="clear"></div>
+                        </div>
+                    break;
+                case 'bindwechat':
+                    mainContent =
+                        <div ref="accPersonInfo" style={{marginTop:'50px'}}>
+
+                            <div className="acc_control_group">
+                                <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                    <span className="acc_label" >微信号：</span>
+                                </div>
+                                <div className="acc_conte" style={{float:'left'}} >
+                                    <input name="weichat" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                </div>
+                                <div className="toolBar">
+                                    <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="clear"></div>
+                            <div className="acc_control_group">
+                                <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                    <span className="acc_label" >验证码：</span>
+                                </div>
+                                <div className="acc_conte" style={{float:'left'}} >
+                                    <input name="verifyCode" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                </div>
+                            </div>
+                            <div className="clear"></div>
+                            <div className="toolBar">
+                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>提交</button>
                             </div>
                         </div>
-                        <div className="clear"></div>
-                        <div className="acc_control_group">
-                            <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                <span className="acc_label" >验证码：</span>
+                    break;
+                case 'bindphone':
+                    mainContent =
+                        <div ref="accPersonInfo" style={{marginTop:'50px'}}>
+
+                            <div className="acc_control_group">
+                                <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                    <span className="acc_label" >手机号：</span>
+                                </div>
+                                <div className="acc_conte" style={{float:'left'}} >
+                                    <input name="phoneNum" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                </div>
+                                <div className="toolBar">
+                                    <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
+                                    </button>
+                                </div>
                             </div>
-                            <div className="acc_conte" style={{float:'left'}} >
-                                <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle" placeholder="  请输入收到的验证码"/>
+                            <div className="clear"></div>
+                            <div className="acc_control_group">
+                                <div className="acc_label" style={{float:'left',width:'60px'}}>
+                                    <span className="acc_label" >验证码：</span>
+                                </div>
+                                <div className="acc_conte" style={{float:'left'}} >
+                                    <input name="verifyCode" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                </div>
+                            </div>
+                            <div className="clear"></div>
+                            <div className="toolBar">
+                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>提交</button>
                             </div>
                         </div>
-                        <div className="clear"></div>
-                        <div className="toolBar">
-                            <button className="wechatBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>完成绑定</button>
-                        </div>
-                    </div>
-                break;
+                    break;
+            }
+        }else{
+            this.initialData();
         }
+
         return(
-            <div >
+            <div>
                 {mainContent}
             </div>
         );

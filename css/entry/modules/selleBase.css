@@ -3,11 +3,7 @@
     margin-bottom: 30px;
     color: #000000;
     font-size: 15px;
-
-
-
 }
-
 
 .self_conte {
     position: relative;
@@ -17,16 +13,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 15px;
-
 }
 
 .clear{
     clear: both;
 }
+
 .self_control_group{
     margin-bottom: 30px;
 
 }
+
 .saveBtn{
     height: 40px;
     font-size: 18px;
@@ -37,10 +34,10 @@
 }
 
 .gender{
-
     color:#000000;
 }
-.inputStyle{
 
+.inputStyle{
     width: 190px;
+    color:#000000;
 }

@@ -12,8 +12,7 @@ import {
 
 } from '../constants/UserConstants';
 
-
-export let loginAction=function(name,psw){
+export let loginAction=function(name,psw,validate){
 
     return dispatch=> {
 
@@ -24,7 +23,8 @@ export let loginAction=function(name,psw){
             var url = "/func/auth/webLogin";
             var param={
                 'loginName' :loginName,
-                'password' : password
+                'password' : password,
+                'validateCode' :validate
             };
             var ref = this;
             Proxy.query(
@@ -35,57 +35,68 @@ export let loginAction=function(name,psw){
                 function (res) {
                     var reCode = res.reCode;
                     var loginName = res.loginName;
+                    var personId = res.personId;
                     if(reCode==0){
-                        dispatch(getReCode(reCode,loginName));
+                        dispatch(getReCode(reCode,loginName,personId));
                         const path = "/main";
                         browserHistory.push(path);
                     }else {
-                        alert("登录失败！");
+                        var errorMsg = res.errorMessageList[1];
+                        alert("登录失败！"+errorMsg);
                     }
-
                 },
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
             );
-            // var params = {
-            //             'loginName' :'root',
-            //             'password' : 1
-            //         };
-            // Proxy.queryHandle({
-            //     type:'POST',
-            //     url:'/func/auth/webLogin',
-            //     params:JSON.stringify(params),
-            //     dataType:null
-            // }).then((json)=> {
-            //     reCode = json.reCode;
-            //     //菜单
-            //     // return Proxy.queryHandle({
-            //     //         type:'POST',
-            //     //         url:'',
-            //     //         params:JSON.stringify(params),
-            //     //         dataType:null
-            //     // }).then((json)=>{
-            //     //     topMenue=json
-            //     // })
-            // }).then((json)=>{
-            //
-            //     dispatch(getReCode(reCode));
-            //     // dispatch(getTopMenue(topMenue));
-            //
-            // }).catch((err)=> {
-            //
-            // });
         });
     }
-
 }
-let getReCode= (reCode,loginName)=>{
+
+
+export let logoutAction=function(){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+
+            var url = "/func/auth/webLogout";
+            var param={};
+            Proxy.query(
+                'GET',
+                url,
+                param,
+                null,
+                function (res) {
+                    var reCode = res.reCode;
+                    if(reCode==0){
+                        var reCode = null;
+                        var loginName = null;
+                        var personId = null;
+                        dispatch(getReCode(reCode,loginName,personId));
+                        const path = "/main";
+                        browserHistory.push(path);
+                    }else {
+                        var errorMsg = res.errorMessageList[1];
+                        alert("登出失败！"+errorMsg);
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        });
+    }
+}
+
+
+let getReCode= (reCode,loginName,personId)=>{
 
         return {
             type: ACCESS_TOKEN_ACK,
             accessToken: reCode,
             loginName:loginName,
+            personId:personId,
             auth:true,
             validate:true
         };

@@ -25,25 +25,28 @@ var SelfBaseInfo=React.createClass({
         }
     },
 
-    doSaveSelfInfo:function(ob){
-        var personId=ob;
+    doSaveSelfInfo:function(){
+        var personId=this.state.data.personId;
         var selfPersonInfo = this.refs.selfPersonInfo;
         var perName=$(selfPersonInfo).find("input[name='perName']").val();
         var genderCode=$(selfPersonInfo).find("input[name='genderCode']:checked").val();
-        var phoneNum=$(selfPersonInfo).find("input[name='phoneNum']").val();
-        var postCode=$(selfPersonInfo).find("input[name='postCode']").val();
-        var address=$(selfPersonInfo).find("input[name='address']").val();
+        var phoneNum=$(selfPersonInfo).find("input[name='mobilePhone']").val();
+        var qq=$(selfPersonInfo).find("input[name='QQ']").val();
+        var wechat=$(selfPersonInfo).find("input[name='wechat']").val();
+        var phoneReg = /^1[34578]\d{9}$/;
 
         if (perName == '') {
             this.showTips('请填写您的姓名~');
-        } else if (perIdCard == '') {
-            this.showTips('请输入您的证件号码~');
+        } else if (genderCode == '') {
+            this.showTips('请选择您的性别~');
         } else if (phoneNum == '') {
             this.showTips('请输入您的电话号码~');
-        } else if (postCode == '') {
-            this.showTips('请输入您的邮编~');
-        } else if (address == '') {
-            this.showTips('请输入您的地址~');
+        } else if(!(phoneReg.test(phoneNum))){
+            this.showTips("手机号码有误，请重新填写~");
+        } else if (qq == '') {
+            this.showTips('请输入您的qq号~');
+        } else if (wechat == '') {
+            this.showTips('请输入您的微信号~');
         } else {
             var url="/func/manageBean/doSave";
             var params={
@@ -51,18 +54,18 @@ var SelfBaseInfo=React.createClass({
                 perName:perName,
                 genderCode:genderCode,
                 phoneNum:phoneNum,
-                postCode:postCode,
-                address:address
+                qq:qq,
+                wechat:wechat
             };
 
-            ProxyQ.queryHandle(
+            ProxyQ.query(
                 'post',
                 url,
                 params,
                 null,
                 function(ob) {
                     var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //数据获取失败
+                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //成功
                         alert("信息修改成功！");
                     }
                 }.bind(this),
@@ -75,13 +78,10 @@ var SelfBaseInfo=React.createClass({
 
     initialData:function(){
         var url="/func/manageBean/modify";
-        var params={
-            userName:'root',
-            reactActionName:'1',
-        };
+        var params={};
 
         ProxyQ.query(
-            'post',
+            'get',
             url,
             params,
             null,
@@ -90,8 +90,7 @@ var SelfBaseInfo=React.createClass({
                 if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
                     return;
                 }
-
-                var data=ob.resList[0];
+                var data=ob.resList;
                 var genderCode = data.genderCode;
                 this.setState({data:data, genderCode:genderCode});
             }.bind(this),
@@ -102,7 +101,7 @@ var SelfBaseInfo=React.createClass({
     },
 
     getInitialState:function(){
-        return ({data:null,gender:null});
+        return ({data:null, gender:null});
     },
 
     render:function(){
@@ -114,7 +113,7 @@ var SelfBaseInfo=React.createClass({
 
                     <div className="self_control_group">
                         <div className="self_label" style={{float:'left'}}>
-                            <span className="self_label" >用户名</span>
+                            <span className="self_label" >用户姓名</span>
                         </div>
                         <div className="self_conte" style={{float:'left'}} >
                             <input name="perName" defaultValue={this.state.data.perName} maxLength="25" className="inputStyle"/>
@@ -123,7 +122,7 @@ var SelfBaseInfo=React.createClass({
 
                     <div className="clear"></div>
                     <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
+                        <div className="self_label" style={{float:'left',width:'60px'}}>
                             <span className="self_label">性别</span>
                         </div>
 
@@ -142,7 +141,7 @@ var SelfBaseInfo=React.createClass({
                     </div>
                     <div className="clear"></div>
                     <div className="self_control_group" >
-                        <div className="self_label" style={{float:'left',width:'45px'}}>
+                        <div className="self_label" style={{float:'left',width:'60px'}}>
                             <span className="self_label">电话</span>
                         </div>
                         <div className="self_conte" style={{float:'left',width:'198px'}}>
@@ -150,37 +149,18 @@ var SelfBaseInfo=React.createClass({
                         </div>
                     </div>
                     <div className="clear"></div>
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">邮编</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="perPostalCode" defaultValue={this.state.data.perPostalCode} className="inputStyle"/>
-                        </div>
-                    </div>
-                    <div className="clear"></div>
 
                     <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
-                            <span className="self_label">地址</span>
-                        </div>
-                        <div className="self_conte"  style={{float:'left'}}>
-                            <input name="perAddress" defaultValue={this.state.data.perAddress} className="inputStyle" />
-                        </div>
-                    </div>
-                    <div className="clear"></div>
-
-                    <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
+                        <div className="self_control_group"  style={{float:'left',width:'60px'}}>
                             <span className="self_label">QQ</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
-                            <input name="QQ" defaultValue={this.state.data.QQ} className="inputStyle" />
+                            <input name="QQ" defaultValue={this.state.data.qq} className="inputStyle" />
                         </div>
                     </div>
                     <div className="clear"></div>
                     <div className="self_label">
-                        <div className="self_control_group"  style={{float:'left',width:'45px'}}>
+                        <div className="self_control_group"  style={{float:'left',width:'60px'}}>
                             <span className="self_label">微信</span>
                         </div>
                         <div className="self_conte"  style={{float:'left'}}>
@@ -189,7 +169,7 @@ var SelfBaseInfo=React.createClass({
                     </div>
                     <div className="clear"></div>
                     <div className="toolBar">
-                        <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.data.personId)}>保存</button>
+                        <button className="saveBtn" href="javascript:;" onClick={this.doSaveSelfInfo}>保存</button>
                     </div>
                 </div>
         }else{
