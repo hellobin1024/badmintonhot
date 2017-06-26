@@ -25,47 +25,50 @@ var ModifyPassword=React.createClass({
         }
     },
 
-    doSaveSelfInfo:function(ob){
-        var customerId=ob;
-        var selfPersonInfo = this.refs.selfPersonInfo;
-        var perName=$(selfPersonInfo).find("input[name='perName']").val();
-        var perIdCard=$(selfPersonInfo).find("input[name='perIdCard']").val();
-        var phoneNum=$(selfPersonInfo).find("input[name='phoneNum']").val();
-        var postCode=$(selfPersonInfo).find("input[name='postCode']").val();
-        var address=$(selfPersonInfo).find("input[name='address']").val();
+    doModifySelfInfo:function(ob){
+        var personId=ob;
+        var modifyPersonInfo = this.refs.modifyPersonInfo;
+        var oldpwd=$(modifyPersonInfo).find("input[name='oldpwd']").val();
+        var newpwd=$(modifyPersonInfo).find("input[name='newpwd']").val();
+        var repwd=$(modifyPersonInfo).find("input[name='repwd']").val();
 
-        if (perName == '') {
-            this.showTips('请填写您的姓名~');
-        } else if (perIdCard == '') {
-            this.showTips('请输入您的证件号码~');
-        } else if (phoneNum == '') {
-            this.showTips('请输入您的电话号码~');
-        } else if (postCode == '') {
-            this.showTips('请输入您的邮编~');
-        } else if (address == '') {
-            this.showTips('请输入您的地址~');
+
+        if (oldpwd == '') {
+            this.showTips('请填写您的原密码~');
+        } else if (newpwd == '') {
+            this.showTips('请输入您的新密码~');
+        } else if (repwd == '') {
+            this.showTips('请再输一遍新密码~');
+        } else if (repwd != newpwd) {
+            this.showTips('两次输入密码不一致~');
         } else {
             //this.showTips('提交成功~', 2500, 1);
 
-            var url="/insurance/insuranceReactPageDataRequest.do";
+            var url="/func/manageBean/doModifyPwd";
             var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'setInsuranceCustomerInfo',
-                customerId:this.state.customerId,
-                perName:perName,
-                perIdCard:perIdCard,
-                phoneNum:phoneNum,
-                postCode:postCode,
-                address:address
+                personId:personId,
+                oldpwd:oldpwd,
+                newpwd:newpwd,
+                repwd:repwd
             };
 
-            ProxyQ.queryHandle(
+            ProxyQ.query(
                 'post',
                 url,
                 params,
                 null,
                 function(ob) {
+                    var reCode = ob.reCode;
+                    if(reCode==undefined && reCode==null){
+                        alert("密码修改错误！");
+                    }
+                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
 
+                        alert("原密码输入错误！");
+                    }
+                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //数据获取成功
+                        alert("密码修改成功！");
+                    }
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -75,34 +78,32 @@ var ModifyPassword=React.createClass({
     },
 
     initialData:function(){
-        var url="/insurance/insuranceReactPageDataRequest.do";
+        var url="/func/manageBean/modify";
         var params={
-            reactPageName:'insurancePersonalCenterPersonInfo',
-            reactActionName:'getInsuranceCustomerInfo',
+            userName:'root',
+            reactActionName:'1',
         };
 
-        ProxyQ.queryHandle(
+        ProxyQ.query(
             'post',
             url,
             params,
             null,
             function(ob) {
-                var re = ob.re;
-                if(re!==undefined && re!==null && (re ==2 || re =="2")) { //登录信息为空
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+
                     return;
                 }
-                var data=ob.data;
-                var customerId=ob.customerId;
-                this.setState({
-                    data:data,
-                    customerId:customerId
-                });
+                var data=ob.resList[0];
+                this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         );
     },
+
 
     getInitialState:function(){
         return ({data:null,
@@ -113,6 +114,7 @@ var ModifyPassword=React.createClass({
         var mainContent;
         var data;
 
+        if(this.state.data!==undefined && this.state.data!==null){
         mainContent=
             <div ref="modifyPersonInfo" style={{marginTop:'50px'}}>
 
@@ -147,10 +149,12 @@ var ModifyPassword=React.createClass({
                 </div>
                 <div className="clear"></div>
                 <div className="toolBar">
-                    <button className="modifyBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>确认修改</button>
+                    <button className="modifyBtn" href="javascript:;" onClick={this.doModifySelfInfo.bind(null,this.state.data.personId)}>确认修改</button>
                 </div>
             </div>
-
+        }else{
+            this.initialData();
+        }
         return(
             <div >
                 {mainContent}

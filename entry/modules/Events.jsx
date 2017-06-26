@@ -57,7 +57,7 @@ var Event = React.createClass({
     },
 
     signUp:function (item) {
-        var url = "/func/allow/eventSignUp";
+        var url = "/func/allow/classSignUp";
         var param={
             id:item
         }
@@ -152,7 +152,7 @@ var Event = React.createClass({
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
                         </ul>
                         <div className="buy-me">
-                            <a onClick={this.signUp.bind(null,item.eventId)}>报名</a>
+                            <a onClick={this.signUp.bind(null,item.classId)}>报名</a>
                         </div>
                     </div>
 
@@ -180,7 +180,6 @@ var Event = React.createClass({
                          aria-labelledby="myLargeModalLabel"
                          aria-hidden="true"
                          ref='successModal'
-                         data-backdrop="static"
                          data-keyboard="false"
                          style={{zIndex: 1045}}
                     >
