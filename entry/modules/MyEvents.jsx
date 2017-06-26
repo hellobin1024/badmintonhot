@@ -52,7 +52,7 @@ var MyEvents = React.createClass({
 
             data.map(function(item, i){
                 eventsTable.push(
-                    <div key={i}>
+                    <div key={i} className="event-table">
                         <table >
                             <tbody>
                             <tr>
@@ -74,7 +74,7 @@ var MyEvents = React.createClass({
             });
 
             mainContent=
-                <div className="event-table">
+                <div>
                     {eventsTable}
                 </div>
         }else{
