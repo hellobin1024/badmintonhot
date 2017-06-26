@@ -17,6 +17,7 @@ const initialState = {
     accessToken: null,
     loginName: null,
     personId:null
+
 };
 
 let user = (state = initialState, action) => {
@@ -29,6 +30,7 @@ let user = (state = initialState, action) => {
                 accessToken: action.accessToken,
                 loginName: action.loginName,
                 personId:action.personId
+
             })
             break;
 

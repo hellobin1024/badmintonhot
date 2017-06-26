@@ -2233,7 +2233,14 @@ top:0;
 span.menu {
     display: none;
 }
-
+.basic_first{
+    float:left;
+    width:29.59%;
+    text-align:center;
+    margin: 1em 1em 1em 3px;
+    min-width: 206px;
+    height: 326px;
+}
 .basic{
     float:left;
     width:29.59%;
@@ -2242,7 +2249,7 @@ span.menu {
     min-width: 206px;
     height: 326px;
 }
-.basic:hover{
+.basic:hover ,.basic_first:hover{
     transform:scale(1.1);
     transition:.5s all;
     -webkit-transition:.5s all;
@@ -2251,7 +2258,7 @@ span.menu {
     -ms-transition:.5s all;
 }
 
-.business{
+.business {
     background:#344859;
     padding:1.5em 0em;
 }
@@ -2276,23 +2283,23 @@ span.menu {
     font-size:19px;
     margin:0;
 }
-.basic ul{
+.basic ul,.basic_first ul{
     padding:2em 0 1em;
     margin:0;
     display:block;
     box-shadow: 0px 2px 0px #D7D7D7;
     height: 153px;
 }
-.basic ul li{
+.basic ul li,.basic_first ul li{
     color:#5B6873;
     border-bottom: 1px dotted #5B6873;
     padding-bottom:.5em;
 }
-.basic ul li span{
+.basic ul li span ,.basic_first ul li span{
     color:#000000;
     font-weight: 500;
 }
-.basic ul li.gd{
+.basic ul li.gd ,.basic_first ul li.gd{
     border-bottom:none;
 }
 .buy-me{
