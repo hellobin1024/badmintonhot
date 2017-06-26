@@ -1142,3 +1142,7 @@ input[type=radio][disabled]:hover {
 .strong {
     background-color: green;
 }
+
+.forget-link{
+    cursor: pointer;
+}

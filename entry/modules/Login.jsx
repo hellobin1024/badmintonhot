@@ -5,11 +5,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import {Link} from 'react-router';
 import '../../css/components/basic/passport.css';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var UserActions=require('../action/UserActions');
-var flag=0;
+
 var Login=React.createClass({
 
     //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
@@ -30,25 +30,21 @@ var Login=React.createClass({
     },
 
     login:function(){
-        if(flag==0) {
-            var loginPage = this.refs['loginPage'];
-            var username = $(loginPage).find("input[name='username']").val();
-            var password = $(loginPage).find("input[name='password']").val();
+        var loginPage = this.refs['loginPage'];
+        var username = $(loginPage).find("input[name='username']").val();
+        var password = $(loginPage).find("input[name='password']").val();
 
-            var validate = $(loginPage).find("input[name='verify']").val();
-            this.loginSetCookie(username,password);
-            if (username == ''||username==null) {
-                alert('请填写用户名！');
-            } else if(password ==''||password == null){
-                alert('请填写密码！');
-            }
-            //else if(validate == ''||validate == null){
-            //    alert('请填写验证码！');
-            //}
-            else {
-                 this.props.dispatch(UserActions.loginAction(username,password));
-            }
-
+        var validate = $(loginPage).find("input[name='verify']").val();
+        this.loginSetCookie(username,password);
+        if (username == ''||username==null) {
+            alert('请填写用户名！');
+        } else if(password ==''||password == null){
+            alert('请填写密码！');
+        } else if(validate == ''||validate == null){
+            alert('请填写验证码！');
+        }
+        else {
+            this.props.dispatch(UserActions.loginAction(username,password,validate));
         }
     },
 
@@ -102,23 +98,30 @@ var Login=React.createClass({
 
         var registerPage = this.refs['registerPage'];
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+        var sportsLevel = $(registerPage).find('#sportsLevel');
 
+        var inThis=this;
         var url = '/func/register/getAthleteLevel';
         if(isTrainer!== undefined && isTrainer!==null){
-
+            sportsLevel.css('display','');
             ProxyQ.query(
                 'GET',
                 url,
                 null,
                 null,
-                function (res) {
-                    var a = res;
+                function (re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                        var sportsLevel=re.resList;
+                        inThis.setState({sportsLevel:sportsLevel});
+                    }
                 },
-
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
             );
+        }else{
+            sportsLevel.css('display','none');
         }
 
     },
@@ -130,7 +133,13 @@ var Login=React.createClass({
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
         var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
 
-        var phoneReg = /^1[34578]\d{9}$/;
+        var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+        var sportsLevel = "";
+        if(isTrainer!== undefined && isTrainer!==null){
+            sportsLevel = $('#sportsLevel option:selected').val();
+        }
+
+        //var phoneReg = /^1[34578]\d{9}$/;
 
         if (userName == "") {
             this.showTips('请填写用户名~');
@@ -140,33 +149,34 @@ var Login=React.createClass({
             this.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
             this.showTips('请再次输入密码~');
-        } else if (phoneNum == "") {
-            this.showTips('请填写手机号~');
-        } else if(!(phoneReg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
-        } else if (verifyCode == "") {
-            this.showTips('请填写验证码~');
+        } else if (sportsLevel == "-1" || sportsLevel == -1) {
+            this.showTips('请选择运动员水平~');
         } else{
 
+            var url = '/func/register/userRegister';
             var params={
                 userName:userName,
                 password:password,
                 phoneNum:phoneNum,
-
+                sportsLevel:sportsLevel
             };
-            Proxy.queryHandle({
-                type:'POST',
-                url:'/func/auth/userRegister',
-                params:JSON.stringify(params),
-                dataType:null
-            }).then((json)=> {
-                reCode = json.reCode;
-
-            }).then((json)=>{
-
-            }).catch((err)=> {
-
-            });
+            ProxyQ.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                       alert(re.response);
+                    }else{
+                        alert(re.response);
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
         }
     },
 
@@ -177,7 +187,7 @@ var Login=React.createClass({
         if(password==ackPassword){
             return;
         }else{
-            alert("两次输入密码不一致！");
+            this.showTips('两次输入密码不一致！');
         }
     },
 
@@ -409,11 +419,10 @@ var Login=React.createClass({
     },
 
     getInitialState:function(){
-        flag=0;
         var path='/app'
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
-        return ({view:'login', path:path, verifyCode: null});
+        return ({view:'login', path:path, verifyCode: null, sportsLevel: null});
     },
 
     repaintImage:function (){
@@ -507,6 +516,15 @@ var Login=React.createClass({
                     </div>
                 break;
             case 'register':
+
+                var sportsLevel=this.state.sportsLevel;
+                if(sportsLevel !==undefined && sportsLevel !==null){
+                    var relative_add_trs=[];
+                    sportsLevel.map(function(item, i){
+                        relative_add_trs.push(<option key={i} value={item.value}>{item.label}</option>);
+                    });
+                }
+
                 mainContent=
                     <div ref="registerPage">
                         <div className="main-form">
@@ -549,7 +567,13 @@ var Login=React.createClass({
                                         <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
                                             <input name="isTrainer" type="checkbox" tabIndex="7" onClick={this.isRegisterAsTrainer}/>
+
+                                            <select style={{marginLeft:'5px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
+                                                <option value={-1}>请选择运动水平</option>
+                                                {relative_add_trs}
+                                            </select>
                                         </span>
+
                                     </div>
 
 
@@ -647,7 +671,7 @@ var Login=React.createClass({
                                     </div>
                                 </header>
                                 <div className="links">
-                                    <img src={window.App.getResourceDeployPrefix()+"/images/loginCar.jpg"} />
+                                    <img src={window.App.getResourceDeployPrefix()+"/images/ayk.png"} />
                                 </div>
                             </div>
                         </div>
@@ -681,12 +705,14 @@ var Login=React.createClass({
 const mapStateToProps = (state, ownProps) => {
 
     const props = {
-        token: state.userInfo.accessToken
+        token: state.userInfo.accessToken,
+        name: state.userInfo.loginName,
+        personId:state.userInfo.personId
     }
 
     return props
 }
- export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Login);
 
 
 

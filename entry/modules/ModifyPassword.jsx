@@ -25,31 +25,27 @@ var ModifyPassword=React.createClass({
         }
     },
 
-    doModifySelfInfo:function(ob){
-        var personId=ob;
-        var modifyPersonInfo = this.refs.modifyPersonInfo;
-        var oldpwd=$(modifyPersonInfo).find("input[name='oldpwd']").val();
-        var newpwd=$(modifyPersonInfo).find("input[name='newpwd']").val();
-        var repwd=$(modifyPersonInfo).find("input[name='repwd']").val();
-
+    doModifyPwd:function(){
+        var selfPersonInfo = this.refs.modifyPersonInfo;
+        var oldpwd=$(selfPersonInfo).find("input[name='oldpwd']").val();
+        var newpwd=$(selfPersonInfo).find("input[name='newpwd']").val();
+        var renewpwd=$(selfPersonInfo).find("input[name='renewpwd']").val();
 
         if (oldpwd == '') {
-            this.showTips('请填写您的原密码~');
+            this.showTips('请输入旧密码~');
         } else if (newpwd == '') {
-            this.showTips('请输入您的新密码~');
-        } else if (repwd == '') {
-            this.showTips('请再输一遍新密码~');
-        } else if (repwd != newpwd) {
-            this.showTips('两次输入密码不一致~');
+            this.showTips('请输入新密码~');
+        } else if (newpwd.length<6) {
+            this.showTips('密码至少为6位~');
+        } else if (renewpwd == '') {
+            this.showTips('请再次输入新密码~');
         } else {
-            //this.showTips('提交成功~', 2500, 1);
 
             var url="/func/manageBean/doModifyPwd";
             var params={
-                personId:personId,
+                personId:this.state.personId,
                 oldpwd:oldpwd,
-                newpwd:newpwd,
-                repwd:repwd
+                newpwd:newpwd
             };
 
             ProxyQ.query(
@@ -59,16 +55,10 @@ var ModifyPassword=React.createClass({
                 null,
                 function(ob) {
                     var reCode = ob.reCode;
-                    if(reCode==undefined && reCode==null){
-                        alert("密码修改错误！");
-                    }
-                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
-
-                        alert("原密码输入错误！");
-                    }
-                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //数据获取成功
+                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //成功
                         alert("密码修改成功！");
                     }
+
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -77,44 +67,17 @@ var ModifyPassword=React.createClass({
         }
     },
 
-    initialData:function(){
-        var url="/func/manageBean/modify";
-        var params={
-            userName:'root',
-            reactActionName:'1',
-        };
-
-        ProxyQ.query(
-            'post',
-            url,
-            params,
-            null,
-            function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
-
-                    return;
-                }
-                var data=ob.resList[0];
-                this.setState({data:data});
-            }.bind(this),
-            function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        );
-    },
-
-
     getInitialState:function(){
-        return ({data:null,
-            customerId:null,});
+        var personId = null;
+        if(this.props.personId!==undefined && this.props.personId!==null){
+            personId = this.props.personId;
+        }
+        return ({personId:personId});
     },
 
     render:function(){
         var mainContent;
-        var data;
 
-        if(this.state.data!==undefined && this.state.data!==null){
         mainContent=
             <div ref="modifyPersonInfo" style={{marginTop:'50px'}}>
 
@@ -123,11 +86,12 @@ var ModifyPassword=React.createClass({
                         <span className="modify_label" >原密码</span>
                     </div>
                     <div className="modify_conte" style={{float:'left'}} >
-                        <input name="oldpwd" defaultValue="" maxLength="25" className="inputStyle"/>
+                        <input name="oldpwd" type="password" defaultValue="" maxLength="25" className="inputStyle"/>
                     </div>
+                    {/*
                     <div className="modify_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
                         <span className="modify_span" >忘记密码？</span>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="clear"></div>
                 <div className="modify_control_group" >
@@ -135,7 +99,7 @@ var ModifyPassword=React.createClass({
                         <span className="modify_label">新密码</span>
                     </div>
                     <div className="modify_conte" style={{float:'left',width:'198px'}}>
-                        <input name="newpwd" defaultValue="" className="inputStyle" />
+                        <input name="newpwd" type="password" defaultValue="" className="inputStyle" />
                     </div>
                 </div>
                 <div className="clear"></div>
@@ -144,19 +108,17 @@ var ModifyPassword=React.createClass({
                         <span className="modify_label">确认密码</span>
                     </div>
                     <div className="modify_conte"  style={{float:'left'}}>
-                        <input name="repwd" defaultValue="" className="inputStyle"/>
+                        <input name="renewpwd" type="password" defaultValue="" className="inputStyle"/>
                     </div>
                 </div>
                 <div className="clear"></div>
                 <div className="toolBar">
-                    <button className="modifyBtn" href="javascript:;" onClick={this.doModifySelfInfo.bind(null,this.state.data.personId)}>确认修改</button>
+                    <button className="modifyBtn" onClick={this.doModifyPwd}>提交</button>
                 </div>
             </div>
-        }else{
-            this.initialData();
-        }
+
         return(
-            <div >
+            <div style={{marginLeft:'100pX'}}>
                 {mainContent}
             </div>
         );

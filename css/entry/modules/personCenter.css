@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 .person-container {
-    width: 1220px;
+    width: 1140px;
     margin: 0 auto;
 }
 
@@ -11,8 +11,7 @@
 
 #aside {
     width: 230px;
-    min-height: 900px;
-    height: 900px;
+    height: 800px;
     background-color: #fff;
     -webkit-transition: height 0.5s;
     transition: height 0.5s;
@@ -29,7 +28,7 @@
 
 #aside dl dt {
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     height: 26px;
     line-height: 14px;
@@ -58,7 +57,7 @@
 
 #aside dl dd {
     padding: 10px 0px 20px 10px;
-    font-size: 12px;
+    font-size: 13px;
     height: 14px;
     line-height: 14px;
 }
@@ -81,8 +80,7 @@
 }
 
 #content {
-    width: 900px;
-    min-height: 900px;
+    width: 800px;
     background-color: #fff;
     overflow: auto;
     -webkit-transition: height 0.5s;
@@ -91,4 +89,29 @@
 
 .r {
     float: right;
+}
+
+.my-group:hover{
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.my-activity:hover {
+    text-decoration: underline;
+    color: green;
+}
+
+.base-info:hover {
+    text-decoration: underline;
+    color: green;
+}
+
+.count-bind:hover{
+    text-decoration: underline;
+    color: green;
+}
+
+.modify-pwd:hover {
+    text-decoration: underline;
+    color: green;
 }

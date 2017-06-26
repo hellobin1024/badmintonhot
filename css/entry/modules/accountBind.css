@@ -46,7 +46,7 @@
     background: #94ea95;
     width: 80px;
     border-radius: 5px;
-    margin-left: 430px;
+    margin-left: 340px;
 }
 .baccBtn{
     height: 40px;
@@ -55,7 +55,7 @@
     background: #94ea95;
     width: 80px;
     border-radius: 5px;
-    margin-left: 430px;
+    margin-left: 340px;
 }
 .caccBtn{
     height: 40px;
@@ -81,4 +81,19 @@
     background: #94ea95;
     width: 300px;
     border-radius: 5px;
+}
+
+.update{
+    margin-left: 50px;
+    cursor: pointer;
+}
+
+.update:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.tag{
+    margin-left: 200px;
+    font-size: 14px;
 }

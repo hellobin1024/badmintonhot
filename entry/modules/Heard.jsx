@@ -3,14 +3,43 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
+
+var UserActions=require('../action/UserActions');
 import {Link} from 'react-router';
+import { connect } from 'react-redux';
+
 var Heard = React.createClass({
+
+    exit:function () {
+        this.props.dispatch(UserActions.logoutAction());
+    },
 
     getInitialState: function () {
         var path=this.props.path;
-        return({router:path})
+        var token = this.props.token;
+        var loginName= this.props.loginName;
+        var personId=this.props.personId;
+        var loginState = false;
+        if(token=='0' || token==0){
+            var loginState = true;
+        }
+        return({router:path, loginState:loginState, userName:loginName, personId:personId})
     },
+
+    componentWillReceiveProps: function (props) {
+        var path=props.path;
+        var token = props.token;
+        var loginName= props.loginName;
+        var personId=props.personId;
+        var loginState = false;
+        if(token=='0' || token==0){
+            var loginState = true;
+        }
+        this.setState({router:path, loginState:loginState, userName:loginName, personId:personId})
+    },
+
     render:function() {
+
         var contains = null;
         contains =
             <div className="header">
@@ -46,7 +75,7 @@ var Heard = React.createClass({
                                 </li>
                                 <li ref="events">
                                     <Link to={window.App.getAppRoute() + "/events"}>
-                                        活动
+                                        活动/群圈
                                     </Link>
                                 </li>
                                 <li ref="training">
@@ -60,13 +89,31 @@ var Heard = React.createClass({
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
-                        <div className="dropdown-grids">
-                            <div id="loginContainer">
-                                <Link to={window.App.getAppRoute() + "/login"}>
-                                    <span>登录</span>
-                                </Link>
+
+                        {this.state.loginState ?
+                            <div className="user-info">
+                                <span className="user-name">
+                                    <Link to={window.App.getAppRoute() + "/personInfo"}>
+                                        <i className='icon-user' style={{color: 'green'}}></i>
+                                        <strong style={{marginLeft:'10px'}}>{this.state.userName}</strong>
+                                    </Link>
+                                </span>
+
+                                <span className="logout" onClick={this.exit}>
+                                    <i className='icon-off'></i>
+                                    <Link to={window.App.getAppRoute() + "/main"}></Link>
+                                </span>
                             </div>
-                        </div>
+                            :
+                            <div className="dropdown-grids">
+                                <div id="loginContainer">
+                                    <Link to={window.App.getAppRoute() + "/login"}>
+                                        <span>登录</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        }
+
                         <div className="clearfix"> </div>
                     </div>
                 </div>
@@ -119,4 +166,13 @@ var Heard = React.createClass({
         });
     }
 });
-module.exports = Heard;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+        loginName: state.userInfo.loginName,
+        personId: state.userInfo.personId
+    }
+    return props
+}
+export default connect(mapStateToProps)(Heard);
