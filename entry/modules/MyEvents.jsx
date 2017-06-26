@@ -35,6 +35,31 @@ var MyEvents = React.createClass({
         );
     },
 
+    operate: function (ob) {
+        var eventId=ob;
+
+        var params={
+            eventId:eventId,
+        };
+
+        ProxyQ.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                    return;
+                }
+                alert("操作成功!")
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
+
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
@@ -47,36 +72,54 @@ var MyEvents = React.createClass({
         var mainContent = null;
         var data = this.state.data;
 
+        var operate = this.operate;
         var eventsTable = [];
+        var ins = this;
         if(data!==undefined && data!==null){
 
             data.map(function(item, i){
                 eventsTable.push(
-                    <div key={i} className="event-table">
-                        <table >
-                            <tbody>
+                        <tbody  key={i} className="event-table">
+                            <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
                             <tr>
-                                <td>活动名称:</td><td>{item.eventName}</td>
-                                <td>活动简介:</td><td>{item.eventBrief}</td>
+                                <td>名称：{item.eventName}</td>
+                                <td>简介：{item.eventBrief}</td>
+                                <td>时间：{item.eventTime}</td>
                             </tr>
                             <tr>
-                                <td>活动时间:</td><td>{item.eventTime}</td>
-                                <td>活动地点:</td><td>{item.eventAddr}</td>
+                                <td>地点：{item.eventAddr}</td>
+                                <td>创建者：{item.eventManager}</td>
+                                <td>成员：{item.eventMember}</td>
                             </tr>
                             <tr>
-                                <td>活动发起者:</td><td>{item.eventManager}</td>
-                                <td>活动成员:</td><td>{item.eventMember}</td>
+                                <td></td>
+                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId)}>{item.operate}</a></td>
+                                <td></td>
                             </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        </tbody>
                 );
             });
 
             mainContent=
-                <div>
-                    {eventsTable}
+                <div id="event" className="my-event">
+                    <div className="widget-container fluid-height">
+                        <div className="widget-content padded clearfix">
+                            <table className="table table-striped invoice-table">
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                </tr>
+                                </thead>
+
+                                {eventsTable}
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
         }else{
 
             this.initialData();
