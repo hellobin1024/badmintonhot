@@ -57,7 +57,7 @@ var Group = React.createClass({
             this.initialData();
         }
 
-        returm(
+        return(
             {mainContent}
         )
     },

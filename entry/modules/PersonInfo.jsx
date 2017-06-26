@@ -10,6 +10,7 @@ import ModifyPassword from '../modules/ModifyPassword.jsx';
 import AccountBind from '../modules/AccountBind.jsx';
 import MyGroup from '../modules/MyGroup.jsx';
 import MyEvents from '../modules/MyEvents.jsx';
+import MyClass from '../modules/MyClass'
 
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
@@ -62,6 +63,11 @@ var PersonInfo = React.createClass({
                     <MyEvents personId={personId}/>
                 );
                 break;
+            case 'manageMyClass':
+                mainContent =(
+                    <MyClass personId={personId}/>
+                );
+                break;
         }
 
         return(
@@ -87,7 +93,7 @@ var PersonInfo = React.createClass({
                             </dd>
                             <dt><i className="icon-user-md"></i>课程</dt>
                             <dd className="my-group">
-                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyGroup')}>我的课程</a></div>
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyClass')}>我的课程</a></div>
                             </dd>
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className="base-info">
