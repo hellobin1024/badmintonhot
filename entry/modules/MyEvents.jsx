@@ -24,6 +24,7 @@ var MyEvents = React.createClass({
             function(ob) {
                 var reCode = ob.reCode;
                 if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                    alert(ob.response);
                     return;
                 }
                 var data=ob.resList;
@@ -37,7 +38,7 @@ var MyEvents = React.createClass({
 
     operate: function (ob) {
         var eventId=ob;
-
+        var url="/func/events/deleteMyEvents";
         var params={
             eventId:eventId,
         };
@@ -50,9 +51,13 @@ var MyEvents = React.createClass({
             function(ob) {
                 var reCode = ob.reCode;
                 if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                    alert(ob.response);
                     return;
                 }
-                alert("操作成功!")
+                alert(ob.response);
+                var data = this.state.data;
+                data.splice(index,1);
+                this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());

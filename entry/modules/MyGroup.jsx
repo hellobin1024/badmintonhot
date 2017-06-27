@@ -3,16 +3,17 @@
  */
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { render} from 'react-dom'
+import { render} from 'react-dom';
 
-var ProxyQ = require('../../components/proxy/ProxyQ')
+import '../../css/entry/modules/myGroup.css';
+var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var Group = React.createClass({
+var MyGroup = React.createClass({
 
     initialData:function(){
-        var url="/func/group/getMyGroup";
+        var url="/func/groups/getMyGroups";
         var params={
-            personId:this.state.personId,
+            personId:this.state.personId
         };
 
         ProxyQ.query(
@@ -22,12 +23,40 @@ var Group = React.createClass({
             null,
             function(ob) {
                 var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取为空
+                    alert(ob.response);
                     return;
                 }
+                var data=ob.resList;
+                this.setState({data:data});
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
 
-                var data=ob.resList[0];
-                var genderCode = data.genderCode;
+    operate: function (ob,index) {
+        var groupId=ob;
+        var url="/func/groups/deleteMygroups";
+        var params={
+            groupId:groupId,
+        };
+
+        ProxyQ.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                    alert(ob.response);
+                    return;
+                }
+                alert(ob.response);
+                var data = this.state.data;
+                data.splice(index,1);
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -48,19 +77,60 @@ var Group = React.createClass({
         var mainContent = null;
         var data = this.state.data;
 
+        var operate = this.operate;
+        var groupIdTable = [];
+        var ins = this;
         if(data!==undefined && data!==null){
-            mainContent=
-                <div>
 
+            data.map(function(item, i){
+                groupIdTable.push(
+                    <tbody  key={i} className="group-table">
+                    <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.groupNum}:</strong></h4></td></tr>
+                    <tr>
+                        <td>名称：{item.groupName}</td>
+                        <td>简介：{item.groupBrief}</td>
+                        <td>时间：{item.creatTime}</td>
+                    </tr>
+                    <tr>
+                        <td>备注：{item.remark}</td>
+                        <td>创建者：{item.groupManager}</td>
+                        <td>成员：{item.groupMember}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.groupId,i)}>{item.operate}</a></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                );
+            });
+
+            mainContent=
+                <div id="group" className="m-group">
+                    <div className="widget-container fluid-height">
+                        <div className="widget-content padded clearfix">
+                            <table className="table table-striped invoice-table">
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                </tr>
+                                </thead>
+
+                                {groupIdTable}
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
         }else{
             this.initialData();
         }
 
-        returm(
-            {mainContent}
-        )
+        return mainContent;
     },
 });
 
-module.exports=Group;
+module.exports=MyGroup;
