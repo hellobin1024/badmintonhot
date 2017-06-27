@@ -129,7 +129,9 @@ var MyGroup = React.createClass({
             this.initialData();
         }
 
-        return mainContent;
+        return(
+            {mainContent}
+        )
     },
 });
 
