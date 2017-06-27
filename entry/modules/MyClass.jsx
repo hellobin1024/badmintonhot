@@ -50,23 +50,39 @@ var Class = React.createClass({
 
 
             mainContent=
-                <div  className="event-table">
-                    <table >
-                        <tbody>
-                        <tr>
-                            <td>活动名称:</td><td>{item.eventName}</td>
-                            <td>活动简介:</td><td>{item.eventBrief}</td>
-                        </tr>
-                        <tr>
-                            <td>活动时间:</td><td>{item.eventTime}</td>
-                            <td>活动地点:</td><td>{item.eventAddr}</td>
-                        </tr>
-                        <tr>
-                            <td>活动发起者:</td><td>{item.eventManager}</td>
-                            <td>活动成员:</td><td>{item.eventMember}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div id="event" className="my-event">
+                    <div className="widget-container fluid-height">
+                        <div className="widget-content padded clearfix">
+                            <table className="table table-striped invoice-table">
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr>
+                                    <td>课程名称:</td><td></td>
+                                    <td>开课教员:</td><td></td>
+                                </tr>
+                                <tr>
+                                    <td>课程时间:</td><td></td>
+                                    <td>课程地点:</td><td></td>
+                                </tr>
+                                <tr>
+                                    <td>课程计划招生:</td><td></td>
+                                    <td>课程现有人数:</td><td></td>
+                                </tr>
+                                <tr>
+                                    <td style={{borderBottom:'1px solid #ddd'}}>课程简介:</td>
+                                    <td colSpan={3}></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
 
 

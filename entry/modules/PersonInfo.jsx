@@ -110,7 +110,7 @@ var PersonInfo = React.createClass({
 
 
                     <div id="content" className="r" data-tag="wallet-balance" data-title="" style={{height: '800px'}}>
-                        <div className="wrap" id="balance">
+                        <div  id="balance">
 
                             {mainContent}
 
