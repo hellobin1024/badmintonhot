@@ -202,7 +202,7 @@ var accountBind=React.createClass({
                             </div>
                             <div className="clear"></div>
                             <div className="toolBar">
-                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>提交</button>
+                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
                             </div>
                         </div>
                     break;
@@ -233,7 +233,7 @@ var accountBind=React.createClass({
                             </div>
                             <div className="clear"></div>
                             <div className="toolBar">
-                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>提交</button>
+                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
                             </div>
                         </div>
                     break;

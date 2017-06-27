@@ -36,10 +36,16 @@ var MyEvents = React.createClass({
         );
     },
 
-    operate: function (ob) {
+    operate: function (ob,flag,index) {
         var eventId=ob;
-        var url="/func/events/deleteMyEvents";
+        if(flag=="delete"){
+            var url="/func/events/deleteMyEvents";
+        }else{
+            var url="/func/events/quitEvents";
+        }
+
         var params={
+            personId:this.state.personId,
             eventId:eventId,
         };
 
@@ -98,7 +104,7 @@ var MyEvents = React.createClass({
                             </tr>
                             <tr>
                                 <td></td>
-                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId)}>{item.operate}</a></td>
+                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
                                 <td></td>
                             </tr>
                         </tbody>

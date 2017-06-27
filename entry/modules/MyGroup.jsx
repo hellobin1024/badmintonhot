@@ -36,10 +36,15 @@ var MyGroup = React.createClass({
         );
     },
 
-    operate: function (ob,index) {
+    operate: function (ob,flag,index) {
         var groupId=ob;
-        var url="/func/groups/deleteMygroups";
+        if(flag=="delete"){
+            var url="/func/groups/deleteMyGroups";
+        }else{
+            var url="/func/groups/quitGroups";
+        }
         var params={
+            personId:this.state.personId,
             groupId:groupId,
         };
 
@@ -98,7 +103,7 @@ var MyGroup = React.createClass({
                     </tr>
                     <tr>
                         <td></td>
-                        <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.groupId,i)}>{item.operate}</a></td>
+                        <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.groupId,item.flag,i)}>{item.operate}</a></td>
                         <td></td>
                     </tr>
                     </tbody>
@@ -129,9 +134,7 @@ var MyGroup = React.createClass({
             this.initialData();
         }
 
-        return(
-            {mainContent}
-        )
+        return mainContent;
     },
 });
 

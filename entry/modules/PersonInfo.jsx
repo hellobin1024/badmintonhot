@@ -10,7 +10,10 @@ import ModifyPassword from '../modules/ModifyPassword.jsx';
 import AccountBind from '../modules/AccountBind.jsx';
 import MyGroup from '../modules/MyGroup.jsx';
 import MyEvents from '../modules/MyEvents.jsx';
-import MyClass from '../modules/MyClass'
+import MyClass from '../modules/MyClass';
+import CreateGroup from '../modules/CreateGroup.jsx';
+import CreateEvent from '../modules/CreateEvent.jsx';
+
 
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
@@ -58,6 +61,17 @@ var PersonInfo = React.createClass({
                     <MyGroup personId={personId}/>
                 );
                 break;
+
+            case 'createEvent':
+                mainContent =(
+                    <CreateEvent personId={personId}/>
+                );
+                break;
+            case 'createGroup':
+                mainContent =(
+                    <CreateGroup personId={personId}/>
+                );
+                break;
             case 'manageMyEvents':
                 mainContent =(
                     <MyEvents personId={personId}/>
@@ -82,14 +96,14 @@ var PersonInfo = React.createClass({
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyGroup')}>管理群圈</a></div>
                             </dd>
                             <dd className="my-group">
-                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'')}>创建群圈</a></div>
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createGroup')}>创建群圈</a></div>
                             </dd>
                             <dt><i className="icon-calendar"></i>活动</dt>
                             <dd className="my-activity">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyEvents')}>管理活动</a></div>
                             </dd>
                             <dd className="my-activity">
-                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'')}>创建活动</a></div>
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createEvent')}>创建活动</a></div>
                             </dd>
                             <dt><i className="icon-user-md"></i>课程</dt>
                             <dd className="my-group">
