@@ -59,8 +59,23 @@ var Training = React.createClass({
             function (res) {
                 var a = res.resList;
                 var day ="";
+                var week="";
                 for(var i=0;i<a.length;i++){
-                    day+="周"+a[i].sectionDay+" 开始时间"+a[i].sectionStart+" 结束时间"+a[i].sectionEnd+" ";
+                    if(a[i].sectionDay ==1 || a[i].sectionDay =="1")
+                    week="一";
+                    else  if(a[i].sectionDay ==2 || a[i].sectionDay =="2")
+                    week="二";
+                    else  if(a[i].sectionDay ==3 || a[i].sectionDay =="3")
+                    week="三";
+                    if(a[i].sectionDay ==4 || a[i].sectionDay =="4")
+                    week="四";
+                    else  if(a[i].sectionDay ==5 || a[i].sectionDay =="5")
+                    week="五";
+                    else  if(a[i].sectionDay ==6 || a[i].sectionDay =="6")
+                    week="六";
+                    else  if(a[i].sectionDay ==7 || a[i].sectionDay =="7")
+                    week="七";
+                    day+="周"+week+" "+a[i].sectionStart+"到"+a[i].sectionEnd+"  ";
                 }
                 a[0].day=day;
                 ref.setState({modal:a[0]});
@@ -114,7 +129,7 @@ var Training = React.createClass({
                             <p><span>介绍：</span>{item.detail}</p>
                         </div>
                         <div className="value">
-                            <p><span>教练：</span>{item.personId.perName}</p>
+                            <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
                         </div>
                         <ul>
                             <li><span>课时：</span> {item.classCount}</li>
@@ -139,7 +154,7 @@ var Training = React.createClass({
                             <p id="eventPlace"><span>地点：</span>{item.badmintonClass.badmintonVenueUnit.address}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.badmintonClass.personId.perName}</p>
+                            <p id="eventCreater"><span>组织者：</span>{item.badmintonClass.infoPersonInfo.perName}</p>
                         </div>
                         <ul>
                             <li id="eventTime"><span>时间：</span>{item.day}</li>
