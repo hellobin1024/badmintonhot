@@ -2,7 +2,10 @@
  * Created by dingyiming on 2017/2/15.
  */
 var Proxy = require('../../components/proxy/ProxyQ');
-import { hashHistory, browserHistory  } from 'react-router';
+
+import { browserHistory ,hashHistory} from 'react-router';
+var Training = require('../modules/Training');
+
 import {
     // UPDATE_CAR_HISTORY_ORDERS,
     // UPDATE_APPLIED_CAR_ORDERS,
@@ -12,7 +15,7 @@ import {
 
 } from '../constants/UserConstants';
 
-export let loginAction=function(name,psw,validate){
+export let loginAction=function(name,psw,validate,type,product){
 
     return dispatch=> {
 
@@ -38,8 +41,37 @@ export let loginAction=function(name,psw,validate){
                     var personId = res.personId;
                     if(reCode==0){
                         dispatch(getReCode(reCode,loginName,personId));
-                        const path = "/main";
-                        hashHistory.push(path);
+                        if(type=="1"){
+                            var url = "/func/allow/classSignUp";
+                            var param = {
+                                id: product
+                            }
+                            var ref = this;
+                            Proxy.query(
+                                'POST',
+                                url,
+                                param,
+                                null,
+                                function (res) {
+                                    if (res.reCode == 0) {
+                                        alert(res.response);
+                                        const path = "/training?product="+product;
+                                        browserHistory.push(path);
+                                    } else {
+                                        alert(res.response);
+                                    }
+
+                                },
+
+                                function (xhr, status, err) {
+                                    console.error(this.props.url, status, err.toString());
+                                }
+                            );
+                        }else{
+                            const path = "/training";
+                            browserHistory.push(path);
+                        }
+
                     }else {
                         var errorMsg = res.errorMessageList[1];
                         alert("登录失败！"+errorMsg);

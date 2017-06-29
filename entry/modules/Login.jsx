@@ -12,6 +12,12 @@ var UserActions=require('../action/UserActions');
 
 var Login=React.createClass({
 
+    //获取url中的参数
+    getUrlParam :function(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    },
     //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
     showTips:function(txt,time,status) {
         var htmlCon = '';
@@ -44,7 +50,9 @@ var Login=React.createClass({
             alert('请填写验证码！');
         }
         else {
-            this.props.dispatch(UserActions.loginAction(username,password,validate));
+            var type=this.getUrlParam("loginType");
+            var product=parseInt(this.getUrlParam("product"));
+            this.props.dispatch(UserActions.loginAction(username,password,validate,type,product));
         }
     },
 
@@ -127,6 +135,8 @@ var Login=React.createClass({
     },
 
     register:function(){
+        var type=this.getUrlParam("loginType");
+        var product=this.getUrlParam("product");
         var registerPage = this.refs['registerPage'];
         var userName = $(registerPage).find("input[name='userName']").val();
         var password = $(registerPage).find("input[name='password']").val();
@@ -431,7 +441,7 @@ var Login=React.createClass({
         var path='/app'
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
-        return ({view:'login', path:path, verifyCode: null, sportsLevel: null});
+        return ({view:'register', path:path, verifyCode: null, sportsLevel: null});
     },
 
     repaintImage:function (){
@@ -484,7 +494,7 @@ var Login=React.createClass({
                                             <div className="form-item form-sevenday">
                                                 <div className="form-cont clearfix">
                                                     <label><input type="checkbox" id="login_autoLoginCheckbox" className="passport-sevenday" tabIndex="2" />记住密码</label>
-                                                    <a className="forget-link" onClick={this.viewSwitch.bind(this,'forget')}>忘记密码</a>
+                                             {/*<a className="forget-link" onClick={this.viewSwitch.bind(this,'forget')}>忘记密码</a>*/}
                                                 </div>
                                             </div>
 
@@ -495,7 +505,6 @@ var Login=React.createClass({
 
                                                     <button type="button" id="login" className="passport-btn passport-btn-def xl w-full" tabIndex="4" onClick={this.login}>
                                                         <a style={{color:'#ffffff'}}>登录</a>
-                                                        <Link to={window.App.getAppRoute() + this.state.path} id="goToOther"></Link>
                                                     </button>
                                                 </div>
                                             </div>
@@ -547,7 +556,7 @@ var Login=React.createClass({
                                 <div className="passport-form passport-form-sign" id="register-form">
                                     <div className="form-item">
                                         <div className="form-cont">
-                                            <input type="text" name="userName" className="passport-txt xl w-full" tabIndex="1" autoComplete="off" placeholder="请输入用户名"/>
+                                            <input type="text" name="userName" className="passport-txt xl w-full" tabIndex="1" autoComplete="off" placeholder="请输入手机号"/>
                                         </div>
                                     </div>
                                     <div className="form-item">
@@ -566,7 +575,7 @@ var Login=React.createClass({
                                         </div>
                                     </div>
 
-                                    <div className="form-item form-mcode mb-25">
+                                    {/*<div className="form-item form-mcode mb-25">
                                         <div className="form-cont">
                                             <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
                                             <div className="btn-getcode">
@@ -595,7 +604,7 @@ var Login=React.createClass({
                                             </select>
                                         </span>
 
-                                    </div>
+                                    </div>*/}
 
 
                                     <div className="form-item">

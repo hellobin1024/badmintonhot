@@ -192,7 +192,7 @@ var Event = React.createClass({
                                 <li><span>简介：</span> {item.eventBrief}</li>
                             </ul>
                             <div className="buy-me">
-                                <a onClick={ref.showEventsDetail.bind(null, item)}>参加</a>
+                                <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
                             </div>
                         </div>
                     )
@@ -213,7 +213,7 @@ var Event = React.createClass({
                                 <li><span>简介：</span> {item.eventBrief}</li>
                             </ul>
                             <div className="buy-me">
-                                <a onClick={ref.showEventsDetail.bind(null, item)}>参加</a>
+                                <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
                             </div>
                         </div>
                     )
@@ -282,7 +282,11 @@ var Event = React.createClass({
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
                         </ul>
                         <div className="buy-me">
-                            <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>
+                            {item.eventMaxMemNum>item.eventNowMemNum?
+                                <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:
+                                <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>
+                            }
+
                         </div>
                     </div>
 

@@ -64,7 +64,7 @@ var Heard = React.createClass({
                             <span className="menu"><img src="images/menu.png" alt="" /></span>
                             <ul className="nav1">
                                 <li ref="main">
-                                    <Link to={window.App.getAppRoute() + "/main"}>
+                                    <Link to={window.App.getAppRoute() + "/ad"}>
                                         首页
                                     </Link>
                                 </li>
