@@ -14,7 +14,7 @@ sup{vertical-align:text-top;}
 sub{vertical-align:text-bottom;}
 legend{color:#000000;}
 fieldset,img{border:0 none;}
-button,input,select,textarea{font-size:12px; vertical-align:middle; border:none;}
+button,input,select,textarea{font-size:12px; vertical-align:middle;}
 table{border-collapse:collapse;border-spacing:0;}
 img{vertical-align:top;border:none;}
 textarea{resize:none;}
@@ -41,7 +41,7 @@ textarea{overflow:auto;vertical-align:top; resize: none;}
 
 .fl{float:left;}
 .fr{float:right;}
-input{border:none;}
+
 
 .wrapper{width:100%;}
 .wrap{width:320px;}

@@ -566,7 +566,7 @@ select {
     font-size: 12px;
     padding: 7px 33px 7px 7px;
     outline: none;
-    border: none;
+
     background: url(../images/arrow.png) no-repeat 76% center #ffffff;
     border-radius: 0px;
     -webkit-border-radius: 0px;

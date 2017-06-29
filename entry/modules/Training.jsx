@@ -93,6 +93,7 @@ var Training = React.createClass({
             function (res) {
                 var a = res.resList;
                 var day ="";
+                var week="";
                 for(var i=0;i<a.length;i++){
                     day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
                 }
@@ -148,7 +149,7 @@ var Training = React.createClass({
                             <p><span>介绍：</span>{item.detail}</p>
                         </div>
                         <div className="value">
-                            <p><span>教练：</span>{item.personId.perName}</p>
+                            <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
                         </div>
                         <ul>
                             <li><span>每周课程安排：</span> {item.classCount}次/周</li>
@@ -173,7 +174,9 @@ var Training = React.createClass({
                             <p id="eventPlace"><span>地点：</span>{item.badmintonClass.badmintonVenueUnit.name}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>教练：</span>{item.badmintonClass.personId.perName}</p>
+
+                            <p id="eventCreater"><span>教练：</span>{item.badmintonClass.infoPersonInfo.perName}</p>
+
                         </div>
                         <ul>
                             <li><span>详细地点：</span>{item.badmintonClass.badmintonVenueUnit.address}</li>

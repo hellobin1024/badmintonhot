@@ -1,6 +1,10 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Link} from 'react-router';
+import '../../build/css/css/common.css'
+import '../../build/css/css/animate.min.css'
+import '../../build/css/css/indexSty.css'
+
 var AdPage = React.createClass({
 
     getInitialState: function () {

@@ -53,7 +53,7 @@ export let loginAction=function(name,psw,validate,type,product){
                                 function (res) {
                                     if (res.reCode == 0) {
                                         alert(res.response);
-                                        const path = "/training";
+                                        const path = "/training?product="+product;
                                         browserHistory.push(path);
                                     } else {
                                         alert(res.response);
@@ -67,7 +67,7 @@ export let loginAction=function(name,psw,validate,type,product){
                             );
                         }else{
                             const path = "/training";
-                            hashHistory.push(path);
+                            browserHistory.push(path);
                         }
                     }else {
                         var errorMsg = res.errorMessageList[1];
@@ -104,7 +104,7 @@ export let logoutAction=function(){
                         var personId = null;
                         dispatch(getReCode(reCode,loginName,personId));
                         const path = "/main";
-                        hashHistory.push(path);
+                        browserHistory.push(path);
                     }else {
                         var errorMsg = res.errorMessageList[1];
                         alert("登出失败！"+errorMsg);
