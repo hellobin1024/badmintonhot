@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import { connect } from 'react-redux';
 import '../../build/css/style.css'
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
@@ -12,7 +13,10 @@ var Training = React.createClass({
 
     getInitialState: function () {
 
-        return ({});
+        var token=this.props.token;
+        return ({
+            token:token
+        });
     },
     initialData:function(){
 
@@ -20,30 +24,60 @@ var Training = React.createClass({
 
     },
     signUp:function (item) {
-        var url = "/func/allow/classSignUp";
-        var param={
-            id:item
-        }
-        var ref = this;
-        Proxy.query(
-            'POST',
-            url,
-            param,
-            null,
-            function (res) {
-                if(res.reCode==0){
-                    alert(res.response);
-                }else {
-                    alert(res.response);
-                }
-                ref.closeModal();
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
+        if(this.state.token!==null&&this.state.token!==undefined) {
+            var url = "/func/allow/classSignUp";
+            var param = {
+                id: item
             }
-        );
+            var ref = this;
+            Proxy.query(
+                'POST',
+                url,
+                param,
+                null,
+                function (res) {
+                    if (res.reCode == 0) {
+                        alert(res.response);
+                    } else {
+                        alert(res.response);
+                    }
+                    ref.closeModal();
+                },
 
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }else {
+            alert("您尚未登录！");
+        }
+
+    },
+    dateChange:function (date) {
+        switch (date){
+            case 1:
+                date='一';
+                break
+            case 2:
+                date='二';
+                break
+            case 3:
+                date='三';
+                break
+            case 4:
+                date='四';
+                break
+            case 5:
+                date='五';
+                break
+            case 6:
+                date='六';
+                break
+            case 7:
+                date='七';
+                break
+        }
+        return date;
     },
     showClassDetail:function (item) {
         var url = "/func/allow/getCLassScheduleByClassId";
@@ -60,7 +94,7 @@ var Training = React.createClass({
                 var a = res.resList;
                 var day ="";
                 for(var i=0;i<a.length;i++){
-                    day+="周"+a[i].sectionDay+" 开始时间"+a[i].sectionStart+" 结束时间"+a[i].sectionEnd+" ";
+                    day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
                 }
                 a[0].day=day;
                 ref.setState({modal:a[0]});
@@ -117,12 +151,12 @@ var Training = React.createClass({
                             <p><span>教练：</span>{item.personId.perName}</p>
                         </div>
                         <ul>
-                            <li><span>课时：</span> {item.classCount}</li>
+                            <li><span>每周课程安排：</span> {item.classCount}次/周</li>
                             <li><span>费用：</span> {item.cost}</li>
                             <li><span>已报名人数：</span> {item.signNumber}</li>
                         </ul>
                         <div className="buy-me">
-                            <a onClick={ref.showClassDetail.bind(null,item)}>参加</a>
+                            <a onClick={ref.showClassDetail.bind(null,item)}>详情</a>
                         </div>
                     </div>
                 )
@@ -136,19 +170,23 @@ var Training = React.createClass({
                     <div style={{textAlign: 'center'}} key='modal' >
                         <div className="business">
                             <h2 id="CLassTitle">{item.badmintonClass.className}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.badmintonClass.badmintonVenueUnit.address}</p>
+                            <p id="eventPlace"><span>地点：</span>{item.badmintonClass.badmintonVenueUnit.name}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.badmintonClass.personId.perName}</p>
+                            <p id="eventCreater"><span>教练：</span>{item.badmintonClass.personId.perName}</p>
                         </div>
                         <ul>
-                            <li id="eventTime"><span>时间：</span>{item.day}</li>
-                            <li id="eventMaxNum"><span>最大需求人数：</span>{item.badmintonClass.maxNumber}</li>
+                            <li><span>详细地点：</span>{item.badmintonClass.badmintonVenueUnit.address}</li>
+                            <li id="eventTime"><span>课程安排：</span>{item.day}</li>
+                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.badmintonClass.maxNumber}</li>
                             <li id="eventNum"><span>已报名人数：</span>{item.badmintonClass.signNumber}</li>
                             <li id="eventBrief"><span>简介：</span>{item.badmintonClass.detail}</li>
                         </ul>
                         <div className="buy-me">
-                            <a onClick={this.signUp.bind(null,item.badmintonClass.classId)}>报名</a>
+                            {item.badmintonClass.maxNumber>item.badmintonClass.signNumber?
+                                <a onClick={this.signUp.bind(null,item.badmintonClass.classId)}>报名</a>:
+                                <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
+                        }
                         </div>
                     </div>
 
@@ -201,4 +239,11 @@ var Training = React.createClass({
 
     }
 });
-module.exports = Training;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+    }
+    return props
+}
+export default connect(mapStateToProps)(Training);

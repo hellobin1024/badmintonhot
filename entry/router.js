@@ -11,6 +11,8 @@ import ckEditor from './modules/CKEditorWapper.jsx';
 import MainPage from './modules/MainPage';
 import PersonInfo from './modules/PersonInfo.jsx'
 import AD from './adModel/adPage'
+import AdText from './adModel/adText'
+import Order from './modules/Order'
 import {Component} from 'react'
 
 class AppRouter extends Component {
@@ -28,7 +30,8 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/training"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ad"} component={AD}/>
-
+                    <Route path={window.App.getAppRoute() + "/adText"} component={AdText}/>
+                    <Route path={window.App.getAppRoute() + "/order"} component={Order}/>
                     <Route path={window.App.getAppRoute() + "/personInfo"} component={PersonInfo}/>
                 </Route>
             </Router>
