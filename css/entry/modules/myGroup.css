@@ -1,4 +1,4 @@
-.event-table{
+.group-table{
     width: 70%;
     margin-top: 60px;
     font-size: 14px;
@@ -15,7 +15,7 @@
     color: green;
 }
 
-.my-event{
+.m-group{
     margin-left: 10px;
     margin-top: 30px;
 }

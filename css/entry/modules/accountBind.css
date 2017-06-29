@@ -71,9 +71,8 @@
 
     color: #000000;
     font-size: 15px;
-
-
 }
+
 .wechatBtn{
     height: 40px;
     font-size: 18px;
@@ -81,6 +80,14 @@
     background: #94ea95;
     width: 300px;
     border-radius: 5px;
+}
+
+.wechatBtn:hover{
+    color: #000000;
+}
+
+.modifyBtn:hover{
+    color: #000000;
 }
 
 .update{
