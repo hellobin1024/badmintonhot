@@ -64,7 +64,7 @@ var accountBind=React.createClass({
                 address:address
             };
 
-            ProxyQ.queryHandle(
+            ProxyQ.query(
                 'post',
                 url,
                 params,
@@ -77,6 +77,75 @@ var accountBind=React.createClass({
                 }.bind(this)
             );
         }
+    },
+
+    getVerifyCode:function(){
+        var accPersonInfo = this.refs['accPersonInfo'];
+        var phoneNum = $(accPersonInfo).find("input[name='phoneNum']").val();
+        var reg = /^1[34578]\d{9}$/;
+        if(!(reg.test(phoneNum))){
+            this.showTips("手机号码有误，请重新填写~");
+            return false;
+        }
+        var num = '';
+        for(var i=0;i<4;i++){
+            num+=Math.floor(Math.random()*10);
+        }
+        this.setState({verifyCode:num});
+
+        var params = {
+            corp_id:'hy6550',
+            corp_pwd:'mm2289',
+            corp_service:1069003256550,
+            mobile:phoneNum,
+            msg_content:''+num,
+            corp_msg_id:'',
+            ext:''
+        };
+
+        var ins=this; //保存this
+        var url='http://sms.cloud.hbsmservice.com:8080/sms_send2.do';
+        $.ajax({
+            type    : 'POST',
+            url     : url,
+            data    : params,
+            dataType: 'JSONP',
+            crossDomain: true,
+            cache   : false,
+            ContentType: 'application/json',
+            //jsonpCallback: '?',
+            //jsonp: 'callback',
+            success : function (response) {
+                ins.showTips("验证码发送成功！");
+                ins.verifyCodeTimeOut();
+            },
+            error   : function (xhr, status, err) {
+                var $modal=$("#root_modal");
+                var content;
+                var errType="";
+                if(xhr.status==200 || xhr.status=="200") {
+                    ins.showTips("验证码发送成功！");
+                    ins.verifyCodeTimeOut();
+                    return;
+                } else if(xhr.status==404||xhr.status=="404") {
+                    content="错误描述:"+xhr.responseText;
+                    errType="";
+                    switch(xhr.statusText) {
+                        case "Not Found":
+                            errType="发生错误:"+"path not found";
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (xhr.status == 502 || xhr.status == "502") {
+                    content = "错误描述:" + xhr.responseText;
+                    errType = "发生错误:" + "无效的服务器指向";
+                }
+                $modal.find(".modal-body").text(content);
+                $modal.find(".modal-title").text(errType);
+                $modal.modal('show');
+            }
+        });
     },
 
     initialData:function(){
@@ -184,7 +253,7 @@ var accountBind=React.createClass({
                                     <span className="acc_label" >微信号：</span>
                                 </div>
                                 <div className="acc_conte" style={{float:'left'}} >
-                                    <input name="weichat" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                    <input name="weichat" defaultValue="" maxLength="11" className="inputStyle" placeholder=""/>
                                 </div>
                                 <div className="toolBar">
                                     <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
@@ -225,7 +294,7 @@ var accountBind=React.createClass({
                             <div className="clear"></div>
                             <div className="acc_control_group">
                                 <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                    <span className="acc_label" >验证码：</span>
+                                    <span className="acc_label" onClick={this.getVerifyCode}>验证码：</span>
                                 </div>
                                 <div className="acc_conte" style={{float:'left'}} >
                                     <input name="verifyCode" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>

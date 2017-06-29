@@ -131,6 +131,7 @@ var Login=React.createClass({
         var userName = $(registerPage).find("input[name='userName']").val();
         var password = $(registerPage).find("input[name='password']").val();
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
+        var verifyCode = $(registerPage).find("input[name='verifyCode']").val();
         var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
 
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
@@ -138,8 +139,7 @@ var Login=React.createClass({
         if(isTrainer!== undefined && isTrainer!==null){
             sportsLevel = $('#sportsLevel option:selected').val();
         }
-
-        //var phoneReg = /^1[34578]\d{9}$/;
+        var phoneReg = /^1[34578]\d{9}$/;
 
         if (userName == "") {
             this.showTips('请填写用户名~');
@@ -149,6 +149,16 @@ var Login=React.createClass({
             this.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
             this.showTips('请再次输入密码~');
+        } else if (phoneNum == "") {
+            this.showTips('请填写手机号~');
+        } else if(!(phoneReg.test(phoneNum))){
+            this.showTips("手机号码有误，请重新填写~");
+        } else if (verifyCode == "") {
+            this.showTips('请填写验证码~');
+        } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
+            this.showTips('验证码失效，请重新获取~');
+        } else if(verifyCode!==this.state.verifyCode) {
+            this.showTips('验证码不正确~');
         } else if (sportsLevel == "-1" || sportsLevel == -1) {
             this.showTips('请选择运动员水平~');
         } else{
@@ -264,7 +274,7 @@ var Login=React.createClass({
                     ins.verifyCodeTimeOut();
                     return;
                 } else if(xhr.status==404||xhr.status=="404") {
-                    content="错误描述:        "+xhr.responseText;
+                    content="错误描述:"+xhr.responseText;
                     errType="";
                     switch(xhr.statusText) {
                         case "Not Found":
@@ -274,7 +284,7 @@ var Login=React.createClass({
                             break;
                     }
                 } else if (xhr.status == 502 || xhr.status == "502") {
-                    content = "错误描述:        " + xhr.responseText;
+                    content = "错误描述:" + xhr.responseText;
                     errType = "发生错误:" + "无效的服务器指向";
                 }
                 $modal.find(".modal-body").text(content);
@@ -314,24 +324,23 @@ var Login=React.createClass({
         } else if(verifyCode!==this.state.verifyCode) {
             this.showTips('验证码不正确~');
         } else{
-            var url="/insurance/insuranceReactPageDataRequest.do";
+            var url="/func/modify/modifyPassword";
             var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'customerPasswordModify',
                 userName:userName,
                 password:password,
                 phoneNum:phoneNum,
             };
-            ProxyQ.queryHandle(
+            ProxyQ.query(
                 'post',
                 url,
                 params,
                 null,
-                function(ob) {
-                    var re = ob.re;
-                    if(re != undefined && re != null ){
-                        this.setState({view: 'login'})
-
+                function(re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                        alert(re.response);
+                    }else{
+                        alert(re.response);
                     }
                 }.bind(this),
                 function(xhr, status, err) {
@@ -560,6 +569,18 @@ var Login=React.createClass({
                                     <div className="form-item form-mcode mb-25">
                                         <div className="form-cont">
                                             <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
+                                            <div className="btn-getcode">
+                                                <button type="button" className="passport-btn js-getcode" id="J_getCode" onClick={this.getVerifyCode}>发送验证码</button>
+                                            </div>
+                                            <div className="btn-getcode">
+                                                <button type="button" className="passport-btn js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-item">
+                                        <div className="form-cont">
+                                            <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
                                         </div>
                                     </div>
 
