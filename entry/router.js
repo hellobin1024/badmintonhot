@@ -19,9 +19,10 @@ class AppRouter extends Component {
     render() {
 
         return (
-            <Router history={browserHistory}>
-                <Route path="/" component={App}>
+            <Router history={hashHistory}>
+                <Route path={window.App.getAppRoute()} component={App}>
                     <IndexRoute  component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
                     <Route path={window.App.getAppRoute() + "/main"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ckedit"} component={ckEditor}/>

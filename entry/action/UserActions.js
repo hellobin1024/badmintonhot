@@ -2,8 +2,10 @@
  * Created by dingyiming on 2017/2/15.
  */
 var Proxy = require('../../components/proxy/ProxyQ');
+
 import { browserHistory ,hashHistory} from 'react-router';
 var Training = require('../modules/Training');
+
 import {
     // UPDATE_CAR_HISTORY_ORDERS,
     // UPDATE_APPLIED_CAR_ORDERS,
@@ -69,6 +71,7 @@ export let loginAction=function(name,psw,validate,type,product){
                             const path = "/training";
                             browserHistory.push(path);
                         }
+
                     }else {
                         var errorMsg = res.errorMessageList[1];
                         alert("登录失败！"+errorMsg);
@@ -104,7 +107,7 @@ export let logoutAction=function(){
                         var personId = null;
                         dispatch(getReCode(reCode,loginName,personId));
                         const path = "/main";
-                        browserHistory.push(path);
+                        hashHistory.push(path);
                     }else {
                         var errorMsg = res.errorMessageList[1];
                         alert("登出失败！"+errorMsg);
