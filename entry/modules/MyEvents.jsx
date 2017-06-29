@@ -24,6 +24,7 @@ var MyEvents = React.createClass({
             function(ob) {
                 var reCode = ob.reCode;
                 if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                    alert(ob.response);
                     return;
                 }
                 var data=ob.resList;
@@ -35,10 +36,16 @@ var MyEvents = React.createClass({
         );
     },
 
-    operate: function (ob) {
+    operate: function (ob,flag,index) {
         var eventId=ob;
+        if(flag=="delete"){
+            var url="/func/events/deleteMyEvents";
+        }else{
+            var url="/func/events/quitEvents";
+        }
 
         var params={
+            personId:this.state.personId,
             eventId:eventId,
         };
 
@@ -50,9 +57,13 @@ var MyEvents = React.createClass({
             function(ob) {
                 var reCode = ob.reCode;
                 if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                    alert(ob.response);
                     return;
                 }
-                alert("操作成功!")
+                alert(ob.response);
+                var data = this.state.data;
+                data.splice(index,1);
+                this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -93,7 +104,7 @@ var MyEvents = React.createClass({
                             </tr>
                             <tr>
                                 <td></td>
-                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId)}>{item.operate}</a></td>
+                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
                                 <td></td>
                             </tr>
                         </tbody>

@@ -1,0 +1,23 @@
+.time-input{
+    padding: 5px 0px 5px 0px;
+    width: 160px;
+    height: 35px;
+    font-size: 14px;
+    line-height: 35px;
+    color: #000000;
+    border: 1px solid #c5c5c5;
+    border-color: #c5c5c5;
+    vertical-align: middle;
+}
+
+.time-input:focus {
+    border-color: #35b558;
+    -webkit-box-shadow: 0 0 5px #51cc73;
+    box-shadow: 0 0 5px #51cc73;
+}
+
+.def-style{
+    background-color: #999;
+    padding: 10.5px;
+    color: #000000
+}
