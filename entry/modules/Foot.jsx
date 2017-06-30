@@ -22,8 +22,8 @@ var Foot = React.createClass({
                             <h4>APP下载</h4>
                             <div className="d-apps">
                                 <ul>
-                                    <li><a href="#"><img src="images/app23.png" alt="" /></a></li>
-                                    <li><a href="#"><img src="images/app3.png" alt="" /></a></li>
+                                    <li><a href="#"><img src={window.App.getResourceDeployPrefix()+"/images/app23.png"} alt="" /></a></li>
+                                    <li><a href="#"><img src={window.App.getResourceDeployPrefix()+"/images/app3.png"} alt="" /></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -31,9 +31,9 @@ var Foot = React.createClass({
                             <h4>We Accept</h4>
                             <div className="a-cards">
                                 <ul>
-                                    <li><a href="#"><img src="images/c1.png" alt="" /></a></li>
-                                    <li><a href="#"><img src="images/c2.png" alt="" /></a></li>
-                                    <li><a href="#"><img src="images/c3.png" alt="" /></a></li>
+                                    <li><a href="#"><img src={window.App.getResourceDeployPrefix()+"/images/c1.png"} alt="" /></a></li>
+                                    <li><a href="#"><img src={window.App.getResourceDeployPrefix()+"/images/c2.png"} alt="" /></a></li>
+                                    <li><a href="#"><img src={window.App.getResourceDeployPrefix()+"/images/c3.png"} alt="" /></a></li>
                                 </ul>
                             </div>
                         </div>

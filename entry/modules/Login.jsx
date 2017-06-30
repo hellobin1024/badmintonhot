@@ -6,6 +6,9 @@ import { render } from 'react-dom';
 import {Link} from 'react-router';
 import '../../css/components/basic/passport.css';
 import { connect } from 'react-redux';
+
+var Tips = require('../../components/basic/Tips');
+
 var ProxyQ = require('../../components/proxy/ProxyQ');
 var SyncStore = require('../../components/flux/stores/SyncStore');
 var UserActions=require('../action/UserActions');
@@ -18,22 +21,23 @@ var Login=React.createClass({
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     },
-    //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
-    showTips:function(txt,time,status) {
-        var htmlCon = '';
-        if(txt != ''){
-            if(status != 0 && status != undefined){
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#4AAF33;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }else{
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#D84C31;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }
-            $('body').prepend(htmlCon);
-            if(time == '' || time == undefined){
-                time = 1500;
-            }
-            setTimeout(function(){ $('.tipsBox').remove(); },time);
-        }
-    },
+
+    ////显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
+    //showTips:function(txt,time,status) {
+    //    var htmlCon = '';
+    //    if(txt != ''){
+    //        if(status != 0 && status != undefined){
+    //            htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#4AAF33;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
+    //        }else{
+    //            htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#D84C31;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
+    //        }
+    //        $('body').prepend(htmlCon);
+    //        if(time == '' || time == undefined){
+    //            time = 1500;
+    //        }
+    //        setTimeout(function(){ $('.tipsBox').remove(); },time);
+    //    }
+    //},
 
     login:function(){
         var loginPage = this.refs['loginPage'];
@@ -141,6 +145,7 @@ var Login=React.createClass({
         var userName = $(registerPage).find("input[name='userName']").val();
         var password = $(registerPage).find("input[name='password']").val();
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
+        var verifyCode = $(registerPage).find("input[name='verifyCode']").val();
         var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
 
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
@@ -148,19 +153,28 @@ var Login=React.createClass({
         if(isTrainer!== undefined && isTrainer!==null){
             sportsLevel = $('#sportsLevel option:selected').val();
         }
-
-        //var phoneReg = /^1[34578]\d{9}$/;
+        var phoneReg = /^1[34578]\d{9}$/;
 
         if (userName == "") {
-            this.showTips('请填写用户名~');
+            Tips.showTips('请填写用户名~');
         } else if (password == "") {
-            this.showTips('请填写密码~');
+            Tips.showTips('请填写密码~');
         } else if (password.length<6) {
-            this.showTips('密码至少为6位~');
+            Tips.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
-            this.showTips('请再次输入密码~');
+            Tips.showTips('请再次输入密码~');
+        } else if (phoneNum == "") {
+            Tips.showTips('请填写手机号~');
+        } else if(!(phoneReg.test(phoneNum))){
+            Tips.showTips("手机号码有误，请重新填写~");
+        } else if (verifyCode == "") {
+            Tips.showTips('请填写验证码~');
+        } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
+            Tips.showTips('验证码失效，请重新获取~');
+        } else if(verifyCode!==this.state.verifyCode) {
+            Tips.showTips('验证码不正确~');
         } else if (sportsLevel == "-1" || sportsLevel == -1) {
-            this.showTips('请选择运动员水平~');
+            Tips.showTips('请选择运动员水平~');
         } else{
 
             var url = '/func/register/userRegister';
@@ -197,7 +211,7 @@ var Login=React.createClass({
         if(password==ackPassword){
             return;
         }else{
-            this.showTips('两次输入密码不一致！');
+            Tips.showTips('两次输入密码不一致！');
         }
     },
 
@@ -230,7 +244,7 @@ var Login=React.createClass({
         var phoneNum = $(refsPage).find("input[name='phoneNum']").val();
         var reg = /^1[34578]\d{9}$/;
         if(!(reg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
+            Tips.showTips("手机号码有误，请重新填写~");
             return false;
         }
         var num = '';
@@ -262,7 +276,7 @@ var Login=React.createClass({
             //jsonpCallback: '?',
             //jsonp: 'callback',
             success : function (response) {
-                ins.showTips("验证码发送成功！");
+                Tips.showTips("验证码发送成功！");
                 ins.verifyCodeTimeOut();
             },
             error   : function (xhr, status, err) {
@@ -270,11 +284,11 @@ var Login=React.createClass({
                 var content;
                 var errType="";
                 if(xhr.status==200 || xhr.status=="200") {
-                    ins.showTips("验证码发送成功！");
+                    Tips.showTips("验证码发送成功！");
                     ins.verifyCodeTimeOut();
                     return;
                 } else if(xhr.status==404||xhr.status=="404") {
-                    content="错误描述:        "+xhr.responseText;
+                    content="错误描述:"+xhr.responseText;
                     errType="";
                     switch(xhr.statusText) {
                         case "Not Found":
@@ -284,7 +298,7 @@ var Login=React.createClass({
                             break;
                     }
                 } else if (xhr.status == 502 || xhr.status == "502") {
-                    content = "错误描述:        " + xhr.responseText;
+                    content = "错误描述:" + xhr.responseText;
                     errType = "发生错误:" + "无效的服务器指向";
                 }
                 $modal.find(".modal-body").text(content);
@@ -304,44 +318,43 @@ var Login=React.createClass({
         var phoneReg = /^1[34578]\d{9}$/;
 
         if (userName == "") {
-            this.showTips('请填写用户名~');
+            Tips.showTips('请填写用户名~');
         } else if (password == "") {
-            this.showTips('请填写密码~');
+            Tips.showTips('请填写密码~');
         } else if (password.length<6) {
-            this.showTips('密码至少为6位~');
+            Tips.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
-            this.showTips('请再次输入密码~');
+            Tips.showTips('请再次输入密码~');
         } else if (password != ackPassword) {
-            this.showTips('两次输入密码不一致~');
+            Tips.showTips('两次输入密码不一致~');
         } else if (phoneNum == "") {
-            this.showTips('请填写手机号~');
+            Tips.showTips('请填写手机号~');
         } else if(!(phoneReg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
+            Tips.showTips("手机号码有误，请重新填写~");
         } else if (verifyCode == "") {
-            this.showTips('请填写验证码~');
+            Tips.showTips('请填写验证码~');
         } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
-            this.showTips('验证码失效，请重新获取~');
+            Tips.showTips('验证码失效，请重新获取~');
         } else if(verifyCode!==this.state.verifyCode) {
-            this.showTips('验证码不正确~');
+            Tips.showTips('验证码不正确~');
         } else{
-            var url="/insurance/insuranceReactPageDataRequest.do";
+            var url="/func/modify/modifyPassword";
             var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'customerPasswordModify',
                 userName:userName,
                 password:password,
                 phoneNum:phoneNum,
             };
-            ProxyQ.queryHandle(
+            ProxyQ.query(
                 'post',
                 url,
                 params,
                 null,
-                function(ob) {
-                    var re = ob.re;
-                    if(re != undefined && re != null ){
-                        this.setState({view: 'login'})
-
+                function(re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                        alert(re.response);
+                    }else{
+                        alert(re.response);
                     }
                 }.bind(this),
                 function(xhr, status, err) {
@@ -437,7 +450,7 @@ var Login=React.createClass({
 
     repaintImage:function (){
         var img = $("#validateImage");
-        img.attr('src',"/badmintonhot/validatecode.jpg?rnd=" + Math.random());// 防止浏览器缓存的问题
+        img.attr('src',"/validatecode.jpg?rnd=" + Math.random());// 防止浏览器缓存的问题
     },
 
     render:function(){
@@ -475,7 +488,7 @@ var Login=React.createClass({
                                                 <tr >
                                                     <td>验证码: </td>
                                                     <td><input type="text" name="verify" id="verify" className="passport-txt xl w-full" /></td>
-                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="/badmintonhot/validatecode.jpg"/></td>
+                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="/validatecode.jpg" /></td>
                                                     <td><img style={{paddingLeft:'5px'}} onClick={this.repaintImage} src={window.App.getResourceDeployPrefix()+"/images/refresh1.png"} ></img></td>
                                                     <td><span id="verifyMsg" className="errorMessage"></span></td>
                                                 </tr>
@@ -484,8 +497,8 @@ var Login=React.createClass({
 
                                             <div className="form-item form-sevenday">
                                                 <div className="form-cont clearfix">
-                                                    <label><input type="checkbox" id="login_autoLoginCheckbox" className="passport-sevenday" tabIndex="2" />记住密码</label>
-                                             {/*<a className="forget-link" onClick={this.viewSwitch.bind(this,'forget')}>忘记密码</a>*/}
+                                                    <label><input type="checkbox" id="login_autoLoginCheckbox" className="remember" tabIndex="2" />记住密码</label>
+                                                    <a className="forget-link" onClick={this.viewSwitch.bind(this,'forget')}>忘记密码</a>
                                                 </div>
                                             </div>
 
@@ -566,24 +579,36 @@ var Login=React.createClass({
                                         </div>
                                     </div>
 
-                                    {/*<div className="form-item form-mcode mb-25">
+                                    <div className="form-item form-mcode mb-25">
                                         <div className="form-cont">
                                             <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
+                                            <div className="btn-getcode">
+                                                <button type="button" className="passport-btn js-getcode" id="J_getCode" onClick={this.getVerifyCode}>发送验证码</button>
+                                            </div>
+                                            <div className="btn-getcode">
+                                                <button type="button" className="passport-btn js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-item">
+                                        <div className="form-cont">
+                                            <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
                                         </div>
                                     </div>
 
                                     <div className="form-item" >
-                                        <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
-                                            <input name="isTrainer" type="checkbox" tabIndex="7" onClick={this.isRegisterAsTrainer}/>
+                                            <input name="isTrainer" type="checkbox" tabIndex="7" className="is-Trainer" onClick={this.isRegisterAsTrainer}/>
 
-                                            <select style={{marginLeft:'5px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
+                                            <select style={{marginLeft:'15px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
                                                 <option value={-1}>请选择运动水平</option>
                                                 {relative_add_trs}
                                             </select>
                                         </span>
 
-                                    </div>*/}
+                                    </div>
 
 
                                     <div className="form-item">
@@ -690,7 +715,7 @@ var Login=React.createClass({
 
 
         return(
-            <div className="container" style={{position: 'absolute',height: '100%', width: '100%',background:'url(../images/loginbg.jpeg)'}}>
+            <div className="container" style={{position: 'absolute',height: '100%', width: '100%',background:'url('+window.App.getResourceDeployPrefix()+'/images/loginbg.jpeg)'}}>
             <div className="passport-wrapper">
 
                 <div id="container" ref='login-register-forget'>

@@ -42,11 +42,13 @@ export let loginAction=function(name,psw,validate,type,product){
                     if(reCode==0){
                         dispatch(getReCode(reCode,loginName,personId));
                         if(type=="1"){
+
                             const path = "/order?product="+product;
                             browserHistory.push(path);
+
                         }else{
                             const path = "/training";
-                            browserHistory.push(path);
+                            hashHistory.push(path);
                         }
                     }else {
                         var errorMsg = res.errorMessageList[1];
@@ -92,6 +94,39 @@ export let logoutAction=function(){
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
+            );
+        });
+    }
+}
+
+
+export let loginStateAction=function(path){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+
+            var url="/func/login/getLonginState";
+            var params={};
+            Proxy.query(
+                'get',
+                url,
+                params,
+                null,
+                function(res) {
+                    var reCode = res.reCode;
+                    var data = res.resList
+                    if(reCode==0){
+                        var loginName = data.loginName;
+                        var personId = data.personId;
+                        dispatch(getReCode(reCode,loginName,personId));
+                        //const path = "/main";
+                        hashHistory.push(path);
+                    }
+                }.bind(this),
+                function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
             );
         });
     }

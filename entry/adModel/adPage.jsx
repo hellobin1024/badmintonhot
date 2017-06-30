@@ -26,7 +26,7 @@ var AdPage = React.createClass({
                         <div className="content mr">
                             <div className="logo_ad">
                                 <Link to={window.App.getAppRoute() + "/training"}>
-                                    <img src="/images/img/home.png" />官网
+                                    <img src={window.App.getResourceDeployPrefix()+"/images/img/home.png"} />官网
                                 </Link>
                             </div>
 
@@ -35,7 +35,7 @@ var AdPage = React.createClass({
 
                                 </div>
                                 <div className="btnCon">
-                                        <img className="btnbg" src="/images/img/left_btn_bg.png"/>
+                                        <img className="btnbg" src={window.App.getResourceDeployPrefix()+"/images/img/left_btn_bg.png"}/>
                                         <Link to={window.App.getAppRoute() + "/adText"}>
                                             <div className="adText">
                                             <h2>这个夏天 加入我们吧！</h2>
@@ -79,23 +79,23 @@ var AdPage = React.createClass({
                                         </div>
                                     </Link>
                                     <Link to={window.App.getAppRoute() + "/login?loginType=1&product=12"}>
-                                        <img className="btn_arow" src="/images/img/left.png"/>
-                                        <img className="btnWord" src="/images/img/btn_word.png"/>
+                                        <img className="btn_arow" src={window.App.getResourceDeployPrefix()+"/images/img/left.png"}/>
+                                        <img className="btnWord" src={window.App.getResourceDeployPrefix()+"/images/img/btn_word.png"}/>
                                     </Link>
                                 </div>
-                                <div className="house"><img src="/images/img/huose.png"/></div>
+                                <div className="house"><img src={window.App.getResourceDeployPrefix()+"/images/img/huose.png"} /></div>
                             </div>
 
                             <div className="con_rf lf">
                                 <div className="peoCon">
-                                    <img className="peo" src="/images/img/peo.png"/>
-                                    <img className="work" alt="挑工作" src="/images/img/qiuzhizhe.png"/>
+                                    <img className="peo" src={window.App.getResourceDeployPrefix()+"/images/img/peo.png"} />
+                                    <img className="work" alt="挑工作" src={window.App.getResourceDeployPrefix()+"/images/img/qiuzhizhe.png"} />
                                 </div>
 
                                 <div className="peoBtn">
                                     <Link to={window.App.getAppRoute() + "/login?loginType=1&product=13"}>
-                                        <img className="btnbg_rf" src="/images/img/rf_bg.png"/>
-                                        <img className="btnWord_rf" alt="求职者" src="/images/img/tiao.png"/>
+                                        <img className="btnbg_rf" src={window.App.getResourceDeployPrefix()+"/images/img/rf_bg.png"} />
+                                        <img className="btnWord_rf" alt="求职者" src={window.App.getResourceDeployPrefix()+"/images/img/tiao.png"} />
                                     </Link>
                                     <Link to={window.App.getAppRoute() + "/adText"}>
                                     <div className="adText1">
@@ -143,7 +143,7 @@ var AdPage = React.createClass({
                                         </table>
                                     </div>
                                     </Link>
-                                    <img className="btn_arow_rf" src="/images/img/rf.png"/>
+                                    <img className="btn_arow_rf" src={window.App.getResourceDeployPrefix()+"/images/img/rf.png"}/>
                                </div>
 
                                 <div className="big_word_rf"></div>

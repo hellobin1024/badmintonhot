@@ -7,7 +7,7 @@ import '../../build/css/style.css';
 var UserActions=require('../action/UserActions');
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
-
+var ProxyQ = require('../../components/proxy/ProxyQ');
 var Heard = React.createClass({
 
     exit:function () {
@@ -20,9 +20,14 @@ var Heard = React.createClass({
         var loginName= this.props.loginName;
         var personId=this.props.personId;
         var loginState = false;
-        if(token=='0' || token==0){
+        if(token=='0' || token==0){ //先从flux获取登录状态
             var loginState = true;
         }
+
+        if(loginState==false){ // 刷新时如果flux中登录状态丢失，从后台获取
+            this.props.dispatch(UserActions.loginStateAction(path));
+        }
+
         return({router:path, loginState:loginState, userName:loginName, personId:personId})
     },
 
@@ -61,7 +66,7 @@ var Heard = React.createClass({
                     </div>
                     <div className="nav-top">
                         <div className="top-nav">
-                            <span className="menu"><img src="images/menu.png" alt="" /></span>
+                            <span className="menu"><img src={window.App.getResourceDeployPrefix()+"/images/menu.png"} alt="" /></span>
                             <ul className="nav1">
                                 <li ref="main">
                                     <Link to={window.App.getAppRoute() + "/ad"}>

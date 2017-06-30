@@ -22,7 +22,7 @@ var ContainSpace = React.createClass({
                                         <li className="dropdown active">
                                             <a href="products.html">
                                                 <div className="destinations-grid">
-                                                    <img src="images/a1.jpg" alt="" />
+                                                    <img src={window.App.getResourceDeployPrefix()+"images/a1.jpg"} alt="" />
                                                 </div>
                                                 <div className="destinations-grid-info">
                                                     <div className="destinations-hotel">Lorem ipsum dolor sit amet , Goa</div>
@@ -41,7 +41,7 @@ var ContainSpace = React.createClass({
                                         <li className="dropdown">
                                             <a href="products.html">
                                                 <div className="destinations-grid">
-                                                    <img src="images/a4.jpg" alt="" />
+                                                    <img src={window.App.getResourceDeployPrefix()+"images/a4.jpg"} alt="" />
                                                 </div>
                                                 <div className="destinations-grid-info">
                                                     <div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangalore</div>
@@ -61,7 +61,7 @@ var ContainSpace = React.createClass({
                                         <li className="dropdown">
                                             <a href="products">
                                                 <div className="destinations-grid">
-                                                    <img src="images/a3.jpg" alt="" />
+                                                    <img src={window.App.getResourceDeployPrefix()+"images/a3.jpg"} alt="" />
                                                 </div>
                                                 <div className="destinations-grid-info">
                                                     <div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangkok</div>
@@ -80,7 +80,7 @@ var ContainSpace = React.createClass({
                                         <li className="dropdown">
                                             <a href="products.html">
                                                 <div className="destinations-grid">
-                                                    <img src="images/a1.jpg" alt="" />
+                                                    <img src={window.App.getResourceDeployPrefix()+"images/a1.jpg"} alt="" />
                                                 </div>
                                                 <div className="destinations-grid-info">
                                                     <div className="destinations-hotel">Lorem ipsum dolor sit amet , Malaysia</div>
@@ -145,7 +145,7 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="banner-bottom-middle" style={{ paddingTop: '14px'}}>
                                 <a href="products.html">
-                                    <img src="images/a2.jpg" alt="" />
+                                    <img src={window.App.getResourceDeployPrefix()+"images/a2.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
                                         <h5>Book your next Malaysia holiday!</h5>
                                         <p>Integer eget aliquam nibh. Donec blandit volutpat libero id lacinia</p>
@@ -160,7 +160,7 @@ var ContainSpace = React.createClass({
                                 <div className="top-destinations-bottom">
                                     <div className="td-grids">
                                         <div className="col-xs-3 td-left">
-                                            <img src="images/t1.jpg" alt="" />
+                                            <img src={window.App.getResourceDeployPrefix()+"images/t1.jpg"} alt="" />
                                         </div>
                                         <div className="col-xs-7 td-middle">
                                             <a href="products.html">Donec libero id lacinia</a>
@@ -176,7 +176,7 @@ var ContainSpace = React.createClass({
                                     </div>
                                     <div className="td-grids">
                                         <div className="col-xs-3 td-left">
-                                            <img src="images/t2.jpg" alt="" />
+                                            <img src={window.App.getResourceDeployPrefix()+"images/t2.jpg"} alt="" />
                                         </div>
                                         <div className="col-xs-7 td-middle">
                                             <a href="products.html">Donec libero id lacinia</a>
@@ -193,7 +193,7 @@ var ContainSpace = React.createClass({
                                     </div>
                                     <div className="td-grids">
                                         <div className="col-xs-3 td-left">
-                                            <img src="images/t3.jpg" alt="" />
+                                            <img src={window.App.getResourceDeployPrefix()+"images/t3.jpg"} alt="" />
                                         </div>
                                         <div className="col-xs-7 td-middle">
                                             <a href="products.html">Donec libero id lacinia</a>
@@ -210,7 +210,7 @@ var ContainSpace = React.createClass({
                                     </div>
                                     <div className="td-grids">
                                         <div className="col-xs-3 td-left">
-                                            <img src="images/t4.jpg" alt="" />
+                                            <img src={window.App.getResourceDeployPrefix()+"images/t4.jpg"} alt="" />
                                         </div>
                                         <div className="col-xs-7 td-middle">
                                             <a href="products.html">Donec libero id lacinia</a>
@@ -233,7 +233,7 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
                                 <a href="products.html">
-                                    <img src="images/a3.jpg" alt="" />
+                                    <img src={window.App.getResourceDeployPrefix()+"images/a3.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
                                         <h5>New Hotel Experiences at Your Favourite Destinations</h5>
                                         <p>Integer eget aliquam nibh. Donec blandit volutpat libero id lacinia</p>

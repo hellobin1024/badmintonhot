@@ -1146,3 +1146,15 @@ input[type=radio][disabled]:hover {
 .forget-link{
     cursor: pointer;
 }
+
+.remember{
+    vertical-align: middle;
+}
+
+.is-Trainer{
+    vertical-align: middle;
+}
+
+.forget-link{
+    margin-left: 4px;
+}
