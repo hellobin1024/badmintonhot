@@ -90,7 +90,7 @@ var PersonInfo = React.createClass({
 
                 <div id="pjax-container" className="person-container clearfix">
                     <div id="aside" className="l" style={{height:'800px',border: '1px solid #1C6'}}>
-                        <dl className="st">
+                        <dl className="st-dl">
                             <dt><i className="icon-user-md"></i>群圈</dt>
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyGroup')}>管理群圈</a></div>

@@ -16,19 +16,19 @@ var Banner=React.createClass({
         contains =
             <div id="myCarousel" className="carousel slide">
                 <ol className="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
                     <li data-target="#myCarousel" data-slide-to="1"></li>
                     <li data-target="#myCarousel" data-slide-to="2"></li>
                 </ol>
                 <div className="carousel-inner">
                     <div className="item active">
-                        <img src="/images/test.jpg" alt="First slide"/>
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test.jpg"} alt="First slide"/>
                     </div>
                     <div className="item">
-                        <img src="/images/test1.jpg" alt="Second slide"/>
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test1.jpg"} alt="Second slide"/>
                     </div>
                     <div className="item">
-                        <img src="/images/test2.jpg" alt="Third slide"/>
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test2.jpg"} alt="Third slide"/>
                     </div>
                 </div>
             </div>

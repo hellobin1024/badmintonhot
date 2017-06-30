@@ -58,7 +58,7 @@
     margin-left: 340px;
 }
 .caccBtn{
-    height: 40px;
+    height: 33px;
     font-size: 15px;
     border-color: #6fd508;
     background: #94ea95;
@@ -103,4 +103,12 @@
 .tag{
     margin-left: 200px;
     font-size: 14px;
+}
+
+.js-getcode{
+    margin-left: 15px;
+    margin-top: 3px;
+    height: 25px;
+    color: #000000;
+    background-color: #6fd508;
 }

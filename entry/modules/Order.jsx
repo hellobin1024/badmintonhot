@@ -236,7 +236,7 @@ var Order = React.createClass({
                                 <p>以上没有您所需要的人员？<a onClick={this.showModal}>点此添加！</a></p>
                             </div>
                             <div className="orderSubmit">
-                                <button style={{padding: '7px 20px 7px 20px'}}>报名</button>
+                                <button style={{padding: '7px 20px 7px 20px'}} onClick={this.classSignUp}>报名</button>
                             </div>
                         </div>
                     </div>
@@ -341,8 +341,9 @@ var Order = React.createClass({
         return mainContent;
 
     },
+
     componentDidMount:function(){
-        $(document).ready(function(){
+        $("body").click(function(){
             var lList = $("#lList");
             var llList = document.getElementById("lList");
             var rList = $("#rList");

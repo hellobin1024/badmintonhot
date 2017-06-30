@@ -16,7 +16,7 @@ var RightSlide = React.createClass({
             <div className="col-md-4 product-right">
                     <div className="h-className">
                         <h5>推广</h5>
-                        <img src="images/TG.jpg" style={{width: '100%'}}/>
+                        <img src={window.App.getResourceDeployPrefix()+"/images/TG.jpg"} style={{width: '100%'}}/>
                     </div>
                     <div className="h-className p-day">
                         <h5>新闻快讯</h5>
@@ -40,7 +40,7 @@ var RightSlide = React.createClass({
                     </div>
                     <div className="h-className p-day">
                         <h5>装备推荐</h5>
-                        <img src="images/TG2.jpg" style={{width: '100%'}}/>
+                        <img src={window.App.getResourceDeployPrefix()+"/images/TG2.jpg"} style={{width: '100%'}}/>
                     </div>
 
             </div>

@@ -56,7 +56,7 @@ export let loginAction=function(name,psw,validate,type,product){
                                     if (res.reCode == 0) {
                                         alert(res.response);
                                         const path = "/training?product="+product;
-                                        browserHistory.push(path);
+                                        hashHistory.push(path);
                                     } else {
                                         alert(res.response);
                                     }
@@ -69,7 +69,7 @@ export let loginAction=function(name,psw,validate,type,product){
                             );
                         }else{
                             const path = "/training";
-                            browserHistory.push(path);
+                            hashHistory.push(path);
                         }
 
                     }else {
@@ -116,6 +116,39 @@ export let logoutAction=function(){
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }
+            );
+        });
+    }
+}
+
+
+export let loginStateAction=function(path){
+
+    return dispatch=> {
+
+        return new Promise((resolve, reject) => {
+
+            var url="/func/login/getLonginState";
+            var params={};
+            Proxy.query(
+                'get',
+                url,
+                params,
+                null,
+                function(res) {
+                    var reCode = res.reCode;
+                    var data = res.resList
+                    if(reCode==0){
+                        var loginName = data.loginName;
+                        var personId = data.personId;
+                        dispatch(getReCode(reCode,loginName,personId));
+                        //const path = "/main";
+                        hashHistory.push(path);
+                    }
+                }.bind(this),
+                function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
             );
         });
     }

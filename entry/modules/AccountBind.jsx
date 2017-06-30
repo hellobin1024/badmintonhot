@@ -4,87 +4,49 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/entry/modules/accountBind.css';
+
+var Tips = require('../../components/basic/Tips');
+
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
 var accountBind=React.createClass({
-
-    //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
-    showTips:function(txt,time,status) {
-        var htmlCon = '';
-        if(txt != ''){
-            if(status != 0 && status != undefined){
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#4AAF33;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }else{
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#D84C31;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }
-            $('body').prepend(htmlCon);
-            if(time == '' || time == undefined){
-                time = 1500;
-            }
-            setTimeout(function(){ $('.tipsBox').remove(); },time);
-        }
-    },
 
     viewSwitch:function(ob){
         var view=ob;
         this.setState({view:view});
     },
 
-    doSaveSelfInfo:function(ob){
-        var customerId=ob;
-        var selfPersonInfo = this.refs.selfPersonInfo;
-        var perName=$(selfPersonInfo).find("input[name='perName']").val();
-        var perIdCard=$(selfPersonInfo).find("input[name='perIdCard']").val();
-        var phoneNum=$(selfPersonInfo).find("input[name='phoneNum']").val();
-        var postCode=$(selfPersonInfo).find("input[name='postCode']").val();
-        var address=$(selfPersonInfo).find("input[name='address']").val();
-
-        if (perName == '') {
-            this.showTips('请填写您的姓名~');
-        } else if (perIdCard == '') {
-            this.showTips('请输入您的证件号码~');
-        } else if (phoneNum == '') {
-            this.showTips('请输入您的电话号码~');
-        } else if (postCode == '') {
-            this.showTips('请输入您的邮编~');
-        } else if (address == '') {
-            this.showTips('请输入您的地址~');
-        } else {
-            //this.showTips('提交成功~', 2500, 1);
-
-            var url="/insurance/insuranceReactPageDataRequest.do";
-            var params={
-                reactPageName:'insurancePersonalCenterPersonInfo',
-                reactActionName:'setInsuranceCustomerInfo',
-                customerId:this.state.customerId,
-                perName:perName,
-                perIdCard:perIdCard,
-                phoneNum:phoneNum,
-                postCode:postCode,
-                address:address
-            };
-
-            ProxyQ.query(
-                'post',
-                url,
-                params,
-                null,
-                function(ob) {
-
-                }.bind(this),
-                function(xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }.bind(this)
-            );
-        }
+    verifyCodeTimeOut:function(){  //获取验证码倒计时
+        var refsPage = this.refs['accPersonInfo'];
+        var J_getCode = $(refsPage).find('#J_getCode');
+        var J_second = $(refsPage).find('#J_second');
+        var J_resetCode = $(refsPage).find('#J_resetCode');
+        J_getCode.hide();
+        J_second.html('60');
+        J_resetCode.show();
+        var second = 60; //验证码有效时间60秒
+        var timer = null;
+        var ins = this;
+        timer = setInterval(function () {
+            second -= 1;
+            if (second > 0) {
+                J_second.html(second);
+            } else {
+                clearInterval(timer);
+                J_getCode.show();
+                J_resetCode.hide();
+                ins.setState({verifyCode:null}); //把验证码设置失效
+            }
+        }, 1000);
     },
 
     getVerifyCode:function(){
         var accPersonInfo = this.refs['accPersonInfo'];
         var phoneNum = $(accPersonInfo).find("input[name='phoneNum']").val();
+        var verifyCode = $(accPersonInfo).find("input[name='verifyCode']").val();
         var reg = /^1[34578]\d{9}$/;
         if(!(reg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
+            Tips.showTips("手机号码有误，请重新填写~");
             return false;
         }
         var num = '';
@@ -148,6 +110,48 @@ var accountBind=React.createClass({
         });
     },
 
+    phoneSubmit:function(){
+        var accPersonInfo = this.refs['accPersonInfo'];
+        var phoneNum = $(accPersonInfo).find("input[name='phoneNum']").val();
+        var verifyCode = $(accPersonInfo).find("input[name='verifyCode']").val();
+        var phoneReg = /^1[34578]\d{9}$/;
+
+        if (phoneNum == "") {
+            Tips.showTips('请填写手机号~');
+        } else if(!(phoneReg.test(phoneNum))){
+            Tips.showTips("手机号码有误，请重新填写~");
+        } else if (verifyCode == "") {
+            Tips.showTips('请填写验证码~');
+        } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
+            Tips.showTips('验证码失效，请重新获取~');
+        } else if(verifyCode!==this.state.verifyCode) {
+            Tips.showTips('验证码不正确~');
+        } else{
+
+            var url = '/func/bind/bindPhoneNum';
+            var params={
+                phoneNum:phoneNum,
+            };
+            ProxyQ.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (re) {
+                    var reCode = re.reCode;
+                    if(reCode==0 || reCode=='0'){
+                        alert(re.response);
+                    }else{
+                        alert(re.response);
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }
+    },
+
     initialData:function(){
         var url="/func/manageBean/accountBindInit";
         var params={};
@@ -184,7 +188,7 @@ var accountBind=React.createClass({
     },
 
     getInitialState:function(){
-        return ({view:'bindall', init:null});
+        return ({view:'bindall', verifyCode:null, init:null});
     },
 
     render:function(){
@@ -256,8 +260,7 @@ var accountBind=React.createClass({
                                     <input name="weichat" defaultValue="" maxLength="11" className="inputStyle" placeholder=""/>
                                 </div>
                                 <div className="toolBar">
-                                    <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
-                                    </button>
+                                    <button className="caccBtn" onClick="">获取验证码</button>
                                 </div>
                             </div>
                             <div className="clear"></div>
@@ -271,7 +274,7 @@ var accountBind=React.createClass({
                             </div>
                             <div className="clear"></div>
                             <div className="toolBar">
-                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                                <button className="wechatBtn" onClick={this.weichatSubmit}>保存</button>
                             </div>
                         </div>
                     break;
@@ -284,12 +287,13 @@ var accountBind=React.createClass({
                                     <span className="acc_label" >手机号：</span>
                                 </div>
                                 <div className="acc_conte" style={{float:'left'}} >
-                                    <input name="phoneNum" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
+                                    <input name="phoneNum" defaultValue="" maxLength="11" className="inputStyle" placeholder=""/>
                                 </div>
                                 <div className="toolBar">
-                                    <button className="caccBtn" href="javascript:;" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>获取验证码
-                                    </button>
+                                    <button className="caccBtn" name="verifyCode" id="J_getCode" onClick={this.getVerifyCode}>获取验证码</button>
+                                    <button type="button" className="js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
                                 </div>
+
                             </div>
                             <div className="clear"></div>
                             <div className="acc_control_group">
@@ -302,7 +306,7 @@ var accountBind=React.createClass({
                             </div>
                             <div className="clear"></div>
                             <div className="toolBar">
-                                <button className="wechatBtn" onClick={this.doSaveSelfInfo.bind(null,this.state.customerId)}>保存</button>
+                                <button className="wechatBtn" onClick={this.phoneSubmit}>保存</button>
                             </div>
                         </div>
                     break;

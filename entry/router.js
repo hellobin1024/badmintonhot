@@ -21,7 +21,7 @@ class AppRouter extends Component {
         return (
             <Router history={hashHistory}>
                 <Route path={window.App.getAppRoute()} component={App}>
-                    <IndexRoute  component={MainSection}/>
+                    <IndexRoute component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
                     <Route path={window.App.getAppRoute() + "/main"} component={MainSection}/>

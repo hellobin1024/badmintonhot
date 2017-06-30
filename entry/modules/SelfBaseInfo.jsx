@@ -4,26 +4,12 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/entry/modules/selleBase.css';
+
+var Tips = require('../../components/basic/Tips');
+
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
 var SelfBaseInfo=React.createClass({
-
-    //显示提示框，目前三个参数(txt：要显示的文本；time：自动关闭的时间（不设置的话默认1500毫秒）；status：默认0为错误提示，1为正确提示；)
-    showTips:function(txt,time,status) {
-        var htmlCon = '';
-        if(txt != ''){
-            if(status != 0 && status != undefined){
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#4AAF33;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }else{
-                htmlCon = '<div class="tipsBox" style="width:220px;padding:10px;background-color:#D84C31;border-radius:4px;-webkit-border-radius: 4px;-moz-border-radius: 4px;color:#fff;box-shadow:0 0 3px #ddd inset;-webkit-box-shadow: 0 0 3px #ddd inset;text-align:center;position:fixed;top:25%;left:50%;z-index:999999;margin-left:-120px;">'+txt+'</div>';
-            }
-            $('body').prepend(htmlCon);
-            if(time == '' || time == undefined){
-                time = 1500;
-            }
-            setTimeout(function(){ $('.tipsBox').remove(); },time);
-        }
-    },
 
     doSaveSelfInfo:function(){
         var personId=this.state.data.personId;
@@ -36,17 +22,17 @@ var SelfBaseInfo=React.createClass({
         var phoneReg = /^1[34578]\d{9}$/;
 
         if (perName == '') {
-            this.showTips('请填写您的姓名~');
+            Tips.showTips('请填写您的姓名~');
         } else if (genderCode == '') {
-            this.showTips('请选择您的性别~');
+            Tips.showTips('请选择您的性别~');
         } else if (phoneNum == '') {
-            this.showTips('请输入您的电话号码~');
+            Tips.showTips('请输入您的电话号码~');
         } else if(!(phoneReg.test(phoneNum))){
-            this.showTips("手机号码有误，请重新填写~");
+            Tips.showTips("手机号码有误，请重新填写~");
         } else if (qq == '') {
-            this.showTips('请输入您的qq号~');
+            Tips.showTips('请输入您的qq号~');
         } else if (wechat == '') {
-            this.showTips('请输入您的微信号~');
+            Tips.showTips('请输入您的微信号~');
         } else {
             var url="/func/manageBean/doSave";
             var params={
