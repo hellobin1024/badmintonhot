@@ -84,7 +84,7 @@ var MyCLass = React.createClass({
                         <tbody key={i} className="event-table">
                         <tr>
                             <td>课程名称: {item.cLassName}</td>
-                            <td>开课教员: {item.classPerName}</td>
+                            <td>开课教员: {item.cLassCreateName}</td>
                         </tr>
                         <tr>
                             <td >课程时间: {item.classtime}</td>
@@ -97,6 +97,10 @@ var MyCLass = React.createClass({
                         <tr>
                             <td style={{borderBottom:'1px solid #ddd'}}>课程简介: {item.classbrief}</td>
                             <td></td>
+                        </tr>
+                        <tr>
+                            <td>上课人: {item.classPerName}</td>
+                            <td>报名人: {item.classCreName}</td>
                         </tr>
                         <tr>
                             <td></td>

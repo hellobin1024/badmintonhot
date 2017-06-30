@@ -20,8 +20,7 @@ var Order = React.createClass({
     },
     getInitialState: function () {
 
-        // var product=this.getUrlParam("product");
-        var product=12;
+        var product=parseInt(this.getUrlParam("product"));
         return({product:product,
         data:null})
     },
@@ -128,7 +127,7 @@ var Order = React.createClass({
     },
     classSignUp:function () {
         var store="";
-        $("#rList li").each(function (index, domEle) {
+        $("#d1 input:checkbox:checked").each(function (index, domEle) {
             store+=$(domEle).val()+",";
         });
         var url = "/func/allow/classMultiplySignUp";
@@ -142,7 +141,12 @@ var Order = React.createClass({
             params,
             null,
             function (ob) {
-                var a = ob.reCode;
+                var reCode = ob.reCode;
+                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                    alert(ob.response);
+                    return;
+                }
+                alert(ob.response);
 
             }.bind(this),
             function (xhr, status, err) {
@@ -154,57 +158,63 @@ var Order = React.createClass({
     },
     render:function(){
         var mainContent = null;
-        var data = this.state.data;
-        var relate = this.state.relate;
-        var path=this.props.route.path;
-        var table=null;
-        var lis=[];
-        if(data!==undefined && data!==null&&relate!==undefined && relate!==null) {
-            table =
-                <div>
-                    <table className="table table-striped invoice-table">
-                        <thead className="table-head">
-                        <tr>
-                            <th width="300"></th>
-                            <th width="300"></th>
-                            <th width="300"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>课程名称:</td>
-                            <td>{data.className}</td>
-                            <td>开课教员:</td>
-                            <td>{data.infoPersonInfo.perName}</td>
-                        </tr>
-                        <tr>
-                            <td>课程时间:</td>
-                            <td>{1}</td>
-                            <td>课程地点:</td>
-                            <td>{data.badmintonVenueUnit.name + ":" + data.badmintonVenueUnit.address}</td>
-                        </tr>
-                        <tr>
-                            <td>课程计划招生:</td>
-                            <td>{data.maxNumber}</td>
-                            <td>课程现有人数:</td>
-                            <td>{data.signNumber}</td>
-                        </tr>
-                        <tr>
-                            <td style={{borderBottom: '1px solid #ddd'}}>课程简介:</td>
-                            <td style={{borderBottom: '1px solid #ddd'}} colSpan={6}>{data.detail}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            relate.map(function (item,i) {
-                lis.push(
-                    <li value={item.relatedPersonId} id={"li"+i}>{item.userName}</li>
-                )
-            })
-        }else{
-            this.initialData();
-        }
-            mainContent=
+        if(this.state.product!==undefined && this.state.product!==null) {
+            var data = this.state.data;
+            var relate = this.state.relate;
+            var path = this.props.route.path;
+            var table = null;
+            var lis = [];
+            if (data !== undefined && data !== null && relate !== undefined && relate !== null) {
+                table =
+                    <div>
+                        <table className="table table-striped invoice-table">
+                            <thead className="table-head">
+                            <tr>
+                                <th width="300"></th>
+                                <th width="300"></th>
+                                <th width="300"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>课程名称:</td>
+                                <td>{data.className}</td>
+                                <td>开课教员:</td>
+                                <td>{data.infoPersonInfo.perName}</td>
+                            </tr>
+                            <tr>
+                                <td>课程时间:</td>
+                                <td>{1}</td>
+                                <td>课程地点:</td>
+                                <td>{data.badmintonVenueUnit.name + ":" + data.badmintonVenueUnit.address}</td>
+                            </tr>
+                            <tr>
+                                <td>课程计划招生:</td>
+                                <td>{data.maxNumber}</td>
+                                <td>课程现有人数:</td>
+                                <td>{data.signNumber}</td>
+                            </tr>
+                            <tr>
+                                <td style={{borderBottom: '1px solid #ddd'}}>课程简介:</td>
+                                <td style={{borderBottom: '1px solid #ddd'}} colSpan={6}>{data.detail}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                relate.map(function (item, i) {
+                    lis.push(
+                        <div style={{width:'150px',float: 'left'}} key={'checkbox'+i}>
+                            <div style={{float: 'left'}}><input type="checkbox" key={i} value={item.relatedPersonId}/></div>
+
+                            <div style={{float: 'left'}}><span>{item.userName}</span></div>
+                            <div className="clearfix"></div>
+                        </div>
+                    )
+                })
+            } else {
+                this.initialData();
+            }
+            mainContent =
                 <div>
                     <Header path={path}/>
 
@@ -218,25 +228,13 @@ var Order = React.createClass({
                                 <h2>报名人员选择</h2>
                             </div>
                             <div id="d1" className="order-container">
-                                <div><span>可选人员</span><span style={{paddingLeft: '260px'}}>已选人员</span></div>
-                                <ul className="data-list" id="lList">
                                     {lis}
-                                </ul>
-
-                                <div className="button-box">
-                                    <button type="button" name="button" id="add">添 加</button>
-                                    <button type="button" name="button" id="remove">删 除</button>
-                                </div>
-
-                                <ul className="data-list" id="rList">
-
-                                </ul>
                             </div>
                             <div style={{marginLeft: '78em'}}>
                                 <p>以上没有您所需要的人员？<a onClick={this.showModal}>点此添加！</a></p>
                             </div>
                             <div className="orderSubmit">
-                                <button style={{padding: '7px 20px 7px 20px'}}>报名</button>
+                                <button style={{padding: '7px 20px 7px 20px'}} onClick={this.classSignUp}>报名</button>
                             </div>
                         </div>
                     </div>
@@ -322,7 +320,8 @@ var Order = React.createClass({
                                                     marginBottom: '20px',
                                                     width: '100%'
                                                 }}>
-                                                    <button style={{padding: '5px 20px'}} onClick={this.addNewMan}>添加</button>
+                                                    <button style={{padding: '5px 20px'}} onClick={this.addNewMan}>添加
+                                                    </button>
                                                 </div>
 
                                             </div>
@@ -336,50 +335,18 @@ var Order = React.createClass({
                     </div>
 
                 </div>
+        }else {
+            mainContent=
+                <div>
+                <h1>数据出错，请重新尝试，抱歉！</h1>
+            </div>
+        }
 
 
         return mainContent;
 
     },
-    componentDidMount:function(){
-        $(document).ready(function(){
-            var lList = $("#lList");
-            var llList = document.getElementById("lList");
-            var rList = $("#rList");
-            var items = $(".data-list li");
-            for(var i = 0;i<items.length;i++){
-                items[i].onclick = itemsclick;
-                items[i].ondblclick = itemsdblclick;
-            }
-            function itemsdblclick(){
-                if (this.parentNode === llList) {
-                    rList.append(this);
-                }else{
-                    lList.append(this);
-                }
-            }
-            function itemsclick(){
-                var classname = this.className;
-                if(classname === "selected"){
-                    this.className = "";
-                }else{
-                    this.className="selected";
-                }
-            }
-            function itemsMove(){
-                var items = $(".data-list li.selected");
-                for(var i = 0;i<items.length;i++){
-                    if(this.id === "add"){
-                        rList.append(items[i]);
-                    }else{
-                        lList.append(items[i]);
-                    }
-                }
-            }
-            $("#add").on("click",itemsMove);
-            $("#remove").on("click",itemsMove);
-        });
-    },
+
 });
 
 module.exports=Order;

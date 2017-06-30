@@ -432,7 +432,7 @@ var Login=React.createClass({
         var path='/app'
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
-        return ({view:'register', path:path, verifyCode: null, sportsLevel: null});
+        return ({view:'login', path:path, verifyCode: null, sportsLevel: null});
     },
 
     repaintImage:function (){

@@ -42,36 +42,12 @@ export let loginAction=function(name,psw,validate,type,product){
                     if(reCode==0){
                         dispatch(getReCode(reCode,loginName,personId));
                         if(type=="1"){
-                            var url = "/func/allow/classSignUp";
-                            var param = {
-                                id: product
-                            }
-                            var ref = this;
-                            Proxy.query(
-                                'POST',
-                                url,
-                                param,
-                                null,
-                                function (res) {
-                                    if (res.reCode == 0) {
-                                        alert(res.response);
-                                        const path = "/training?product="+product;
-                                        browserHistory.push(path);
-                                    } else {
-                                        alert(res.response);
-                                    }
-
-                                },
-
-                                function (xhr, status, err) {
-                                    console.error(this.props.url, status, err.toString());
-                                }
-                            );
+                            const path = "/order?product="+product;
+                            browserHistory.push(path);
                         }else{
                             const path = "/training";
                             browserHistory.push(path);
                         }
-
                     }else {
                         var errorMsg = res.errorMessageList[1];
                         alert("登录失败！"+errorMsg);
@@ -106,7 +82,7 @@ export let logoutAction=function(){
                         var loginName = null;
                         var personId = null;
                         dispatch(getReCode(reCode,loginName,personId));
-                        const path = "/main";
+                        const path = "/training";
                         hashHistory.push(path);
                     }else {
                         var errorMsg = res.errorMessageList[1];
