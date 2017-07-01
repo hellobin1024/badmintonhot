@@ -293,8 +293,8 @@ var Order = React.createClass({
                                                         <div className="self_controls">
                                                             <select style={{height: '35px'}} id="relativeSex">
                                                                 <option value={-1}>请选择性别</option>
-                                                                <option value={0}>男</option>
-                                                                <option value={1}>女</option>
+                                                                <option value={1}>男</option>
+                                                                <option value={2}>女</option>
                                                             </select>
                                                         </div>
                                                     </div>
