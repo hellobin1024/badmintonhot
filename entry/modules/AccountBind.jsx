@@ -201,6 +201,7 @@ var accountBind=React.createClass({
                     mainContent =
                         <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
+                            {/*
                             <div className="acc_control_group">
                                 <div className="acc_conte" style={{float:'left'}}>
                                     <img style={{paddingLeft:'5px'}}
@@ -222,6 +223,7 @@ var accountBind=React.createClass({
                                     <button className="accBtn" onClick={this.viewSwitch.bind(this,'bindwechat')}>去绑定</button>
                                 }
                             </div>
+                             */}
                             <div className="clear"></div>
                             <div className="acc_control_group" style={{marginTop:'40px'}}>
                                 <div className="acc_conte" style={{float:'left'}}>
