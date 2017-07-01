@@ -1,36 +1,43 @@
 import React from 'react';
 import {render} from 'react-dom';
-import '../../css/components/basic/calendar.css';
+
+
 /**
  * data: "12-02-2012"
+ *
  */
 var Calendar = React.createClass({
     getInitialState  : function () {
         var data = this.props.data;
-        return ({data: data});
+        return ({data: data
+        });
     },
-    render : function () {
+    render           : function () {
         if (this.props.ctrlName !== undefined && this.props.ctrlName !== null) {
             return (
-                <span className="input-append date" data-date={this.state.data}
-                     ref="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
-                    <span className="add-on" >
-                        <i className="icon-calendar def-style"></i>
-                    </span>
-                    <input className="time-input" size="16" type="text" name={this.props.ctrlName} defaultValue={this.state.data}/>
-                </span>
+                <div className="input-append date" data-date={this.state.data} ref="datetimepicker"
+                     data-date-format="yyyy-mm-dd">
+                             <span className="add-on" >
+                                 <i className="icon-calendar" style={{backgroundColor:'#f4f4f4',padding:'10.5px'}}></i>
+                             </span>
+                    <input className="file" size="16"   type="text" name={this.props.ctrlName}  defaultValue={this.state.data} style={{padding:'5px 0px 5px 0px',width:'90px'}}/>
+                </div>
             );
         }
         else {
-            return (<div></div>);
+            return (<div>失败</div>);
         }
     },
     componentDidMount: function () {
         var $datetimepicker = $(this.refs.datetimepicker);
-        $datetimepicker.datetimepicker('setStartDate', '2016-01-01');
+        $datetimepicker.datetimepicker('setStartDate', '1900-01-01');
+        var ref=this;
         $datetimepicker.datetimepicker('').on('changeDate', function (ev) {
-            $datetimepicker.children(".time-input")[0].value = ev.date;
+            $datetimepicker.children(".file")[0].value = ev.date;
             $datetimepicker.datetimepicker('hide');
+            var date = $datetimepicker.children(".file")[0].value;
+            if(ref.props.callbackParent!=null&&ref.props.callbackParent!=undefined)
+                ref.props.callbackParent(date);
         });
 
     }

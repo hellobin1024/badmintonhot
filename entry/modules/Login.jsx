@@ -560,7 +560,7 @@ var Login=React.createClass({
                                 <div className="passport-form passport-form-sign" id="register-form">
                                     <div className="form-item">
                                         <div className="form-cont">
-                                            <input type="text" name="userName" className="passport-txt xl w-full" tabIndex="1" autoComplete="off" placeholder="请输入手机号"/>
+                                            <input type="text" name="userName" className="passport-txt xl w-full" tabIndex="1" autoComplete="off" placeholder="请输入用户名/手机号"/>
                                         </div>
                                     </div>
                                     <div className="form-item">
@@ -597,7 +597,7 @@ var Login=React.createClass({
                                         </div>
                                     </div>
 
-                                    <div className="form-item" >
+                                    {/*<div className="form-item" >
                                         <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
                                             <input name="isTrainer" type="checkbox" tabIndex="7" className="is-Trainer" onClick={this.isRegisterAsTrainer}/>
@@ -608,7 +608,7 @@ var Login=React.createClass({
                                             </select>
                                         </span>
 
-                                    </div>
+                                    </div>*/}
 
 
                                     <div className="form-item">

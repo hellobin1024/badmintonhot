@@ -32,7 +32,7 @@ var PersonInfo = React.createClass({
         var loginName= this.props.loginName;
         var personId=this.props.personId;
 
-        return({router:route, userName:loginName, personId:personId})
+        return({router:route, userName:loginName, personId:personId,current:'manageMyClass'})
     },
 
     render:function(){

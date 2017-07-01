@@ -6,6 +6,7 @@ import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import RightSlide from '../../entry/modules/RightSilde'
+import {Link} from 'react-router';
 var Proxy = require('../../components/proxy/ProxyQ');
 
 var Training = React.createClass({
@@ -142,22 +143,24 @@ var Training = React.createClass({
             var ref = this;
             data.map(function (item,i) {
                 trs.push(
-                    <div className="basic" key={i}>
+                    <div key={i}>
+                        <div className="basic" >
 
-                        <div className="business">
-                            <h2>{item.className}</h2>
-                            <p><span>介绍：</span>{item.detail}</p>
-                        </div>
-                        <div className="value">
-                            <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
-                        </div>
-                        <ul>
-                            <li><span>每周课程安排：</span> {item.classCount}次/周</li>
-                            <li><span>费用：</span> {item.cost}</li>
-                            <li><span>已报名人数：</span> {item.signNumber}</li>
-                        </ul>
-                        <div className="buy-me">
-                            <a onClick={ref.showClassDetail.bind(null,item)}>详情</a>
+                            <div className="business">
+                                <h2>{item.className}</h2>
+                                <p><span>介绍：</span>{item.detail}</p>
+                            </div>
+                            <div className="value">
+                                <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
+                            </div>
+                            <ul>
+                                <li><span>每周课程安排：</span> {item.classCount}次/周</li>
+                                <li><span>费用：</span> {item.cost}</li>
+                                <li><span>已报名人数：</span> {item.signNumber}</li>
+                            </ul>
+                            <div className="buy-me">
+                                <a onClick={ref.showClassDetail.bind(null,item)}>详情</a>
+                            </div>
                         </div>
                     </div>
                 )
@@ -191,6 +194,7 @@ var Training = React.createClass({
                                 <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
                         }
                         </div>
+                        <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonClass.classId} style={{paddingLeft: '33em'}} onClick={this.closeModal}>给他人报名--></Link>
                     </div>
 
 
@@ -204,7 +208,7 @@ var Training = React.createClass({
                                 <div className="product-grids">
                                     <div className="col-md-8 news_content">
                                         {trs}
-
+                                        <div className="clearfix"></div>
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
@@ -229,6 +233,7 @@ var Training = React.createClass({
                                 <div className="modal-body">
                                     <div className="modalEventDetail">
                                         {mrs}
+
                                     </div>
                                 </div>
                             </div>

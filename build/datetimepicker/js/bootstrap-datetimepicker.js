@@ -109,7 +109,7 @@
     this.initialDate = options.initialDate || new Date();
     this.zIndex = options.zIndex || this.element.data('z-index') || undefined;
     this.title = typeof options.title === 'undefined' ? false : options.title;
-    this.defaultTimeZone ="中国标准时间";
+    this.defaultTimeZone = (new Date).toString().split('(')[1].slice(0, -1);
     this.timezone = options.timezone || this.defaultTimeZone;
 
     this.icons = {
@@ -134,7 +134,7 @@
       this.formatViewType = this.element.data('formatViewType');
     }
 
-    this.minView = 0;
+    this.minView = 2;
     if ('minView' in options) {
       this.minView = options.minView;
     } else if ('minView' in this.element.data()) {
@@ -1417,11 +1417,11 @@
   $.fn.datetimepicker.Constructor = Datetimepicker;
   var dates = $.fn.datetimepicker.dates = {
     en: {
-      days:        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      daysShort:   ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      daysMin:     ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-      months:      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      days:        ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+      daysShort:   ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      daysMin:     ['日', '一', '二', '三', '四', '五', '六', '日'],
+      months:      ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      monthsShort: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
       meridiem:    ['am', 'pm'],
       suffix:      ['st', 'nd', 'rd', 'th'],
       today:       'Today',

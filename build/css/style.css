@@ -333,7 +333,6 @@ input:focus {
 /*--//Login --*/
 /*-- banner --*/
 .banner{
-    background: url(../images/banner.jpg) no-repeat 0px 0px;
     background-size: cover;
     padding: 2em 0;
 }
@@ -693,7 +692,6 @@ select option{
 }
 .how-to {
 	margin-top: 3em;
-	background: url(../images/2.jpg) no-repeat 0px -157px;
 	min-height: 400px;
 	padding: 2em 0;
 	background-size: cover;
@@ -1295,12 +1293,12 @@ ul#flexiselDemo1 li a h4:hover{
 }
 /*-- hotels --*/
 .hotels-banner{
-    background: url(../images/banner3.jpg) no-repeat 0px 0px;
+
 	background-size:cover;
 }
 /*-- holidays --*/
 .holidays-banner{
-    background: url(../images/banner1.jpg) no-repeat 0px 0px;
+
     background-size: cover;
 }
 .holidays-grid {
@@ -1327,7 +1325,7 @@ ul#flexiselDemo1 li a h4:hover{
     margin-bottom: 6px;
 }
 .fh-banner {
-    background: url(../images/banner1.jpg) no-repeat 0px 0px;
+
     background-size: cover;
 }
 /*-- bus --*/
@@ -1373,7 +1371,6 @@ ul#flexiselDemo1 li a h4:hover{
 }
 /*-- trains --*/
 .trains-banner{
-	background: url(../images/banner4.jpg) no-repeat 0px 0px;
     background-size: cover;
 }
 .train-facts{

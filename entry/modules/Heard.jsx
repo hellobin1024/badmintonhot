@@ -75,7 +75,7 @@ var Heard = React.createClass({
                                 </li>
                                 <li ref="news">
                                     <Link to={window.App.getAppRoute() + "/news"}>
-                                        资讯
+                                        羽坛资讯
                                     </Link>
                                 </li>
                                 <li ref="events">
@@ -85,12 +85,12 @@ var Heard = React.createClass({
                                 </li>
                                 <li ref="training">
                                     <Link to={window.App.getAppRoute() + "/training"}>
-                                        培训
+                                        课程培训
                                     </Link>
                                 </li>
-                                <li ref="video"><a href="#">视频</a></li>
+                                {/*<li ref="video"><a href="#">视频</a></li>
                                 <li ref="group"><a href="#">直播</a></li>
-                                <li ref="group"><a href="#">商城</a></li>
+                                <li ref="group"><a href="#">商城</a></li>*/}
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
