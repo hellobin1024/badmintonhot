@@ -131,11 +131,13 @@ var CreateEvent = React.createClass({
                         </span>
                     </div>
                     <div className="common-line">
-                        <span className="common-label l-label">活动时间：</span>
-                        <span >
+                        <span className="common-label l-label" style={{float:'left'}}>活动时间：</span>
+                        <span style={{float:'left'}}>
                             <Calendar data={today} ctrlName='transferDate'/>
                         </span>
-                        <span className="common-label r-label">活动地点：</span>
+                    </div>
+                    <div className="common-line">
+                        <span className="common-label " style={{marginLeft: '120px'}}>活动地点：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventPlace">
                                 <option value={-1}>请选择</option>

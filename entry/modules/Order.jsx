@@ -18,7 +18,8 @@ var Order = React.createClass({
 
     getUrlParam :function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        // var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        var r = window.location.href.substr(window.location.href.indexOf('?')+1).match(reg);
         if (r != null) return unescape(r[2]); return null; //返回参数值
     },
     getInitialState: function () {
@@ -155,8 +156,8 @@ var Order = React.createClass({
             crossDomain: true,
             cache   : false,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             //jsonpCallback: '?',
             //jsonp: 'callback',
@@ -167,7 +168,7 @@ var Order = React.createClass({
                 var $modal=$("#root_modal");
                 var content;
                 var errType="";
-                if(xhr.status==200 || xhr.status=="200") {
+                if(xhr.status==200 || xhr.status=="200"||xhr.status==0 || xhr.status=="0") {
                     Tips.showTips("已通知课程教练！");
                     return;
                 } else if(xhr.status==404||xhr.status=="404") {
@@ -232,7 +233,7 @@ var Order = React.createClass({
                             alert(ob.response);
 
                             const path = "/personInfo";
-                            browserHistory.push(path);
+                            hashHistory.push(path);
                             ref.sendMessage(coachPhone,"羽毛球热——注册会员'"+loginName+"'报名了您所开设的暑期课程'"+className+"'，请及时电话联系进行确认！联系电话：+"+myPhone);//给教练发消息
                             ref.sendMessage(myPhone,"羽毛球热——感谢您报名我们的暑期课程，具体缴费，福利详情请与您的课程教练："+coachName+" "+coachPhone+"联系确认");//给自己发消息
 
@@ -316,7 +317,7 @@ var Order = React.createClass({
                             请在右下角点击"点此添加"选项进行人员添加，在您添加的同时我们将会为您创建该人员的账号（初始密码000000）以方便其登陆！</p>
                     </div>
 
-                    <div id="pjax-container" className="person-container clearfix" style={{paddingTop: '25px'}}>
+                    <div id="pjax-container" className="person-container clearfix" style={{paddingTop: '25px',color:'black'}}>
                         <div>
                             <div className="orderTitle">
                                 <h2 >您所选课程</h2>
@@ -327,6 +328,7 @@ var Order = React.createClass({
                             </div>
                             <div id="d1" className="order-container">
                                     {lis}
+                                <div className="clearfix"></div>
                             </div>
                             <div style={{marginLeft: '78em'}}>
                                 <p>以上没有您所需要的人员？<a onClick={this.showModal}>点此添加！</a></p>

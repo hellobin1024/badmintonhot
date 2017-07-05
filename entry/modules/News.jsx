@@ -33,6 +33,9 @@ var News = React.createClass({
             isChange: false,
         });
     },
+    dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
+        return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
+    },
     getNewsTheme:function () {
         var url = "/func/allow/getNewsTheme";
         var ref = this;
@@ -62,6 +65,7 @@ var News = React.createClass({
             var data = this.paginationData(this.state.data, this.state.pageIndex);
             var len = this.state.data.length;
             var trs = [];
+            var ref=this;
             data.map(function (item, i) {
                 trs.push(
                     <div className="product-right-grids" key={i}>
@@ -79,7 +83,7 @@ var News = React.createClass({
                                     <div className="newsContain">
                                         <span className="icon-eye-open">{item.readCount + '  '}位看官</span>
                                         <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-                                        <span className="icon-calendar">{item.creatTime + 1 + '月' + 22 + '日'}</span>
+                                        <span className="icon-calendar">{ref.dateFormat(item.createTime)}</span>
                                     </div>
                                     <p>{item.brief}</p>
                                 </div>

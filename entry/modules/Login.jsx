@@ -18,7 +18,8 @@ var Login=React.createClass({
     //获取url中的参数
     getUrlParam :function(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        // var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        var r = window.location.href.substr(window.location.href.indexOf('?')+1).match(reg);
         if (r != null) return unescape(r[2]); return null; //返回参数值
     },
 
@@ -442,10 +443,11 @@ var Login=React.createClass({
     },
 
     getInitialState:function(){
-        var path='/app'
+        var path='/app';
+        var type=this.getUrlParam("loginType");
         //var path = SyncStore.getRouter();
         //SyncStore.setRouter(null);
-        return ({view:'login', path:path, verifyCode: null, sportsLevel: null});
+        return ({view:'login', path:path, verifyCode: null, sportsLevel: null,type:type});
     },
 
     repaintImage:function (){
@@ -457,6 +459,7 @@ var Login=React.createClass({
         var mainContent;
         var view=this.state.view;
         var a=this.props.token;
+        var product=parseInt(this.getUrlParam("product"));
         switch(view){
             case 'login':
                 mainContent=
@@ -488,7 +491,7 @@ var Login=React.createClass({
                                                 <tr >
                                                     <td>验证码: </td>
                                                     <td><input type="text" name="verify" id="verify" className="passport-txt xl w-full" /></td>
-                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="/validatecode.jpg" /></td>
+                                                    <td><img style={{paddingLeft:'10px'}} id="validateImage" src="badmintonhot/validatecode.jpg" /></td>
                                                     <td><img style={{paddingLeft:'5px'}} onClick={this.repaintImage} src={window.App.getResourceDeployPrefix()+"/images/refresh1.png"} ></img></td>
                                                     <td><span id="verifyMsg" className="errorMessage"></span></td>
                                                 </tr>
@@ -509,6 +512,10 @@ var Login=React.createClass({
 
                                                     <button type="button" id="login" className="passport-btn passport-btn-def xl w-full" tabIndex="4" onClick={this.login}>
                                                         <a style={{color:'#ffffff'}}>登录</a>
+                                                        {this.state.type==null?
+                                                            <Link to={window.App.getAppRoute() + '/training'} id="goToOther"></Link>:
+                                                            <Link to={window.App.getAppRoute() + '/order?product='+product} id="goToOther"></Link>
+                                                        }
                                                     </button>
                                                 </div>
                                             </div>
@@ -715,7 +722,7 @@ var Login=React.createClass({
 
 
         return(
-            <div className="container" style={{position: 'absolute',height: '100%', width: '100%',background:'url('+window.App.getResourceDeployPrefix()+'/images/loginbg.jpeg)'}}>
+            <div className="container" style={{position: 'absolute',height: '100%', width: '100%',background:'url('+window.App.getResourceDeployPrefix()+'/images/loginbg.jpg)'}}>
             <div className="passport-wrapper">
 
                 <div id="container" ref='login-register-forget'>

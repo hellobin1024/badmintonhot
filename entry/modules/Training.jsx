@@ -21,7 +21,7 @@ var Training = React.createClass({
     },
     initialData:function(){
 
-        this.getAllCLass();
+        this.getAllClass();
 
     },
     signUp:function (item) {
@@ -39,6 +39,7 @@ var Training = React.createClass({
                 function (res) {
                     if (res.reCode == 0) {
                         alert(res.response);
+                        ref.initialData();
                     } else {
                         alert(res.response);
                     }
@@ -81,7 +82,7 @@ var Training = React.createClass({
         return date;
     },
     showClassDetail:function (item) {
-        var url = "/func/allow/getCLassScheduleByClassId";
+        var url = "/func/allow/getClassScheduleByClassId";
         var param={
             id:item.classId
         }
@@ -116,7 +117,7 @@ var Training = React.createClass({
         $(successModal).modal('hide');
     },
 
-    getAllCLass:function () {
+    getAllClass:function () {
         var url = "/func/allow/getAllClass";
         var ref = this;
         Proxy.query(
@@ -194,7 +195,9 @@ var Training = React.createClass({
                                 <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
                         }
                         </div>
-                        <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonClass.classId} style={{paddingLeft: '33em'}} onClick={this.closeModal}>给他人报名--></Link>
+                        <div style={{paddingTop: '2em'}}>
+                            <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonClass.classId} onClick={this.closeModal}>给他人报名--></Link>
+                        </div>
                     </div>
 
 

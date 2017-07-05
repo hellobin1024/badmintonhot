@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
+import { connect } from 'react-redux';
 import '../../css/entry/modules/accountBind.css';
-
 var Tips = require('../../components/basic/Tips');
 
 var ProxyQ = require('../../components/proxy/ProxyQ');
@@ -78,7 +78,7 @@ var accountBind=React.createClass({
             //jsonpCallback: '?',
             //jsonp: 'callback',
             success : function (response) {
-                ins.showTips("验证码发送成功！");
+                Tips.showTips("验证码发送成功！");
                 ins.verifyCodeTimeOut();
             },
             error   : function (xhr, status, err) {
@@ -86,7 +86,7 @@ var accountBind=React.createClass({
                 var content;
                 var errType="";
                 if(xhr.status==200 || xhr.status=="200") {
-                    ins.showTips("验证码发送成功！");
+                    Tips.showTips("验证码发送成功！");
                     ins.verifyCodeTimeOut();
                     return;
                 } else if(xhr.status==404||xhr.status=="404") {
@@ -191,6 +191,14 @@ var accountBind=React.createClass({
         return ({view:'bindall', verifyCode:null, init:null});
     },
 
+    qrcode:function () {
+        var personId=this.props.personId+"";
+        window.setTimeout(function () {
+            var el=document.getElementById("qrcode");
+            new QRCode(el, personId);
+        },500)
+
+    },
     render:function(){
         var mainContent;
         var data;
@@ -201,7 +209,7 @@ var accountBind=React.createClass({
                     mainContent =
                         <div ref="accPersonInfo" style={{marginTop:'50px'}}>
 
-                            {/*
+
                             <div className="acc_control_group">
                                 <div className="acc_conte" style={{float:'left'}}>
                                     <img style={{paddingLeft:'5px'}}
@@ -223,7 +231,7 @@ var accountBind=React.createClass({
                                     <button className="accBtn" onClick={this.viewSwitch.bind(this,'bindwechat')}>去绑定</button>
                                 }
                             </div>
-                             */}
+
                             <div className="clear"></div>
                             <div className="acc_control_group" style={{marginTop:'40px'}}>
                                 <div className="acc_conte" style={{float:'left'}}>
@@ -252,32 +260,8 @@ var accountBind=React.createClass({
                     break;
                 case 'bindwechat':
                     mainContent =
-                        <div ref="accPersonInfo" style={{marginTop:'50px'}}>
-
-                            <div className="acc_control_group">
-                                <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                    <span className="acc_label" >微信号：</span>
-                                </div>
-                                <div className="acc_conte" style={{float:'left'}} >
-                                    <input name="weichat" defaultValue="" maxLength="11" className="inputStyle" placeholder=""/>
-                                </div>
-                                <div className="toolBar">
-                                    <button className="caccBtn" onClick="">获取验证码</button>
-                                </div>
-                            </div>
-                            <div className="clear"></div>
-                            <div className="acc_control_group">
-                                <div className="acc_label" style={{float:'left',width:'60px'}}>
-                                    <span className="acc_label" >验证码：</span>
-                                </div>
-                                <div className="acc_conte" style={{float:'left'}} >
-                                    <input name="verifyCode" defaultValue="" maxLength="25" className="inputStyle" placeholder=""/>
-                                </div>
-                            </div>
-                            <div className="clear"></div>
-                            <div className="toolBar">
-                                <button className="wechatBtn" onClick={this.weichatSubmit}>保存</button>
-                            </div>
+                        <div ref="accPersonInfo" style={{marginTop:'50px',padding:'170px'}} id="qrcode" onLoad={this.qrcode()}>
+                            <span style={{fontSize: 'larger',paddingLeft: '100px'}}>扫码绑定</span>
                         </div>
                     break;
                 case 'bindphone':
@@ -324,7 +308,14 @@ var accountBind=React.createClass({
         );
     },
 });
-module.exports=accountBind;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        loginName: state.userInfo.personId,
+    }
+    return props
+}
+export default connect(mapStateToProps)(accountBind);
 /**
  * Created by douxiaobin on 2016/10/27.
  */

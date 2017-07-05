@@ -82,6 +82,7 @@ var Event = React.createClass({
             function (res) {
                 if(res.reCode==0){
                     alert(res.response);
+                    ref.initialData();
                 }else {
                     alert(res.response);
                 }
@@ -112,6 +113,7 @@ var Event = React.createClass({
                 function (res) {
                     if(res.reCode==0){
                         alert(res.response);
+                        ref.initialData();
                     }else {
                         alert(res.response);
                     }

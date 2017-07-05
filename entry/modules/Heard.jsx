@@ -3,10 +3,10 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
-
-var UserActions=require('../action/UserActions');
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
+var UserActions=require('../action/UserActions');
+
 var ProxyQ = require('../../components/proxy/ProxyQ');
 var Heard = React.createClass({
 
@@ -57,7 +57,7 @@ var Heard = React.createClass({
                             <div className="emergency-grid">
                                 <ul>
                                     <li>联系电话 : </li>
-                                    <li className="call">+1 234 567 8901</li>
+                                    <li className="call">18254888887</li>
                                 </ul>
                             </div>
                             <div className="clearfix"> </div>

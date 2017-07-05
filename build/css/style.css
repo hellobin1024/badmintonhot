@@ -113,7 +113,7 @@ nav.navbar.navbar-default {
 
 .user-name{
     float:left;
-    width:90px;
+    width:120px;
     cursor:pointer;
 }
 
@@ -2258,6 +2258,7 @@ span.menu {
 .business {
     background:#344859;
     padding:1.5em 0em;
+    height: 116px;
 }
 .business h2{
     font-size:22px;

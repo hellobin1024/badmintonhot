@@ -36,10 +36,10 @@ var MyCLass = React.createClass({
     },
 
     operate: function (ob,index) {
-        var classId=ob;
-        var url="/func/allow/deleteMyCLass";
+        var memberId=ob;
+        var url="/func/allow/deleteMyClass";
         var params={
-            classId:classId,
+            memberId:memberId,
         };
         ProxyQ.query(
             'post',
@@ -74,12 +74,12 @@ var MyCLass = React.createClass({
         var mainContent = null;
         var data = this.state.data;
         var operate = this.operate;
-        var CLassTable = [];
+        var ClassTable = [];
         var ins = this;
         if(data!==undefined && data!==null){
 
             data.map(function(item, i){
-                CLassTable.push(
+                ClassTable.push(
 
                         <tbody key={i} className="event-table">
                         <tr>
@@ -104,7 +104,7 @@ var MyCLass = React.createClass({
                         </tr>
                         <tr>
                             <td></td>
-                            <td style={{TextAlign:'center'}} ><a className="operate" onClick={operate.bind(ins,item.classId,i)}>{item.operate}</a></td>
+                            <td style={{TextAlign:'center'}} ><a className="operate" onClick={operate.bind(ins,item.memberId,i)}>{item.operate}</a></td>
                         </tr>
                         </tbody>
 
@@ -122,7 +122,7 @@ var MyCLass = React.createClass({
                                 <th width="300"></th>
                             </tr>
                             </thead>
-                            {CLassTable}
+                            {ClassTable}
                         </table>
                     </div>
                 </div>

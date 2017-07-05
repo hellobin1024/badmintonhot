@@ -19,7 +19,7 @@ class AppRouter extends Component {
     render() {
 
         return (
-            <Router history={browserHistory}>
+            <Router history={hashHistory}>
                 <Route path={window.App.getAppRoute()} component={App}>
                     <IndexRoute  component={AD}/>
                     <Route path={window.App.getAppRoute() + "/"} component={AD}/>
