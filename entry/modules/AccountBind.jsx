@@ -213,7 +213,7 @@ var accountBind=React.createClass({
                             <div className="acc_control_group">
                                 <div className="acc_conte" style={{float:'left'}}>
                                     <img style={{paddingLeft:'5px'}}
-                                         src={window.App.getResourceDeployPrefix()+"/images/wechat.jpg"}></img>
+                                         src={window.App.getResourceDeployPrefix()+"/images/wechaticon.jpg"}></img>
                                 </div>
                                 <div className="acc_span" style={{float:'left',width:'120px',marginLeft:'15px'}}>
                                     <span className="acc_span">微信绑定</span>

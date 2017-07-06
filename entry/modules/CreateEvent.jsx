@@ -105,7 +105,10 @@ var CreateEvent = React.createClass({
         }
         return ({personId: personId, data:null});
     },
-
+test:function () {
+    $('#showExample').timepicker();
+    // $('#hideExample').timepicker('isVisible');
+},
     render:function(){
         var mainContent = null;
         var data = this.state.data;
@@ -177,6 +180,12 @@ var CreateEvent = React.createClass({
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
                         </span>
                     </div>
+
+
+                        <input type="text" className="date start" id="showExample"/>
+
+                    <button onClick={this.test}>test</button>
+
                 </div>
 
         } else{
@@ -184,6 +193,7 @@ var CreateEvent = React.createClass({
         }
         return mainContent;
     },
+
 });
 
 module.exports=CreateEvent;
