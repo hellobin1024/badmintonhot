@@ -13,7 +13,7 @@ import MyEvents from '../modules/MyEvents.jsx';
 import MyClass from '../modules/MyClass';
 import CreateGroup from '../modules/CreateGroup.jsx';
 import CreateEvent from '../modules/CreateEvent.jsx';
-
+import CreateCLass from '../modules/CreateCLass.jsx';
 
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
@@ -82,6 +82,11 @@ var PersonInfo = React.createClass({
                     <MyClass personId={personId}/>
                 );
                 break;
+            case 'createClass':
+                mainContent =(
+                    <CreateCLass personId={personId}/>
+                );
+                break;
         }
 
         return(
@@ -108,6 +113,9 @@ var PersonInfo = React.createClass({
                             <dt><i className="icon-user-md"></i>课程</dt>
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyClass')}>我的课程</a></div>
+                            </dd>
+                            <dd className="my-group">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createClass')}>课程定制</a></div>
                             </dd>
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className="base-info">
