@@ -14,6 +14,7 @@ var Heard = React.createClass({
         this.props.dispatch(UserActions.logoutAction());
     },
 
+
     getInitialState: function () {
         var path=this.props.path;
         var token = this.props.token;
