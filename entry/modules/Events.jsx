@@ -130,7 +130,14 @@ var Event = React.createClass({
 
     },
     getAllEvents:function () {
-        var url = "/func/allow/getAllEvents";
+        if(this.props.token!=null)
+        {
+            var url = "/func/allow/getCheckedEvents";//登录了以后
+
+        }else{
+            var url = "/func/allow/getAllEvents";//未登录
+        }
+
         var ref = this;
         Proxy.query(
             'GET',
