@@ -29,6 +29,7 @@ var PersonInfo = React.createClass({
         var route = new Array();
         route.push(undefined);
 
+        var a="1";
         var loginName= this.props.loginName;
         var personId=this.props.personId;
 
