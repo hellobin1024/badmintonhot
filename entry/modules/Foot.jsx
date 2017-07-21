@@ -7,7 +7,7 @@ var Foot = React.createClass({
 
 
     getInitialState: function () {
-        var a=1;
+        var a=3;
 
         return ({});
     },
