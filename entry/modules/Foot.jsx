@@ -12,9 +12,6 @@ var Foot = React.createClass({
     },
 
 
-
-
-
     render:function() {
         var contains = null;
         contains =
