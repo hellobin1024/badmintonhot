@@ -50,7 +50,15 @@
     border-radius: 5px;
     margin-left: 25%;
 }
-
+.search-Btn {
+    height: 35px;
+    font-size: 14px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 70px;
+    border-radius: 2px;
+    margin-left: 15px;
+}
 .save-Btn:hover{
     color: #000000;
 }

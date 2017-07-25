@@ -6,6 +6,7 @@ var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
 import Calendar from '../../components/basic/Calendar.jsx';
 import '../../css/entry/modules/create.css';
+import { connect } from 'react-redux';
 
 var Tips = require('../../components/basic/Tips');
 
@@ -20,6 +21,7 @@ var CreateEvent = React.createClass({
         var eventBrief = $(createEvent).find("input[name='eventBrief']").val();
         var transferDate = $(createEvent).find("input[name='transferDate']").val();
         var eventPlace = $('#eventPlace option:selected').val();
+        var eventGroup = $('#eventGroup option:selected').val();
         var eventMaxMemNum = $(createEvent).find("input[name='eventMaxMemNum']").val();
         var hasSparring = $('#hasSparring option:selected').val();
         var eventType = $('#eventType option:selected').val();
@@ -52,6 +54,7 @@ var CreateEvent = React.createClass({
                 eventPlace:eventPlace,
                 eventMaxMemNum:eventMaxMemNum,
                 hasSparring:hasSparring,
+                eventGroup:eventGroup,
                 eventType:eventType
             };
             ProxyQ.query(
@@ -75,11 +78,11 @@ var CreateEvent = React.createClass({
     },
 
     initialData:function(){
-        var url="/func/events/getVenueUnit";
+        var url="/func/events/getVenueUnitGroup";
         var params={};
 
         ProxyQ.query(
-            'get',
+            'post',
             url,
             params,
             null,
@@ -103,25 +106,29 @@ var CreateEvent = React.createClass({
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null});
+        return ({personId: personId, data:null,addPerson:[]});
     },
 
     render:function(){
         var mainContent = null;
         var data = this.state.data;
         var eventPlaceList = [];
-
+        var eventGroupList = [];
         if(data!==undefined && data!==null){
 
-            data.map(function(item, i){
+            var data1=data.listGroupInfo;
+            var data2=data.listVenueUnit;
+            data2.map(function(item, i){
                 eventPlaceList.push(<option key={i} value={item.unitId}>{item.name}</option>);
+            });
+            data1.map(function(item, i){
+                eventGroupList.push(<option key={i} value={item.groupId}>{item.groupName}</option>);
             });
 
             mainContent=
                 <div ref="createEvent" className="c-block">
                     <div className="common-line">
-                        <span className="common-label l-label">活动名称：</span>
-                        <span>
+                        <span className="common-label l-label">活动名称：</span><span>
                             <input type="text" name="eventName" className="common-input" tabIndex="1"></input>
                         </span>
 
@@ -170,13 +177,24 @@ var CreateEvent = React.createClass({
                                 <option value={0}>公开活动</option>
                             </select>
                         </span>
+                        <span className="common-label r-label">   选择小组：</span>
+                        <span>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
+                                    <option value={-1}>请选择</option>
+                                    {eventGroupList}
+                                </select>
+                        </span>
+
+
+
                     </div>
 
-                    <div className="save-line">
+                    <div className="save-line" style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
                         </span>
                     </div>
+
                 </div>
 
         } else{
