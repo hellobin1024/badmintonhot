@@ -101,6 +101,7 @@ var CreateEvent = React.createClass({
         );
     },
 
+
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
