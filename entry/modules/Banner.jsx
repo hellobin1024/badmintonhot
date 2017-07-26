@@ -1,37 +1,42 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
-import '../../build/css/JFFormStyle-1.css'
-import '../../build/css/jquery-ui.css'
-import '../../build/css/style.css'
+
+
 
 var Banner=React.createClass({
 
     componentDidMount: function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                start: function (slider) {
-                    $('body').removeClass('loading');
-                }
-            });
+        $('#myCarousel').carousel({
+            interval: 2000
+        })
     },
 
     render: function () {
         var contains = null;
         contains =
-
-                    <div className="flexslider" directionNav={false}>
-                        <ul className="slides">
-                            <li>
-                                <img src="/images/test.jpg" alt=""/>
-                            </li>
-                            <li>
-                                <img src="/images/test1.jpg" alt=""/>
-                            </li>
-                            <li>
-                                <img src="/images/test2.jpg" alt=""/>
-                            </li>
-                        </ul>
+            <div id="myCarousel" className="carousel slide">
+                <ol className="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                </ol>
+                <div className="carousel-inner">
+                    <div className="item active">
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test.jpg"} alt="First slide"/>
                     </div>
+                    <div className="item">
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test3.jpg"} alt="Fourth slide"/>
+                    </div>
+                    <div className="item">
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test1.jpg"} alt="Second slide"/>
+                    </div>
+                    <div className="item">
+                        <img src={window.App.getResourceDeployPrefix()+"/images/test2.jpg"} alt="Third slide"/>
+                    </div>
+
+                </div>
+            </div>
 
         return contains;
     }

@@ -28,6 +28,11 @@ window.Deploy.getResourceDeployPrefix = function () {
 window.App.getResourceDeployPrefix = function () {
     return "";
 }
+
+window.App.getDownloadDeployDeployPrefix = function () {
+    return "";
+}
+
 window.App.getAppRoute = function () {
     return "";
 }

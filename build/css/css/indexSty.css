@@ -1,0 +1,73 @@
+@charset "utf-8";
+/* CSS Document */
+.mr{margin-left:auto;margin-right:auto;}
+.lf{float:left;}
+.rf{float:right;}
+.leftBg,.rightBg{height:100%;position:fixed;}
+.leftBg{background:url(../../images/img/leftBg.png) no-repeat 0 center;left:0;top:0;z-index:-2;width:73.6%;background-size:100% 100%;}
+.rightBg{background:url(../../images/img/rightBg.png) no-repeat 0 center;right:0;top:0;z-index:-1;width:77.9%;background-size:100% 100%;}
+.con_lf,.con_rf{width:50%;}
+/**/
+.content{width:1024px;}
+.logo_ad{padding-top:26px;position: relative;
+    left: -10em;}
+/*左边样式*/
+.big_word{padding-top:25px;padding-left:24px;}
+.btnCon{padding-top:114px;padding-left:60px;position:relative;width:341px;height:305px;top:30em;left:-9em;}
+.btnbg{position:absolute;left:60px;top:114px;}
+.btnWord{position:absolute;top:150px;left:69px;}
+.btn_arow{position:absolute;top:209px;left:35px;}
+.house{display: block;top:24em;left:-2em;position:relative;}
+/*右边样式*/
+/*.big_word_rf{padding-right:20px;padding-top:147px;padding-bottom:92px;}*/
+.peoCon{position:relative;top:5em;left:32em;height:240px;width:414px;}
+.peo{position:absolute;top:0;left:0;}
+.work{position:absolute;top:33px;left:0px;}
+.peoBtn{ position:relative;top: -9em;left: 34em;}
+.btnWord_rf{position:absolute;top:32px;left:22px;}
+.btn_arow_rf{position:absolute;top:53px;left:110px;}
+
+.leftBg,.rightBg,.big_word img,.logo a img,.big_word_rf img,.btnWord,.btnbg,.house,.peo,.work,.btnbg_rf,.btnWord_rf,.btn_arow_rf,.btn_arow,.btnWord,.btn_arow_rf,.btnWord_rf{display:none;}
+
+.adText {
+    position: relative;
+    bottom: 38em;
+}
+.adText1 {
+    position: relative;
+    top: 9em;
+    right: 20em;
+}
+.adText h2 {
+    font-size: large;
+    color: #fab34c;
+}
+.adText1 h2{
+    font-size: large;
+    color: #03b4ac;
+}
+.adText p {
+     font-size: x-small;
+     width: 30em;
+     text-indent: 30px;
+ }
+.adText1 p{
+    font-size: x-small;
+    width: 30em;
+    text-indent: 30px;
+}
+.adText table {
+    font-size: x-small;
+}
+.adText1 table{
+    font-size: x-small;
+}
+.adText_th{
+    text-align: center;
+}
+.adText_td1{
+    width:60px;
+}
+.adText_td2{
+    width:280px;
+}

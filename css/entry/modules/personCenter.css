@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+.person-container {
+    width: 1140px;
+    margin: 0 auto;
+}
+
+.clearfix, .pagination {
+    display: block;
+}
+
+#aside {
+    width: 230px;
+    height: 800px;
+    background-color: #fff;
+    -webkit-transition: height 0.5s;
+    transition: height 0.5s;
+}
+
+.l {
+    float: left;
+}
+
+#aside dl {
+    padding-top: 30px;
+    padding-left: 35px;
+}
+
+#aside dl dt {
+    color: #3c3c3c;
+    font-size: 15px;
+    font-weight: bold;
+    height: 26px;
+    line-height: 14px;
+    padding: 5px 0;
+    margin-top: 15px;
+}
+
+#aside dl dt i {
+    float: left;
+    width: 28px;
+    font-weight: normal;
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#aside dl dd.current {
+    color: #44b05a;
+}
+
+#aside dl dd {
+    padding: 10px 0px 20px 10px;
+    font-size: 13px;
+    height: 14px;
+    line-height: 14px;
+}
+
+#aside dl dd.current div {
+    border-left-color: #44b05a;
+}
+
+#aside dl dd div {
+    border-left: 3px solid #fff;
+    padding-left: 10px;
+}
+#aside dl dd a {
+    color: #757575;
+    cursor:pointer;
+}
+
+:link, :visited, ins {
+    text-decoration: none;
+}
+
+#content {
+    width: 700px;
+    background-color: #fff;
+    overflow: auto;
+    -webkit-transition: height 0.5s;
+    transition: height 0.5s;
+}
+
+.r {
+    float: left;
+}
+
+.my-group:hover{
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.my-activity:hover {
+    text-decoration: underline;
+    color: green;
+}
+
+.base-info:hover {
+    text-decoration: underline;
+    color: green;
+}
+
+.count-bind:hover{
+    text-decoration: underline;
+    color: green;
+}
+
+.modify-pwd:hover {
+    text-decoration: underline;
+    color: green;
+}

@@ -1,16 +1,50 @@
 import React from 'react';
 import {render} from 'react-dom';
-import '../../build/css/JFFormStyle-1.css'
-import '../../build/css/jquery-ui.css'
-import '../../build/css/style.css'
+import '../../build/css/JFFormStyle-1.css';
+import '../../build/css/jquery-ui.css';
+import '../../build/css/style.css';
 import {Link} from 'react-router';
+import { connect } from 'react-redux';
+var UserActions=require('../action/UserActions');
+
+var ProxyQ = require('../../components/proxy/ProxyQ');
 var Heard = React.createClass({
+
+    exit:function () {
+        this.props.dispatch(UserActions.logoutAction());
+    },
 
     getInitialState: function () {
         var path=this.props.path;
-        return({router:path})
+        var token = this.props.token;
+        var loginName= this.props.loginName;
+        var personId=this.props.personId;
+        var loginState = false;
+        if(token=='0' || token==0){ //先从flux获取登录状态
+            var loginState = true;
+        }
+
+        if(loginState==false){ // 刷新时如果flux中登录状态丢失，从后台获取
+            this.props.dispatch(UserActions.loginStateAction(path));
+        }
+
+        return({router:path, loginState:loginState, userName:loginName, personId:personId})
     },
+
+    componentWillReceiveProps: function (props) {
+        var path=props.path;
+        var token = props.token;
+        var loginName= props.loginName;
+        var personId=props.personId;
+        var loginState = false;
+        if(token=='0' || token==0){
+            var loginState = true;
+        }
+        this.setState({router:path, loginState:loginState, userName:loginName, personId:personId})
+    },
+
     render:function() {
+
         var contains = null;
         contains =
             <div className="header">
@@ -23,7 +57,7 @@ var Heard = React.createClass({
                             <div className="emergency-grid">
                                 <ul>
                                     <li>联系电话 : </li>
-                                    <li className="call">+1 234 567 8901</li>
+                                    <li className="call">18254888887</li>
                                 </ul>
                             </div>
                             <div className="clearfix"> </div>
@@ -32,41 +66,59 @@ var Heard = React.createClass({
                     </div>
                     <div className="nav-top">
                         <div className="top-nav">
-                            <span className="menu"><img src="images/menu.png" alt="" /></span>
+                            <span className="menu"><img src={window.App.getResourceDeployPrefix()+"/images/menu.png"} alt="" /></span>
                             <ul className="nav1">
                                 <li ref="main">
-                                    <Link to={window.App.getAppRoute() + "/main"}>
+                                    <Link to={window.App.getAppRoute() + "/ad"}>
                                         首页
                                     </Link>
                                 </li>
                                 <li ref="news">
                                     <Link to={window.App.getAppRoute() + "/news"}>
-                                        资讯
+                                        羽坛资讯
                                     </Link>
                                 </li>
                                 <li ref="events">
                                     <Link to={window.App.getAppRoute() + "/events"}>
-                                        活动
+                                        活动/群圈
                                     </Link>
                                 </li>
                                 <li ref="training">
                                     <Link to={window.App.getAppRoute() + "/training"}>
-                                        培训
+                                        课程培训
                                     </Link>
                                 </li>
-                                <li ref="video"><a href="#">视频</a></li>
+                                {/*<li ref="video"><a href="#">视频</a></li>
                                 <li ref="group"><a href="#">直播</a></li>
-                                <li ref="group"><a href="#">商城</a></li>
+                                <li ref="group"><a href="#">商城</a></li>*/}
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
-                        <div className="dropdown-grids">
-                            <div id="loginContainer">
-                                <Link to={window.App.getAppRoute() + "/login"}>
-                                    <span>登录</span>
-                                </Link>
+
+                        {this.state.loginState ?
+                            <div className="user-info">
+                                <span className="user-name">
+                                    <Link to={window.App.getAppRoute() + "/personInfo"}>
+                                        <i className='icon-user' style={{color: 'green'}}></i>
+                                        <strong style={{marginLeft:'10px'}}>{this.state.userName}</strong>
+                                    </Link>
+                                </span>
+
+                                <span className="logout" onClick={this.exit}>
+                                    <i className='icon-off'></i>
+                                    <Link to={window.App.getAppRoute() + "/main"}></Link>
+                                </span>
                             </div>
-                        </div>
+                            :
+                            <div className="dropdown-grids">
+                                <div id="loginContainer">
+                                    <Link to={window.App.getAppRoute() + "/login"}>
+                                        <span>登录</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        }
+
                         <div className="clearfix"> </div>
                     </div>
                 </div>
@@ -94,9 +146,9 @@ var Heard = React.createClass({
                 a = 'news';
                 break
             default:
-                break
+                break;
         }
-        $(this.refs[a]).attr("class","active")
+        $(this.refs[a]).attr("class","active");
 
         $("#loginButton").click(function() {
             var button = $('#loginButton');
@@ -119,4 +171,13 @@ var Heard = React.createClass({
         });
     }
 });
-module.exports = Heard;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+        loginName: state.userInfo.loginName,
+        personId: state.userInfo.personId
+    }
+    return props
+}
+export default connect(mapStateToProps)(Heard);

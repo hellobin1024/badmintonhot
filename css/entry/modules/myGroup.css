@@ -1,0 +1,22 @@
+.group-table{
+    width: 70%;
+    margin-top: 60px;
+    font-size: 14px;
+    color:#000000;
+}
+
+.operate{
+    cursor: pointer;
+    color: #337ab7;
+}
+
+.operate:hover{
+    text-decoration: underline;
+    color: green;
+}
+
+.m-group{
+    margin-left: 10px;
+    margin-top: 30px;
+}
+

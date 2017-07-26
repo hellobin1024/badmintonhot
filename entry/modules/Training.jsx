@@ -1,7 +1,12 @@
 import React from 'react';
 import {render} from 'react-dom';
+import { connect } from 'react-redux';
+import '../../build/css/style.css'
+import '../../build/css/JFFormStyle-1.css'
+import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import RightSlide from '../../entry/modules/RightSilde'
+import {Link} from 'react-router';
 var Proxy = require('../../components/proxy/ProxyQ');
 
 var Training = React.createClass({
@@ -9,24 +14,111 @@ var Training = React.createClass({
 
     getInitialState: function () {
 
-        return ({});
+        var token=this.props.token;
+        return ({
+            token:token
+        });
     },
     initialData:function(){
 
-        this.getAllEvents();
+        this.getAllClass();
 
     },
-    showEventsDetail:function () {
-        var successModal = this.refs['successModal'];
-        $(successModal).modal('show');
+    signUp:function (item) {
+        if(this.state.token!==null&&this.state.token!==undefined) {
+            var url = "/func/allow/classSignUp";
+            var param = {
+                id: item
+            }
+            var ref = this;
+            Proxy.query(
+                'POST',
+                url,
+                param,
+                null,
+                function (res) {
+                    if (res.reCode == 0) {
+                        alert(res.response);
+                        ref.initialData();
+                    } else {
+                        alert(res.response);
+                    }
+                    ref.closeModal();
+                },
+
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }else {
+            alert("您尚未登录！");
+        }
+
     },
+    dateChange:function (date) {
+        switch (date){
+            case 1:
+                date='一';
+                break
+            case 2:
+                date='二';
+                break
+            case 3:
+                date='三';
+                break
+            case 4:
+                date='四';
+                break
+            case 5:
+                date='五';
+                break
+            case 6:
+                date='六';
+                break
+            case 7:
+                date='七';
+                break
+        }
+        return date;
+    },
+    showClassDetail:function (item) {
+        var url = "/func/allow/getClassScheduleByClassId";
+        var param={
+            id:item.classId
+        }
+        var ref = this;
+        Proxy.query(
+            'POST',
+            url,
+            param,
+            null,
+            function (res) {
+                var a = res.resList;
+                var day ="";
+                var week="";
+                for(var i=0;i<a.length;i++){
+                    day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
+                }
+                a[0].day=day;
+                ref.setState({modal:a[0]});
+                var successModal = ref.refs['successModal'];
+                $(successModal).modal('show');
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+
+    },
+
     closeModal:function () {
         var successModal = this.refs['successModal'];
         $(successModal).modal('hide');
     },
 
-    getAllEvents:function () {
-        var url = "/func/allow/getAllEvents";
+    getAllClass:function () {
+        var url = "/func/allow/getAllClass";
         var ref = this;
         Proxy.query(
             'GET',
@@ -52,28 +144,65 @@ var Training = React.createClass({
             var ref = this;
             data.map(function (item,i) {
                 trs.push(
-                    <div className="basic" key={i}>
+                    <div key={i}>
+                        <div className="basic" >
 
-                        <div className="business">
-                            <h2>{item.eventName}</h2>
-                            <p><span>介绍：</span>{item.badmintonVenueUnit.name}</p>
-                        </div>
-                        <div className="value">
-                            <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
-                        </div>
-                        <ul>
-                            <li><span>课时：</span> {item.eventTime}</li>
-                            <li><span>已报名：</span> {item.eventNowMemNum}人</li>
-                            <li><span>费用：</span> {item.eventBrief}</li>
-
-                        </ul>
-                        <div className="buy-me">
-                            <a onClick={ref.showEventsDetail}>参加</a>
+                            <div className="business">
+                                <h2>{item.className}</h2>
+                                <p><span>介绍：</span>{item.detail}</p>
+                            </div>
+                            <div className="value">
+                                <p><span>教练：</span>{item.infoPersonInfo.perName}</p>
+                            </div>
+                            <ul>
+                                <li><span>每周课程安排：</span> {item.classCount}次/周</li>
+                                <li><span>费用：</span> {item.cost}</li>
+                                <li><span>已报名人数：</span> {item.signNumber}</li>
+                            </ul>
+                            <div className="buy-me">
+                                <a onClick={ref.showClassDetail.bind(null,item)}>详情</a>
+                            </div>
                         </div>
                     </div>
                 )
 
             })
+
+            var mrs = [];
+            if(this.state.modal!==null&&this.state.modal!==undefined){
+                var item = this.state.modal;
+                mrs.push(
+                    <div style={{textAlign: 'center'}} key='modal' >
+                        <div className="business">
+                            <h2 id="CLassTitle">{item.badmintonClass.className}</h2>
+                            <p id="eventPlace"><span>地点：</span>{item.badmintonClass.badmintonVenueUnit.name}</p>
+                        </div>
+                        <div className="value">
+
+                            <p id="eventCreater"><span>教练：</span>{item.badmintonClass.infoPersonInfo.perName}</p>
+
+                        </div>
+                        <ul>
+                            <li><span>详细地点：</span>{item.badmintonClass.badmintonVenueUnit.address}</li>
+                            <li id="eventTime"><span>课程安排：</span>{item.day}</li>
+                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.badmintonClass.maxNumber}</li>
+                            <li id="eventNum"><span>已报名人数：</span>{item.badmintonClass.signNumber}</li>
+                            <li id="eventBrief"><span>简介：</span>{item.badmintonClass.detail}</li>
+                        </ul>
+                        <div className="buy-me">
+                            {item.badmintonClass.maxNumber>item.badmintonClass.signNumber?
+                                <a onClick={this.signUp.bind(null,item.badmintonClass.classId)}>报名</a>:
+                                <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
+                        }
+                        </div>
+                        <div style={{paddingTop: '2em'}}>
+                            <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonClass.classId} onClick={this.closeModal}>给他人报名--></Link>
+                        </div>
+                    </div>
+
+
+                )
+            }
             contains =
                 <div>
                     <div className="banner-bottom">
@@ -82,7 +211,7 @@ var Training = React.createClass({
                                 <div className="product-grids">
                                     <div className="col-md-8 news_content">
                                         {trs}
-
+                                        <div className="clearfix"></div>
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
@@ -96,7 +225,6 @@ var Training = React.createClass({
                          aria-labelledby="myLargeModalLabel"
                          aria-hidden="true"
                          ref='successModal'
-                         data-backdrop="static"
                          data-keyboard="false"
                          style={{zIndex: 1045}}
                     >
@@ -107,33 +235,14 @@ var Training = React.createClass({
 
                                 <div className="modal-body">
                                     <div className="modalEventDetail">
-                                        <div style={{textAlign: 'center'}}>
+                                        {mrs}
 
-                                            <div className="business">
-                                                <h2>基础练习</h2>
-                                                <p><span>地点：</span>山大软件园</p>
-                                            </div>
-                                            <div className="value">
-                                                <p><span>组织者：</span>林丹</p>
-                                            </div>
-                                            <ul>
-                                                <li><span>时间：</span> 2017-6-9</li>
-                                                <li><span>活动详细地址：</span>京东方会计师会计焚枯食淡</li>
-                                                <li><span>最大需求人数：</span>6</li>
-                                                <li><span>参与者：</span> 赵四、刘能、谢大姐、谢广坤、谢飞机</li>
-                                                <li><span>简介：</span> 讲述了客服即可圣诞节副书记阿里看见的时刻</li>
-                                            </ul>
-                                            <div className="buy-me">
-                                                <a onClick={this.closeModal}>报名</a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
+                 </div>
         }else{
             this.initialData();
         }
@@ -141,4 +250,11 @@ var Training = React.createClass({
 
     }
 });
-module.exports = Training;
+
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+    }
+    return props
+}
+export default connect(mapStateToProps)(Training);

@@ -1,0 +1,58 @@
+
+.self_label {
+    margin-bottom: 30px;
+    color: #000000;
+    font-size: 15px;
+}
+
+.self_conte {
+    position: relative;
+    margin-left: 30px;
+    line-height: 30px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+}
+
+.clear{
+    clear: both;
+}
+
+.self_control_group{
+    margin-bottom: 30px;
+
+}
+
+.saveBtn{
+    height: 40px;
+    font-size: 18px;
+    border-color: #6fd508;
+    background: #94ea95;
+    width: 270px;
+    border-radius: 5px;
+}
+
+.saveBtn:hover{
+    color: #000000;
+}
+
+.gender{
+    color:#000000;
+}
+
+.inputStyle{
+    width: 190px;
+    height: 35px;
+    color:#000000;
+    border: 1px solid #c5c5c5;
+    border-color: #c5c5c5;
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+.inputStyle:focus {
+    border-color: #35b558;
+    -webkit-box-shadow: 0 0 5px #51cc73;
+    box-shadow: 0 0 5px #51cc73;
+}
