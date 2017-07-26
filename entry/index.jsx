@@ -12,6 +12,7 @@ const store = configureStore();
 
 import crc from  'create-react-class'
 
+
 render(
     <Root store={store} />,
     document.getElementById('root')
