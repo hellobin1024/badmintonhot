@@ -8,6 +8,7 @@ var ContainSpace = React.createClass({
 
     render:function() {
         var contains = null;
+        var a=1;
         contains =
             <div className="banner-bottom">
                 <div className="container">
