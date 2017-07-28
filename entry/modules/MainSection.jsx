@@ -57,6 +57,7 @@ var MainSection = React.createClass({
         }
         contains =
 
+
             <div>
 
                 <div className="move-text">
