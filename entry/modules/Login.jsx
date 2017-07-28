@@ -4,7 +4,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import {Link} from 'react-router';
-import '../../css/components/basic/passport.css';
+
 import { connect } from 'react-redux';
 
 var Tips = require('../../components/basic/Tips');

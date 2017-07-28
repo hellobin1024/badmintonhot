@@ -24,9 +24,9 @@ var Heard = React.createClass({
             var loginState = true;
         }
 
-        if(loginState==false){ // 刷新时如果flux中登录状态丢失，从后台获取
-            this.props.dispatch(UserActions.loginStateAction(path));
-        }
+        // if(loginState==false){ // 刷新时如果flux中登录状态丢失，从后台获取
+        //     this.props.dispatch(UserActions.loginStateAction(path));
+        // }
 
         return({router:path, loginState:loginState, userName:loginName, personId:personId})
     },
@@ -49,127 +49,11 @@ var Heard = React.createClass({
         contains =
             <div className="header">
                 <div className="container">
-                    <div className="header-grids">
-                        <div className="logo">
-                            <h1><a  href="#">Badminton<span className="logo_span">Hot</span></a></h1>
-                        </div>
-                        <div className="header-dropdown">
-                            <div className="emergency-grid">
-                                <ul>
-                                    <li>联系电话 : </li>
-                                    <li className="call">18254888887</li>
-                                </ul>
-                            </div>
-                            <div className="clearfix"> </div>
-                        </div>
-                        <div className="clearfix"> </div>
-                    </div>
-                    <div className="nav-top">
-                        <div className="top-nav">
-                            <span className="menu"><img src={window.App.getResourceDeployPrefix()+"/images/menu.png"} alt="" /></span>
-                            <ul className="nav1">
-                                <li ref="main">
-                                    <Link to={window.App.getAppRoute() + "/ad"}>
-                                        首页
-                                    </Link>
-                                </li>
-                                <li ref="news">
-                                    <Link to={window.App.getAppRoute() + "/news"}>
-                                        羽坛资讯
-                                    </Link>
-                                </li>
-                                <li ref="events">
-                                    <Link to={window.App.getAppRoute() + "/events"}>
-                                        活动/群圈
-                                    </Link>
-                                </li>
-                                <li ref="training">
-                                    <Link to={window.App.getAppRoute() + "/training"}>
-                                        课程培训
-                                    </Link>
-                                </li>
-                                {/*<li ref="video"><a href="#">视频</a></li>
-                                <li ref="group"><a href="#">直播</a></li>
-                                <li ref="group"><a href="#">商城</a></li>*/}
-                            </ul>
-                            <div className="clearfix"> </div>
-                        </div>
-
-                        {this.state.loginState ?
-                            <div className="user-info">
-                                <span className="user-name">
-                                    <Link to={window.App.getAppRoute() + "/personInfo"}>
-                                        <i className='icon-user' style={{color: 'green'}}></i>
-                                        <strong style={{marginLeft:'10px'}}>{this.state.userName}</strong>
-                                    </Link>
-                                </span>
-
-                                <span className="logout" onClick={this.exit}>
-                                    <i className='icon-off'></i>
-                                    <Link to={window.App.getAppRoute() + "/main"}></Link>
-                                </span>
-                            </div>
-                            :
-                            <div className="dropdown-grids">
-                                <div id="loginContainer">
-                                    <Link to={window.App.getAppRoute() + "/login"}>
-                                        <span>登录</span>
-                                    </Link>
-                                </div>
-                            </div>
-                        }
-
-                        <div className="clearfix"> </div>
-                    </div>
+                    supnuevo
                 </div>
         </div>;
         return contains;
     },
-    componentDidMount(){
-        $( "span.menu" ).click(function() {
-            $("ul.nav1").slideToggle(300, function () {
-                // Animation complete.
-
-            });
-        });
-        //顶部tab高亮与路由同步
-        $("ul.nav1").click(function (e) {
-            $("ul.nav1 li").each(function () {
-                $(this).attr('class','')
-            })
-            $(e.target.parentNode).attr('class', 'active');
-        });
-        var element=this.state.router;
-        var a=element.substring(1,element.length);
-        switch (a){
-            case 'newsContain':
-                a = 'news';
-                break
-            default:
-                break;
-        }
-        $(this.refs[a]).attr("class","active");
-
-        $("#loginButton").click(function() {
-            var button = $('#loginButton');
-            var box = $('#loginBox');
-            var form = $('#loginForm');
-            button.removeAttr('href');
-            button.mouseup(function(login) {
-                box.toggle();
-                button.toggleClass('active');
-            });
-            form.mouseup(function() {
-                return false;
-            });
-            $(this).mouseup(function(login) {
-                if(!($(login.target).parent('#loginButton').length > 0)) {
-                    button.removeClass('active');
-                    box.hide();
-                }
-            });
-        });
-    }
 });
 
 const mapStateToProps = (state, ownProps) => {

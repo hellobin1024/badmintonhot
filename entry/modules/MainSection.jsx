@@ -3,14 +3,10 @@ import {render} from 'react-dom';
 
 var config=require('../../config.json');
 import '../../css/entry/modules/mainSection.css';
-import News from '../../entry/modules/News'
 import Heard from '../modules/Heard'
-import Banner from '../modules/Banner'
 import Foot from '../modules/Foot'
-import Events from '../modules/Events'
 import Main from '../modules/MainPage'
-import Training from '../modules/Training'
-import NewsContain from '../modules/NewsContain'
+
 import Login from '../modules/Login';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
@@ -49,21 +45,7 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
-                case App.getAppRoute() + "/news":
-                    ctrl =<News/>
-                    break;
-                case App.getAppRoute() + "/events":
-                    ctrl =<Events/>
-                    break;
-                case App.getAppRoute() + "/main":
-                    ctrl =<Main/>
-                    break;
-                case App.getAppRoute() + "/newsContain":
-                    ctrl =<NewsContain/>
-                    break;
-                case App.getAppRoute() + "/training":
-                    ctrl =<Training/>
-                    break;
+
                 default:
                     break;
             }
@@ -76,15 +58,9 @@ var MainSection = React.createClass({
         contains =
 
             <div>
-                <Heard path={path}/>
-
-                <Banner/>
-
-                <div className="clearfix"> </div>
-
 
                 <div className="move-text">
-                    <div className="marquee">欢迎来到"羽毛球热"</div>
+                    <div className="marquee">supnuevo</div>
                 </div>
 
                 <div style={{margin: "0px auto 0 auto",width:"100%"}} className="baba">

@@ -7,7 +7,7 @@ import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import Heard from '../modules/Heard'
-import Banner from '../modules/Banner'
+
 import Foot from '../modules/Foot'
 import ContainSpace from '../modules/ContainSpace'
 var MainPage =React.createClass({
