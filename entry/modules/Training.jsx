@@ -215,6 +215,12 @@ var Training = React.createClass({
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
+                                    <div className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
+                                        <input type="text" className="form-control" value="09:32"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +254,20 @@ var Training = React.createClass({
         }
         return contains;
 
+    },
+    componentDidMount:function () {
+        $(document).click(function () {
+            $('.clockpicker').clockpicker()
+                .find('input').change(function(){
+                // TODO: time changed
+                console.log(this.value);
+            });
+            $('#demo-input').clockpicker({
+                autoclose: true
+            });
+        })
     }
+
 });
 
 const mapStateToProps = (state, ownProps) => {
