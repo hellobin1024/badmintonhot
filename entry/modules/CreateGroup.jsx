@@ -34,7 +34,7 @@ var CreateGroup = React.createClass({
             Tips.showTips("最大人数只能为 数字~");
         } else {
 
-            var url="/func/groups/createGroup";
+                var url="/func/groups/createGroup";
             var params={
                 personId:this.state.personId,
                 groupName:groupName,
@@ -142,11 +142,11 @@ var CreateGroup = React.createClass({
     render:function(){
         var mainContent = null;
         var data = this.state.data;
-        if(this.state.addPerson!==null&&this.state.addPerson!==undefined){
+        if(this.state.addPerson!==null&&this.state.addPerson!==undefined) {
             var ars = [];
-            this.state.addPerson.map(function(item,i){
+            this.state.addPerson.map(function (item, i) {
                 ars.push(
-                    <div  key={'addPerson'+i} style={{float:'left',paddingRight:'25px'}}>
+                    <div key={'addPerson'+i} style={{float:'left',paddingRight:'25px'}}>
                         <div style={{float: 'left'}}><input type="checkbox" key={i} value={item}/></div>
 
                         <div style={{float: 'left'}}><span>{item}</span></div>
@@ -155,7 +155,6 @@ var CreateGroup = React.createClass({
                 )
             })
         }
-
 
         mainContent=
             <div ref="createGroup" className="c-block">
@@ -196,7 +195,7 @@ var CreateGroup = React.createClass({
                     <span className="common-label l-label" style={{float:'left'}}>保存时请点击您想选择的组员：</span>
                     {ars}
                 </div>
-                <div className="save-line"  style={{position:'absolute'}}>
+                <div className="zsave-line"  style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
                         </span>

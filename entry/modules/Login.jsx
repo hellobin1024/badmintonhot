@@ -138,7 +138,22 @@ var Login=React.createClass({
         }
 
     },
+    isRegisterAsCoach:function(){
 
+        var registerPage = this.refs['registerPage'];
+        var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
+        var Rephone = $(registerPage).find('#Rephone');
+        var RephoneInput = $(registerPage).find('#RephoneInput');
+        var inThis=this;
+        if(isTrainer!== undefined && isTrainer!==null){
+            Rephone.css('display','');
+            RephoneInput.css('display','');
+        }else{
+            Rephone.css('display','none');
+            RephoneInput.css('display','none');
+        }
+
+    },
     register:function(){
         var type=this.getUrlParam("loginType");
         var product=this.getUrlParam("product");
@@ -146,16 +161,34 @@ var Login=React.createClass({
         var userName = $(registerPage).find("input[name='userName']").val();
         var password = $(registerPage).find("input[name='password']").val();
         var ackPassword = $(registerPage).find("input[name='ackPassword']").val();
-        var verifyCode = $(registerPage).find("input[name='verifyCode']").val();
-        var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
-
+        var Trainer=1;
         var isTrainer = $(registerPage).find("input[name='isTrainer']:checked").val();
-        var sportsLevel = "";
-        if(isTrainer!== undefined && isTrainer!==null){
-            sportsLevel = $('#sportsLevel option:selected').val();
-        }
         var phoneReg = /^1[34578]\d{9}$/;
+        if(isTrainer!== undefined && isTrainer!==null){
+            var phoneNum = $(registerPage).find("input[name='phoneNum']").val();
+            var verifyCode = $(registerPage).find("input[name='verifyCode']").val();
+            if (phoneNum == "") {
+                Tips.showTips('请填写手机号~');
+            } else if(!(phoneReg.test(phoneNum))){
+                Tips.showTips("手机号码有误，请重新填写~");
+            } else if (verifyCode == "") {
+                Tips.showTips('请填写验证码~');
+            } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
+                Tips.showTips('验证码失效，请重新获取~');
+            } else if(verifyCode!==this.state.verifyCode) {
+                Tips.showTips('验证码不正确~');
+            }
+            Trainer=1;
+        }
+        else//不是教练,用户
+        {
+            Trainer=0;
 
+        }
+        if(phoneNum== undefined && phoneNum==null) {
+
+            phoneNum="";
+        }
         if (userName == "") {
             Tips.showTips('请填写用户名~');
         } else if (password == "") {
@@ -164,18 +197,6 @@ var Login=React.createClass({
             Tips.showTips('密码至少为6位~');
         } else if (ackPassword == "") {
             Tips.showTips('请再次输入密码~');
-        } else if (phoneNum == "") {
-            Tips.showTips('请填写手机号~');
-        } else if(!(phoneReg.test(phoneNum))){
-            Tips.showTips("手机号码有误，请重新填写~");
-        } else if (verifyCode == "") {
-            Tips.showTips('请填写验证码~');
-        } else if(this.state.verifyCode == null || this.state.verifyCode == undefined) {
-            Tips.showTips('验证码失效，请重新获取~');
-        } else if(verifyCode!==this.state.verifyCode) {
-            Tips.showTips('验证码不正确~');
-        } else if (sportsLevel == "-1" || sportsLevel == -1) {
-            Tips.showTips('请选择运动员水平~');
         } else{
 
             var url = '/func/register/userRegister';
@@ -183,7 +204,7 @@ var Login=React.createClass({
                 userName:userName,
                 password:password,
                 phoneNum:phoneNum,
-                sportsLevel:sportsLevel
+                Trainer:Trainer
             };
             ProxyQ.query(
                 'POST',
@@ -586,36 +607,40 @@ var Login=React.createClass({
                                         </div>
                                     </div>
 
-                                    <div className="form-item form-mcode mb-25">
-                                        <div className="form-cont">
-                                            <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
-                                            <div className="btn-getcode">
-                                                <button type="button" className="passport-btn js-getcode" id="J_getCode" onClick={this.getVerifyCode}>发送验证码</button>
-                                            </div>
-                                            <div className="btn-getcode">
-                                                <button type="button" className="passport-btn js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div className="form-item">
-                                        <div className="form-cont">
-                                            <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
-                                        </div>
-                                    </div>
 
-                                    {/*<div className="form-item" >
+
+
+                                    <div className="form-item" >
                                         <span>是否注册为教练&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                         <span className="form-cont">
-                                            <input name="isTrainer" type="checkbox" tabIndex="7" className="is-Trainer" onClick={this.isRegisterAsTrainer}/>
+                                            <input name="isTrainer" type="checkbox" tabIndex="7" className="is-Trainer" onClick={this.isRegisterAsCoach}/>
 
-                                            <select style={{marginLeft:'15px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
+                                            {/*<select style={{marginLeft:'15px', color:'#000000!important', width:'180px', height:'35px', display:'none'}} id="sportsLevel">
                                                 <option value={-1}>请选择运动水平</option>
                                                 {relative_add_trs}
-                                            </select>
+                                            </select>*/}
+                                            <div className="form-item form-mcode mb-25" id="Rephone" style={{display:'none'}}>
+                                                <div className="form-cont">
+                                                    <input type="text" name="phoneNum" className="passport-txt xl w-full" tabIndex="5" maxLength="11" autoComplete="off" placeholder="请输入手机号"/>
+                                                    <div className="btn-getcode">
+                                                        <button type="button" className="passport-btn js-getcode" id="J_getCode" onClick={this.getVerifyCode}>发送验证码</button>
+                                                    </div>
+                                                    <div className="btn-getcode">
+                                                        <button type="button" className="passport-btn js-getcode" id="J_resetCode" style={{display:'none'}}><span id="J_second">60</span>秒后重发</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-item" id="RephoneInput"style={{display:'none'}} >
+                                                 <div className="form-cont">
+                                                     <input type="text" name="verifyCode" className="passport-txt xl w-full" tabIndex="6" autoComplete="off" placeholder="请输入验证码"/>
+                                                 </div>
+                                            </div>
+
+
                                         </span>
 
-                                    </div>*/}
+                                    </div>
 
 
                                     <div className="form-item">

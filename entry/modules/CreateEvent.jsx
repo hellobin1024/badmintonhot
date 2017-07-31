@@ -177,23 +177,26 @@ var CreateEvent = React.createClass({
                                 {eventPlaceList}
                             </select>
                         </span>
-                        <span className="common-label r-label"> 选择小组：</span>
+                        <span className="common-label r-label">活动类型：</span>
                         <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
-                                    <option value={-1}>请选择</option>
-                                    {eventGroupList}
-                                </select>
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
+                                <option value={-1}>请选择</option>
+                                <option value={1}>群活动</option>
+                                <option value={0}>公开活动</option>
+                            </select>
                         </span>
 
 
 
                     </div>
                     <div className="common-line">
-                        <span className="common-label l-label">最多人数：</span>
+                        <span className="common-label l-label"> 选择小组：</span>
                         <span>
-                            <input type="text" name="eventMaxMemNum" className="common-input" tabIndex="5"></input>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
+                                    <option value={-1}>请选择</option>
+                                    {eventGroupList}
+                                </select>
                         </span>
-
                         <span className="common-label r-label">是否需要陪练：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'13px'}} id="hasSparring">
@@ -205,13 +208,9 @@ var CreateEvent = React.createClass({
                     </div>
 
                     <div className="common-line">
-                        <span className="common-label l-label">活动类型：</span>
+                        <span className="common-label l-label">最多人数：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
-                                <option value={-1}>请选择</option>
-                                <option value={1}>群活动</option>
-                                <option value={0}>公开活动</option>
-                            </select>
+                            <input type="text" name="eventMaxMemNum" className="common-input" tabIndex="5"></input>
                         </span>
                     </div>
 

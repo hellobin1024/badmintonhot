@@ -11,9 +11,9 @@ class Root extends Component {
         const { store } = this.props
         return (
             <Provider store={store}>
-                <div style={{width:'100%',height:'100%'}}>
-                    <Router store={store} />
-                </div>
+            <div style={{width:'100%',height:'100%'}}>
+                <Router store={store} />
+            </div>
             </Provider>
         )
     }
