@@ -137,20 +137,56 @@ var CreateEvent = React.createClass({
                             <input type="text" name="eventBrief" className="common-input" tabIndex="2"></input>
                         </span>
                     </div>
+
                     <div className="common-line">
-                        <span className="common-label l-label" style={{float:'left'}}>活动时间：</span>
-                        <span style={{float:'left'}}>
-                            <Calendar data={today} ctrlName='transferDate'/>
+                        <span className="common-label l-label" >选择星期：</span>
+                        <span>
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
+                                <option value={-1}>请选择</option>
+                                <option value={1}>周一</option>
+                                <option value={2}>周二</option>
+                                <option value={3}>周三</option>
+                                <option value={4}>周四</option>
+                                <option value={5}>周五</option>
+                                <option value={6}>周六</option>
+                                <option value={7}>周日</option>
+                            </select>
                         </span>
+                        <span className="common-label r-label" >是否为周期活动</span>
+                        <input type="checkbox"  style={{marginLeft:'30px',width:'inherit',height:'inherit'}} name="periodFlag"  id="periodFlag"  value="是否为周期活动"  />
                     </div>
                     <div className="common-line">
-                        <span className="common-label " style={{marginLeft: '120px'}}>活动地点：</span>
+
+                        <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
+                        <span style={{float:'left'}} >
+                            <Calendar data={today} ctrlName='transferDate1'/>
+                        </span>
+                        <span className="common-label r-label" style={{float:'left',marginLeft:'120px'}}>结束时间：</span>
+                        <span style={{}} >
+                            <Calendar data={today} ctrlName='transferDate2'/>
+                        </span>
+                        <div className="clearfix"/>
+                    </div>
+
+                    <div className="common-line">
+
+                        <span className="common-label l-label" style={{}}>活动地点：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventPlace">
                                 <option value={-1}>请选择</option>
                                 {eventPlaceList}
                             </select>
                         </span>
+                        <span className="common-label r-label"> 选择小组：</span>
+                        <span>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
+                                    <option value={-1}>请选择</option>
+                                    {eventGroupList}
+                                </select>
+                        </span>
+
+
+
                     </div>
                     <div className="common-line">
                         <span className="common-label l-label">最多人数：</span>
@@ -177,16 +213,6 @@ var CreateEvent = React.createClass({
                                 <option value={0}>公开活动</option>
                             </select>
                         </span>
-                        <span className="common-label r-label">   选择小组：</span>
-                        <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
-                                    <option value={-1}>请选择</option>
-                                    {eventGroupList}
-                                </select>
-                        </span>
-
-
-
                     </div>
 
                     <div className="save-line" style={{position:'absolute'}}>
