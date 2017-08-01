@@ -10,7 +10,7 @@ var ContainSpace = React.createClass({
         var contains = null;
         var a=1;
         contains =
-            <digv className="banner-bottom">
+            <div className="banner-bottom">
                 <div className="container">
                     <div className="banner-bottom-grids">
                         <div className="col-md-4 banner-bottom-grid">
@@ -279,7 +279,7 @@ var ContainSpace = React.createClass({
                     </div>
                 </div>
 
-            </digv>
+            </div>
         return contains;
     },
     componentDidMount(){
