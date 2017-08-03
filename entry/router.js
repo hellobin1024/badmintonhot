@@ -29,7 +29,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/events"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/newsContain"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
-                    <Route path={window.App.getAppRoute() + "/training"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/class"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ad"} component={AD}/>
                     <Route path={window.App.getAppRoute() + "/adText"} component={AdText}/>
                     <Route path={window.App.getAppRoute() + "/order"} component={Order}/>

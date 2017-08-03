@@ -534,7 +534,7 @@ var Login=React.createClass({
                                                     <button type="button" id="login" className="passport-btn passport-btn-def xl w-full" tabIndex="4" onClick={this.login}>
                                                         <a style={{color:'#ffffff'}}>登录</a>
                                                         {this.state.type==null?
-                                                            <Link to={window.App.getAppRoute() + '/training'} id="goToOther"></Link>:
+                                                            <Link to={window.App.getAppRoute() + '/class'} id="goToOther"></Link>:
                                                             <Link to={window.App.getAppRoute() + '/order?product='+product} id="goToOther"></Link>
                                                         }
                                                     </button>

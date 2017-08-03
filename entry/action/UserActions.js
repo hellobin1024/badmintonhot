@@ -4,7 +4,7 @@
 var Proxy = require('../../components/proxy/ProxyQ');
 
 import { browserHistory ,hashHistory} from 'react-router';
-var Training = require('../modules/Training');
+var Training = require('../modules/Class');
 
 import {
     // UPDATE_CAR_HISTORY_ORDERS,

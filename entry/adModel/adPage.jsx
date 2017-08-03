@@ -26,7 +26,7 @@ var AdPage = React.createClass({
                         <div className="rightBg"></div>
                         <div className="content mr">
                             <div className="logo_ad">
-                                <Link to={window.App.getAppRoute() + "/training"}>
+                                <Link to={window.App.getAppRoute() + "/class"}>
                                     <img src={window.App.getResourceDeployPrefix()+"/images/img/home.png"} />官网
                                 </Link>
                             </div>

@@ -9,7 +9,7 @@ import Banner from '../modules/Banner'
 import Foot from '../modules/Foot'
 import Events from '../modules/Events'
 import Main from '../modules/MainPage'
-import Training from '../modules/Training'
+import Class from './Class'
 import NewsContain from '../modules/NewsContain'
 import Login from '../modules/Login';
 import '../../build/css/JFFormStyle-1.css'
@@ -61,8 +61,8 @@ var MainSection = React.createClass({
                 case App.getAppRoute() + "/newsContain":
                     ctrl =<NewsContain/>
                     break;
-                case App.getAppRoute() + "/training":
-                    ctrl =<Training/>
+                case App.getAppRoute() + "/class":
+                    ctrl =<Class/>
                     break;
                 default:
                     break;

@@ -9,11 +9,10 @@ import RightSlide from '../../entry/modules/RightSilde'
 import {Link} from 'react-router';
 var Proxy = require('../../components/proxy/ProxyQ');
 
-var Training = React.createClass({
+var Class = React.createClass({
 
 
     getInitialState: function () {
-
         var token=this.props.token;
         return ({
             token:token
@@ -276,4 +275,4 @@ const mapStateToProps = (state, ownProps) => {
     }
     return props
 }
-export default connect(mapStateToProps)(Training);
+export default connect(mapStateToProps)(Class);
