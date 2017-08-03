@@ -19,43 +19,76 @@ var CreateEvent = React.createClass({
         var createEvent = this.refs['createEvent'];
         var eventName = $(createEvent).find("input[name='eventName']").val();
         var eventBrief = $(createEvent).find("input[name='eventBrief']").val();
-        var transferDate = $(createEvent).find("input[name='transferDate']").val();
+        var chooseWeek = $('#chooseWeek option:selected').val();
         var eventPlace = $('#eventPlace option:selected').val();
         var eventGroup = $('#eventGroup option:selected').val();
+        var startTime = $(createEvent).find("input[name='startTime']").val();
+        var endTime = $(createEvent).find("input[name='endTime']").val();
+        var classTrainer= $('#classTrainer option:selected').val();
         var eventMaxMemNum = $(createEvent).find("input[name='eventMaxMemNum']").val();
-        var hasSparring = $('#hasSparring option:selected').val();
-        var eventType = $('#eventType option:selected').val();
+        var eventType = $('#eventType option:selected').val()
+        var memberLevel = $('#level option:selected').val();
+        var eventCost = $(createEvent).find("input[name='eventCost']").val();
+        var IsScedule=0;
+        var IsSparing=0;
+
+
+        if(document.getElementById("periodFlag").checked){
+
+            IsScedule=1;
+        }
+        else{
+
+            IsScedule=0;
+        }
+        if(document.getElementById("IsSparing").checked){
+
+            IsSparing=1;
+        }
+        else{
+
+            IsSparing=0;
+        }
         var reg = new RegExp("^[0-9]*$");
+
+        startTime="2017-07-02 "+startTime;
+        var time1 = Date.parse(startTime);
+        var newDate1 = new Date(time1);
+
+        endTime="2017-07-02 "+endTime;
+        var time2 = Date.parse(endTime);
+        var newDate2 = new Date(time2);
 
         if (eventName == "") {
             Tips.showTips('请填写活动名称~');
         } else if (eventBrief == "") {
             Tips.showTips('请填写活动简介~');
-        } else if (transferDate == "") {
-            Tips.showTips('请选择活动时间~');
-        } else if (eventPlace == "-1") {
-            Tips.showTips('请选择活动地点~');
         } else if (eventMaxMemNum == "") {
             Tips.showTips('请填写活动最大人数~');
         } else if(!reg.test(eventMaxMemNum)){
             Tips.showTips("最大人数只能为数字~");
-        }  else if (hasSparring == "-1") {
-            Tips.showTips('请选择是否需要陪练~');
-        } else if (eventType == "-1") {
-            Tips.showTips('请选择活动类型~');
+        }  if(!reg.test(eventCost)){
+            Tips.showTips("最大人数只能为数字~");
         } else {
 
-            var url="/func/events/createEvent";
+            var url="/func/mobile/createEvent";
             var params={
-                personId:this.state.personId,
+                eventManagerId:this.state.personId,
                 eventName:eventName,
                 eventBrief:eventBrief,
-                transferDate:transferDate,
-                eventPlace:eventPlace,
+                chooseWeek:chooseWeek,
+                eventPlaceId:eventPlace,
                 eventMaxMemNum:eventMaxMemNum,
-                hasSparring:hasSparring,
-                eventGroup:eventGroup,
-                eventType:eventType
+                coachId:classTrainer,
+                groupId:eventGroup,
+                eventType:eventType,
+                startTime:newDate1,
+                endTime:newDate2,
+                IsScedule:IsScedule,
+                memberLevel:memberLevel,
+                cost:eventCost,
+                isNeedSparring:IsSparing
+
             };
             ProxyQ.query(
                 'post',
@@ -115,15 +148,20 @@ var CreateEvent = React.createClass({
         var data = this.state.data;
         var eventPlaceList = [];
         var eventGroupList = [];
+        var eventTrainerList = [];
         if(data!==undefined && data!==null){
 
             var data1=data.listGroupInfo;
             var data2=data.listVenueUnit;
+            var data3=data.listTrainer;
             data2.map(function(item, i){
                 eventPlaceList.push(<option key={i} value={item.unitId}>{item.name}</option>);
             });
             data1.map(function(item, i){
                 eventGroupList.push(<option key={i} value={item.groupId}>{item.groupName}</option>);
+            });
+            data3.map(function(item, i){
+                eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perName}</option>);
             });
 
             mainContent=
@@ -142,8 +180,7 @@ var CreateEvent = React.createClass({
                     <div className="common-line">
                         <span className="common-label l-label" >选择星期：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
-                                <option value={-1}>请选择</option>
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="chooseWeek">
                                 <option value={1}>周一</option>
                                 <option value={2}>周二</option>
                                 <option value={3}>周三</option>
@@ -157,15 +194,28 @@ var CreateEvent = React.createClass({
                         <input type="checkbox"  style={{marginLeft:'30px',width:'inherit',height:'inherit'}} name="periodFlag"  id="periodFlag"  value="是否为周期活动"  />
                     </div>
                     <div className="common-line">
-
+                        <div style={{float:'left',width:'300px'}}>
                         <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
-                        <span style={{float:'left'}} >
-                            <Calendar data={today} ctrlName='transferDate1'/>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" style={{width:'100px'}} value="09:30"  name="startTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
                         </span>
-                        <span className="common-label r-label" style={{float:'left',marginLeft:'120px'}}>结束时间：</span>
-                        <span style={{}} >
-                            <Calendar data={today} ctrlName='transferDate2'/>
+                        </div>
+                        <div style={{float:'left',width:'300px'}}>
+                        <span className="common-label r-label" style={{float:'left'}}>结束时间：</span>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" value="11:30" style={{width:'100px'}} name="endTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
                         </span>
+                                </div>
+
+
                         <div className="clearfix"/>
                     </div>
 
@@ -174,14 +224,12 @@ var CreateEvent = React.createClass({
                         <span className="common-label l-label" style={{}}>活动地点：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventPlace">
-                                <option value={-1}>请选择</option>
                                 {eventPlaceList}
                             </select>
                         </span>
                         <span className="common-label r-label">活动类型：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
-                                <option value={-1}>请选择</option>
                                 <option value={1}>群活动</option>
                                 <option value={0}>公开活动</option>
                             </select>
@@ -194,18 +242,17 @@ var CreateEvent = React.createClass({
                         <span className="common-label l-label"> 选择小组：</span>
                         <span>
                                 <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
-                                    <option value={-1}>请选择</option>
                                     {eventGroupList}
                                 </select>
                         </span>
-                        <span className="common-label r-label">是否需要陪练：</span>
+                        <span className="common-label r-label" >选择教练：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'13px'}} id="hasSparring">
-                                <option value={-1}>请选择</option>
-                                <option value={1}>是</option>
-                                <option value={0}>否</option>
-                            </select>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="classTrainer">
+                                    <option value={-1}>请选择</option>
+                                    {eventTrainerList}
+                                </select>
                         </span>
+
                     </div>
 
                     <div className="common-line">
@@ -213,6 +260,23 @@ var CreateEvent = React.createClass({
                         <span>
                             <input type="text" name="eventMaxMemNum" className="common-input" tabIndex="5"></input>
                         </span>
+                        <span className="common-label r-label">选择水平：</span>
+                        <span>
+                            <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'13px'}} id="level">
+                                <option value={1}>业余小白</option>
+                                <option value={2}>初级爱好者</option>
+                                <option value={3}>业余高手</option>
+                                <option value={4}>专业运动员</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div className="common-line">
+                        <span className="common-label l-label">人均花费：</span>
+                        <span>
+                            <input type="text" name="eventCost" className="common-input" tabIndex="5"></input>
+                        </span>
+                        <span className="common-label r-label" >是否需要陪练</span>
+                        <input type="checkbox" style={{marginLeft:'30px',width:'inherit',height:'inherit'}} name="IsSparing" id="IsSparing"  value="是否需要陪练"  />
                     </div>
 
                     <div className="save-line" style={{position:'absolute'}}>
@@ -228,6 +292,18 @@ var CreateEvent = React.createClass({
         }
         return mainContent;
     },
+    componentDidMount:function () {
+        $(document).click(function () {
+            $('.clockpicker').clockpicker()
+                .find('input').change(function(){
+                    // TODO: time changed
+                    console.log(this.value);
+                });
+            $('#demo-input').clockpicker({
+                autoclose: true
+            });
+        })
+    }
 });
 
 module.exports=CreateEvent;

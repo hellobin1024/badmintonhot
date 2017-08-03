@@ -37,7 +37,7 @@ var CreateGroup = React.createClass({
                 var url="/func/groups/createGroup";
             var params={
                 personId:this.state.personId,
-                groupName:groupName,
+                groupId:groupName,
                 groupBrief:groupBrief,
                 groupMaxMemNum:groupMaxMemNum,
                 remark:remark,
@@ -190,12 +190,13 @@ var CreateGroup = React.createClass({
                         <span>
                             <button className="search-Btn" onClick={this.doAddMember}>添加</button>
                         </span>
+                     <span className="common-label r-label" style={{marginLeft:'20px'}}>提示搜索成功点击添加</span>
                 </div>
                 <div className="common-line" id="group">
                     <span className="common-label l-label" style={{float:'left'}}>保存时请点击您想选择的组员：</span>
                     {ars}
                 </div>
-                <div className="zsave-line"  style={{position:'absolute'}}>
+                <div className="save-line"  style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
                         </span>
