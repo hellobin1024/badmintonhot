@@ -15,6 +15,109 @@ var ProxyQ = require('../../components/proxy/ProxyQ');
 
 var CreateEvent = React.createClass({
 
+
+
+    getWeek:function () {
+        const Today=new Date();
+
+        var myDay=new Array();
+
+        for(var i=0;i<7;i++){
+            var millsec=Today.getTime()+i*24*60*60*1000;
+            myDay[i]=millsec;
+        }
+
+        var setDay=new Array();
+        setDay[0]='取消';
+        for(var j=0;j<7;j++)
+        {
+            var day1=new Date(myDay[j]);
+            setDay[j+1]=day1;
+        }
+
+
+        var req = [];
+        for(var k=1;k<8;k++){
+            var date=new Date(setDay[k]);
+            var month=date.getMonth()+1;
+            var w=date.getDay();
+            var day=date.getDate();
+            var a;
+            var finalShow={};
+            switch(w){
+                case 0:a= '星期天';break;
+                case 1:a= '星期一';break;
+                case 2:a= '星期二';break;
+                case 3:a= '星期三';break;
+                case 4:a= '星期四';break;
+                case 5:a= '星期五';break;
+                case 6:a= '星期六';break;
+
+            }
+            finalShow.lable=a+'('+month+'月'+day+'日)';
+            finalShow.value=(w==0?7:w);
+            req.push(finalShow);
+        }
+        return req;
+    },
+    getDay:function (chooseweek) {
+        const Today=new Date();
+
+        var myDay=new Array();
+
+        for(var i=0;i<7;i++){
+            var millsec=Today.getTime()+i*24*60*60*1000;
+            myDay[i]=millsec;
+        }
+
+        var setDay=new Array();
+        for(var j=0;j<7;j++)
+        {
+            var day1=new Date(myDay[j]);
+            setDay[j+1]=day1;
+        }
+
+
+        var finalShow={};
+        var data1;
+        for(var k=1;k<8;k++){
+            var date=new Date(setDay[k]);
+            var month=date.getMonth()+1;
+            var w=date.getDay();
+            var day=date.getDate();
+            var a;
+
+            chooseweek==7?0:chooseweek;
+
+            switch(w){
+                case 0:a= '星期天';break;
+                case 1:a= '星期一';break;
+                case 2:a= '星期二';break;
+                case 3:a= '星期三';break;
+                case 4:a= '星期四';break;
+                case 5:a= '星期五';break;
+                case 6:a= '星期六';break;
+
+            }
+            if(chooseweek==w){
+                var month1;
+                if(month<=10)
+                    month1="0"+month;
+                else
+                    month1=month;
+                var day1;
+                if(day<=10)
+                    day1="0"+day;
+                else
+                    day1=day;
+
+                finalShow='2017-'+month1+'-'+day1;
+            }
+        }
+        return finalShow;
+    },
+
+
     doSave: function () {
         var createEvent = this.refs['createEvent'];
         var eventName = $(createEvent).find("input[name='eventName']").val();
@@ -51,11 +154,14 @@ var CreateEvent = React.createClass({
         }
         var reg = new RegExp("^[0-9]*$");
 
-        startTime="2017-07-02 "+startTime;
+        var data1=this.getDay(chooseWeek);
+
+
+        startTime=data1+" "+startTime;
         var time1 = Date.parse(startTime);
         var newDate1 = new Date(time1);
 
-        endTime="2017-07-02 "+endTime;
+        endTime=data1+" "+endTime;
         var time2 = Date.parse(endTime);
         var newDate2 = new Date(time2);
 
@@ -76,7 +182,7 @@ var CreateEvent = React.createClass({
                 eventManagerId:this.state.personId,
                 eventName:eventName,
                 eventBrief:eventBrief,
-                chooseWeek:chooseWeek,
+                scheduleperiod:chooseWeek,
                 eventPlaceId:eventPlace,
                 eventMaxMemNum:eventMaxMemNum,
                 coachId:classTrainer,
@@ -149,8 +255,12 @@ var CreateEvent = React.createClass({
         var eventPlaceList = [];
         var eventGroupList = [];
         var eventTrainerList = [];
+        var weekList=[];
+
+
         if(data!==undefined && data!==null){
 
+            var data4=this.getWeek();
             var data1=data.listGroupInfo;
             var data2=data.listVenueUnit;
             var data3=data.listTrainer;
@@ -163,7 +273,9 @@ var CreateEvent = React.createClass({
             data3.map(function(item, i){
                 eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perName}</option>);
             });
-
+            data4.map(function(item, i){
+                weekList.push(<option key={i} value={item.value}>{item.lable}</option>);
+            });
             mainContent=
                 <div ref="createEvent" className="c-block">
                     <div className="common-line">
@@ -181,13 +293,7 @@ var CreateEvent = React.createClass({
                         <span className="common-label l-label" >选择星期：</span>
                         <span>
                             <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="chooseWeek">
-                                <option value={1}>周一</option>
-                                <option value={2}>周二</option>
-                                <option value={3}>周三</option>
-                                <option value={4}>周四</option>
-                                <option value={5}>周五</option>
-                                <option value={6}>周六</option>
-                                <option value={7}>周日</option>
+                                {weekList}
                             </select>
                         </span>
                         <span className="common-label r-label" >是否为周期活动</span>
