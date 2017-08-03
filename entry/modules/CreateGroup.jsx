@@ -34,7 +34,7 @@ var CreateGroup = React.createClass({
             Tips.showTips("最大人数只能为 数字~");
         } else {
 
-                var url="/func/groups/createGroup";
+            var url="/func/groups/createGroup";
             var params={
                 personId:this.state.personId,
                 groupId:groupName,

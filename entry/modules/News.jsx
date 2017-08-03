@@ -36,13 +36,15 @@ var News = React.createClass({
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
     },
-    getNewsTheme:function () {
-        var url = "/func/allow/getNewsTheme";
+    getNewsList:function () {
+        var url = "/func/allow/getNewsList";
         var ref = this;
+        var param={
+        }
         Proxy.query(
-            'GET',
+            'POST',
             url,
-            null,
+            param,
             null,
             function (res) {
                 var a = res.resList;
@@ -56,7 +58,7 @@ var News = React.createClass({
     },
     initialData:function(){
 
-       this.getNewsTheme();
+       this.getNewsList();
 
     },
     render: function () {
