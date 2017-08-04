@@ -50,8 +50,8 @@ var SelfBaseInfo=React.createClass({
                 params,
                 null,
                 function(ob) {
-                    var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //成功
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //成功
                         alert("信息修改成功！");
                     }
                 }.bind(this),
@@ -72,11 +72,11 @@ var SelfBaseInfo=React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 var genderCode = data.genderCode;
                 this.setState({data:data, genderCode:genderCode});
             }.bind(this),

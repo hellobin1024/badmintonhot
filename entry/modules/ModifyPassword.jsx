@@ -41,8 +41,8 @@ var ModifyPassword=React.createClass({
                 params,
                 null,
                 function(ob) {
-                    var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==0 || reCode =="0")) { //成功
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //成功
                         alert("密码修改成功！");
                     }
 

@@ -22,9 +22,9 @@ var MyGroup = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取为空
-                    alert(ob.response);
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取为空
+                    alert("获取失败");
                     return;
                 }
                 var data=ob.resList;
@@ -55,8 +55,8 @@ var MyGroup = React.createClass({
             null,
             function(ob) {
                 var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
-                    alert(ob.response);
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                    alert("操作失败");
                     return;
                 }
                 alert(ob.response);

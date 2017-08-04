@@ -22,12 +22,12 @@ var MyEvents = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     alert(ob.response);
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -56,11 +56,11 @@ var MyEvents = React.createClass({
             null,
             function(ob) {
                 var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
-                    alert(ob.response);
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                    alert("操作失败");
                     return;
                 }
-                alert(ob.response);
+                alert("操作成功");
                 var data = this.state.data;
                 data.splice(index,1);
                 this.setState({data:data});

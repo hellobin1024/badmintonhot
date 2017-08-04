@@ -138,11 +138,11 @@ var accountBind=React.createClass({
                 params,
                 null,
                 function (re) {
-                    var reCode = re.reCode;
-                    if(reCode==0 || reCode=='0'){
-                        alert(re.response);
+                    var reCode = re.re;
+                    if(reCode==1 || reCode=='1'){
+                        alert("绑定成功");
                     }else{
-                        alert(re.response);
+                        alert("绑定失败");
                     }
                 },
                 function (xhr, status, err) {
@@ -162,12 +162,12 @@ var accountBind=React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     return;
                 }
-                var weichat=ob.resList.weichat;
-                var phoneNum=ob.resList.phoneNum;
+                var weichat=ob.data.weichat;
+                var phoneNum=ob.data.phoneNum;
                 var weichatBind=false;
                 var phoneBind=false;
                 if(weichat!==null && weichat!==""){
