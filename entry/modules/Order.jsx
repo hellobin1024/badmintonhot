@@ -157,7 +157,7 @@ var Order = React.createClass({
             cache   : false,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    },
+            },
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             //jsonpCallback: '?',
             //jsonp: 'callback',

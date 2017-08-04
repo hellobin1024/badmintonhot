@@ -84,7 +84,7 @@ var Heard = React.createClass({
                                     </Link>
                                 </li>
                                 <li ref="training">
-                                    <Link to={window.App.getAppRoute() + "/training"}>
+                                    <Link to={window.App.getAppRoute() + "/class"}>
                                         课程培训
                                     </Link>
                                 </li>

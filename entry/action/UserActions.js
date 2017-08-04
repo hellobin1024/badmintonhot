@@ -112,11 +112,10 @@ export let loginStateAction=function(path){
         return new Promise((resolve, reject) => {
 
             var url="/func/login/getLonginState";
-            var params={};
             Proxy.query(
                 'get',
                 url,
-                params,
+                null,
                 null,
                 function(res) {
                     var reCode = res.reCode;

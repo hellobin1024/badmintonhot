@@ -47,7 +47,7 @@ var News = React.createClass({
             param,
             null,
             function (res) {
-                var a = res.resList;
+                var a = res.data;
                 ref.setState({data:a});
             },
 
@@ -74,7 +74,7 @@ var News = React.createClass({
                         <div className="product-right-top">
                             <div className="p-left">
                                 <div className="p-right-img">
-                                    <a style={{background:'url('+item.themeImg+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
+                                    <a style={{background:'url('+item.img+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
                                 </div>
                             </div>
                             <div className="p-right">

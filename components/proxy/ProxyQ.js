@@ -52,16 +52,10 @@ var ProxyQ = {
                 var content;
                 var errType="";
                 var catched=false;
-                if((response.reCode!==undefined&&response.reCode!==null)&&(response.reCode==0||response.reCode==1||response.reCode=="1"||response.reCode==-1||response.reCode=="-1"||response.reCode==2||response.reCode=="2"))
-                {  if(response.content!==undefined&&response.content!==null&&response.content!="") {
-                    catched = true;
-                    content = response.content;
-                }
-                }else{
+                if((response.re!==undefined&&response.re!==null)&&(response.re==1||response.re=="1"))
+                {
                     console.log('...');
-                    if ((response.arr == undefined || response.arr == null)
-                        && (response.array==undefined||response.array==null)
-                        &&(response.data == undefined || response.data == null))
+                    if (response.data == undefined || response.data == null)
                     {
                         content="警告:   数据为空";
                         catched=true;
@@ -73,9 +67,14 @@ var ProxyQ = {
                             catched=true;
                         }
                     }
+                }else{
+                    if(response.re==-1||response.re=="-1") {
+                        catched = true;
+                        content = response.data;
+                    }
                 }
                 if(catched==true)
-                {   if(response.reCode==2||response.reCode=="2"){
+                {   if(response.re==2||response.re=="2"){
                     $modal.find(".modal-body").html(content);
                 }else {
                     $modal.find(".modal-body").text(content);

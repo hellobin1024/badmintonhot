@@ -45,10 +45,10 @@ var Event = React.createClass({
             param,
             null,
             function (res) {
-                var a = res.resList;
+                var a = res.data;
                 var member ="";
                 for(var i=0;i<a.length;i++){
-                    member+=" "+a[i].infoPersonInfo.perName
+                    member+=" "+a[i].loginName
                 }
                 item.member=member;
                 ref.setState({modal:item});
@@ -80,12 +80,13 @@ var Event = React.createClass({
             param,
             null,
             function (res) {
-                if(res.reCode==0){
-                    alert(res.response);
+                if(res.re==1||res.re=="1"){
+                    alert(res.data);
                     ref.initialData();
-                }else {
-                    alert(res.response);
                 }
+                // else {
+                //     alert(res.data);
+                // }
                 ref.closeModal();
             },
 
@@ -111,12 +112,13 @@ var Event = React.createClass({
                 param,
                 null,
                 function (res) {
-                    if(res.reCode==0){
-                        alert(res.response);
+                    if(res.re==1||res.re=="1"){
+                        alert(res.data);
                         ref.initialData();
-                    }else {
-                        alert(res.response);
                     }
+                    // else {
+                    //     alert(res.data);
+                    // }
                     ref.closeModal();
                 },
 
@@ -135,18 +137,22 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
-            var url = "/func/allow/getAllEvents";//未登录
+            var url = "/func/allow/getEvents";//未登录
         }
 
         var ref = this;
         Proxy.query(
-            'GET',
+            'POST',
             url,
-            null,
+            {},
             null,
             function (res) {
-                var a = res.resList;
-                ref.setState({event:a});
+                var a = res.data;
+                if(res.re==1) {
+                    ref.setState({event: a});
+                }else{
+                    ref.setState({event: 0});
+                }
             },
 
             function (xhr, status, err) {
@@ -155,16 +161,20 @@ var Event = React.createClass({
         );
     },
     getAllGroups:function () {
-        var url = "/func/allow/getAllGroups";
+        var url = "/func/allow/getGroups";
         var ref = this;
         Proxy.query(
-            'GET',
+            'POST',
             url,
-            null,
+            {},
             null,
             function (res) {
-                var a = res.resList;
-                ref.setState({group:a});
+                var a = res.data;
+                if(res.re==1) {
+                    ref.setState({group: a});
+                }else{
+                    ref.setState({group: 0});
+                }
             },
 
             function (xhr, status, err) {
@@ -183,93 +193,104 @@ var Event = React.createClass({
             var trs = [];
             var grs = [];
             var ref = this;
-            event.map(function (item, i) {
-                if (i == 0) {
-                    trs.push(
-                        <div className="basic_first" key={"event"+i}>
+            if(event!=0) {
+                event.map(function (item, i) {
+                    if (i == 0) {
+                        trs.push(
+                            <div className="basic_first" key={"event" + i}>
 
-                            <div className="business">
-                                <h2>{item.eventName}</h2>
-                                <p><span>地点：</span>{item.badmintonVenueUnit.name}</p>
-                            </div>
-                            <div className="value">
-                                <p><span>组织者：</span>{item.infoPersonInfo.perName}</p>
-                            </div>
-                            <ul>
-                                <li><span>时间：</span> {ref.dateFormat(item.eventTime)}</li>
-                                <li><span>已报名：</span> {item.eventNowMemNum}人</li>
-                                <li><span>简介：</span> {item.eventBrief}</li>
-                            </ul>
-                            <div className="buy-me">
-                                <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
-                            </div>
-                        </div>
-                    )
-                }
-                else {
-                    trs.push(
-                        <div className="basic" key={"event"+i}>
-                            <div className="business">
-                                <h2>{item.eventName}</h2>
-                                <p><span>地点：</span>{item.badmintonVenueUnit.name}</p>
-                            </div>
-                            <div className="value">
-                                <p><span>组织者：</span>{item.infoPersonInfo.perName}</p>
-                            </div>
-                            <ul>
-                                <li><span>时间：</span> {ref.dateFormat(item.eventTime)}</li>
-                                <li><span>已报名：</span> {item.eventNowMemNum}人</li>
-                                <li><span>简介：</span> {item.eventBrief}</li>
-                            </ul>
-                            <div className="buy-me">
-                                <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
-                            </div>
-                        </div>
-                    )
-                }
-            })
-
-            group.map(function (item, i) {
-                if (i == 0) {
-                    grs.push(
-                        <div className="basic_first" key={"group"+i}>
-
-                            <div className="business">
-                                <h2>{item.groupName}</h2>
-                            </div>
-                            <div className="value">
-                                <p><span>群主：</span>{item.infoPersonInfo.perName}</p>
-                            </div>
-                            <ul>
-                                <li><span>现有人数：</span> {item.groupNowMemNum}人</li>
-                                    <li><span>简介：</span> {item.groupBrief}</li>
+                                <div className="business">
+                                    <h2>{item.eventName}</h2>
+                                    <p><span>地点：</span>{item.eventPlaceName}</p>
+                                </div>
+                                <div className="value">
+                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                </div>
+                                <ul>
+                                    <li><span>时间：</span> {ref.dateFormat(item.startTime)}</li>
+                                    <li><span>已报名：</span> {item.eventNowMemNum}人</li>
+                                    <li><span>简介：</span> {item.eventBrief}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    <a onClick={ref.groupSignUp.bind(null,item.groupId)}>加入</a>
+                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
                                 </div>
                             </div>
                         )
-                    }else{
+                    }
+                    else {
+                        trs.push(
+                            <div className="basic" key={"event" + i}>
+                                <div className="business">
+                                    <h2>{item.eventName}</h2>
+                                    <p><span>地点：</span>{item.eventPlaceName}</p>
+                                </div>
+                                <div className="value">
+                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                </div>
+                                <ul>
+                                    <li><span>时间：</span> {ref.dateFormat(item.eventTime)}</li>
+                                    <li><span>已报名：</span> {item.eventNowMemNum}人</li>
+                                    <li><span>简介：</span> {item.eventBrief}</li>
+                                </ul>
+                                <div className="buy-me">
+                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
+                                </div>
+                            </div>
+                        )
+                    }
+                })
+            }else{
+                trs.push(
+                    <div>暂无数据！</div>
+                )
+            }
+            if(group !=0) {
+                group.map(function (item, i) {
+                    if (i == 0) {
                         grs.push(
-                            <div className="basic" key={"group"+i}>
+                            <div className="basic_first" key={"group" + i}>
 
                                 <div className="business">
                                     <h2>{item.groupName}</h2>
                                 </div>
                                 <div className="value">
-                                    <p><span>群主：</span>{item.infoPersonInfo.perName}</p>
+                                    <p><span>群主：</span>{item.groupManagerLoginName}</p>
                                 </div>
                                 <ul>
                                     <li><span>现有人数：</span> {item.groupNowMemNum}人</li>
                                     <li><span>简介：</span> {item.groupBrief}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    <a onClick={ref.groupSignUp.bind(null,item.groupId)}>加入</a>
+                                    <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
+                                </div>
+                            </div>
+                        )
+                    } else {
+                        grs.push(
+                            <div className="basic" key={"group" + i}>
+
+                                <div className="business">
+                                    <h2>{item.groupName}</h2>
+                                </div>
+                                <div className="value">
+                                    <p><span>群主：</span>{item.groupManagerLoginName}</p>
+                                </div>
+                                <ul>
+                                    <li><span>现有人数：</span> {item.groupNowMemNum}人</li>
+                                    <li><span>简介：</span> {item.groupBrief}</li>
+                                </ul>
+                                <div className="buy-me">
+                                    <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
                                 </div>
                             </div>
                         )
                     }
                 })
+            }else {
+                grs.push(
+                    <div>暂无数据！</div>
+                )
+            }
 
             var mrs = [];
             if(this.state.modal!==null&&this.state.modal!==undefined){
@@ -278,14 +299,13 @@ var Event = React.createClass({
                     <div style={{textAlign: 'center'}} key='modal'>
                         <div className="business">
                             <h2 id="eventTitle">{item.eventName}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.badmintonVenueUnit.name}</p>
+                            <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.infoPersonInfo.perName}</p>
+                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerName}</p>
                         </div>
                         <ul>
                             <li id="eventTime"><span>时间：</span>{ref.dateFormat(item.eventTime)}</li>
-                            <li id="eventPlaceDetail"><span>活动详细地址：</span>{item.badmintonVenueUnit.address}</li>
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
                             <li id="eventNum"><span>参与者：</span>{item.member}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>

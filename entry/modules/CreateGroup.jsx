@@ -201,6 +201,7 @@ var CreateGroup = React.createClass({
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
                         </span>
                 </div>
+
             </div>
 
         return mainContent;
