@@ -55,7 +55,7 @@ var MyEvents = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
+                var reCode = ob.re;
                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
                     alert("操作失败");
                     return;

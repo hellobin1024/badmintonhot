@@ -27,7 +27,7 @@ var MyGroup = React.createClass({
                     alert("获取失败");
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {

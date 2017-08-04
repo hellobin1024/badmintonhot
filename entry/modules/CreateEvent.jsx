@@ -156,12 +156,23 @@ var CreateEvent = React.createClass({
 
         var data1=this.getDay(chooseWeek);
 
+        var eventPlaceId = parseInt(eventPlace);
+        var classTrainer = parseInt(classTrainer);
+        var eventMaxMemNum2 = parseInt(eventMaxMemNum);
+        var eventCost = parseInt(eventCost);
+        var IsSparing = parseInt(IsSparing);
+        var eventGroup = parseInt(eventGroup);
+        var chooseWeek = parseInt(chooseWeek);
+        if(classTrainer==-1)
+        {
+            classTrainer=null;
+        }
 
-        startTime=data1+" "+startTime;
+        startTime=data1+" "+startTime+":00";
         var time1 = Date.parse(startTime);
         var newDate1 = new Date(time1);
 
-        endTime=data1+" "+endTime;
+        endTime=data1+" "+endTime+":00";
         var time2 = Date.parse(endTime);
         var newDate2 = new Date(time2);
 
@@ -177,23 +188,26 @@ var CreateEvent = React.createClass({
             Tips.showTips("最大人数只能为数字~");
         } else {
 
-            var url="/func/mobile/createEvent";
+            var url="/func/mobile/createEvents";
             var params={
                 eventManagerId:this.state.personId,
                 eventName:eventName,
                 eventBrief:eventBrief,
-                scheduleperiod:chooseWeek,
-                eventPlaceId:eventPlace,
-                eventMaxMemNum:eventMaxMemNum,
+                eventDate:chooseWeek,
+                eventPlaceId:eventPlaceId,
+                eventMaxMemNum:eventMaxMemNum2,
                 coachId:classTrainer,
                 groupId:eventGroup,
                 eventType:eventType,
-                startTime:newDate1,
-                endTime:newDate2,
+                startTime:startTime,
+                endTime:endTime,
                 IsScedule:IsScedule,
                 memberLevel:memberLevel,
                 cost:eventCost,
-                isNeedSparring:IsSparing
+                isNeedSparring:IsSparing,
+                feeDes:"",
+                eventNowMemNum:1,
+                status:0
 
             };
             ProxyQ.query(
@@ -202,12 +216,12 @@ var CreateEvent = React.createClass({
                 params,
                 null,
                 function(ob) {
-                    var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
-                        alert(ob.response);
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                        alert("创建失败");
                         return;
                     }
-                    alert(ob.response);
+                    alert("创建成功");
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());

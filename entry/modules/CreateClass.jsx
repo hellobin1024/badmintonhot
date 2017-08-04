@@ -76,7 +76,7 @@ var CreateEvent = React.createClass({
                     alert(ob.response);
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
