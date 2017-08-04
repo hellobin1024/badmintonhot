@@ -36,11 +36,11 @@ var Class = React.createClass({
                 param,
                 null,
                 function (res) {
-                    if (res.reCode == 0) {
-                        alert(res.response);
+                    if (res.re == 1) {
+                        alert("操作成功");
                         ref.initialData();
                     } else {
-                        alert(res.response);
+                        alert("操作失败");
                     }
                     ref.closeModal();
                 },
@@ -92,7 +92,7 @@ var Class = React.createClass({
             param,
             null,
             function (res) {
-                var a = res.resList;
+                var a = res.data;
                 var day ="";
                 var week="";
                 for(var i=0;i<a.length;i++){
@@ -125,7 +125,7 @@ var Class = React.createClass({
             null,
             null,
             function (res) {
-                var a = res.resList;
+                var a = res.data;
                 ref.setState({data:a});
             },
 

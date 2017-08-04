@@ -93,6 +93,30 @@ var CreateGroup = React.createClass({
                         var data=ob.resList;
                         this.setState({data:data});
                         alert(ob.response);
+                        var name=this.state.data;
+                        if(name!=="") {
+                            var addPerson = [];
+                            var flag = 0;
+                            addPerson = this.state.addPerson;
+                            if (addPerson == null) {
+                                addPerson.push(name);
+                            } else {
+                                addPerson.map(function (item) {
+                                    if (item == name) {
+                                        flag = 1;
+                                    }
+                                })
+                                if (flag == 1) {
+                                    alert("已存在！");
+                                } else {
+                                    addPerson.push(name);
+                                }
+                            }
+                            this.setState({addPerson: addPerson});
+                        }else
+                        {
+
+                        }
                     }.bind(this),
                     function (xhr, status, err) {
                         console.error(this.props.url, status, err.toString());
@@ -134,7 +158,7 @@ var CreateGroup = React.createClass({
             this.setState({addPerson: addPerson});
         }else
         {
-            alert("不可以添加不存在的用户");
+
         }
 
 
@@ -187,10 +211,10 @@ var CreateGroup = React.createClass({
                         <span>
                             <button className="search-Btn" onClick={this.doSerachGroupMember}>搜索</button>
                         </span>
-                        <span>
+                    {/*<span>
                             <button className="search-Btn" onClick={this.doAddMember}>添加</button>
                         </span>
-                     <span className="common-label r-label" style={{marginLeft:'20px'}}>提示搜索成功点击添加</span>
+                     <span className="common-label r-label" style={{marginLeft:'20px'}}>提示搜索成功点击添加</span>*/}
                 </div>
                 <div className="common-line" id="group">
                     <span className="common-label l-label" style={{float:'left'}}>保存时请点击您想选择的组员：</span>

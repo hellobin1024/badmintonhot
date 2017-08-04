@@ -22,11 +22,11 @@ var MyCLass = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -47,8 +47,8 @@ var MyCLass = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
                     return;
                 }
                 alert("操作成功!")

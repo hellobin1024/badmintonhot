@@ -63,12 +63,12 @@ var CreateEvent = React.createClass({
 
     initialData:function(){
         var url="/func/allow/getAllTrainer";
-        var params={};
+
 
         ProxyQ.query(
             'get',
             url,
-            params,
+            null,
             null,
             function(ob) {
                 var reCode = ob.reCode;

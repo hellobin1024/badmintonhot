@@ -80,6 +80,7 @@ var Event = React.createClass({
             param,
             null,
             function (res) {
+
                 if(res.re==1||res.re=="1"){
                     alert(res.data);
                     ref.initialData();
@@ -153,6 +154,7 @@ var Event = React.createClass({
                 }else{
                     ref.setState({event: 0});
                 }
+
             },
 
             function (xhr, status, err) {
