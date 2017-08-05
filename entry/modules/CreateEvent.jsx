@@ -176,7 +176,13 @@ var CreateEvent = React.createClass({
         var time2 = Date.parse(endTime);
         var newDate2 = new Date(time2);
 
-        if (eventName == "") {
+        const Today=new Date();
+        if(newDate1<Today){
+            Tips.showTips("开始时间必须大于当前时间~");
+        }else if(newDate1>newDate2){
+
+            Tips.showTips("开始时间不能大于结束时间~");
+        }else if (eventName == "") {
             Tips.showTips('请填写活动名称~');
         } else if (eventBrief == "") {
             Tips.showTips('请填写活动简介~');
