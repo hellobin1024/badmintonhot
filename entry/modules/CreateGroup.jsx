@@ -50,7 +50,10 @@ var CreateGroup = React.createClass({
                 function(ob) {
                     var reCode = ob.re;
                     if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                        alert("创建失败！");
                         return;
+                    }else{
+                        alert("创建成功！");
                     }
                 }.bind(this),
                 function(xhr, status, err) {

@@ -180,7 +180,6 @@ var CreateEvent = React.createClass({
         if(newDate1<Today){
             Tips.showTips("开始时间必须大于当前时间~");
         }else if(newDate1>newDate2){
-
             Tips.showTips("开始时间不能大于结束时间~");
         }else if (eventName == "") {
             Tips.showTips('请填写活动名称~');
@@ -190,7 +189,7 @@ var CreateEvent = React.createClass({
             Tips.showTips('请填写活动最大人数~');
         } else if(!reg.test(eventMaxMemNum)){
             Tips.showTips("最大人数只能为数字~");
-        }  if(!reg.test(eventCost)){
+        } else if(!reg.test(eventCost)){
             Tips.showTips("最大人数只能为数字~");
         } else {
 
@@ -237,7 +236,7 @@ var CreateEvent = React.createClass({
     },
 
     initialData:function(){
-        var url="/func/allow/getVenueUnitGroup";
+        var url="/func/events/getVenueUnitGroupTrainer";
         var params={};
 
         ProxyQ.query(
@@ -246,12 +245,12 @@ var CreateEvent = React.createClass({
             params,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
-                    alert(ob.response);
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
+                    alert(ob.response)
                     return;
                 }
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -323,7 +322,7 @@ var CreateEvent = React.createClass({
                         <div style={{float:'left',width:'300px'}}>
                         <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
                         <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
-                            <input type="text" className="form-control" style={{width:'100px'}} value="09:30"  name="startTime"/>
+                            <input type="text" className="form-control" style={{width:'100px'}} value="22:30"  name="startTime"/>
                                             <span className="input-group-addon">
                                                 <span className="glyphicon glyphicon-time"></span>
                                             </span>
@@ -333,7 +332,7 @@ var CreateEvent = React.createClass({
                         <div style={{float:'left',width:'300px'}}>
                         <span className="common-label r-label" style={{float:'left'}}>结束时间：</span>
                         <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
-                            <input type="text" className="form-control" value="11:30" style={{width:'100px'}} name="endTime"/>
+                            <input type="text" className="form-control" value="23:30" style={{width:'100px'}} name="endTime"/>
                                             <span className="input-group-addon">
                                                 <span className="glyphicon glyphicon-time"></span>
                                             </span>

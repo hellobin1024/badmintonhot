@@ -47,12 +47,12 @@ var CreateEvent = React.createClass({
                 params,
                 null,
                 function(ob) {
-                    var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
-                        alert(ob.response);
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+
                         return;
                     }
-                    alert(ob.response);
+                   alert("创建成功！");
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -71,9 +71,9 @@ var CreateEvent = React.createClass({
             null,
             null,
             function(ob) {
-                var reCode = ob.reCode;
-                if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //数据获取失败
-                    alert(ob.response);
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
+
                     return;
                 }
                 var data=ob.data;
