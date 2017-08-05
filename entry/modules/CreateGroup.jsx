@@ -34,10 +34,9 @@ var CreateGroup = React.createClass({
             Tips.showTips("最大人数只能为 数字~");
         } else {
 
-            var url="/func/groups/createGroup";
+            var url="/func/allow/createGroup";
             var params={
-                personId:this.state.personId,
-                groupId:groupName,
+                groupName:groupName,
                 groupBrief:groupBrief,
                 groupMaxMemNum:groupMaxMemNum,
                 remark:remark,
@@ -49,12 +48,10 @@ var CreateGroup = React.createClass({
                 params,
                 null,
                 function(ob) {
-                    var reCode = ob.reCode;
-                    if(reCode!==undefined && reCode!==null && (reCode ==1 || reCode =="1")) { //操作失败
-                        alert(ob.response);
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
                         return;
                     }
-                    alert(ob.response);
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -74,7 +71,7 @@ var CreateGroup = React.createClass({
                 Tips.showTips('请填写您要搜索的组员~');
             } else {
 
-                var url = "/func/events/SerachGroupMember";
+                var url = "/func/allow/SerachGroupMember";
                 var params = {
                     personId: this.state.personId,
                     username: username
@@ -85,14 +82,12 @@ var CreateGroup = React.createClass({
                     params,
                     null,
                     function (ob) {
-                        var reCode = ob.reCode;
-                        if (reCode !== undefined && reCode !== null && (reCode == 1 || reCode == "1")) { //操作失败
-                            alert(ob.response);
+                        var reCode = ob.re;
+                        if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) { //操作失败
                             return;
                         }
-                        var data=ob.resList;
+                        var data=ob.data;
                         this.setState({data:data});
-                        alert(ob.response);
                         var name=this.state.data;
                         if(name!=="") {
                             var addPerson = [];

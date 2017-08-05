@@ -132,17 +132,17 @@ var CreateEvent = React.createClass({
         var eventType = $('#eventType option:selected').val()
         var memberLevel = $('#level option:selected').val();
         var eventCost = $(createEvent).find("input[name='eventCost']").val();
-        var IsScedule=0;
+        var IsSchedule=0;
         var IsSparing=0;
 
 
         if(document.getElementById("periodFlag").checked){
 
-            IsScedule=1;
+            IsSchedule=1;
         }
         else{
 
-            IsScedule=0;
+            IsSchedule=0;
         }
         if(document.getElementById("IsSparing").checked){
 
@@ -188,7 +188,7 @@ var CreateEvent = React.createClass({
             Tips.showTips("最大人数只能为数字~");
         } else {
 
-            var url="/func/mobile/createEvents";
+            var url="/func/allow/createEvents";
             var params={
                 eventManagerId:this.state.personId,
                 eventName:eventName,
@@ -201,7 +201,7 @@ var CreateEvent = React.createClass({
                 eventType:eventType,
                 startTime:startTime,
                 endTime:endTime,
-                IsScedule:IsScedule,
+                IsSchedule:IsSchedule,
                 memberLevel:memberLevel,
                 cost:eventCost,
                 isNeedSparring:IsSparing,
@@ -231,7 +231,7 @@ var CreateEvent = React.createClass({
     },
 
     initialData:function(){
-        var url="/func/events/getVenueUnitGroup";
+        var url="/func/allow/getVenueUnitGroup";
         var params={};
 
         ProxyQ.query(

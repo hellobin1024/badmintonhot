@@ -11,7 +11,7 @@ var ProxyQ = require('../../components/proxy/ProxyQ');
 var MyEvents = React.createClass({
 
     initialData:function(){
-        var url="/func/events/getMyEvents";
+        var url="/func/allow/getMyEvents";
         var params={
             personId:this.state.personId
         };
@@ -39,9 +39,9 @@ var MyEvents = React.createClass({
     operate: function (ob,flag,index) {
         var eventId=ob;
         if(flag=="delete"){
-            var url="/func/events/deleteMyEvents";
+            var url="/func/allow/deleteMyEvents";
         }else{
-            var url="/func/events/quitEvents";
+            var url="/func/allow/quitEvents";
         }
 
         var params={
