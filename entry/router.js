@@ -7,7 +7,6 @@ import { Router, Route, hashHistory,browserHistory, IndexRoute } from 'react-rou
 import App from './modules/components/App.jsx';
 import Login from './modules/components/Login';
 import MainSection from './modules/components/MainSection.jsx';
-import ckEditor from './modules/CKEditorWapper.jsx';
 import MainPage from './modules/components/MainPage';
 import PersonInfo from './modules/PersonInfo.jsx'
 import AD from './adModel/adPage'
@@ -25,7 +24,6 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
                     <Route path={window.App.getAppRoute() + "/main"} component={MainSection}/>
-                    <Route path={window.App.getAppRoute() + "/ckedit"} component={ckEditor}/>
                     <Route path={window.App.getAppRoute() + "/events"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/newsContain"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/news"} component={MainSection}/>
