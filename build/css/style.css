@@ -1967,6 +1967,7 @@ span.starTextLabel {
     margin: 0;
     text-decoration: none;
     text-transform: capitalize;
+    line-height: initial;
 }
 .p-right-left p{
 	color: #777;

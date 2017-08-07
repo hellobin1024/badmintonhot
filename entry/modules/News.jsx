@@ -79,9 +79,9 @@ var News = React.createClass({
                             </div>
                             <div className="p-right">
                                 <div className="col-md-12 p-right-left" style={{paddingLeft: '30px'}}>
-                                    <Link to={window.App.getAppRoute() + "/newsContain?id="+item.themeId}>
+                                    <a href={item.content} target="_Blank">
                                         {item.title}
-                                    </Link>
+                                    </a>
                                     <div className="newsContain">
                                         <span className="icon-eye-open">{item.readCount + '  '}位看官</span>
                                         <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
