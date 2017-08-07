@@ -118,9 +118,9 @@ export let loginStateAction=function(path){
                 null,
                 null,
                 function(res) {
-                    var reCode = res.reCode;
-                    var data = res.resList
-                    if(reCode==0){
+                    var reCode = res.re;
+                    var data = res.data;
+                    if(data!="-1"){
                         var loginName = data.loginName;
                         var personId = data.personId;
                         dispatch(getReCode(reCode,loginName,personId));
