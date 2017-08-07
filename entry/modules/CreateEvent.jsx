@@ -322,7 +322,7 @@ var CreateEvent = React.createClass({
                         <div style={{float:'left',width:'300px'}}>
                         <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
                         <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
-                            <input type="text" className="form-control" style={{width:'100px'}} value="22:30"  name="startTime"/>
+                            <input type="text" className="form-control" style={{width:'100px'}} value="9:30"  name="startTime"/>
                                             <span className="input-group-addon">
                                                 <span className="glyphicon glyphicon-time"></span>
                                             </span>
@@ -332,7 +332,7 @@ var CreateEvent = React.createClass({
                         <div style={{float:'left',width:'300px'}}>
                         <span className="common-label r-label" style={{float:'left'}}>结束时间：</span>
                         <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
-                            <input type="text" className="form-control" value="23:30" style={{width:'100px'}} name="endTime"/>
+                            <input type="text" className="form-control" value="11:30" style={{width:'100px'}} name="endTime"/>
                                             <span className="input-group-addon">
                                                 <span className="glyphicon glyphicon-time"></span>
                                             </span>
