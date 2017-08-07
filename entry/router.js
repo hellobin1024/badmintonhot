@@ -4,11 +4,11 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, hashHistory,browserHistory, IndexRoute } from 'react-router';
-import App from './modules/App.jsx';
-import Login from './modules/Login';
-import MainSection from './modules/MainSection.jsx';
+import App from './modules/components/App.jsx';
+import Login from './modules/components/Login';
+import MainSection from './modules/components/MainSection.jsx';
 import ckEditor from './modules/CKEditorWapper.jsx';
-import MainPage from './modules/MainPage';
+import MainPage from './modules/components/MainPage';
 import PersonInfo from './modules/PersonInfo.jsx'
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
@@ -21,8 +21,8 @@ class AppRouter extends Component {
         return (
             <Router history={hashHistory}>
                 <Route path={window.App.getAppRoute()} component={App}>
-                    <IndexRoute  component={AD}/>
-                    <Route path={window.App.getAppRoute() + "/"} component={AD}/>
+                    <IndexRoute  component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/login"} component={Login}/>
                     <Route path={window.App.getAppRoute() + "/main"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ckedit"} component={ckEditor}/>

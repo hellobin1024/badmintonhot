@@ -102,7 +102,7 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="choose">
                                 <div className="choose-info">
-                                    <h4>Why Choose Us</h4>
+                                    <h4>推荐群组</h4>
                                 </div>
                                 <div className="choose-grids">
                                     <div className="choose-grids-info">
@@ -142,7 +142,7 @@ var ContainSpace = React.createClass({
 
                         <div className="col-md-4 banner-bottom-grid">
                             <div className="choose-info">
-                                <h4>Why Choose Us</h4>
+                                <h4>热卖推荐</h4>
                             </div>
                             <div className="banner-bottom-middle" style={{ paddingTop: '14px'}}>
                                 <a href="products.html">
@@ -156,7 +156,7 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="top-destinations-grids">
                                 <div className="top-destinations-info">
-                                    <h4>Top Destinations</h4>
+                                    <h4>最热视频</h4>
                                 </div>
                                 <div className="top-destinations-bottom">
                                     <div className="td-grids">
@@ -230,7 +230,7 @@ var ContainSpace = React.createClass({
                         </div>
                         <div className="col-md-4 banner-bottom-grid">
                             <div className="choose-info">
-                                <h4>Why Choose Us</h4>
+                                <h4>待定</h4>
                             </div>
                             <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
                                 <a href="products.html">
@@ -244,7 +244,7 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="news-grids">
                                 <div className="news-grids-info">
-                                    <h4>Latest News</h4>
+                                    <h4>最新活动</h4>
                                 </div>
                                 <div className="news-grids-bottom">
 

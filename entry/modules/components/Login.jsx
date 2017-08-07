@@ -4,14 +4,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import {Link} from 'react-router';
-import '../../css/components/basic/passport.css';
+import '../../../css/components/basic/passport.css';
 import { connect } from 'react-redux';
 
-var Tips = require('../../components/basic/Tips');
+var Tips = require('../../../components/basic/Tips');
 
-var ProxyQ = require('../../components/proxy/ProxyQ');
-var SyncStore = require('../../components/flux/stores/SyncStore');
-var UserActions=require('../action/UserActions');
+var ProxyQ = require('../../../components/proxy/ProxyQ');
+var SyncStore = require('../../../components/flux/stores/SyncStore');
+var UserActions=require('../../action/UserActions');
 
 var Login=React.createClass({
 

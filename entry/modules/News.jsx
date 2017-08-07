@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import {Link} from 'react-router';
-import RightSlide from '../../entry/modules/RightSilde'
+import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 import PageNavigator from '../../components/basic/PageNavigator.jsx';
 
@@ -79,7 +79,7 @@ var News = React.createClass({
                             </div>
                             <div className="p-right">
                                 <div className="col-md-12 p-right-left" style={{paddingLeft: '30px'}}>
-                                    <a href={item.content} target="_Blank">
+                                    <a href={"http://114.215.99.2:8880/news"+item.newsNum+"/index.html"} target="_Blank">
                                         {item.title}
                                     </a>
                                     <div className="newsContain">

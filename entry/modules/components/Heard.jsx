@@ -1,13 +1,13 @@
 import React from 'react';
 import {render} from 'react-dom';
-import '../../build/css/JFFormStyle-1.css';
-import '../../build/css/jquery-ui.css';
-import '../../build/css/style.css';
+import '../../../build/css/JFFormStyle-1.css';
+import '../../../build/css/jquery-ui.css';
+import '../../../build/css/style.css';
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
-var UserActions=require('../action/UserActions');
+var UserActions=require('../../action/UserActions');
 
-var ProxyQ = require('../../components/proxy/ProxyQ');
+var ProxyQ = require('../../../components/proxy/ProxyQ');
 var Heard = React.createClass({
 
     exit:function () {
@@ -69,7 +69,7 @@ var Heard = React.createClass({
                             <span className="menu"><img src={window.App.getResourceDeployPrefix()+"/images/menu.png"} alt="" /></span>
                             <ul className="nav1">
                                 <li ref="main">
-                                    <Link to={window.App.getAppRoute() + "/ad"}>
+                                    <Link to={window.App.getAppRoute() + "/"}>
                                         首页
                                     </Link>
                                 </li>
@@ -83,7 +83,7 @@ var Heard = React.createClass({
                                         活动/群圈
                                     </Link>
                                 </li>
-                                <li ref="training">
+                                <li ref="class">
                                     <Link to={window.App.getAppRoute() + "/class"}>
                                         课程培训
                                     </Link>
@@ -142,6 +142,9 @@ var Heard = React.createClass({
         var element=this.state.router;
         var a=element.substring(1,element.length);
         switch (a){
+            case '':
+                a = 'main';
+                break;
             case 'newsContain':
                 a = 'news';
                 break

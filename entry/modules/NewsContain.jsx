@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import '../../css/entry/modules/newContain.css'
-import RightSlide from '../../entry/modules/RightSilde'
+import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
 var NewsContain = React.createClass({
