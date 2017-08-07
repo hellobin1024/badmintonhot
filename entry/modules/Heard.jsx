@@ -20,7 +20,7 @@ var Heard = React.createClass({
         var loginName= this.props.loginName;
         var personId=this.props.personId;
         var loginState = false;
-        if(token=='0' || token==0){ //先从flux获取登录状态
+        if(token=='1' || token==1){ //先从flux获取登录状态
             var loginState = true;
         }
 
@@ -37,7 +37,7 @@ var Heard = React.createClass({
         var loginName= props.loginName;
         var personId=props.personId;
         var loginState = false;
-        if(token=='0' || token==0){
+        if(token=='1' || token==1){
             var loginState = true;
         }
         this.setState({router:path, loginState:loginState, userName:loginName, personId:personId})
