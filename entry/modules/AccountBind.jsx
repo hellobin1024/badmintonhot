@@ -154,12 +154,11 @@ var accountBind=React.createClass({
 
     initialData:function(){
         var url="/func/manageBean/accountBindInit";
-        var params={};
 
         ProxyQ.query(
             'get',
             url,
-            params,
+            null,
             null,
             function(ob) {
                 var reCode = ob.re;

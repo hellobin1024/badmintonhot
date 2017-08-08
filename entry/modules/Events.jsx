@@ -6,7 +6,7 @@ import '../../build/css/style.css'
 import { connect } from 'react-redux';
 
 
-import RightSlide from '../../entry/modules/RightSilde'
+import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
 var Event = React.createClass({

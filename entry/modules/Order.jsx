@@ -6,7 +6,7 @@ var ReactDOM = require('react-dom');
 import { connect } from 'react-redux';
 import { render} from 'react-dom'
 import { browserHistory ,hashHistory} from 'react-router';
-import Header from '../modules/Heard.jsx';
+import Header from './components/Heard.jsx';
 import '../../css/entry/modules/myEvents.css'
 import Calendar from '../../components/basic/Calendar.jsx';
 var Tips = require('../../components/basic/Tips');

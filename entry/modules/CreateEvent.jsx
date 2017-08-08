@@ -195,7 +195,7 @@ var CreateEvent = React.createClass({
 
             var url="/func/allow/createEvents";
             var params={
-                eventManagerId:this.state.personId,
+                eventManagerId:parseInt(this.state.personId),
                 eventName:eventName,
                 eventBrief:eventBrief,
                 eventDate:chooseWeek,

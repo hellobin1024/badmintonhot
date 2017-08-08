@@ -5,7 +5,7 @@ import '../../build/css/style.css'
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
-import RightSlide from '../../entry/modules/RightSilde'
+import RightSlide from './components/RightSilde'
 import {Link} from 'react-router';
 var Proxy = require('../../components/proxy/ProxyQ');
 

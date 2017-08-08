@@ -1,21 +1,21 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-var config=require('../../config.json');
-import '../../css/entry/modules/mainSection.css';
-import News from '../../entry/modules/News'
-import Heard from '../modules/Heard'
-import Banner from '../modules/Banner'
-import Foot from '../modules/Foot'
-import Events from '../modules/Events'
-import Main from '../modules/MainPage'
-import Class from './Class'
-import NewsContain from '../modules/NewsContain'
-import Login from '../modules/Login';
-import '../../build/css/JFFormStyle-1.css'
-import '../../build/css/jquery-ui.css'
-import '../../build/css/style.css'
-var SyncActions = require('../../components/flux/actions/SyncActions');
+var config=require('../../../config.json');
+import '../../../css/entry/modules/mainSection.css';
+import News from '../../../entry/modules/News'
+import Heard from '../components/Heard'
+import Banner from '../components/Banner'
+import Foot from '../components/Foot'
+import Events from '../../modules/Events'
+import Main from './MainPage'
+import Class from '../Class'
+import NewsContain from '../../modules/NewsContain'
+import Login from '../components/Login';
+import '../../../build/css/JFFormStyle-1.css'
+import '../../../build/css/jquery-ui.css'
+import '../../../build/css/style.css'
+var SyncActions = require('../../../components/flux/actions/SyncActions');
 
 
 var MainSection = React.createClass({
@@ -49,6 +49,9 @@ var MainSection = React.createClass({
             route.push(path);
             switch(path)
             {
+                case App.getAppRoute() + "/":
+                    ctrl =<Main/>
+                    break;
                 case App.getAppRoute() + "/news":
                     ctrl =<News/>
                     break;

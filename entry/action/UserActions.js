@@ -75,11 +75,10 @@ export let logoutAction=function(){
         return new Promise((resolve, reject) => {
 
             var url = "/func/auth/webLogout";
-            var param={};
             Proxy.query(
                 'GET',
                 url,
-                param,
+                null,
                 null,
                 function (res) {
                     var reCode = res.reCode;
