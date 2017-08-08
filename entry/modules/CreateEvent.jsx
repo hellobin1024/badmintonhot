@@ -131,6 +131,7 @@ var CreateEvent = React.createClass({
         var eventMaxMemNum = $(createEvent).find("input[name='eventMaxMemNum']").val();
         var eventType = $('#eventType option:selected').val()
         var memberLevel = $('#level option:selected').val();
+        var costType = $('#costType option:selected').val();
         var eventCost = $(createEvent).find("input[name='eventCost']").val();
         var IsSchedule=0;
         var IsSparing=0;
@@ -212,7 +213,8 @@ var CreateEvent = React.createClass({
                 isNeedSparring:IsSparing,
                 feeDes:"",
                 eventNowMemNum:1,
-                status:0
+                status:0,
+                costType:costType
 
             };
             ProxyQ.query(
@@ -311,7 +313,7 @@ var CreateEvent = React.createClass({
                     <div className="common-line">
                         <span className="common-label l-label" >选择星期：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="chooseWeek">
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="chooseWeek">
                                 {weekList}
                             </select>
                         </span>
@@ -348,13 +350,13 @@ var CreateEvent = React.createClass({
 
                         <span className="common-label l-label" style={{}}>活动地点：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventPlace">
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventPlace">
                                 {eventPlaceList}
                             </select>
                         </span>
                         <span className="common-label r-label">活动类型：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventType">
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventType">
                                 <option value={1}>群活动</option>
                                 <option value={0}>公开活动</option>
                             </select>
@@ -366,13 +368,13 @@ var CreateEvent = React.createClass({
                     <div className="common-line">
                         <span className="common-label l-label"> 选择小组：</span>
                         <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="eventGroup">
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventGroup">
                                     {eventGroupList}
                                 </select>
                         </span>
                         <span className="common-label r-label" >选择教练：</span>
                         <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="classTrainer">
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classTrainer">
                                     <option value={-1}>请选择</option>
                                     {eventTrainerList}
                                 </select>
@@ -387,7 +389,7 @@ var CreateEvent = React.createClass({
                         </span>
                         <span className="common-label r-label">选择水平：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'13px'}} id="level">
+                            <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'16px'}} id="level">
                                 <option value={1}>业余小白</option>
                                 <option value={2}>初级爱好者</option>
                                 <option value={3}>业余高手</option>
@@ -396,14 +398,26 @@ var CreateEvent = React.createClass({
                         </span>
                     </div>
                     <div className="common-line">
-                        <span className="common-label l-label">人均花费：</span>
+                        <span className="common-label l-label">收费类型：</span>
+                        <span>
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="costType">
+                                <option value={1}>按每人收费</option>
+                                <option value={2}>按每小时收费</option>
+                                <option value={3}>总费用</option>
+                                <option value={4}>按每人次收费</option>
+                                <option value={5}>按每人每小时收费</option>
+                                <option value={6}>按场地小时收费</option>
+                            </select>
+                        </span>
+                        <span className="common-label r-label">收费标准：</span>
                         <span>
                             <input type="text" name="eventCost" className="common-input" tabIndex="5"></input>
                         </span>
-                        <span className="common-label r-label" >是否需要陪练</span>
+                    </div>
+                    <div className="common-line">
+                        <span className="common-label l-label" >是否需要陪练</span>
                         <input type="checkbox" style={{marginLeft:'30px',width:'inherit',height:'inherit'}} name="IsSparing" id="IsSparing"  value="是否需要陪练"  />
                     </div>
-
                     <div className="save-line" style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>

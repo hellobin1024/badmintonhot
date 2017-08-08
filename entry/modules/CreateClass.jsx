@@ -143,7 +143,7 @@ var CreateEvent = React.createClass({
                         <div id="selectTrainer" style={{display:'none',float:'left'}}>
                             <span className="common-label l-label"  style={{marginLeft:'30px'}}>选择教练：</span>
                             <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'13px'}} id="classTrainer">
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classTrainer">
                                     <option value={-1}>请选择</option>
                                     {eventTrainerList}
                                 </select>
