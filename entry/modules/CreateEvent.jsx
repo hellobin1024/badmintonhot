@@ -292,7 +292,7 @@ var CreateEvent = React.createClass({
                 eventGroupList.push(<option key={i} value={item.groupId}>{item.groupName}</option>);
             });
             data3.map(function(item, i){
-                eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perName}</option>);
+                eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perNum}</option>);
             });
             data4.map(function(item, i){
                 weekList.push(<option key={i} value={item.value}>{item.lable}</option>);
