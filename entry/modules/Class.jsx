@@ -39,8 +39,6 @@ var Class = React.createClass({
                     if (res.re == 1) {
                         alert("操作成功");
                         ref.initialData();
-                    } else {
-                        alert("操作失败");
                     }
                     ref.closeModal();
                 },
@@ -83,7 +81,7 @@ var Class = React.createClass({
     showClassDetail:function (item) {
         var url = "/func/allow/getClassScheduleByClassId";
         var param={
-            id:item.classId
+            id:item.courseId
         }
         var ref = this;
         Proxy.query(
@@ -173,28 +171,28 @@ var Class = React.createClass({
                 mrs.push(
                     <div style={{textAlign: 'center'}} key='modal' >
                         <div className="business">
-                            <h2 id="CLassTitle">{item.badmintonClassForm.className}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.badmintonClassForm.unitName}</p>
+                            <h2 id="CLassTitle">{item.badmintonCourseInfoForm.courseName}</h2>
+                            <p id="eventPlace"><span>地点：</span>{item.badmintonCourseInfoForm.unitName}</p>
                         </div>
                         <div className="value">
 
-                            <p id="eventCreater"><span>教练：</span>{item.badmintonClassForm.creatorName}</p>
+                            <p id="eventCreater"><span>教练：</span>{item.badmintonCourseInfoForm.creatorName}</p>
 
                         </div>
                         <ul>
                             <li id="eventTime"><span>课程安排：</span>{item.day}</li>
-                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.badmintonClassForm.maxNumber}</li>
-                            <li id="eventNum"><span>已报名人数：</span>{item.badmintonClassForm.signNumber}</li>
-                            <li id="eventBrief"><span>简介：</span>{item.badmintonClassForm.detail}</li>
+                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.badmintonCourseInfoForm.maxNumber}</li>
+                            <li id="eventNum"><span>已报名人数：</span>{item.badmintonCourseInfoForm.signNumber}</li>
+                            <li id="eventBrief"><span>简介：</span>{item.badmintonCourseInfoForm.detail}</li>
                         </ul>
                         <div className="buy-me">
-                            {item.badmintonClassForm.maxNumber>item.badmintonClassForm.signNumber?
-                                <a onClick={this.signUp.bind(null,item.badmintonClassForm.classId)}>报名</a>:
+                            {item.badmintonCourseInfoForm.maxNumber>item.badmintonCourseInfoForm.signNumber?
+                                <a onClick={this.signUp.bind(null,item.badmintonCourseInfoForm.courseId)}>报名</a>:
                                 <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
                         }
                         </div>
                         <div style={{paddingTop: '2em'}}>
-                            <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonClassForm.classId} onClick={this.closeModal}>给他人报名--></Link>
+                            <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonCourseInfoForm.courseId} onClick={this.closeModal}>给他人报名--></Link>
                         </div>
                     </div>
 

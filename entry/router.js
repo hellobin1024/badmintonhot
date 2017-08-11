@@ -12,6 +12,7 @@ import PersonInfo from './modules/PersonInfo.jsx'
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
+import VenueIntro from './modules/VenueIntro'
 import {Component} from 'react'
 
 class AppRouter extends Component {
@@ -32,6 +33,8 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/adText"} component={AdText}/>
                     <Route path={window.App.getAppRoute() + "/order"} component={Order}/>
                     <Route path={window.App.getAppRoute() + "/personInfo"} component={PersonInfo}/>
+                    <Route path={window.App.getAppRoute() + "/venueIntro"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/venueDetail"} component={MainSection}/>
                 </Route>
             </Router>
         )

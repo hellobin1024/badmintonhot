@@ -36,7 +36,6 @@ var CreateEvent = React.createClass({
 
             var url="/func/allow/createClass";
             var params={
-                personId:this.state.personId,
                 remark:remark,
                 classTrainer:classTrainer,
                 hasCoach:hasCoach
