@@ -14,7 +14,7 @@ import MyClass from '../modules/MyClass';
 import CreateGroup from '../modules/CreateGroup.jsx';
 import CreateEvent from '../modules/CreateEvent.jsx';
 import CreateCLass from '../modules/CreateCLass.jsx';
-
+import DemandClass from '../modules/demandClass.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
@@ -88,6 +88,11 @@ var PersonInfo = React.createClass({
                     <CreateCLass personId={personId}/>
                 );
                 break;
+            case 'demandClass':
+                mainContent =(
+                    <DemandClass personId={personId}/>
+                );
+                break;
         }
 
         return(
@@ -117,6 +122,9 @@ var PersonInfo = React.createClass({
                             </dd>
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createClass')}>课程定制</a></div>
+                            </dd>
+                            <dd className="my-group">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'demandClass')}>我的定制</a></div>
                             </dd>
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className="base-info">
