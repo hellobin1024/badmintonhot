@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import '../../css/entry/modules/venueInfo.css';
 import {Link} from 'react-router';
+import Bmap from '../../components/basic/Bmap'
 var Proxy = require('../../components/proxy/ProxyQ');
 
 var VenueDetail = React.createClass({
@@ -51,9 +52,18 @@ var VenueDetail = React.createClass({
 
                                         <div className="clearfix"></div>
                                     </div>
-                                    <div className="venueDetail_map" style={{padding: '30px 35px 0px 15px'}}>
-                                        <div id="allmap" style={{minWidth:'300px',minHeight:'250px'}}></div>
-                                    </div>
+                                    <Bmap option={{
+                                        width:'300px',
+                                        height:'250px',
+                                        longitude:117.094643,
+                                        latitude:36.687979,
+                                        opt:true,
+                                        opts:{   ///覆盖点信息窗口
+                                            width : 200,     // 信息窗口宽度
+                                            height: 100,     // 信息窗口高度
+                                            title : "山东体育学院羽毛球馆" , // 信息窗口标题
+                                        },
+                                        optsInfo:'世纪大道10600号'}}/>
                                 </div>
                             </div>
                         </div>
@@ -67,32 +77,5 @@ var VenueDetail = React.createClass({
         }
         return contains;
     },
-    componentDidMount:function () {
-        // 百度地图API功能
-        var map = new BMap.Map("allmap",{minZoom:10,maxZoom:15});
-        var point = new BMap.Point(117.128081,36.658059)
-        map.centerAndZoom(point,14);
-        map.enableScrollWheelZoom(true);
-
-        // 用经纬度设置地图中心点
-        map.clearOverlays();
-        var new_point = new BMap.Point(117.094643,36.687979);
-        var marker = new BMap.Marker(new_point);  // 创建标注
-        map.addOverlay(marker);              // 将标注添加到地图中
-        map.panTo(new_point);
-        var opts = {
-            width : 200,     // 信息窗口宽度
-            height: 100,     // 信息窗口高度
-            title : "海底捞王府井店" , // 信息窗口标题
-            enableMessage:true,//设置允许信息窗发送短息
-            message:"亲耐滴，晚上一起吃个饭吧？戳下面的链接看下地址喔~"
-        }
-        var infoWindow = new BMap.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);  // 创建信息窗口对象
-        marker.addEventListener("click", function(){
-            map.openInfoWindow(infoWindow,new_point); //开启信息窗口
-        });
-
-    },
-
 });
 module.exports = VenueDetail;

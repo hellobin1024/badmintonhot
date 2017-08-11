@@ -211,12 +211,6 @@ var Class = React.createClass({
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
-                                    <div className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true">
-                                        <input type="text" className="form-control" value="09:32"/>
-                                            <span className="input-group-addon">
-                                                <span className="glyphicon glyphicon-time"></span>
-                                            </span>
-                                    </div>
                                 </div>
                             </div>
                         </div>

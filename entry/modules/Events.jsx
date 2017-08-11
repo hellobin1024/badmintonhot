@@ -209,7 +209,7 @@ var Event = React.createClass({
                                     <p><span>组织者：</span>{item.eventManagerName}</p>
                                 </div>
                                 <ul>
-                                    <li><span>时间：</span> {ref.dateFormat(item.startTime)}</li>
+                                    <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                 </ul>
@@ -230,7 +230,7 @@ var Event = React.createClass({
                                     <p><span>组织者：</span>{item.eventManagerName}</p>
                                 </div>
                                 <ul>
-                                    <li><span>时间：</span> {ref.dateFormat(item.eventTime)}</li>
+                                    <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                 </ul>
@@ -307,7 +307,7 @@ var Event = React.createClass({
                             <p id="eventCreater"><span>组织者：</span>{item.eventManagerName}</p>
                         </div>
                         <ul>
-                            <li id="eventTime"><span>时间：</span>{ref.dateFormat(item.eventTime)}</li>
+                            <li id="eventTime"><span>时间：</span>{item.startTimeStr}</li>
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
                             <li id="eventNum"><span>参与者：</span>{item.member}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
@@ -317,7 +317,6 @@ var Event = React.createClass({
                                 <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>
                             }
-
                         </div>
                     </div>
 

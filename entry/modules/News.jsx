@@ -11,7 +11,8 @@ var News = React.createClass({
     paginationData:function (data,pageIndex) {
         let capacity=data.length;
         var slices=null;
-        Page.getInitialDataIndex(6,capacity,pageIndex,function(ob){
+        var threshold = 6;
+        Page.getInitialDataIndex(threshold,capacity,pageIndex,function(ob){
                 slices=data.slice(ob.begin,ob.end);
             }
         );
