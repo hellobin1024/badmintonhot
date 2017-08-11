@@ -92,17 +92,17 @@ var DemandClass = React.createClass({
 
                            </tr>
                             <tr>
-                            <td  style={{width:'33%'}} >状态：{item.status}</td>
-                            <td  style={{width:'33%'}} >结束日期：{item.deadline}</td>
-                            <td  style={{width:'33%'}} >教练：{item.coach}</td>
+                            <td  style={{width:'50%'}} >状态：{item.status}</td>
+                            <td  style={{width:'50%'}} >教练：{item.coach}</td>
                             </tr>
 
                             <tr>
-                                <td colSpan={3} style={{width:'100%'}}>课程要求：{item.demandBrief}</td>
+                                <td colSpan={2} style={{width:'100%'}}>课程要求：{item.demandBrief}</td>
                             </tr>
                              <tr>
-                             <td> </td>
-                           <td style={{textAlign:'center'}} ><a className="operate" onClick={operate.bind(ins,item.demandId,i)}>{item.operate}</a></td><td> </td>
+                            <td colSpan={2} style={{textAlign:'center'}} >
+                                <a className="operate" onClick={operate.bind(ins,item.demandId,i)}>{item.operate}</a>
+                            </td>
                             </tr>
 
                         </tbody>
@@ -116,7 +116,6 @@ var DemandClass = React.createClass({
                             <table className="table table-striped invoice-table">
                                 <thead className="table-head">
                                 <tr>
-                                    <th width="300"></th>
                                     <th width="300"></th>
                                     <th width="300"></th>
                                 </tr>

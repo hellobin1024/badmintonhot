@@ -8,7 +8,7 @@ import App from './modules/components/App.jsx';
 import Login from './modules/components/Login';
 import MainSection from './modules/components/MainSection.jsx';
 import MainPage from './modules/components/MainPage';
-import PersonInfo from './modules/PersonInfo.jsx'
+import PersonInfo from './modules/PersonInfo.jsx';
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
@@ -32,6 +32,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/adText"} component={AdText}/>
                     <Route path={window.App.getAppRoute() + "/order"} component={Order}/>
                     <Route path={window.App.getAppRoute() + "/personInfo"} component={PersonInfo}/>
+                    <Route path={window.App.getAppRoute() + "/trainerIntroduce"} component={MainSection}/>
                 </Route>
             </Router>
         )

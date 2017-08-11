@@ -8,6 +8,7 @@ import Heard from '../components/Heard'
 import Banner from '../components/Banner'
 import Foot from '../components/Foot'
 import Events from '../../modules/Events'
+import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'
@@ -66,6 +67,9 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/class":
                     ctrl =<Class/>
+                    break;
+                case App.getAppRoute() + "/trainerIntroduce":
+                    ctrl =<TrainerIntroduce/>
                     break;
                 default:
                     break;

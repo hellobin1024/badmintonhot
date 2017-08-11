@@ -184,14 +184,18 @@ var CreateEvent = React.createClass({
             Tips.showTips("开始时间不能大于结束时间~");
         }else if (eventName == "") {
             Tips.showTips('请填写活动名称~');
-        } else if (eventBrief == "") {
+        } else if (eventMaxMemNum == "") {
+            Tips.showTips('请填写活动名称~');
+        }else if (eventBrief == "") {
             Tips.showTips('请填写活动简介~');
+        } else if (eventCost == "") {
+            Tips.showTips('请填写费用~');
         } else if (eventMaxMemNum == "") {
             Tips.showTips('请填写活动最大人数~');
         } else if(!reg.test(eventMaxMemNum)){
             Tips.showTips("最大人数只能为数字~");
         } else if(!reg.test(eventCost)){
-            Tips.showTips("最大人数只能为数字~");
+            Tips.showTips("花费只能为数字~");
         } else {
 
             var url="/func/allow/createEvents";
@@ -292,7 +296,7 @@ var CreateEvent = React.createClass({
                 eventGroupList.push(<option key={i} value={item.groupId}>{item.groupName}</option>);
             });
             data3.map(function(item, i){
-                eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perNum}</option>);
+                eventTrainerList.push(<option key={i} value={item.trainerId}>{item.infoPersonInfo.perNum}</option>);
             });
             data4.map(function(item, i){
                 weekList.push(<option key={i} value={item.value}>{item.lable}</option>);

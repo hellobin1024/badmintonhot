@@ -26,7 +26,7 @@ var CreateEvent = React.createClass({
         }
 
         var demandBrief=document.getElementById("demandBrief").value;
-        var deadline=$(createClass).find("input[name='deadline']").val();
+        //var deadline=$(createClass).find("input[name='deadline']").val();
         var classTrainer = $('#classTrainer option:selected').val();
         var reg = new RegExp("^[0-9]*$");
 
@@ -38,8 +38,8 @@ var CreateEvent = React.createClass({
             var params={
                 demandBrief:demandBrief,
                 coachId:classTrainer,
-                hasCoach:hasCoach,
-                deadline:deadline
+                hasCoach:hasCoach
+
             };
             ProxyQ.query(
                 'post',
@@ -78,7 +78,7 @@ var CreateEvent = React.createClass({
                 }
                 var data=ob.data;
                 this.setState({data:data});
-                $("#Trainflag").prop('checked',true);
+                $("#Trainflag").prop('checked',false);
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -117,23 +117,23 @@ var CreateEvent = React.createClass({
             var data2=data.b;
 
             data2.map(function(item, i){
-                eventTrainerList.push(<option key={i} value={item.infoPersonInfo.personId}>{item.infoPersonInfo.perNum}</option>);
+                eventTrainerList.push(<option key={i} value={item.trainerId}>{item.infoPersonInfo.perNum}</option>);
             });
 
 
             mainContent=
                 <div ref="createClass" className="c-block">
                     <div className="common-line" style={{height:'40px'}}>
-                        <div  style={{float:'left',width:'250px'}}>
+                        {/*<div  style={{float:'left',width:'250px'}}>
                         <span style={{float:'left'}} className="common-label l-label">最后期限：</span>
                         <span  style={{float:'left'}}>
                          <Calendar data={today} ctrlName='deadline'/>
                         </span>
-                        </div>
+                        </div>*/}
 
                         <div  style={{float:'left',width:'270px'}}>
                             <div  style={{float:'left',width:'80px'}}>
-                                <span className="common-label r-label"  style={{float:'left'}}>联系电话：</span>
+                                <span className="common-label l-label"  style={{float:'left'}}>联系电话：</span>
                             </div>
                         <span  style={{float:'left'}}>
                            <input style={{float:'left'}} disabled="disabled" name="mobilePhone" defaultValue={this.state.data.mobilePhone} readOnly="true" maxLength="25" className="common-input"/>
@@ -147,7 +147,7 @@ var CreateEvent = React.createClass({
                             </div>
                             <input type="checkbox"  style={{marginLeft:'30px',float:'left'}}  name="Trainflag" id="Trainflag"  value="是否制定教练" onClick={this.test1} />
                         </div>
-                        <div id="selectTrainer" style={{float:'left'}}>
+                        <div id="selectTrainer" style={{float:'left',display: 'none'}}>
                             <span  className="common-label l-label"  style={{marginLeft:'30px',float:'left'}}>选择教练：</span>
                             <span  style={{float:'left'}}>
                                 <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classTrainer">
