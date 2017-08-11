@@ -46,7 +46,7 @@ var Order = React.createClass({
             params,
             null,
             function(ob) {
-                var data=ob.resList;
+                var data=ob.data;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -62,7 +62,7 @@ var Order = React.createClass({
             null,
             null,
             function(ob) {
-                var a=ob.resList;
+                var a=ob.data;
                 this.setState({relate:a});
             }.bind(this),
             function(xhr, status, err) {
@@ -121,8 +121,7 @@ var Order = React.createClass({
                 params,
                 null,
                 function (ob) {
-                    var a = ob.reCode;
-                    alert(ob.response);
+                    alert(ob.data);
                     var addNewManModal = this.refs['addNewManModal'];
                     $(addNewManModal).modal('hide');
                     this.getRelateMan();
@@ -205,7 +204,7 @@ var Order = React.createClass({
             var className=this.state.data.className;
             var loginName=this.state.loginName;
 
-            var url = "/func//allow/getMyPhone";
+            var url = "/func/allow/getMyPhone";
 
             ProxyQ.query(
                 'get',
@@ -213,7 +212,7 @@ var Order = React.createClass({
                 null,
                 null,
                 function (ob) {
-                    var myPhone = ob.resList;
+                    var myPhone = ob.data;
                     var url = "/func/allow/classMultiplySignUp";
                     var params = {
                         personId: store,
@@ -225,12 +224,11 @@ var Order = React.createClass({
                         params,
                         null,
                         function (ob) {
-                            var reCode = ob.reCode;
-                            if (reCode !== undefined && reCode !== null && (reCode == 1 || reCode == "1")) { //操作失败
-                                alert(ob.response);
+                            var reCode = ob.re;
+                            if (reCode == -1 || reCode == "-1") { //操作失败
                                 return;
                             }
-                            alert(ob.response);
+                            alert(ob.data);
 
                             const path = "/personInfo";
                             hashHistory.push(path);
@@ -272,15 +270,15 @@ var Order = React.createClass({
                             <tbody>
                             <tr>
                                 <td>课程名称:</td>
-                                <td>{data.className}</td>
+                                <td>{data.courseName}</td>
                                 <td>开课教员:</td>
-                                <td>{data.infoPersonInfo.perName}</td>
+                                <td>{data.creatorName}</td>
                             </tr>
                             <tr>
                                 <td>课程时间:</td>
                                 <td>{1}</td>
                                 <td>课程地点:</td>
-                                <td>{data.badmintonVenueUnit.name + ":" + data.badmintonVenueUnit.address}</td>
+                                <td>{data.unitName}</td>
                             </tr>
                             <tr>
                                 <td>课程计划招生:</td>

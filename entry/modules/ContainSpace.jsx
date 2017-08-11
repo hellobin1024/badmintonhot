@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
-
+import {Link} from 'react-router';
 var ContainSpace = React.createClass({
 
     render:function() {
@@ -102,17 +102,16 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="choose">
                                 <div className="choose-info">
-                                    <h4>推荐群组</h4>
+                                    <h4>相关简介</h4>
                                 </div>
                                 <div className="choose-grids">
                                     <div className="choose-grids-info">
                                         <div className="choose-left">
-                                            <h5>09</h5>
-                                            <span>Million</span>
+                                            <span className="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                         </div>
                                         <div className="choose-right">
-                                            <a href="products.html">Aliquam faucibus vehicula vulputate</a>
-                                            <p>Maecenas euismod tortor a tristique convallis diam eros aliquam.</p>
+                                            <a href="#">教练简介</a>
+                                            <p>浏览教练相关信息（教练履历，获奖荣誉，联系方式等）</p>
                                         </div>
                                         <div className="clearfix"> </div>
                                     </div>
@@ -121,18 +120,18 @@ var ContainSpace = React.createClass({
                                             <span className="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                         </div>
                                         <div className="choose-right">
-                                            <a href="products.html">Sed tincidunt consectetur augue</a>
-                                            <p>Nulla bibendum libero in nunc eleifend tincidunt. Aliquam quis molestie lectus</p>
+                                            <Link to={window.App.getAppRoute() + "/venueIntro"}  >场馆简介</Link>
+                                            <p>浏览场馆相关信息（场馆地址，联系电话，场馆图片等）</p>
                                         </div>
                                         <div className="clearfix"> </div>
                                     </div>
                                     <div className="choose-grids-info">
                                         <div className="choose-left">
-                                            <h6>$</h6>
+                                            <span className="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                         </div>
                                         <div className="choose-right">
-                                            <a href="products.html">Nullam et arcu interdum, accumsan justo</a>
-                                            <p>Maecenas dapibus eu purus vel imperdiet. Maecenas cursus, arcu sed tempus </p>
+                                            <a href="#">收费简介</a>
+                                            <p>浏览收费相关信息（活动收费规则，课程收费规则等）</p>
                                         </div>
                                         <div className="clearfix"> </div>
                                     </div>

@@ -197,7 +197,7 @@ var Event = React.createClass({
             var ref = this;
             if(event!=0) {
                 event.map(function (item, i) {
-                    if (i == 0) {
+                    if (i%3 == 0) {
                         trs.push(
                             <div className="basic_first" key={"event" + i}>
 
@@ -248,7 +248,7 @@ var Event = React.createClass({
             }
             if(group !=0) {
                 group.map(function (item, i) {
-                    if (i == 0) {
+                    if (i%3 == 0) {
                         grs.push(
                             <div className="basic_first" key={"group" + i}>
 
