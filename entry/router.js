@@ -7,12 +7,10 @@ import { Router, Route, hashHistory,browserHistory, IndexRoute } from 'react-rou
 import App from './modules/components/App.jsx';
 import Login from './modules/components/Login';
 import MainSection from './modules/components/MainSection.jsx';
-import MainPage from './modules/components/MainPage';
 import PersonInfo from './modules/PersonInfo.jsx';
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
-import VenueIntro from './modules/VenueIntro'
 import {Component} from 'react'
 
 class AppRouter extends Component {

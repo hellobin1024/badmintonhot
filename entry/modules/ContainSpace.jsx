@@ -110,7 +110,7 @@ var ContainSpace = React.createClass({
                                             <span className="glyphicon glyphicon-globe" aria-hidden="true"></span>
                                         </div>
                                         <div className="choose-right">
-                                            <a href="#">教练简介</a>
+                                            <Link to={window.App.getAppRoute()+"/trainerIntroduce"}>教练简介</Link>
                                             <p>浏览教练相关信息（教练履历，获奖荣誉，联系方式等）</p>
                                         </div>
                                         <div className="clearfix"> </div>
