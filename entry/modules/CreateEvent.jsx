@@ -128,6 +128,7 @@ var CreateEvent = React.createClass({
         var startTime = $(createEvent).find("input[name='startTime']").val();
         var endTime = $(createEvent).find("input[name='endTime']").val();
         var classTrainer= $('#classTrainer option:selected').val();
+        var classSparring= $('#classSparring option:selected').val();
         var eventMaxMemNum = $(createEvent).find("input[name='eventMaxMemNum']").val();
         var eventType = $('#eventType option:selected').val()
         var memberLevel = $('#level option:selected').val();
@@ -135,7 +136,7 @@ var CreateEvent = React.createClass({
         var eventCost = $(createEvent).find("input[name='eventCost']").val();
         var IsSchedule=0;
         var IsSparing=0;
-
+        var IsTrainer=0;
 
         if(document.getElementById("periodFlag").checked){
 
@@ -145,7 +146,7 @@ var CreateEvent = React.createClass({
 
             IsSchedule=0;
         }
-        if(document.getElementById("IsSparing").checked){
+        if(document.getElementById("Sparringflag").checked){
 
             IsSparing=1;
         }
@@ -153,12 +154,21 @@ var CreateEvent = React.createClass({
 
             IsSparing=0;
         }
+        if(document.getElementById("Trainflag").checked){
+
+            IsTrainer=1;
+        }
+        else{
+
+            IsTrainer=0;
+        }
         var reg = new RegExp("^[0-9]*$");
 
         var data1=this.getDay(chooseWeek);
 
         var eventPlaceId = parseInt(eventPlace);
         var classTrainer = parseInt(classTrainer);
+        var classSparring = parseInt(classSparring);
         var eventMaxMemNum2 = parseInt(eventMaxMemNum);
         var eventCost = parseInt(eventCost);
         var IsSparing = parseInt(IsSparing);
@@ -168,6 +178,11 @@ var CreateEvent = React.createClass({
         {
             classTrainer=null;
         }
+        if(classSparring==-1)
+        {
+            classSparring=null;
+        }
+
 
         startTime=data1+" "+startTime+":00";
         var time1 = Date.parse(startTime);
@@ -178,7 +193,9 @@ var CreateEvent = React.createClass({
         var newDate2 = new Date(time2);
 
         const Today=new Date();
-        if(newDate1<Today){
+        if(classTrainer!=null&&classSparring!=null&&classTrainer==classSparring){
+            Tips.showTips("陪练和教练人员不可以为同一个~");
+        }else if(newDate1<Today){
             Tips.showTips("开始时间必须大于当前时间~");
         }else if(newDate1>newDate2){
             Tips.showTips("开始时间不能大于结束时间~");
@@ -207,6 +224,7 @@ var CreateEvent = React.createClass({
                 eventPlaceId:eventPlaceId,
                 eventMaxMemNum:eventMaxMemNum2,
                 coachId:classTrainer,
+                SparringId:classSparring,
                 groupId:eventGroup,
                 eventType:eventType,
                 startTime:startTime,
@@ -215,6 +233,7 @@ var CreateEvent = React.createClass({
                 memberLevel:memberLevel,
                 cost:eventCost,
                 isNeedSparring:IsSparing,
+                isNeedCoach:IsTrainer,
                 feeDes:"",
                 eventNowMemNum:1,
                 status:0,
@@ -265,7 +284,28 @@ var CreateEvent = React.createClass({
         );
     },
 
+    test1:function(){
+        if(document.getElementById("Trainflag").checked)
+        {
+            $("#selectTrainer").attr("style","display:block");
 
+        }else{
+            $("#selectTrainer").attr("style","display: none");
+
+
+        }
+    },
+    test2:function(){
+        if(document.getElementById("Sparringflag").checked)
+        {
+            $("#selectSparring").attr("style","display:block");
+
+        }else{
+            $("#selectSparring").attr("style","display: none");
+
+
+        }
+    },
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
@@ -344,7 +384,7 @@ var CreateEvent = React.createClass({
                                             </span>
                              <div className="clearfix"/>
                         </span>
-                                </div>
+                        </div>
 
 
                         <div className="clearfix"/>
@@ -369,22 +409,7 @@ var CreateEvent = React.createClass({
 
 
                     </div>
-                    <div className="common-line">
-                        <span className="common-label l-label"> 选择小组：</span>
-                        <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventGroup">
-                                    {eventGroupList}
-                                </select>
-                        </span>
-                        <span className="common-label r-label" >选择教练：</span>
-                        <span>
-                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classTrainer">
-                                    <option value={-1}>请选择</option>
-                                    {eventTrainerList}
-                                </select>
-                        </span>
 
-                    </div>
 
                     <div className="common-line">
                         <span className="common-label l-label">最多人数：</span>
@@ -419,8 +444,50 @@ var CreateEvent = React.createClass({
                         </span>
                     </div>
                     <div className="common-line">
-                        <span className="common-label l-label" >是否需要陪练</span>
-                        <input type="checkbox" style={{marginLeft:'30px',width:'inherit',height:'inherit'}} name="IsSparing" id="IsSparing"  value="是否需要陪练"  />
+                        <span className="common-label l-label"> 选择小组：</span>
+                        <span>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventGroup">
+                                    {eventGroupList}
+                                </select>
+                        </span>
+
+
+                    </div>
+                    <div className="common-line" style={{height:'30px'}}>
+                        <div  style={{float:'left',width:'225px'}}>
+                            <div style={{float:'left'}}>
+                                <span className="common-label l-label" >是否需要教练</span>
+                            </div>
+                            <input type="checkbox"  style={{marginLeft:'30px',float:'left'}}  name="Trainflag" id="Trainflag"   onClick={this.test1} />
+                        </div>
+                        <div id="selectTrainer" style={{float:'left',display: 'none',width:'200px'}}>
+                            <span  className="common-label l-label"  style={{marginLeft:'30px',float:'left'}}>选择教练：</span>
+                            <span  style={{float:'left'}}>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classTrainer">
+                                    <option value={-1}>请选择</option>
+                                    {eventTrainerList}
+                                </select>
+                            </span>
+                        </div>
+                        <div className="clearfix"></div>
+                    </div>
+                    <div className="common-line"  >
+                        <div  style={{float:'left',width:'225px'}}>
+                            <div style={{float:'left'}}>
+                                <span className="common-label l-label" >是否需要陪练</span>
+                            </div>
+                            <input type="checkbox"  style={{marginLeft:'30px',float:'left'}}  name="Sparringflag" id="Sparringflag"   onClick={this.test2} />
+                        </div>
+                        <div id="selectSparring" style={{float:'left',display: 'none'}}>
+                            <span  className="common-label l-label"  style={{marginLeft:'30px',float:'left'}}>选择陪练：</span>
+                            <span  style={{float:'left'}}>
+                                <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="classSparring">
+                                    <option value={-1}>请选择</option>
+                                    {eventTrainerList}
+                                </select>
+                            </span>
+                        </div>
+                        <div className="clearfix"></div>
                     </div>
                     <div className="save-line" style={{position:'absolute'}}>
                         <span>
