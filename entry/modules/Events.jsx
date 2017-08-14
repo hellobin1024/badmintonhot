@@ -212,6 +212,8 @@ var Event = React.createClass({
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
+                                    <li><span>花费：</span> {item.cost}</li>
+
                                 </ul>
                                 <div className="buy-me">
                                     <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
@@ -233,6 +235,7 @@ var Event = React.createClass({
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
+                                    <li><span>花费：</span> {item.cost}</li>
                                 </ul>
                                 <div className="buy-me">
                                     <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
@@ -311,6 +314,7 @@ var Event = React.createClass({
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
                             <li id="eventNum"><span>参与者：</span>{item.member}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
+                            <li id="cost"><span>花费：</span>{item.cost}</li>
                         </ul>
                         <div className="buy-me">
                             {item.eventMaxMemNum>item.eventNowMemNum?

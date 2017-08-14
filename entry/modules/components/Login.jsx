@@ -212,11 +212,11 @@ var Login=React.createClass({
                 params,
                 null,
                 function (re) {
-                    var reCode = re.reCode;
-                    if(reCode==0 || reCode=='0'){
-                       alert(re.response);
+                    var reCode = re.re;
+                    if(reCode==1 || reCode=='1'){
+                       alert("注册成功！");
                     }else{
-                        alert(re.response);
+                        alert("注册失败！");
                     }
                 },
                 function (xhr, status, err) {
