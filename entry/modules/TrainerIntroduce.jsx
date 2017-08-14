@@ -80,11 +80,11 @@ var TrainIntroduce = React.createClass({
                     <div key={i}>
                         <div className="news_content_body clearfix"  style={{marginLeft:'10px',marginTop:'30px',float:'left',fontSize:'10px'}}>
                             <p>
-                                  <img src={item.img}
+                                  <img src={item.img1}
                                      alt="" data-key="0" className="image-click" style={{paddingRight:'20px', width:'200px', height: '230px' }}/>
-
-
                             </p>
+                        </div>
+                        <div  style={{float:'left',width:'50%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
                             <p>
                                 姓名: {item.name}
                             </p>
@@ -94,13 +94,23 @@ var TrainIntroduce = React.createClass({
                             <p>
                                 教练水平: {item.CoachLevel}
                             </p>
-                        </div>
-                        <div  style={{float:'left',width:'50%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
                             <p>
+                                &emsp;&emsp;
                                 {item.brief}
                             </p>
                         </div>
+                        <div className="news_content_body clearfix"  style={{marginLeft:'30px',marginTop:'30px',float:'left',fontSize:'10px',width:'3000px'}}>
+                                <img src={item.img2}
+                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
+                                <img src={item.img3}
+                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
+                                <img src={item.img4}
+                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
+                        </div>
+                        <br/>
                         <div className="clearfix"/>
+                        <br/><br/>
+
                     </div>
 
 
@@ -116,7 +126,7 @@ var TrainIntroduce = React.createClass({
                 <div className="container">
                     <div className="faqs-top-grids">
                         <div className="product-grids">
-                            <h1 style={{marginLeft:'35px',fontSize:'21px',color:'#303030'}}>乒乓球教练一览</h1>
+                            <h1 style={{textAlign:'center',fontSize:'25px'}}>教练介绍</h1>
                             {trs}
                                 <PageNavigator
                                 capacity={len}
