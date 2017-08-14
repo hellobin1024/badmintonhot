@@ -32,8 +32,10 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/order"} component={Order}/>
                     <Route path={window.App.getAppRoute() + "/personInfo"} component={PersonInfo}/>
                     <Route path={window.App.getAppRoute() + "/trainerIntroduce"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/CostIntroduce"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/venueIntro"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/venueDetail"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/competition"} component={MainSection}/>
 
                 </Route>
             </Router>
