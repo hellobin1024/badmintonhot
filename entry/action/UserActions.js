@@ -25,10 +25,10 @@ export let loginAction=function(name,psw,validate,type,product){
             var password=psw;
             var url = "/func/auth/webLogin";
             var param={
-                'loginName' :loginName,
-                'password' : password,
-                'validateCode' :validate
-            };
+                    'loginName' :loginName,
+                    'password' : password,
+                    'validateCode' :validate
+                };
             var ref = this;
             Proxy.query(
                 'POST',

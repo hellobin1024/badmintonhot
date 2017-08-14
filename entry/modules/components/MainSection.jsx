@@ -9,6 +9,7 @@ import Banner from '../components/Banner'
 import Foot from '../components/Foot'
 import Events from '../../modules/Events'
 import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
+import CostIntroduce from '../../modules/CostIntroduce.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'
@@ -72,6 +73,9 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/trainerIntroduce":
                     ctrl =<TrainerIntroduce/>
+                    break;
+                case App.getAppRoute() + "/ CostIntroduce":
+                    ctrl =<CostIntroduce/>
                     break;
                 case App.getAppRoute() + "/venueIntro":
                     ctrl =<VenueIntro/>
