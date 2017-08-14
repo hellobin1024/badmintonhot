@@ -72,10 +72,11 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/trainerIntroduce":
                     ctrl =<TrainerIntroduce/>
+                    break;
                 case App.getAppRoute() + "/venueIntro":
                     ctrl =<VenueIntro/>
                     break;
-                case App.getAppRoute() + "/venueDetail":
+                case App.getAppRoute() + "/competition":
                     ctrl =<VenueDetail/>
                     break;
                 default:

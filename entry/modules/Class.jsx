@@ -79,35 +79,36 @@ var Class = React.createClass({
         return date;
     },
     showClassDetail:function (item) {
-        var url = "/func/allow/getClassScheduleByClassId";
-        var param={
-            id:item.courseId
-        }
-        var ref = this;
-        Proxy.query(
-            'POST',
-            url,
-            param,
-            null,
-            function (res) {
-                var a = res.data;
-                var day ="";
-                var week="";
-                for(var i=0;i<a.length;i++){
-                    day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
-                }
-                a[0].day=day;
-                ref.setState({modal:a[0]});
-                var successModal = ref.refs['successModal'];
-                $(successModal).modal('show');
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
-
-    },
+        // var url = "/func/allow/getClassScheduleByClassId";
+        // var param={
+        //     id:item.courseId
+        // }
+        // var ref = this;
+        // Proxy.query(
+        //     'POST',
+        //     url,
+        //     param,
+        //     null,
+        //     function (res) {
+        //         var a = res.data;
+        //         var day ="";
+        //         var week="";
+        //         for(var i=0;i<a.length;i++){
+        //             day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
+        //         }
+        //         a[0].day=day;
+        //         ref.setState({modal:a[0]});
+        this.setState({modal:item});
+        var successModal = this.refs['successModal'];
+        $(successModal).modal('show');
+    //         },
+    //
+    //         function (xhr, status, err) {
+    //             console.error(this.props.url, status, err.toString());
+    //         }
+    //     );
+    //
+     },
 
     closeModal:function () {
         var successModal = this.refs['successModal'];
@@ -171,28 +172,28 @@ var Class = React.createClass({
                 mrs.push(
                     <div style={{textAlign: 'center'}} key='modal' >
                         <div className="business">
-                            <h2 id="CLassTitle">{item.badmintonCourseInfoForm.courseName}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.badmintonCourseInfoForm.unitName}</p>
+                            <h2 id="CLassTitle">{item.courseName}</h2>
+                            <p id="eventPlace"><span>地点：</span>{item.unitName}</p>
                         </div>
                         <div className="value">
 
-                            <p id="eventCreater"><span>教练：</span>{item.badmintonCourseInfoForm.creatorName}</p>
+                            <p id="eventCreater"><span>教练：</span>{item.creatorName}</p>
 
                         </div>
                         <ul>
-                            <li id="eventTime"><span>课程安排：</span>{item.day}</li>
-                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.badmintonCourseInfoForm.maxNumber}</li>
-                            <li id="eventNum"><span>已报名人数：</span>{item.badmintonCourseInfoForm.signNumber}</li>
-                            <li id="eventBrief"><span>简介：</span>{item.badmintonCourseInfoForm.detail}</li>
+                            <li id="eventTime"><span>课程安排：</span>{item.scheduleDes}</li>
+                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.maxNumber}</li>
+                            <li id="eventNum"><span>已报名人数：</span>{item.signNumber}</li>
+                            <li id="eventBrief"><span>简介：</span>{item.detail}</li>
                         </ul>
                         <div className="buy-me">
-                            {item.badmintonCourseInfoForm.maxNumber>item.badmintonCourseInfoForm.signNumber?
-                                <a onClick={this.signUp.bind(null,item.badmintonCourseInfoForm.courseId)}>报名</a>:
+                            {item.maxNumber>item.signNumber?
+                                <a onClick={this.signUp.bind(null,item.courseId)}>报名</a>:
                                 <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
                         }
                         </div>
                         <div style={{paddingTop: '2em'}}>
-                            <Link to={window.App.getAppRoute() + "/order?product="+item.badmintonCourseInfoForm.courseId} onClick={this.closeModal}>给他人报名--></Link>
+                            <Link to={window.App.getAppRoute() + "/order?product="+item.courseId} onClick={this.closeModal}>给他人报名--></Link>
                         </div>
                     </div>
 
