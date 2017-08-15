@@ -1,53 +1,190 @@
-import React from 'react';
+
 import {render} from 'react-dom';
 import { connect } from 'react-redux';
+import { browserHistory ,hashHistory} from 'react-router';
 import '../../build/css/style.css'
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import RightSlide from './components/RightSilde'
 import {Link} from 'react-router';
+var Tips = require('../../components/basic/Tips');
 var Proxy = require('../../components/proxy/ProxyQ');
-
+var React = require('react');
+var ReactDOM = require('react-dom');
+import Header from './components/Heard.jsx';
+import '../../css/entry/modules/myEvents.css'
 var Class = React.createClass({
 
 
     getInitialState: function () {
         var token=this.props.token;
-        return ({
-            token:token
-        });
+        var loginName=this.props.loginName;
+        var personId=this.props.personId;
+
+        if(this.props.personId!==undefined && this.props.personId!==null){
+            personId = this.props.personId;
+        }
+        return ({ token:token,personId:personId,loginName:loginName});
     },
     initialData:function(){
 
         this.getAllClass();
 
     },
+    sendMessage:function (phoneNum,contents){
+
+        var params = {
+            corp_id:'hy6550',
+            corp_pwd:'mm2289',
+            corp_service:1069003256550,
+            mobile:phoneNum,
+            msg_content:contents,
+            corp_msg_id:'',
+            ext:''
+        };
+
+        var ins=this; //保存this
+        var url='http://sms.cloud.hbsmservice.com:8080/sms_send2.do';
+        $.ajax({
+            type    : 'POST',
+            url     : url,
+            data    : params,
+            // dataType: 'JSONP',
+            crossDomain: true,
+            cache   : false,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            //jsonpCallback: '?',
+            //jsonp: 'callback',
+            success : function (response) {
+                Tips.showTips("已通知课程教练！");
+            },
+            error   : function (xhr, status, err) {
+                var $modal=$("#root_modal");
+                var content;
+                var errType="";
+                if(xhr.status==200 || xhr.status=="200"||xhr.status==0 || xhr.status=="0") {
+                    Tips.showTips("已通知课程教练！");
+                    return;
+                } else if(xhr.status==404||xhr.status=="404") {
+                    content="错误描述:"+xhr.responseText;
+                    errType="";
+                    switch(xhr.statusText) {
+                        case "Not Found":
+                            errType="发生错误:"+"path not found";
+                            break;
+                        default:
+                            break;
+                    }
+                } else if (xhr.status == 502 || xhr.status == "502") {
+                    content = "错误描述:" + xhr.responseText;
+                    errType = "发生错误:" + "无效的服务器指向";
+                }
+                $modal.find(".modal-body").text(content);
+                $modal.find(".modal-title").text(errType);
+                $modal.modal('show');
+            }
+        });
+    },
     signUp:function (item) {
         if(this.state.token!==null&&this.state.token!==undefined) {
-            var url = "/func/allow/classSignUp";
-            var param = {
-                id: item
-            }
-            var ref = this;
-            Proxy.query(
-                'POST',
-                url,
-                param,
-                null,
-                function (res) {
-                    if (res.re == 1) {
-                        alert("操作成功");
-                        ref.initialData();
-                    }
-                    ref.closeModal();
-                },
+            /*  var url = "/func/allow/classSignUp";
+             var param = {
+             id: item
+             }
+             var ref = this;
+             Proxy.query(
+             'POST',
+             url,
+             param,
+             null,
+             function (res) {
+             if (res.re == 1) {
+             alert("报名成功！");
+             ref.initialData();
+             }
+             ref.closeModal();
+             },
 
+             function (xhr, status, err) {
+             console.error(this.props.url, status, err.toString());
+             }
+             );
+             }else {
+             alert("您尚未登录！");
+             }*/
+
+            var url = "/func/allow/getCoachPhoneAndClass";
+            var params = {
+                classId: item
+            };
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+                function (ob) {
+
+                    var ref = this;
+                    var data=ob.data;
+                    var coachName = data.coachName;
+                    var className = data.className;
+                    var loginName = this.state.loginName;
+                    var coachPhone = data.phone;
+
+                    var personId=this.props.personId+"";
+                    var url = "/func/allow/getMyPhone";
+                    Proxy.query(
+                        'get',
+                        url,
+                        null,
+                        null,
+                        function (ob) {
+                            var myPhone = ob.data;
+                            var url = "/func/allow/classMultiplySignUp";
+                            var params = {
+                                personId: personId,
+                                classId: item
+                            };
+                            Proxy.query(
+                                'post',
+                                url,
+                                params,
+                                null,
+                                function (ob) {
+                                    var reCode = ob.re;
+                                    if (reCode == -1 || reCode == "-1") { //操作失败
+                                        return;
+                                    }
+                                    alert(ob.data);
+
+                                    ref.closeModal();
+                                    const path = "/personInfo";
+                                    hashHistory.push(path);
+
+                                    ref.sendMessage(coachPhone, "羽毛球热——注册会员'" + loginName + "'报名了您所开设的暑期课程'" + className + "'，请及时电话联系进行确认！联系电话：+" + myPhone);//给教练发消息
+                                    ref.sendMessage(myPhone, "羽毛球热——感谢您报名我们的暑期课程，具体缴费，福利详情请与您的课程教练：" + coachName + " " + coachPhone + "联系确认");//给自己发消息
+
+                                }.bind(this),
+                                function (xhr, status, err) {
+                                    console.error(this.props.url, status, err.toString());
+                                }.bind(this)
+                            );
+                        }.bind(this),
+                        function (xhr, status, err) {
+                            console.error(this.props.url, status, err.toString());
+                        }.bind(this)
+                    );
+                }.bind(this),
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
-                }
+                }.bind(this)
             );
-        }else {
+
+        }else{
             alert("您尚未登录！");
         }
 
@@ -264,7 +401,9 @@ var Class = React.createClass({
 const mapStateToProps = (state, ownProps) => {
     const props = {
         token: state.userInfo.accessToken,
-    }
+        loginName: state.userInfo.loginName,
+        personId:state.userInfo.personId,
+}
     return props
 }
 export default connect(mapStateToProps)(Class);

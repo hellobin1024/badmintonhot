@@ -115,8 +115,6 @@ var TrainIntroduce = React.createClass({
 
                     </div>
 
-
-
                 )})
 
         }else{
@@ -148,7 +146,9 @@ var TrainIntroduce = React.createClass({
 
                 </div>
 
+
             </div>
+
         return contains
 
     }
