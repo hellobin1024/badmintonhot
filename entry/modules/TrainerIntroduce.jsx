@@ -100,6 +100,7 @@ var TrainIntroduce = React.createClass({
                             </p>
                         </div>
                         <div className="news_content_body clearfix"  style={{marginLeft:'30px',marginTop:'30px',float:'left',fontSize:'10px',width:'3000px'}}>
+
                                 <img src={item.img2}
                                      alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
                                 <img src={item.img3}

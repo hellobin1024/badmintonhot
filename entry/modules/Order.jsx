@@ -198,20 +198,31 @@ var Order = React.createClass({
         if(store.length==0){
             alert('请至少选择一个报名人！');
         }else {
-            var ref = this;
-            var coachPhone=this.state.data.infoPersonInfo.mobilePhone;
-            var coachName=this.state.data.infoPersonInfo.perName;
-            var className=this.state.data.className;
-            var loginName=this.state.loginName;
-
-            var url = "/func/allow/getMyPhone";
-
+            var url = "/func/allow/getCoachPhone";
+            var params = {
+                classId: this.state.product
+            };
             ProxyQ.query(
+                'post',
+                url,
+                params,
+                null,
+                function (ob) {
+
+                    var ref = this;
+                    var coachName=this.state.data.creatorName;
+                    var className=this.state.data.courseName;
+                    var loginName=this.state.loginName;
+                    var coachPhone=ob.data;
+
+             var url = "/func/allow/getMyPhone";
+             ProxyQ.query(
                 'get',
                 url,
                 null,
                 null,
                 function (ob) {
+
                     var myPhone = ob.data;
                     var url = "/func/allow/classMultiplySignUp";
                     var params = {
@@ -245,7 +256,11 @@ var Order = React.createClass({
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             );
-
+           }.bind(this),
+           function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+        }.bind(this)
+         );
         }
     },
     render:function(){
