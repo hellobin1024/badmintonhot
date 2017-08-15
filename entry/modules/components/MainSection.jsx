@@ -10,6 +10,7 @@ import Foot from '../components/Foot'
 import Events from '../../modules/Events'
 import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import CostIntroduce from '../../modules/CostIntroduce.jsx';
+import Competieion from '../../modules/competition.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'
@@ -81,7 +82,7 @@ var MainSection = React.createClass({
                     ctrl =<VenueIntro/>
                     break;
                 case App.getAppRoute() + "/competition":
-                    ctrl =<VenueDetail/>
+                    ctrl =<Competieion/>
                     break;
                 default:
                     break;

@@ -11,6 +11,8 @@ var Proxy = require('../../components/proxy/ProxyQ');
 import PageNavigator from '../../components/basic/PageNavigator.jsx';
 var Page = require('../../components/basic/Page');
 var TrainIntroduce = React.createClass({
+
+
     paginationData:function (data,pageIndex) {
         let capacity=data.length;
         var slices=null;
@@ -77,14 +79,14 @@ var TrainIntroduce = React.createClass({
 
             data.map(function (item, i) {
                 trs.push(
-                    <div key={i}>
+                    <div key={i} style={{paddingLeft:'70px'}}>
                         <div className="news_content_body clearfix"  style={{marginLeft:'10px',marginTop:'30px',float:'left',fontSize:'10px'}}>
                             <p>
                                   <img src={item.img1}
                                      alt="" data-key="0" className="image-click" style={{paddingRight:'20px', width:'200px', height: '230px' }}/>
                             </p>
                         </div>
-                        <div  style={{float:'left',width:'50%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
+                        <div  style={{paddingLeft:'50px',float:'left',width:'60%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
                             <p>
                                 姓名: {item.name}
                             </p>
@@ -100,12 +102,12 @@ var TrainIntroduce = React.createClass({
                             </p>
                         </div>
                         <div className="news_content_body clearfix"  style={{marginLeft:'30px',marginTop:'30px',float:'left',fontSize:'10px',width:'3000px'}}>
-                                <img src={item.img2}
+                                <img src={item.img2==null?'/images/null.jpg':item.img2}
+                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px'}}/>
+                                <img src={item.img3==null?'/images/null.jpg':item.img3}
                                      alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
-                                <img src={item.img3}
-                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
-                                <img src={item.img4}
-                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px' }}/>
+                                <img src={item.img4==null?'/images/null.jpg':item.img4}
+                                     alt="" data-key="0" className="image-click" style={{paddingRight:'50px', width:'300px', height: '150px'}}/>
                         </div>
                         <br/>
                         <div className="clearfix"/>
@@ -127,6 +129,7 @@ var TrainIntroduce = React.createClass({
                     <div className="faqs-top-grids">
                         <div className="product-grids">
                             <h1 style={{textAlign:'center',fontSize:'25px'}}>教练介绍</h1>
+                            <br/>
                             {trs}
                                 <PageNavigator
                                 capacity={len}
