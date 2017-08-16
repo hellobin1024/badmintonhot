@@ -24,7 +24,6 @@ var MyEvents = React.createClass({
             function(ob) {
                 var reCode = ob.re;
                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
-                    alert(ob.response);
                     return;
                 }
                 var data=ob.data;
