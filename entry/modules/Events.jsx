@@ -202,9 +202,18 @@ var Event = React.createClass({
         }else if(costType==2){
 
             type="按每小时收费";
-        }else{
+        }else if(costType==3){
 
             type="总费用";
+        }else if(costType==4){
+
+            type="按每人次收费";
+        }else if(costType==5){
+
+            type="按每人每小时收费";
+        }else {
+
+            type="按场地小时收费";
         }
        return type;
     },
