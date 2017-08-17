@@ -231,7 +231,7 @@ var Event = React.createClass({
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
                                 <div className="value">
-                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                    <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul>
                                     <li><span>时间：</span> {item.startTimeStr}</li>
@@ -254,7 +254,7 @@ var Event = React.createClass({
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
                                 <div className="value">
-                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                    <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul>
                                     <li><span>时间：</span> {item.startTimeStr}</li>
@@ -332,7 +332,7 @@ var Event = React.createClass({
                             <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerName}</p>
+                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerLoginName}</p>
                         </div>
                         <ul>
                             <li id="eventTime"><span>时间：</span>{item.startTimeStr}</li>
