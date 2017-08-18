@@ -268,7 +268,7 @@ var ShowProject = React.createClass({
                         <td>{item.maxTeamPersonNum}</td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.groupRegistration}>编辑选手</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.groupRegistration}>编辑队员</button>
                              </span>
                         </td>
                         <td>
