@@ -69,6 +69,25 @@ var ShowProject = React.createClass({
             null,
             function (res) {
                 var a = res.data;
+                var projectType2="";
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].projectType == "1") {
+                        projectType2 = "团体";
+                    } else if (a[i].projectType == "2") {
+                        projectType2 = "男单";
+                    }else if (a[i].projectType == "3") {
+                        projectType2 = "女单";
+                    }else if (a[i].projectType == "4") {
+                        projectType2 = "男双";
+                    }else if (a[i].projectType == "5") {
+                        projectType2 = "女双";
+                    }else if (a[i].projectType == "6") {
+                        projectType2 = "混双";
+                    }
+
+
+                    a[i].projectType2 = projectType2;
+                }
                 ref.setState({data:a});
             },
 
@@ -77,66 +96,114 @@ var ShowProject = React.createClass({
             }
         );
     },
+    doSignupPerson: function (projectId) {
+        var projectId=projectId;
+        var url="/func/competition/joinCompetitionPerson";
+        var params={
+            projectId:projectId,
+        };
 
+        Proxy.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                    alert(ob.data);
+                    return;
+                }
+                alert(ob.data);
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
+    doCancelPerson: function (projectId) {
+        var projectId=projectId;
+        var url="/func/competition/cancelCompetitionPerson";
+        var params={
+            projectId:projectId,
+        };
+
+        Proxy.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                    alert(ob.data);
+                    return;
+                }
+                alert(ob.data);
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
     render:function() {
         var contains = null;
+        var doSignupPerson = this.doSignupPerson;
+        var doCancelPerson= this.doCancelPerson;
+        var ref=this;
         if(this.state.data!==null&&this.state.data!==undefined) {
             var data = this.paginationData(this.state.data, this.state.pageIndex);
             var len = this.state.data.length;
             var trs = [];
-            var ref=this;
+
 
             data.map(function (item, i) {
-                if(item.projectType!="1"){
+                if(item.projectType=="1"){
                 trs.push(
-                     <div key={i} style={{paddingLeft:'10px'}}>
-
-                        <div  style={{paddingLeft:'1px',float:'left',width:'60%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
-                            <p style={{float:'left'}}>
-                                项目名称: {item.projectName}
-                            </p>
-                            <p style={{float:'left'}}>
-                                项目类型: {item.projectType}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                )}else{
+                    <tbody  key={i} className="group-table">
+                    <tr>
+                        <td>{item.projectName}</td>
+                        <td>{item.projectType2}</td>
+                        <td>{item.maxTeamNum}</td>
+                        <td>{item.nowTeamNum}</td>
+                        <td>{item.maxTeamPersonNum}</td>
+                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} >报名</button>
+                             </span>
+                        </td>
+                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} >取消</button>
+                             </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                )
+                }else{
 
                     trs.push(
-                        <div key={i} style={{paddingLeft:'10px'}}>
-
-                            <div  style={{paddingLeft:'1px',float:'left',width:'60%',color:'#303030',fontSize:'14px',marginTop:'21px'}}>
-                                <p style={{float:'left'}}>
-                                    项目名称: {item.projectName}
-                                </p>
-                                <p style={{float:'left'}}>
-                                    项目类型: {item.projectType}
-                                </p>
-                                <p style={{float:'left'}}>
-                                    最大参赛队伍: {item.maxTeamNum}
-                                </p>
-                                <p style={{float:'left'}}>
-                                    已报名参赛队伍: {item.nowTeamNum}
-                                </p>
-                                <p style={{float:'left'}}>
-                                    队伍最大人数: {item.maxTeamPersonNum}
-                                </p>
-                            </div>
-
-                        </div>
-
+                        <tbody  key={i} className="group-table">
+                        <tr>
+                            <td>{item.projectName}</td>
+                            <td>{item.projectType2}</td>
+                            <td>{item.maxTeamNum}</td>
+                            <td>{item.nowTeamNum}</td>
+                            <td>{item.maxTeamPersonNum}</td>
+                            <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doSignupPerson.bind(ref,item.projectId)}>报名</button>
+                             </span>
+                            </td>
+                            <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelPerson.bind(ref,item.projectId)}>退出报名</button>
+                             </span>
+                            </td>
+                        </tr>
+                        </tbody>
                     )
-
                 }
-
-
-
-
-
-
             })
 
         }else{
@@ -147,10 +214,22 @@ var ShowProject = React.createClass({
             <div className="banner-bottom">
                 <div className="container">
                     <div className="faqs-top-grids">
-                        <div className="product-grids">
-                            <h1 style={{textAlign:'center',fontSize:'25px'}}>参赛项目报名</h1>
+                        <div className="col-md-8 product-grids">
+                            <h1 style={{paddingLeft:'240px',fontSize:'25px',paddingBottom:'20px'}}>参赛项目报名</h1>
+                            <table className="table table-striped invoice-table">
+                            <thead className="table-head">
+                            <tr>
+                                <th width="150">项目名称 </th>
+                                <th width="150">项目类型  </th>
+                                <th width="150">最大参赛队伍 </th>
+                                <th width="150">已报名参赛队伍 </th>
+                                <th width="150">队伍最大人数  </th>
+                            </tr>
+                            </thead>
                             {trs}
+                            </table>
                         </div>
+                        <RightSlide/>
                         <div className="clearfix"></div>
                     </div>
                 </div>
