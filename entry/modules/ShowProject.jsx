@@ -146,6 +146,12 @@ var ShowProject = React.createClass({
             }.bind(this)
         );
     },
+    groupRegistration:function (item) {
+        this.setState({modal:item});
+        var successModal = this.refs['successModal'];
+        $(successModal).modal('show');
+
+    },
     render:function() {
         var contains = null;
         var doSignupPerson = this.doSignupPerson;
@@ -169,12 +175,17 @@ var ShowProject = React.createClass({
                         <td>{item.maxTeamPersonNum}</td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.groupRegistration}>编辑队伍</button>
+                             </span>
+                        </td>
+                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} >报名</button>
                              </span>
                         </td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} >取消</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} >退出报名</button>
                              </span>
                         </td>
                     </tr>
@@ -222,7 +233,7 @@ var ShowProject = React.createClass({
                                 <th width="150">项目名称 </th>
                                 <th width="150">项目类型  </th>
                                 <th width="150">最大参赛队伍 </th>
-                                <th width="150">已报名参赛队伍 </th>
+                                <th width="170">已报名参赛队伍 </th>
                                 <th width="150">队伍最大人数  </th>
                             </tr>
                             </thead>
@@ -233,7 +244,32 @@ var ShowProject = React.createClass({
                         <div className="clearfix"></div>
                     </div>
                 </div>
+                <div className="modal fade bs-example-modal-sm login-container"
+                     tabIndex="-1"
+                     role="dialog"
+                     aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true"
+                     ref='successModal'
+                     data-keyboard="false"
+                     style={{zIndex: 1045}}
+                    >
+                    <div className="modal-dialog modal-sm"
+                         style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
+                        <div className="modal-content"
+                             style={{position: 'relative', width: '100%', padding: '40px'}}>
+                            <div className="modal-body">
+                                <div className="modalEventDetail">
+                                     sdsds
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
+
 
         return contains
 
