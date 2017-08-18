@@ -169,12 +169,17 @@ var ShowProject = React.createClass({
                         <td>{item.maxTeamPersonNum}</td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} >编辑队伍</button>
+                             </span>
+                        </td>
+                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} >报名</button>
                              </span>
                         </td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} >取消</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} >退出报名</button>
                              </span>
                         </td>
                     </tr>
@@ -222,7 +227,7 @@ var ShowProject = React.createClass({
                                 <th width="150">项目名称 </th>
                                 <th width="150">项目类型  </th>
                                 <th width="150">最大参赛队伍 </th>
-                                <th width="150">已报名参赛队伍 </th>
+                                <th width="170">已报名参赛队伍 </th>
                                 <th width="150">队伍最大人数  </th>
                             </tr>
                             </thead>
