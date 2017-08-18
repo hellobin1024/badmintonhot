@@ -121,9 +121,99 @@ var ShowProject = React.createClass({
             }.bind(this)
         );
     },
+
+    doSignupTeam: function (projectId) {
+        var projectId=projectId;
+        var url="/func/competition/isJoinCompetitionTeam";
+        var params={
+            projectId:projectId,
+        };
+        var ref = this;
+        Proxy.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                projectId=projectId;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                    alert(ob.data);
+                    return;
+                }else{
+                    var successModal2 = this.refs['successModal2'];
+                    $(successModal2).modal('show');
+                    ref.setState({project:projectId});
+
+                }
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
+    doJoinCompetitionTeam: function (projectId) {
+        var projectId=projectId;
+        var createTeam = this.refs['createTeam'];
+        var teamName = $(createTeam).find("input[name='teamName']").val();
+        var remark = $(createTeam).find("input[name='remark']").val();
+
+        var url="/func/competition/joinCompetitionTeam";
+        var params={
+            projectId:projectId,
+            teamName:teamName,
+            remark:remark
+        };
+        var ref = this;
+        Proxy.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                    alert(ob.data);
+                    return;
+                }
+                alert(ob.data);
+                var successModal2 = this.refs['successModal2'];
+                $(successModal2).modal('hide');
+
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
     doCancelPerson: function (projectId) {
         var projectId=projectId;
         var url="/func/competition/cancelCompetitionPerson";
+        var params={
+            projectId:projectId,
+        };
+
+        Proxy.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                    alert(ob.data);
+                    return;
+                }
+                alert(ob.data);
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
+    doCancelTeam: function (projectId) {
+        var projectId=projectId;
+        var url="/func/competition/cancelCompetitionTeam";
         var params={
             projectId:projectId,
         };
@@ -156,6 +246,9 @@ var ShowProject = React.createClass({
         var contains = null;
         var doSignupPerson = this.doSignupPerson;
         var doCancelPerson= this.doCancelPerson;
+        var doSignupTeam= this.doSignupTeam;
+        var doCancelTeam=this.doCancelTeam;
+        var doJoinCompetitionTeam=this.doJoinCompetitionTeam;
         var ref=this;
         if(this.state.data!==null&&this.state.data!==undefined) {
             var data = this.paginationData(this.state.data, this.state.pageIndex);
@@ -175,17 +268,17 @@ var ShowProject = React.createClass({
                         <td>{item.maxTeamPersonNum}</td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.groupRegistration}>编辑队伍</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.groupRegistration}>编辑选手</button>
                              </span>
                         </td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} >报名</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doSignupTeam.bind(ref,item.projectId)} >报名</button>
                              </span>
                         </td>
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} >退出报名</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)} >退出报名</button>
                              </span>
                         </td>
                     </tr>
@@ -217,6 +310,27 @@ var ShowProject = React.createClass({
                 }
             })
 
+            var mrs = [];
+                mrs.push(
+                    <div ref="createTeam">
+                        <div className="common-line">
+                            <span className="common-label l-label">队伍名称：</span>
+                            <span>
+                            <input type="text" name="teamName" className="common-input" tabIndex="1"></input>
+                            </span>
+                        </div>
+                        <div className="common-line">
+                            <span className="common-label l-label">队伍备注：</span>
+                        <span>
+                            <input type="text" name="remark" className="common-input" tabIndex="2"></input>
+                        </span>
+                        </div>
+                        <div className="common-line">
+                            <button style={{fontSize:'14px',color:'#11a669',width:'100px',height:'30px'}} onClick={doJoinCompetitionTeam.bind(ref,this.state.project)} >保存</button>
+                        </div>
+                    </div>
+
+                )
         }else{
             this.initialData();
         }
@@ -256,7 +370,7 @@ var ShowProject = React.createClass({
                     <div className="modal-dialog modal-sm"
                          style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
                         <div className="modal-content"
-                             style={{position: 'relative', width: '100%', padding: '40px'}}>
+                             style={{position: 'relative', width: '80%', padding: '100px'}}>
                             <div className="modal-body">
                                 <div className="modalEventDetail">
                                      sdsds
@@ -265,7 +379,27 @@ var ShowProject = React.createClass({
                         </div>
                     </div>
                 </div>
-
+                <div className="modal fade bs-example-modal-sm login-container"
+                     tabIndex="-1"
+                     role="dialog"
+                     aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true"
+                     ref='successModal2'
+                     data-keyboard="false"
+                     style={{zIndex: 1045}}
+                    >
+                    <div className="modal-dialog modal-sm"
+                         style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
+                        <div className="modal-content"
+                             style={{position: 'relative', width: '60%', padding: '40px'}}>
+                            <div className="modal-body">
+                                <div className="modalEventDetail">
+                                    {mrs}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
