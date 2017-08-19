@@ -14,8 +14,13 @@ var Competieion = React.createClass({
 
     getInitialState: function () {
         var token=this.props.token;
+        var personId=this.props.personId;
+
+        if(this.props.personId!==undefined && this.props.personId!==null){
+            personId = this.props.personId;
+        }
         return ({
-            token:token
+            token:token,personId:personId
         });
     },
     initialData:function(){
@@ -171,6 +176,7 @@ var Competieion = React.createClass({
 const mapStateToProps = (state, ownProps) => {
     const props = {
         token: state.userInfo.accessToken,
+        personId:state.userInfo.personId,
     }
     return props
 }
