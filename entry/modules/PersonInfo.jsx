@@ -10,6 +10,7 @@ import ModifyPassword from '../modules/ModifyPassword.jsx';
 import AccountBind from '../modules/AccountBind.jsx';
 import MyGroup from '../modules/MyGroup.jsx';
 import MyEvents from '../modules/MyEvents.jsx';
+import MyCompetition from '../modules/MyCompetition.jsx';
 import MyClass from '../modules/MyClass';
 import CreateGroup from '../modules/CreateGroup.jsx';
 import CreateEvent from '../modules/CreateEvent.jsx';
@@ -93,6 +94,11 @@ var PersonInfo = React.createClass({
                     <DemandClass personId={personId}/>
                 );
                 break;
+            case 'myCompetition':
+                mainContent =(
+                    <MyCompetition personId={personId}/>
+                );
+                break;
         }
 
         return(
@@ -126,6 +132,11 @@ var PersonInfo = React.createClass({
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'demandClass')}>我的定制</a></div>
                             </dd>
+                            <dt><i className="icon-calendar"></i>赛事</dt>
+                            <dd className="my-activity">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myCompetition')}>我的比赛</a></div>
+                            </dd>
+
                             <dt><i className="icon-cog"></i>账号设置</dt>
                             <dd className="base-info">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>个人资料</a></div>
