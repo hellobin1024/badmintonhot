@@ -271,6 +271,23 @@ var Class = React.createClass({
         );
     },
 
+    test:function () {
+        var url = "/func/allow/test";
+        var ref = this;
+        Proxy.query(
+            'GET',
+            url,
+            null,
+            null,
+            function (res) {
+                var a = res.data;
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+    },
     render:function() {
         var contains = null;
         if(this.state.data!==null&&this.state.data!==undefined) {
@@ -349,6 +366,7 @@ var Class = React.createClass({
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
+                                    <button onClick={this.test}>test</button>
                                 </div>
                             </div>
                         </div>
