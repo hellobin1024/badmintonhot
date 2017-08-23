@@ -8,7 +8,7 @@ import { render} from 'react-dom';
 import '../../css/entry/modules/myEvents.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var MyEvents = React.createClass({
+var MyCompetition = React.createClass({
 
     initialData:function(){
         var url="/func/allow/getMyEvents";
@@ -89,24 +89,24 @@ var MyEvents = React.createClass({
 
             data.map(function(item, i){
                 eventsTable.push(
-                        <tbody  key={i} className="event-table">
-                            <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
-                            <tr>
-                                <td>名称：{item.eventName}</td>
-                                <td>简介：{item.eventBrief}</td>
-                                <td>时间：{item.eventTime}</td>
-                            </tr>
-                            <tr>
-                                <td>地点：{item.eventAddr}</td>
-                                <td>创建者：{item.eventManager}</td>
-                                <td>成员：{item.eventMember}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
+                    <tbody  key={i} className="event-table">
+                    <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
+                    <tr>
+                        <td>比赛名称：{item.eventName}</td>
+                        <td>比赛简介：{item.eventBrief}</td>
+                        <td>比赛时间：{item.eventTime}</td>
+                    </tr>
+                    <tr>
+                        <td>比赛地点：{item.eventAddr}</td>
+                        <td>创建者：{item.eventManager}</td>
+                        <td>成员：{item.eventMember}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
                 );
             });
 
@@ -139,6 +139,6 @@ var MyEvents = React.createClass({
     },
 });
 
-module.exports=MyEvents;
+module.exports=MyCompetition;
 
 

@@ -46,12 +46,18 @@ var Event = React.createClass({
             null,
             function (res) {
                 var a = res.data;
-                var member ="";
-                for(var i=0;i<a.length;i++){
-                    member+=" "+a[i].loginName
-                }
-                item.member=member;
-                ref.setState({modal:item});
+                  var member = "";
+                   for (var i = 0; i < a.length; i++){
+                    member += " " + a[i].loginName
+                   }
+                  var costType2="";
+                  for (var i = 0; i < a.length; i++){
+                    costType2= ref.getStandard(a[i].costType);
+                    item.costType2=costType2;
+                  }
+                  item.member = member;
+                  ref.setState({modal: item});
+
                 var successModal = ref.refs['successModal'];
                 $(successModal).modal('show');
             },
@@ -149,6 +155,11 @@ var Event = React.createClass({
             null,
             function (res) {
                 var a = res.data;
+                var costType2="";
+                for (var i = 0; i < a.length; i++){
+                    costType2= ref.getStandard(a[i].costType);
+                    a[i].costType2=costType2;
+                }
                 if(res.re==1) {
                     ref.setState({event: a});
                 }else{
@@ -184,7 +195,28 @@ var Event = React.createClass({
             }
         );
     },
+    getStandard:function (costType) {
+        var type={};
+        if(costType==1){
+            type="按每人收费";
+        }else if(costType==2){
 
+            type="按每小时收费";
+        }else if(costType==3){
+
+            type="总费用";
+        }else if(costType==4){
+
+            type="按每人次收费";
+        }else if(costType==5){
+
+            type="按每人每小时收费";
+        }else {
+
+            type="按场地小时收费";
+        }
+       return type;
+    },
     render:function() {
         var contains = null;
 
@@ -197,7 +229,9 @@ var Event = React.createClass({
             var ref = this;
             if(event!=0) {
                 event.map(function (item, i) {
+
                     if (i%3 == 0) {
+
                         trs.push(
                             <div className="basic_first" key={"event" + i}>
 
@@ -206,13 +240,13 @@ var Event = React.createClass({
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
                                 <div className="value">
-                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                    <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul>
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
-                                    <li><span>花费：</span> {item.cost}</li>
+                                    <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
 
                                 </ul>
                                 <div className="buy-me">
@@ -229,13 +263,13 @@ var Event = React.createClass({
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
                                 <div className="value">
-                                    <p><span>组织者：</span>{item.eventManagerName}</p>
+                                    <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul>
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
-                                    <li><span>花费：</span> {item.cost}</li>
+                                    <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
                                 </ul>
                                 <div className="buy-me">
                                     <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
@@ -307,14 +341,16 @@ var Event = React.createClass({
                             <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
                         </div>
                         <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerName}</p>
+                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerLoginName}</p>
                         </div>
                         <ul>
                             <li id="eventTime"><span>时间：</span>{item.startTimeStr}</li>
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
                             <li id="eventNum"><span>参与者：</span>{item.member}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
-                            <li id="cost"><span>花费：</span>{item.cost}</li>
+                            {/*<li id="costType"><span>收费标准：</span>{item.costType2}</li>
+                            <li id="cost"><span>花费：</span>{item.cost}</li>*/}
+                            <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
                         </ul>
                         <div className="buy-me">
                             {item.eventMaxMemNum>item.eventNowMemNum?

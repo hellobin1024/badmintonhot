@@ -80,6 +80,12 @@ var CreateEvent = React.createClass({
 
         var finalShow={};
         var data1;
+        if(chooseweek==7){
+            chooseweek=0;
+        }
+
+
+
         for(var k=1;k<8;k++){
             var date=new Date(setDay[k]);
             var month=date.getMonth()+1;
@@ -87,7 +93,7 @@ var CreateEvent = React.createClass({
             var day=date.getDate();
             var a;
 
-            chooseweek==7?0:chooseweek;
+
 
             switch(w){
                 case 0:a= '星期天';break;

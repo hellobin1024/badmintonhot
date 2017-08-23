@@ -4,8 +4,8 @@ import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import { connect } from 'react-redux';
-
-
+import {Link} from 'react-router';
+import { browserHistory ,hashHistory} from 'react-router';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
@@ -14,42 +14,18 @@ var Competieion = React.createClass({
 
     getInitialState: function () {
         var token=this.props.token;
+        var personId=this.props.personId;
+
+        if(this.props.personId!==undefined && this.props.personId!==null){
+            personId = this.props.personId;
+        }
         return ({
-            token:token
+            token:token,personId:personId
         });
     },
     initialData:function(){
 
-        this.getAllClass();
-
-    },
-    signUp:function (item) {
-        if(this.state.token!==null&&this.state.token!==undefined) {
-            var url = "/func/allow/classSignUp";
-            var param = {
-                id: item
-            }
-            var ref = this;
-            Proxy.query(
-                'POST',
-                url,
-                param,
-                null,
-                function (res) {
-                    if (res.re == 1) {
-                        alert("操作成功");
-                        ref.initialData();
-                    }
-                    ref.closeModal();
-                },
-
-                function (xhr, status, err) {
-                    console.error(this.props.url, status, err.toString());
-                }
-            );
-        }else {
-            alert("您尚未登录！");
-        }
+        this.getAllCompetieion();
 
     },
     dateChange:function (date) {
@@ -78,62 +54,55 @@ var Competieion = React.createClass({
         }
         return date;
     },
-    showClassDetail:function (item) {
-        // var url = "/func/allow/getClassScheduleByClassId";
-        // var param={
-        //     id:item.courseId
-        // }
-        // var ref = this;
-        // Proxy.query(
-        //     'POST',
-        //     url,
-        //     param,
-        //     null,
-        //     function (res) {
-        //         var a = res.data;
-        //         var day ="";
-        //         var week="";
-        //         for(var i=0;i<a.length;i++){
-        //             day+="每周"+ref.dateChange(a[i].sectionDay)+":"+a[i].sectionStart+"-"+a[i].sectionEnd+" ";
-        //         }
-        //         a[0].day=day;
-        //         ref.setState({modal:a[0]});
-        this.setState({modal:item});
-        var successModal = this.refs['successModal'];
-        $(successModal).modal('show');
-        //         },
-        //
-        //         function (xhr, status, err) {
-        //             console.error(this.props.url, status, err.toString());
-        //         }
-        //     );
-        //
-    },
-
     closeModal:function () {
         var successModal = this.refs['successModal'];
         $(successModal).modal('hide');
     },
 
-    getAllClass:function () {
-        var url = "/func/allow/getAllClass";
-        var ref = this;
-        Proxy.query(
-            'GET',
-            url,
-            null,
-            null,
-            function (res) {
-                var a = res.data;
-                ref.setState({data:a});
-            },
+    getAllCompetieion:function () {
+        if (this.props.token != null) {
 
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
+            var url = "/func/competition/getCanJoinBadmintonCompetitionInfoList";
+            var ref = this;
+            var params = {};
+            Proxy.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (res) {
+                    var a = res.data;
+                    var competitionType2 = "";
+                    for (var i = 0; i < a.length; i++) {
+                        if (a[i].competitionType == "1") {
+                            competitionType2 = "公开";
+                        } else {
+
+                            competitionType2 = "委托";
+                        }
+                        a[i].startTime = ref.dateFormat(a[i].startTime);
+                        a[i].endTime = ref.dateFormat(a[i].endTime);
+
+                        a[i].competitionType2 = competitionType2;
+                    }
+                    ref.setState({data: a});
+                },
+
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        } else {
+
+              alert("尚未登录！");
+        }
+
+
+    }
+    ,
+    dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
+        return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
     },
-
     render:function() {
         var contains = null;
         if(this.state.data!==null&&this.state.data!==undefined) {
@@ -146,60 +115,25 @@ var Competieion = React.createClass({
                         <div className="basic" >
 
                             <div className="business">
-                                <h2>{item.className}</h2>
-                                <p><span>介绍：</span>{item.detail}</p>
+                                <h2>{item.competitionName}</h2>
+                                <p><span>介绍：</span>{item.breif}</p>
                             </div>
                             <div className="value">
-                                <p><span>教练：</span>{item.creatorName}</p>
+                                <p><span>主办人：</span>{item.hostUnit}</p>
                             </div>
                             <ul>
-                                <li><span>每周课程安排：</span> {item.classCount}次/周</li>
-                                <li><span>费用：</span> {item.cost}</li>
-                                <li><span>已报名人数：</span> {item.signNumber}</li>
+                                <li><span>场地：</span> {item.unitName}</li>
+                                <li><span>时间：</span> {item.startTime}到{item.endTime}</li>
+                                <li><span>类型：</span> {item.competitionType2}</li>
                             </ul>
                             <div className="buy-me">
-                                <a onClick={ref.showClassDetail.bind(null,item)}>详情</a>
+                                <Link to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId} >报名</Link>
                             </div>
                         </div>
                     </div>
                 )
 
             })
-
-            var mrs = [];
-            if(this.state.modal!==null&&this.state.modal!==undefined){
-                var item = this.state.modal;
-                mrs.push(
-                    <div style={{textAlign: 'center'}} key='modal' >
-                        <div className="business">
-                            <h2 id="CLassTitle">{item.courseName}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.unitName}</p>
-                        </div>
-                        <div className="value">
-
-                            <p id="eventCreater"><span>教练：</span>{item.creatorName}</p>
-
-                        </div>
-                        <ul>
-                            <li id="eventTime"><span>课程安排：</span>{item.scheduleDes}</li>
-                            <li id="eventMaxNum"><span>课程计划招生：</span>{item.maxNumber}</li>
-                            <li id="eventNum"><span>已报名人数：</span>{item.signNumber}</li>
-                            <li id="eventBrief"><span>简介：</span>{item.detail}</li>
-                        </ul>
-                        <div className="buy-me">
-                            {item.maxNumber>item.signNumber?
-                                <a onClick={this.signUp.bind(null,item.courseId)}>报名</a>:
-                                <a onClick={function(){alert("抱歉！您报名的课程已满员！")}}>招生已满</a>
-                            }
-                        </div>
-                        <div style={{paddingTop: '2em'}}>
-                            <Link to={window.App.getAppRoute() + "/order?product="+item.courseId} onClick={this.closeModal}>给他人报名--></Link>
-                        </div>
-                    </div>
-
-
-                )
-            }
             contains =
                 <div>
                     <div className="banner-bottom">
@@ -216,29 +150,7 @@ var Competieion = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade bs-example-modal-sm login-container"
-                         tabIndex="-1"
-                         role="dialog"
-                         aria-labelledby="myLargeModalLabel"
-                         aria-hidden="true"
-                         ref='successModal'
-                         data-keyboard="false"
-                         style={{zIndex: 1045}}
-                    >
-                        <div className="modal-dialog modal-sm"
-                             style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
-                            <div className="modal-content"
-                                 style={{position: 'relative', width: '100%', padding: '40px'}}>
 
-                                <div className="modal-body">
-                                    <div className="modalEventDetail">
-                                        {mrs}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
         }else{
             this.initialData();
@@ -264,6 +176,7 @@ var Competieion = React.createClass({
 const mapStateToProps = (state, ownProps) => {
     const props = {
         token: state.userInfo.accessToken,
+        personId:state.userInfo.personId,
     }
     return props
 }

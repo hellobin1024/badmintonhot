@@ -11,6 +11,7 @@ import Events from '../../modules/Events'
 import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import CostIntroduce from '../../modules/CostIntroduce.jsx';
 import Competieion from '../../modules/competition.jsx';
+import ShowProject from '../../modules/ShowProject.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'
@@ -75,7 +76,7 @@ var MainSection = React.createClass({
                 case App.getAppRoute() + "/trainerIntroduce":
                     ctrl =<TrainerIntroduce/>
                     break;
-                case App.getAppRoute() + "/ CostIntroduce":
+                case App.getAppRoute() + "/CostIntroduce":
                     ctrl =<CostIntroduce/>
                     break;
                 case App.getAppRoute() + "/venueIntro":
@@ -83,6 +84,9 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/competition":
                     ctrl =<Competieion/>
+                    break;
+                case App.getAppRoute() + "/ShowProject":
+                    ctrl =<ShowProject/>
                     break;
                 default:
                     break;
