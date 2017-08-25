@@ -50,7 +50,6 @@ var ShowProject = React.createClass({
             competitionId:competitionId,
             personId:personId,
             isChange: false,
-            TeamProject:null,
             PerProject:null,
             addPerson:[]
         });
@@ -196,26 +195,7 @@ var ShowProject = React.createClass({
                         this.setState({member:member});
                         var name=this.state.member;
                         if(name!=="") {
-                            {
-                            /*var addPerson = [];
-                            var flag = 0;
-                            addPerson = this.state.addPerson;
-                            if (addPerson == null) {
-                                addPerson.push(name);
-                            } else {
-                                addPerson.map(function (item) {
-                                    if (item.name == name.name) {
-                                        flag = 1;
-                                    }
-                                })
-                                if (flag == 1) {
-                                    alert("已存在！");
-                                } else {
-                                    addPerson.push(name);
-                                }
-                            }*/
-                            }
-                            this.setState({addPerson: member});
+                        this.setState({addPerson: member});
                         }else
                         {
 
@@ -238,8 +218,8 @@ var ShowProject = React.createClass({
         var projectId=projectId;
         var TeamModel = this.refs['TeamModel'];
         $(TeamModel).modal('show');
-        this.state.TeamProject=projectId;
-        
+
+        this.setState({TeamProject:projectId});
     },
     doCancelPerson: function (projectId) {
         var projectId=projectId;
@@ -328,6 +308,7 @@ var ShowProject = React.createClass({
                 if(a[i].projectId==projectId){
 
                    addPerson=a[i].personList;
+                    if(addPerson!=null){
                    addPerson.map(function (item) {
                         if (item == name) {
                             flag = 1;
@@ -339,6 +320,13 @@ var ShowProject = React.createClass({
                     } else {
                         addPerson.push(name);
                     }
+                    }else{
+
+                        addPerson.push(name);
+                    }
+
+
+
 
                     a[i].personList=addPerson;
                     break;
@@ -571,8 +559,8 @@ var ShowProject = React.createClass({
                             <tr>
                                 <th width="150">项目名称 </th>
                                 <th width="150">项目类型  </th>
-                                <th width="150">最大参赛队伍/人数 </th>
-                                <th width="170">已报名参赛队伍/人数 </th>
+                                <th width="190">最大参赛队伍/人数 </th>
+                                <th width="230">已报名参赛队伍/人数 </th>
                                 <th width="150">队伍最大人数  </th>
                                 <th width="300">已报名人员 </th>
                             </tr>
