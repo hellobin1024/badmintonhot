@@ -8,16 +8,13 @@ import { render} from 'react-dom';
 import '../../css/entry/modules/myCompetition.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var MyCompetition = React.createClass({
-
-    tabChange:function(tab){
-        this.setState({current:tab});
-    },
+var showCompetitionGames = React.createClass({
 
     initialData:function(){
-        var url="/func/competition/getMyBadmintonCompetitionInfoList";
+        var url="/func/competition/getMyCompetition";
         var params={
-            personId:this.state.personId
+            personId:this.state.personId,
+            competitionId:this.state.competitionId
         };
 
         ProxyQ.query(
@@ -52,29 +49,28 @@ var MyCompetition = React.createClass({
         var mainContent = null;
         var data = this.state.data;
 
-
-        switch (this.state.current) {
-            case 'showCompetitionGames':
-                mainContent =(
-                    <showCompetitionGames personId={personId} competitionId={competitionId}/>
-                );
-                break;
-        }
-
         var operate = this.operate;
-        var competitionsTable = [];
+        var competitionGamesTable = [];
         var ins = this;
         if(data!==undefined && data!==null){
 
             data.map(function(item, i){
-                competitionsTable.push(
+                competitionGamesTable.push(
                     <tbody  key={i} className="competition-table">
-                    <tr><td><h4 style={{marginTop:'15px'}}><strong>比赛{i+1}</strong></h4></td></tr>
+                    <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.competitionNum}:</strong></h4></td></tr>
                     <tr>
-                        {/*<td><a data-pjax="true" onClick={this.tabChange.bind(this,'showCompetitionGames')}>比赛名称：{item.competitionName}</a></td>*/}
-                        <td>比赛名称：{item.competitionName}</td>
-                        <td>比赛时间：{item.startTime}</td>
-                        <td>主办方：{item.hostUnit}</td>
+                        <td>比赛项目：{item.Project}</td>
+                        <td>比赛时间：{item.competitionTime}</td>
+                        <td>比赛地点：{item.competitionAddr}</td>
+                    </tr>
+                    <tr>
+                        <td>我的队友：{item.Teammate}</td>
+                        <td>我的对手：{item.Opponent1}&emsp;{item.Opponent2}</td>
+                        <td>比分：{item.scoreA}:{item.scoreB}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
                     </tr>
                     </tbody>
                 );
@@ -93,7 +89,7 @@ var MyCompetition = React.createClass({
                                 </tr>
                                 </thead>
 
-                                {competitionsTable}
+                                {competitionGamesTable}
 
                             </table>
                         </div>
@@ -109,6 +105,6 @@ var MyCompetition = React.createClass({
     },
 });
 
-module.exports=MyCompetition;
+module.exports=showCompetitionGames;
 
 

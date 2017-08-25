@@ -99,6 +99,12 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
+            // case 'showCompetitionGames':
+            //     mainContent =(
+            //         <showCompetitionGames personId={personId} competitionId={competitionId}/>
+            //     );
+            //     break;
+
         }
 
         return(
