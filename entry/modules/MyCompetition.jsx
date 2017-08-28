@@ -62,7 +62,11 @@ var MyCompetition = React.createClass({
             data.map(function(item, i){
                 competitionsTable.push(
                     <tbody  key={i} className="competition-table">
-                    <tr><td><h4 style={{marginTop:'15px'}}><strong>比赛{i+1}</strong></h4></td></tr>
+                    <tr>
+                        <td><h4 style={{marginTop:'15px'}}><strong>比赛{i+1}</strong></h4></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td><a data-pjax="true" onClick={ins.tabChange.bind(this,'showCompetitionGames',item.competitionId)}>比赛名称：{item.competitionName}</a></td>
                         {/*<td>比赛名称：{item.competitionName}</td>*/}

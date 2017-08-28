@@ -59,15 +59,20 @@ var ShowCompetitionGames = React.createClass({
             data.map(function(item, i){
                 competitionGamesTable.push(
                     <tbody  key={i} className="competition-table">
-                    <tr><td><h4 style={{marginTop:'15px'}}><strong>比赛{i+1}</strong></h4></td></tr>
                     <tr>
-                        {/*<td>比赛项目：{item.Project}</td>*/}
-                        <td>比赛时间：{item.startTime}</td>
-                        {/*<td>比赛地点：{item.competitionAddr}</td>*/}
+                        <td><h4 style={{marginTop:'15px'}}><strong>场次{i+1}</strong></h4></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td>对阵：{item.teamNameA}&nbsp;VS&nbsp;{item.teamNameB}</td>
-                        {/*<td>比分：{item.scoreA}&nbsp;:&nbsp;{item.scoreB}</td>*/}
+                        <td>比赛项目：{item.gameType}</td>
+                        <td>比赛时间：{item.startTime}</td>
+                        <td>比赛地点：{item.competitionAddr}</td>
+                    </tr>
+                    <tr>
+                        <td>对阵：{item.personNameA1}&nbsp;{item.personNameA2}&nbsp;VS&nbsp;{item.personNameB1}&nbsp;{item.personNameB2}</td>
+                        <td>比&emsp;&emsp;分：{item.scoreA}&nbsp;:&nbsp;{item.scoreB}</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td></td>
