@@ -101,11 +101,19 @@ var MyEvents = React.createClass({
                                 <td>创建者：{item.eventManager}</td>
                                 <td>成员：{item.eventMember}</td>
                             </tr>
-                            <tr>
+                            {
+                                item.remark==1?
+                                <tr>
+                                 <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag2,i)}>{item.operate2}</a></td>
+                                 <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
                                 <td></td>
-                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
-                                <td></td>
-                            </tr>
+                                </tr>:
+                                 <tr>
+                                    <td></td>
+                                    <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
+                                    <td></td>
+                                </tr>
+                            }
                         </tbody>
                 );
             });

@@ -172,6 +172,11 @@ var CreateEvent = React.createClass({
         var reg = new RegExp("^[0-9]*$");
 
         var data1=this.getDay(chooseWeek);
+        if(IsSchedule==1){
+            var eventNowMemNum2=0;
+        }else{
+            var eventNowMemNum2=1;
+        }
 
         var eventPlaceId = parseInt(eventPlace);
         var classTrainer = parseInt(classTrainer);
@@ -248,7 +253,7 @@ var CreateEvent = React.createClass({
                 isNeedCoach:IsTrainer,
                 yardNum:yardNum2,
                 feeDes:"",
-                eventNowMemNum:1,
+                eventNowMemNum:eventNowMemNum2,
                 status:0,
                 costType:costType
 
