@@ -89,8 +89,9 @@ var MyEvents = React.createClass({
 
             data.map(function(item, i){
                 eventsTable.push(
-                        <tbody  key={i} className="event-table">
-                            <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
+                    <tbody  key={i} className="event-table">
+
+                          <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
                             <tr>
                                 <td>名称：{item.eventName}</td>
                                 <td>简介：{item.eventBrief}</td>
@@ -102,19 +103,23 @@ var MyEvents = React.createClass({
                                 <td>成员：{item.eventMember}</td>
                             </tr>
                             {
-                                item.remark==1?
-                                <tr>
-                                 <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag2,i)}>{item.operate2}</a></td>
-                                 <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
-                                <td></td>
-                                </tr>:
-                                 <tr>
-                                    <td></td>
-                                    <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
-                                    <td></td>
-                                </tr>
+                              item.remark==1?
+                                  <tr>
+                                      <td></td>
+                                      <td  style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag2,i)}>{item.operate2}</a></td>
+                                      <td></td>
+                                  </tr>:<div></div>
+
                             }
-                        </tbody>
+                            <tr>
+                                <td></td>
+                                <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
+                                <td></td>
+                            </tr>
+
+
+                    </tbody>
+
                 );
             });
 
