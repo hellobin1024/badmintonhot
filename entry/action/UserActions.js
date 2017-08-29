@@ -135,7 +135,6 @@ export let loginStateAction=function(path){
     }
 }
 
-
 let getReCode= (reCode,loginName,personId)=>{
 
         return {
@@ -144,7 +143,7 @@ let getReCode= (reCode,loginName,personId)=>{
             loginName:loginName,
             personId:personId,
             auth:true,
-            validate:true
+            validate:true,
         };
 }
 
