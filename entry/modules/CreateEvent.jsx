@@ -128,6 +128,7 @@ var CreateEvent = React.createClass({
         var createEvent = this.refs['createEvent'];
         var eventName = $(createEvent).find("input[name='eventName']").val();
         var eventBrief = $(createEvent).find("input[name='eventBrief']").val();
+        var fieldCount = $(createEvent).find("input[name='fieldCount']").val();
         var chooseWeek = $('#chooseWeek option:selected').val();
         var eventPlace = $('#eventPlace option:selected').val();
         var eventGroup = $('#eventGroup option:selected').val();
@@ -178,6 +179,7 @@ var CreateEvent = React.createClass({
         var eventMaxMemNum2 = parseInt(eventMaxMemNum);
         var eventCost = parseInt(eventCost);
         var IsSparing = parseInt(IsSparing);
+        var fieldCount = parseInt(fieldCount);
         var eventGroup = parseInt(eventGroup);
         var chooseWeek = parseInt(chooseWeek);
         if(classTrainer==-1)
@@ -207,7 +209,9 @@ var CreateEvent = React.createClass({
             Tips.showTips("开始时间不能大于结束时间~");
         }else if (eventName == "") {
             Tips.showTips('请填写活动名称~');
-        } else if (eventMaxMemNum == "") {
+        }else if (fieldCount == "") {
+            Tips.showTips('请填写所需场地数目~');
+        }else if (eventMaxMemNum == "") {
             Tips.showTips('请填写活动名称~');
         }else if (eventBrief == "") {
             Tips.showTips('请填写活动简介~');
@@ -218,6 +222,8 @@ var CreateEvent = React.createClass({
         } else if(!reg.test(eventMaxMemNum)){
             Tips.showTips("最大人数只能为数字~");
         } else if(!reg.test(eventCost)){
+            Tips.showTips("花费只能为数字~");
+        } else if(!reg.test(fieldCount)){
             Tips.showTips("花费只能为数字~");
         } else {
 
@@ -240,6 +246,7 @@ var CreateEvent = React.createClass({
                 cost:eventCost,
                 isNeedSparring:IsSparing,
                 isNeedCoach:IsTrainer,
+                fieldCount:fieldCount,
                 feeDes:"",
                 eventNowMemNum:1,
                 status:0,
@@ -404,16 +411,10 @@ var CreateEvent = React.createClass({
                                 {eventPlaceList}
                             </select>
                         </span>
-                        <span className="common-label r-label">活动类型：</span>
+                        <span className="common-label r-label">需要场地数量：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventType">
-                                <option value={1}>群活动</option>
-                                <option value={0}>公开活动</option>
-                            </select>
+                            <input type="text" name="fieldCount" className="common-input" tabIndex="2"></input>
                         </span>
-
-
-
                     </div>
 
 
@@ -455,6 +456,13 @@ var CreateEvent = React.createClass({
                                 <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventGroup">
                                     {eventGroupList}
                                 </select>
+                        </span>
+                        <span className="common-label r-label">活动类型：</span>
+                        <span>
+                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventType">
+                                <option value={1}>群活动</option>
+                                <option value={0}>公开活动</option>
+                            </select>
                         </span>
 
 

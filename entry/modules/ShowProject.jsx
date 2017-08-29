@@ -51,16 +51,14 @@ var ShowProject = React.createClass({
             personId:personId,
             isChange: false,
             PerProject:null,
+            type:null,
             addPerson:[]
         });
     },
     initialData:function(){
 
         this.getBadmintonCompetitionProjectList();
-
     },
-
-
     getBadmintonCompetitionProjectList:function () {
         var url = "/func/competition/getBadmintonCompetitionProjectList";
         var ref = this;
@@ -208,11 +206,11 @@ var ShowProject = React.createClass({
             }
         }
     },
-    doAddSignupPerson: function (projectId) {
+    doAddSignupPerson: function (projectId,type) {
         var doubleModal = this.refs['doubleModal'];
         $(doubleModal).modal('show');
         this.state.PerProject=projectId;
-
+        this.state.type=type;
     },
     doCreateTeam: function (projectId) {
         var projectId=projectId;
@@ -221,30 +219,40 @@ var ShowProject = React.createClass({
 
         this.setState({TeamProject:projectId});
     },
-    doCancelPerson: function (projectId) {
+    doCancelPerson: function (name,projectId) {
         var projectId=projectId;
-        var url="/func/competition/cancelCompetitionPerson";
-        var params={
-            projectId:projectId,
-        };
+        var name=name;
+        var Str="你确定要删除["+name+"]么？";
+        var ref=this;
+        if(window.confirm(Str)) {
 
-        Proxy.query(
-            'post',
-            url,
-            params,
-            null,
-            function(ob) {
-                var reCode = ob.re;
-                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
-                    alert(ob.data);
-                    return;
-                }
-                alert(ob.data);
-            }.bind(this),
-            function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        );
+            var url = "/func/competition/removePersonFromCompetitionTeam";
+            var params = {
+                projectId:projectId,
+                username:name,
+            };
+
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+                function (ob) {
+                    var reCode = ob.re;
+                    if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) {
+                        alert(ob.data);
+                        return;
+                    }
+                    ref.setState({data:ob.data});
+                    alert("删除成功！");
+                }.bind(this),
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            );
+        }else{
+            return;
+        }
     },
     doCancelTeam: function (projectId) {
         var projectId=projectId;
@@ -301,14 +309,55 @@ var ShowProject = React.createClass({
         var ref=this;
         var projectId=this.state.PerProject;
         var a = this.state.data;
-        if(name!=="") {
+        var type=this.state.type;
+        if(type=="team")
+        {
+            var url="/func/competition/addPersonToCompetitionTeam";
+            var params={
+                projectId:projectId,
+                username:name,
+            };
+        }
+        else {
+            var url="/func/competition/createCompetitionTeam";
+            var projectId=parseInt(projectId);
+            var personIdA=parseInt(this.state.personId);
+            var personIdB=parseInt(personId);
+
+            var params={
+                projectId:projectId,
+                personIdA:personIdA,
+                personIdB:personIdB,
+                teamName:null,
+                remark:null
+            };
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+                function(ob) {
+                    var reCode = ob.re;
+                    if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                        alert(ob.data);
+                        return;
+                    }
+                    alert(ob.data);
+                }.bind(this),
+                function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            );
+        }
+
+        if(name!==""&&type=="team") {
             var addPerson = [];
             var flag = 0;
             for (var i = 0; i < a.length; i++) {
                 if(a[i].projectId==projectId){
 
                    addPerson=a[i].personList;
-                    if(addPerson!=null){
+                    if(addPerson!=null&&addPerson.length!=0){
                    addPerson.map(function (item) {
                         if (item == name) {
                             flag = 1;
@@ -320,14 +369,30 @@ var ShowProject = React.createClass({
                     } else {
                         addPerson.push(name);
                     }
+
                     }else{
 
                         addPerson.push(name);
                     }
 
 
-
-
+                    Proxy.query(
+                            'post',
+                            url,
+                            params,
+                            null,
+                            function(ob) {
+                                var reCode = ob.re;
+                                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
+                                    alert(ob.data);
+                                    return;
+                                }
+                                alert(ob.data);
+                            }.bind(this),
+                            function(xhr, status, err) {
+                                console.error(this.props.url, status, err.toString());
+                            }.bind(this)
+                    );
                     a[i].personList=addPerson;
                     break;
                 }
@@ -365,7 +430,7 @@ var ShowProject = React.createClass({
 
                         item.personList.map(function(itema,j){
                         ttrs.push(
-                            <span style={{fontSize:'14px',marginRight:'5px'}}>{itema}</span>
+                            <span style={{fontSize:'14px',marginRight:'5px'}} onClick={ref.doCancelPerson.bind(ref,itema,item.projectId)}>{itema}</span>
                         )
                     })
 
@@ -382,7 +447,7 @@ var ShowProject = React.createClass({
                         {item.joinMark==1?
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.doAddSignupPerson.bind(ref,item.projectId)}>添加队员</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"team")}>添加队员</button>
                              </span>
                         </td> : null
 
@@ -439,6 +504,15 @@ var ShowProject = React.createClass({
                         </tbody>
                     )
                 }else{{/*两个人报名*/}
+                    if(item.personList!==null&&item.personList!==undefined){
+
+                        item.personList.map(function(itema,j){
+                            nrs.push(
+                                <span style={{fontSize:'14px',marginRight:'5px'}} >{itema}</span>
+                            )
+                        })
+
+                    }
                     trs.push(
                         <tbody  key={i} className="group-table">
                         <tr>
@@ -447,19 +521,12 @@ var ShowProject = React.createClass({
                             <td>{item.maxTeamNum}</td>
                             <td>{item.nowTeamNum}</td>
                             <td>{item.maxTeamPersonNum}</td>
-                            <td rowSpan={2}>{prs}</td>
-                            { item.joinMark==1?<td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.doAddSignupPerson}>添加队员</button>
-                             </span></td>
-                                : null
-
-                            }
+                            <td rowSpan={2}>{nrs}</td>
                             {
                                 item.joinMark==0?
                             <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} >报名</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}  onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"double")}>报名</button>
                              </span>
                             </td>: null
                             }
@@ -502,7 +569,6 @@ var ShowProject = React.createClass({
                 var prs = [];
                 this.state.addPerson.map(function (item, i) {
                     prs.push(
-                        <tbody  key={'addPerson'+i} className="group-table">
                         <tr>
                             <td>{item.name}</td>
                             <td>{item.age}</td>
@@ -511,7 +577,7 @@ var ShowProject = React.createClass({
                                 <button style={{color:'#11a669',fontSize:'14px',textAlign:'Center'}} onClick={doAddMember.bind(ref,item.id,item.name)}>添加</button>
                             </td>
                         </tr>
-                        </tbody>
+
                     )
                 })
             }
@@ -528,8 +594,8 @@ var ShowProject = React.createClass({
                         </div>
                         <div className="clearfix"></div>
                     </div>
-                    <div className="common-line"style={{height:'30px'}}>
-                        <table className="table table-striped invoice-table">
+                    <div className="common-line"style={{height:'30px'}} >
+                        <table className="table table-striped invoice-table" >
                             <thead className="table-head">
                             <tr>
                                 <th width="150">姓名 </th>
@@ -538,7 +604,9 @@ var ShowProject = React.createClass({
                                 <th width="150">操作 </th>
                             </tr>
                             </thead>
+                            <tbody className="group-table" style={{overFlow:'scroll'}}>
                             {prs}
+                            </tbody>
                         </table>
                     </div>
                 </div>
