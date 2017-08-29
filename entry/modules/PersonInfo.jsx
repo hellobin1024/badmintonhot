@@ -15,6 +15,7 @@ import MyClass from '../modules/MyClass';
 import CreateGroup from '../modules/CreateGroup.jsx';
 import CreateEvent from '../modules/CreateEvent.jsx';
 import CreateCLass from '../modules/CreateCLass.jsx';
+import showCompetitionGames from '../modules/showCompetitionGames.jsx';
 import DemandClass from '../modules/demandClass.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
@@ -99,6 +100,12 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
+            // case 'showCompetitionGames':
+            //     mainContent =(
+            //         <showCompetitionGames personId={personId} competitionId={competitionId}/>
+            //     );
+            //     break;
+
         }
 
         return(
