@@ -102,6 +102,14 @@ var MyEvents = React.createClass({
                                 <td>创建者：{item.eventManager}</td>
                                 <td>成员：{item.eventMember}</td>
                             </tr>
+                          <tr>
+                              {
+                                  item.isOutDate==1?<td>过期状态：已过期</td>:
+                                      <td>过期状态：未过期</td>
+                              }
+                              <td></td>
+                              <td></td>
+                          </tr>
                             {
                               item.remark==1?
                                   <tr>
