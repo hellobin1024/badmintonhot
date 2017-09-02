@@ -11,7 +11,7 @@ var ProxyQ = require('../../components/proxy/ProxyQ');
 var HistoryEvents = React.createClass({
 
     initialData:function(){
-        var url="/func/allow/HistoryEvents";
+        var url="/func/allow/getMyEventsForHistory";
         var params={
             personId:this.state.personId
         };

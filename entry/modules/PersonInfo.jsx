@@ -101,7 +101,7 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
-            case 'historyEvent':
+            case 'historyEvents':
                 mainContent =(
                     <HistoryEvents personId={personId} />
                 );
