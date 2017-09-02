@@ -17,6 +17,7 @@ import CreateEvent from '../modules/CreateEvent.jsx';
 import CreateCLass from '../modules/CreateCLass.jsx';
 import showCompetitionGames from '../modules/showCompetitionGames.jsx';
 import DemandClass from '../modules/demandClass.jsx';
+import HistoryEvents from '../modules/HistoryEvents.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
@@ -100,11 +101,11 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
-            // case 'showCompetitionGames':
-            //     mainContent =(
-            //         <showCompetitionGames personId={personId} competitionId={competitionId}/>
-            //     );
-            //     break;
+            case 'historyEvent':
+                mainContent =(
+                    <HistoryEvents personId={personId} />
+                );
+                break;
 
         }
 
@@ -128,6 +129,9 @@ var PersonInfo = React.createClass({
                             </dd>
                             <dd className="my-activity">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createEvent')}>创建活动</a></div>
+                            </dd>
+                            <dd className="my-activity">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'historyEvents')}>历史记录</a></div>
                             </dd>
                             <dt><i className="icon-user-md"></i>课程</dt>
                             <dd className="my-group">
