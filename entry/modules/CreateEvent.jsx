@@ -76,25 +76,17 @@ var CreateEvent = React.createClass({
             var day1=new Date(myDay[j]);
             setDay[j+1]=day1;
         }
-
-
         var finalShow={};
         var data1;
         if(chooseweek==7){
             chooseweek=0;
         }
-
-
-
         for(var k=1;k<8;k++){
             var date=new Date(setDay[k]);
             var month=date.getMonth()+1;
             var w=date.getDay();
             var day=date.getDate();
             var a;
-
-
-
             switch(w){
                 case 0:a= '星期天';break;
                 case 1:a= '星期一';break;
@@ -177,7 +169,9 @@ var CreateEvent = React.createClass({
         }else{
             var eventNowMemNum2=1;
         }
-
+        if(yardNum==null){
+            yardNum="1";
+        }
         var eventPlaceId = parseInt(eventPlace);
         var classTrainer = parseInt(classTrainer);
         var classSparring = parseInt(classSparring);
@@ -195,8 +189,6 @@ var CreateEvent = React.createClass({
         {
             classSparring=null;
         }
-
-
         startTime=data1+" "+startTime+":00";
         var time1 = Date.parse(startTime);
         var newDate1 = new Date(time1);
@@ -214,8 +206,6 @@ var CreateEvent = React.createClass({
             Tips.showTips("开始时间不能大于结束时间~");
         }else if (eventName == "") {
             Tips.showTips('请填写活动名称~');
-        }else if (yardNum == "") {
-            Tips.showTips('请填写所需场地数目~');
         }else if (eventMaxMemNum == "") {
             Tips.showTips('请填写活动名称~');
         }else if (eventBrief == "") {
@@ -418,7 +408,7 @@ var CreateEvent = React.createClass({
                         </span>
                         <span className="common-label r-label">需要场地数量：</span>
                         <span>
-                            <input type="text" name="fieldCount" className="common-input" tabIndex="2"></input>
+                            <input type="text" name="fieldCount" defaultValue="1" className="common-input" tabIndex="2"></input>
                         </span>
                     </div>
 

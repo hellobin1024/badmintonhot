@@ -342,14 +342,36 @@ var ShowProject = React.createClass({
                         alert(ob.data);
                         return;
                     }
-                    alert(ob.data);
+                    var a = ob.data;
+                    var projectType2="";
+                    for (var i = 0; i < a.length; i++) {
+                        if (a[i].projectType == "6") {
+                            projectType2 = "团体";
+                        } else if (a[i].projectType == "1") {
+                            projectType2 = "男单";
+                        }else if (a[i].projectType == "2") {
+                            projectType2 = "女单";
+                        }else if (a[i].projectType == "3") {
+                            projectType2 = "男双";
+                        }else if (a[i].projectType == "4") {
+                            projectType2 = "女双";
+                        }else if (a[i].projectType == "5") {
+                            projectType2 = "混双";
+                        }
+                        a[i].projectType2 = projectType2;
+                    }
+                    ref.setState({data:a});
+                    alert("报名成功！");
+                    var doubleModal = this.refs['doubleModal'];
+                    $(doubleModal).modal('hide');
+                    this.state.addPerson=null;
+                    $("#GroupMember").val("");
                 }.bind(this),
                 function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
                 }.bind(this)
             );
         }
-
         if(name!==""&&type=="team") {
             var addPerson = [];
             var flag = 0;
@@ -374,8 +396,6 @@ var ShowProject = React.createClass({
 
                         addPerson.push(name);
                     }
-
-
                     Proxy.query(
                             'post',
                             url,
@@ -398,14 +418,10 @@ var ShowProject = React.createClass({
                 }
             }
             ref.setState({data:a});
-
             var doubleModal = this.refs['doubleModal'];
             $(doubleModal).modal('hide');
             this.state.addPerson=null;
             $("#GroupMember").val("");
-        }else
-        {
-          alert("姓名为空！");
         }
 
     },
@@ -430,7 +446,7 @@ var ShowProject = React.createClass({
 
                         item.personList.map(function(itema,j){
                         ttrs.push(
-                            <span style={{fontSize:'14px',marginRight:'5px'}} onClick={ref.doCancelPerson.bind(ref,itema,item.projectId)}>{itema}</span>
+                            <span style={{fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer'}} onClick={ref.doCancelPerson.bind(ref,itema,item.projectId)}>{itema}</span>
                         )
                     })
 
@@ -444,7 +460,7 @@ var ShowProject = React.createClass({
                         <td>{item.nowTeamNum}</td>
                         <td>{item.maxTeamPersonNum}</td>
                         <td rowSpan={2}>{ttrs}</td>
-                        {item.joinMark==1?
+                        {item.joinMark==1&&item.isTeamCreateor==1?
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"team")}>添加队员</button>
@@ -462,13 +478,22 @@ var ShowProject = React.createClass({
                             null
                         }
                         {
-                            item.joinMark==1?
+                            item.joinMark==1&&item.isTeamCreateor==1?
                         <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)} >退出报名</button>
                              </span>
                         </td> : null
                         }
+                        {
+                            item.joinMark==1&&item.isTeamCreateor==0?
+                                <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
+                             </span>
+                            </td> : null
+                        }
+
                     </tr>
                     </tbody>
                 )
@@ -492,13 +517,21 @@ var ShowProject = React.createClass({
                             </td>:null
                             }
                             {
-                                item.joinMark==1?
+                                item.joinMark==1&&item.isTeamCreateor==1?
                             <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名</button>
                              </span>
                             </td>
                                     : null
+                            }
+                            {
+                                item.joinMark==1&&item.isTeamCreateor==0?
+                                    <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
+                             </span>
+                                    </td> : null
                             }
                         </tr>
                         </tbody>
@@ -531,12 +564,20 @@ var ShowProject = React.createClass({
                             </td>: null
                             }
                             {
-                                item.joinMark==1?
+                                item.joinMark==1&&item.isTeamCreateor==1?
                             <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
                                 <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名</button>
                              </span>
                             </td>: null
+                            }
+                            {
+                                item.joinMark==1&&item.isTeamCreateor==0?
+                             <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
+                             </span>
+                             </td> : null
                             }
                         </tr>
                         </tbody>
@@ -604,7 +645,7 @@ var ShowProject = React.createClass({
                                 <th width="150">操作 </th>
                             </tr>
                             </thead>
-                            <tbody className="group-table" style={{overFlow:'scroll'}}>
+                            <tbody className="group-table" over-flow="scroll" style={{overFlow:'scroll'}}>
                             {prs}
                             </tbody>
                         </table>

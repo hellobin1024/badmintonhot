@@ -144,7 +144,8 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
-            var url = "/func/allow/getEvents";//未登录
+            //var url = "/func/allow/getEvents";//未登录
+            alert("数据为空，请登录！");
         }
 
         var ref = this;
@@ -346,17 +347,30 @@ var Event = React.createClass({
                         <ul>
                             <li id="eventTime"><span>时间：</span>{item.startTimeStr}</li>
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
-                            <li id="eventNum"><span>参与者：</span>{item.member}</li>
+                            <li id="eventNum"><span>参与者：</span>{item.eventMember}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
                             {/*<li id="costType"><span>收费标准：</span>{item.costType2}</li>
                             <li id="cost"><span>花费：</span>{item.cost}</li>*/}
                             <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
+                            {
+                                item.money!=null? <li><span>缴费状态：</span>已缴费{item.money+"/元"}</li>:
+                                    <li><span>缴费状态：</span>未交费</li>
+                            }
+
                         </ul>
                         <div className="buy-me">
-                            {item.eventMaxMemNum>item.eventNowMemNum?
-                                <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:
-                                <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>
+
+
+                            {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                              <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
+                            {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                                <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
+                            }
+                            {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                                <a >您已报名</a>:null
+                            }
+
                         </div>
                     </div>
 
