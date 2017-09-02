@@ -87,10 +87,11 @@ var Event = React.createClass({
             null,
             function (res) {
 
-                if(res.re==1||res.re=="1"){
+                if(res.re==-1||res.re=="-1"){
                     alert(res.data);
-                    ref.initialData();
+                    //ref.initialData();
                 }
+                alert(res.data);
                 // else {
                 //     alert(res.data);
                 // }
@@ -362,7 +363,7 @@ var Event = React.createClass({
 
 
                             {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
-                              <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                              <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
                             {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null

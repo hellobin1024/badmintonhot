@@ -9,7 +9,7 @@ import {
 
 
 const initialState = {
-    id: null,
+    competitionId: null,
 
 
 };
@@ -21,7 +21,7 @@ let page = (state = initialState, action) => {
         case STORE_INFO:
 
             return Object.assign({}, state, {
-                id: action.id,
+                competitionId: action.competitionId,
 
             })
             break;

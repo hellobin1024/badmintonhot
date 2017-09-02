@@ -32,7 +32,7 @@ let getPageInfo= (id)=>{
 
     return {
         type: STORE_INFO,
-        id:id
+        competitionId:id
     };
 }
 
