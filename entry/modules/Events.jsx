@@ -145,8 +145,7 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
-            //var url = "/func/allow/getEvents";//未登录
-            alert("数据为空，请登录！");
+            var url = "/func/allow/getEvents";//未登录
         }
 
         var ref = this;
