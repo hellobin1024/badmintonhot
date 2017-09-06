@@ -65,7 +65,7 @@ var ShowCompetitionGames = React.createClass({
                         <td></td>
                     </tr>
                     <tr>
-                        <td>比赛项目：{item.gameType}</td>
+                        <td>比赛项目：{item.gameTypeName}</td>
                         <td>开始时间：{item.startTime}</td>
                         <td>结束时间：{item.endTime}</td>
                     </tr>
