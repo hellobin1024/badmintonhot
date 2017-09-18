@@ -74,6 +74,7 @@ var Event = React.createClass({
     },
 
     eventSignUp:function (item) {
+        var ref=this;
         if(this.state.token!==null&&this.state.token!==undefined){
         var url = "/func/allow/eventSignUp";
         var param={
@@ -92,9 +93,7 @@ var Event = React.createClass({
                     //ref.initialData();
                 }
                 alert(res.data);
-                // else {
-                //     alert(res.data);
-                // }
+                ref.getAllEvents();
                 ref.closeModal();
             },
 
@@ -124,9 +123,7 @@ var Event = React.createClass({
                         alert(res.data);
                         ref.initialData();
                     }
-                    // else {
-                    //     alert(res.data);
-                    // }
+
                     ref.closeModal();
                 },
 
