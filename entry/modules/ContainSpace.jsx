@@ -98,8 +98,10 @@ var ContainSpace = React.createClass({
                     trs.push(
                         <div key={i}>
                             <div>
+                                <div className="conStainbusiness">
                                 <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223'}}>{item.competitionName}</h2>
-
+                                </div>
+                                <div className="constainValue">
                                 <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>介绍：</span>{item.breif}<span
                                     style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
                                 </p>
@@ -111,8 +113,11 @@ var ContainSpace = React.createClass({
                                 <p><span
                                     style={{fontSize:'16px',color:'#8ecd4f'}}>时间：</span> {item.startTime}到{item.endTime}
                                 </p>
+                                </div>
+                                <div className="buy-me">
                                 <Link style={{fontSize:'17px',color:'#d91c62'}}
                                       to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId}>报名</Link>
+                                </div>
                             </div>
                         </div>
                     )

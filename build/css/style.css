@@ -2273,6 +2273,34 @@ span.menu {
     margin:3px 0 0;
     font-family: 'Nunito', sans-serif;
 }
+.conStainbusiness {
+    background:#08d822;
+    padding:1.5em 0em;
+    height: 46px;
+}
+.conStainbusiness h2{
+    font-size:16px;
+    color:#08d822;
+    margin:0;
+    font-family: 'Nunito', sans-serif;
+}
+.conStainbusiness p{
+    color:#08d822;
+    font-size:16px;
+    margin:3px 0 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.constainValue{
+    padding:0.5em 0;
+    background:#0b7409;
+}
+.constainValue p{
+    color:#fff;
+    font-size:16px;
+    margin:0;
+}
+
 .value{
     padding:0.5em 0;
     background:#0b7409;
