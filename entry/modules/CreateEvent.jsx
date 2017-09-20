@@ -408,7 +408,7 @@ var CreateEvent = React.createClass({
                         </span>
                         <span className="common-label r-label">需要场地数量：</span>
                         <span>
-                            <input type="text" name="fieldCount" className="common-input" tabIndex="2"></input>
+                            <input type="text" name="fieldCount" defaultValue="1" className="common-input" tabIndex="2"></input>
                         </span>
                     </div>
 

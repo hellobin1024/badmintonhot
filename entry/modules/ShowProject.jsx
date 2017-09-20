@@ -11,6 +11,7 @@ var Proxy = require('../../components/proxy/ProxyQ');
 import PageNavigator from '../../components/basic/PageNavigator.jsx';
 var Page = require('../../components/basic/Page');
 var UserActions=require('../action/UserActions');
+var PageActions=require('../action/PageActions');
 var ShowProject = React.createClass({
 
     getUrlParam :function(name) {
@@ -41,6 +42,11 @@ var ShowProject = React.createClass({
 
     getInitialState: function () {
         var competitionId=parseInt(this.getUrlParam("competitionId"));
+        if(competitionId!=null&&competitionId+''=='NaN'){
+
+            competitionId=null;
+        }
+
         var personId=this.props.personId;
         if(this.props.personId!==undefined && this.props.personId!==null){
             personId = this.props.personId;
@@ -425,329 +431,381 @@ var ShowProject = React.createClass({
         }
 
     },
+    test:function(){
+        document.getElementById("showproject").click();
+    },
     render:function() {
         var contains = null;
-        var doSignup = this.doSignup;
-        var doCancelPerson= this.doCancelPerson;
-        var doCancelTeam=this.doCancelTeam;
-        var doAddSignupPerson=this.doAddSignupPerson;
-        var doAddMember=this.doAddMember;
-        var doCreateTeam=this.doCreateTeam;
-        var ref=this;
-        if(this.state.data!==null&&this.state.data!==undefined) {
-            var data = this.state.data;
-            var trs = [];
-            var nrs=[];
-            var ttrs =[];
-            data.map(function (item, i) {
+        if(this.state.competitionId!=null) {
+            var doSignup = this.doSignup;
+            var doCancelPerson = this.doCancelPerson;
+            var doCancelTeam = this.doCancelTeam;
+            var doAddSignupPerson = this.doAddSignupPerson;
+            var doAddMember = this.doAddMember;
+            var doCreateTeam = this.doCreateTeam;
+            var ref = this;
+            if (this.state.data !== null && this.state.data !== undefined) {
+                var data = this.state.data;
+                var trs = [];
+                var nrs = [];
+                var ttrs = [];
+                data.map(function (item, i) {
 
-                if(item.projectType=="6"){ {/*Team报名*/}
-                    if(item.personList!==null&&item.personList!==undefined){
-
-                        item.personList.map(function(itema,j){
-                        ttrs.push(
-                            <span style={{fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer'}} onClick={ref.doCancelPerson.bind(ref,itema,item.projectId)}>{itema}</span>
-                        )
-                    })
-
-                    }
-                trs.push(
-                    <tbody  key={i} className="group-table">
-                    <tr>
-                        <td>{item.projectName}</td>
-                        <td>{item.projectType2}</td>
-                        <td>{item.maxTeamNum}</td>
-                        <td>{item.nowTeamNum}</td>
-                        <td>{item.maxTeamPersonNum}</td>
-                        <td rowSpan={2}>{ttrs}</td>
-                        {item.joinMark==1&&item.isTeamCreateor==1?
-                        <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"team")}>添加队员</button>
-                             </span>
-                        </td> : null
-
-                         }
-                        {
-                        item.joinMark==0?
-                        <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCreateTeam.bind(ref,item.projectId)} >报名</button>
-                             </span>
-                        </td>:
-                            null
+                    if (item.projectType == "6") {
+                        {/*Team报名*/
                         }
-                        {
-                            item.joinMark==1&&item.isTeamCreateor==1?
-                        <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)} >退出报名</button>
-                             </span>
-                        </td> : null
-                        }
-                        {
-                            item.joinMark==1&&item.isTeamCreateor==0?
-                                <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
-                             </span>
-                            </td> : null
-                        }
+                        if (item.personList !== null && item.personList !== undefined&&item.isTeamCreateor == 1) {
 
-                    </tr>
-                    </tbody>
-                )
-                }else if(item.projectType=="1"||item.projectType=="2") {  {/*单人报名*/}
-                    trs.push(
-                        <tbody  key={i} className="group-table">
-                        <tr>
-                            <td>{item.projectName}</td>
-                            <td>{item.projectType2}</td>
-                            <td>{item.maxTeamNum}</td>
-                            <td>{item.nowTeamNum}</td>
-                            <td>{item.maxTeamPersonNum}</td>
-                            <td rowSpan={2}></td>
+                            item.personList.map(function (itema, j) {
+                                ttrs.push(
+                                    <span
+                                        style={{fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer'}}
+                                        onClick={ref.doCancelPerson.bind(ref,itema,item.projectId)}>{itema}</span>
+                                )
+                            })
 
-                            {
-                                item.joinMark==0?
-                                <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doSignup.bind(ref,item.projectId,ref.state.personId,null,"person")} >报名</button>
-                             </span>
-                            </td>:null
-                            }
-                            {
-                                item.joinMark==1&&item.isTeamCreateor==1?
-                            <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名</button>
-                             </span>
-                            </td>
-                                    : null
-                            }
-                            {
-                                item.joinMark==1&&item.isTeamCreateor==0?
+                        }
+                        if (item.personList !== null && item.personList !== undefined&&item.isTeamCreateor == 0) {
+
+                            item.personList.map(function (itema, j) {
+                                ttrs.push(
+                                    <span style={{fontSize:'14px',marginRight:'5px'}}>{itema}</span>
+                                )
+                            })
+
+                        }
+                        trs.push(
+                            <tbody key={i} className="group-table">
+                            <tr>
+                                <td>{item.projectName}</td>
+                                <td>{item.projectType2}</td>
+                                <td>{item.maxTeamNum}</td>
+                                <td>{item.nowTeamNum}</td>
+                                <td>{item.maxTeamPersonNum}</td>
+                                <td rowSpan={2}>{ttrs}</td>
+                                {item.joinMark == 1 && item.isTeamCreateor == 1 ?
                                     <td>
                             <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"team")}>添加队员
+                                </button>
                              </span>
                                     </td> : null
-                            }
-                        </tr>
-                        </tbody>
-                    )
-                }else{{/*两个人报名*/}
-                    if(item.personList!==null&&item.personList!==undefined){
 
-                        item.personList.map(function(itema,j){
-                            nrs.push(
-                                <span style={{fontSize:'14px',marginRight:'5px'}} >{itema}</span>
-                            )
-                        })
+                                }
+                                {
+                                    item.joinMark == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={doCreateTeam.bind(ref,item.projectId)}>报名
+                                </button>
+                             </span>
+                                        </td> :
+                                        null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 1 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn"
+                                        style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}}
+                                        disabled="true">已报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
 
+                            </tr>
+                            </tbody>
+                        )
+                    } else if (item.projectType == "1" || item.projectType == "2") {
+                        {/*单人报名*/
+                        }
+                        trs.push(
+                            <tbody key={i} className="group-table">
+                            <tr>
+                                <td>{item.projectName}</td>
+                                <td>{item.projectType2}</td>
+                                <td>{item.maxTeamNum}</td>
+                                <td>{item.nowTeamNum}</td>
+                                <td>{item.maxTeamPersonNum}</td>
+                                <td rowSpan={2}></td>
+
+                                {
+                                    item.joinMark == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={doSignup.bind(ref,item.projectId,ref.state.personId,null,"person")}>报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 1 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名
+                                </button>
+                             </span>
+                                        </td>
+                                        : null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn"
+                                        style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}}
+                                        disabled="true">已报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                            </tr>
+                            </tbody>
+                        )
+                    } else {
+                        {/*两个人报名*/
+                        }
+                        if (item.personList !== null && item.personList !== undefined) {
+
+                            item.personList.map(function (itema, j) {
+                                nrs.push(
+                                    <span style={{fontSize:'14px',marginRight:'5px'}}>{itema}</span>
+                                )
+                            })
+
+                        }
+                        trs.push(
+                            <tbody key={i} className="group-table">
+                            <tr>
+                                <td>{item.projectName}</td>
+                                <td>{item.projectType2}</td>
+                                <td>{item.maxTeamNum}</td>
+                                <td>{item.nowTeamNum}</td>
+                                <td>{item.maxTeamPersonNum}</td>
+                                <td rowSpan={2}>{nrs}</td>
+                                {
+                                    item.joinMark == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"double")}>报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 1 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn" style={{borderRadius:'3px'}}
+                                        onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                                {
+                                    item.joinMark == 1 && item.isTeamCreateor == 0 ?
+                                        <td>
+                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
+                                <button className="search-Btn"
+                                        style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}}
+                                        disabled="true">已报名
+                                </button>
+                             </span>
+                                        </td> : null
+                                }
+                            </tr>
+                            </tbody>
+                        )
                     }
-                    trs.push(
-                        <tbody  key={i} className="group-table">
-                        <tr>
-                            <td>{item.projectName}</td>
-                            <td>{item.projectType2}</td>
-                            <td>{item.maxTeamNum}</td>
-                            <td>{item.nowTeamNum}</td>
-                            <td>{item.maxTeamPersonNum}</td>
-                            <td rowSpan={2}>{nrs}</td>
-                            {
-                                item.joinMark==0?
-                            <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}}  onClick={ref.doAddSignupPerson.bind(ref,item.projectId,"double")}>报名</button>
-                             </span>
-                            </td>: null
-                            }
-                            {
-                                item.joinMark==1&&item.isTeamCreateor==1?
-                            <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px'}} onClick={doCancelTeam.bind(ref,item.projectId)}>退出报名</button>
-                             </span>
-                            </td>: null
-                            }
-                            {
-                                item.joinMark==1&&item.isTeamCreateor==0?
-                             <td>
-                            <span style={{fontSize:'16px',borderRadius:'2px'}}>
-                                <button className="search-Btn" style={{borderRadius:'3px',background:'#969f96',borderColor:'#8a9084'}} disabled="true" >已报名</button>
-                             </span>
-                             </td> : null
-                            }
-                        </tr>
-                        </tbody>
-                    )
-                }
-            })
+                })
 
-            var mrs = [];
-            mrs.push(
-                <div ref="createTeam">
-                    <div className="common-line">
-                        <span className="common-label l-label">队伍名称：</span>
+                var mrs = [];
+                mrs.push(
+                    <div ref="createTeam">
+                        <div className="common-line">
+                            <span className="common-label l-label">队伍名称：</span>
                             <span>
                             <input type="text" name="teamName" className="common-input" tabIndex="1"></input>
                             </span>
-                    </div>
-                    <div className="common-line">
-                        <span className="common-label l-label">队伍备注：</span>
+                        </div>
+                        <div className="common-line">
+                            <span className="common-label l-label">队伍备注：</span>
                         <span>
                             <input type="text" name="remark" className="common-input" tabIndex="2"></input>
                         </span>
-                    </div>
-                    <div className="common-line">
-                        <button style={{fontSize:'14px',color:'#11a669',width:'60px',height:'30px'}} onClick={doSignup.bind(null,this.state.TeamProject,null,null,"team")} >保存</button>
-                    </div>
-                </div>
-
-            )
-            if(this.state.addPerson!==null&&this.state.addPerson!==undefined) {
-                var prs = [];
-                this.state.addPerson.map(function (item, i) {
-                    prs.push(
-                        <tr>
-                            <td>{item.name}</td>
-                            <td>{item.age}</td>
-                            <td>{item.gender}</td>
-                            <td>
-                                <button style={{color:'#11a669',fontSize:'14px',textAlign:'Center'}} onClick={doAddMember.bind(ref,item.id,item.name)}>添加</button>
-                            </td>
-                        </tr>
-
-                    )
-                })
-            }
-            var drs = [];
-            drs.push(
-                <div ref="createGroup">
-                    <div className="common-line">
-                        <div className="common-label l-label" style={{float:'left'}}>搜索组员：</div>
-                        <div style={{float:'left'}}>
-                            <input type="text" id="GroupMember" name="GroupMember" placeholder="请输入你要搜索的队友" className="common-input" tabIndex="5"></input>
                         </div>
-                        <div  style={{float:'left'}}>
-                            <button  style={{fontSize:'14px',color:'#11a669',width:'50px',height:'35px',marginLeft:'20px'}}  onClick={this.doSerachGroupMember}>搜索</button>
+                        <div className="common-line">
+                            <button style={{fontSize:'14px',color:'#11a669',width:'60px',height:'30px'}}
+                                    onClick={doSignup.bind(null,this.state.TeamProject,null,null,"team")}>保存
+                            </button>
                         </div>
-                        <div className="clearfix"></div>
                     </div>
-                    <div className="common-line"style={{height:'30px'}} >
-                        <table className="table table-striped invoice-table" >
-                            <thead className="table-head">
+                )
+                if (this.state.addPerson !== null && this.state.addPerson !== undefined) {
+                    var prs = [];
+                    this.state.addPerson.map(function (item, i) {
+                        prs.push(
                             <tr>
-                                <th width="150">姓名 </th>
-                                <th width="150">年龄  </th>
-                                <th width="150">性别</th>
-                                <th width="150">操作 </th>
+                                <td>{item.name}</td>
+                                <td>{item.age}</td>
+                                <td>{item.gender}</td>
+                                <td>
+                                    <button style={{color:'#11a669',fontSize:'14px',textAlign:'Center'}}
+                                            onClick={doAddMember.bind(ref,item.id,item.name)}>添加
+                                    </button>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody className="group-table" over-flow="scroll" style={{overFlow:'scroll'}}>
-                            {prs}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            )
-        }else{
-            this.initialData();
-        }
-
-        contains =
-            <div className="banner-bottom">
-                <div className="container">
-                    <div className="faqs-top-grids" >
-                        <div >
-                            <h1 style={{paddingLeft:'400px',fontSize:'25px',paddingBottom:'20px'}}>参赛项目报名</h1>
+                        )
+                    })
+                }
+                var drs = [];
+                drs.push(
+                    <div ref="createGroup">
+                        <div className="common-line">
+                            <div className="common-label l-label" style={{float:'left'}}>搜索组员：</div>
+                            <div style={{float:'left'}}>
+                                <input type="text" id="GroupMember" name="GroupMember" placeholder="请输入你要搜索的队友"
+                                       className="common-input" tabIndex="5"></input>
+                            </div>
+                            <div style={{float:'left'}}>
+                                <button
+                                    style={{fontSize:'14px',color:'#11a669',width:'50px',height:'35px',marginLeft:'20px'}}
+                                    onClick={this.doSerachGroupMember}>搜索
+                                </button>
+                            </div>
+                            <div className="clearfix"></div>
+                        </div>
+                        <div style={{height: '190px', overflowY: 'scroll'}}>
                             <table className="table table-striped invoice-table">
-                            <thead className="table-head">
-                            <tr>
-                                <th width="150">项目名称 </th>
-                                <th width="150">项目类型  </th>
-                                <th width="190">最大参赛队伍/人数 </th>
-                                <th width="230">已报名参赛队伍/人数 </th>
-                                <th width="150">队伍最大人数  </th>
-                                <th width="300">已报名人员 </th>
-                            </tr>
-                            </thead>
-                            {trs}
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="150">姓名</th>
+                                    <th width="150">年龄</th>
+                                    <th width="150">性别</th>
+                                    <th width="150">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody className="group-table" over-flow="scroll" style={{overFlow:'scroll'}}>
+                                {prs}
+                                </tbody>
                             </table>
                         </div>
-                        { /*<RightSlide/>*/}
-                        <div className="clearfix"></div>
                     </div>
-                </div>
-                <div className="modal fade bs-example-modal-sm login-container"
-                     tabIndex="-1"
-                     role="dialog"
-                     aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true"
-                     ref='successModal'
-                     data-keyboard="false"
-                     style={{zIndex: 1045}}
-                    >
-                    <div className="modal-dialog modal-sm"
-                         style={{position: 'absolute', top: '30%', width: '400px', marginLeft: '25%'}}>
-                        <div className="modal-content"
-                             style={{position: 'relative', width: '400px', padding: '100px'}}>
-                            <div className="modal-body">
-                                <div className="modalEventDetail">
-                                     sdsds
+                )
+            } else {
+                this.initialData();
+            }
+
+            contains =
+                <div className="banner-bottom">
+                    <div className="container">
+                        <div className="faqs-top-grids">
+                            <div >
+                                <h1 style={{paddingLeft:'400px',fontSize:'25px',paddingBottom:'20px'}}>参赛项目报名</h1>
+                                <table className="table table-striped invoice-table">
+                                    <thead className="table-head">
+                                    <tr>
+                                        <th width="150">项目名称</th>
+                                        <th width="150">项目类型</th>
+                                        <th width="190">最大参赛队伍/人数</th>
+                                        <th width="230">已报名参赛队伍/人数</th>
+                                        <th width="150">队伍最大人数</th>
+                                        <th width="300">已报名人员</th>
+                                    </tr>
+                                    </thead>
+                                    {trs}
+                                </table>
+                            </div>
+                            { /*<RightSlide/>*/}
+                            <div className="clearfix"></div>
+                        </div>
+                    </div>
+                    <div className="modal fade bs-example-modal-sm login-container"
+                         tabIndex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
+                         ref='successModal'
+                         data-keyboard="false"
+                         style={{zIndex: 1045}}
+                        >
+                        <div className="modal-dialog modal-sm"
+                             style={{position: 'absolute', top: '30%', width: '400px', marginLeft: '25%'}}>
+                            <div className="modal-content"
+                                 style={{position: 'relative', width: '400px', padding: '100px'}}>
+                                <div className="modal-body">
+                                    <div className="modalEventDetail">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade bs-example-modal-sm login-container"
+                         tabIndex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
+                         ref='TeamModel'
+                         data-keyboard="false"
+                         style={{zIndex: 1045}}
+                        >
+                        <div className="modal-dialog modal-sm"
+                             style={{position: 'absolute', top: '30%', width: '400px', marginLeft: '25%'}}>
+                            <div className="modal-content"
+                                 style={{position: 'relative', width: '400px', padding: '40px'}}>
+                                <div className="modal-body">
+                                    <div className="modalEventDetail">
+                                        {mrs}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade bs-example-modal-sm login-container"
+                         tabIndex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
+                         ref='doubleModal'
+                         data-keyboard="false"
+                         style={{zIndex: 1045}}
+                        >
+                        <div className="modal-dialog modal-sm"
+                             style={{position: 'relative', top: '30%', width: '400px', marginLeft: '25%'}}>
+                            <div className="modal-content"
+                                 style={{position: 'relative', width: '400px'}}>
+                                <div className="modal-body">
+                                    <div className="modalEventDetail">
+                                        {drs}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="modal fade bs-example-modal-sm login-container"
-                     tabIndex="-1"
-                     role="dialog"
-                     aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true"
-                     ref='TeamModel'
-                     data-keyboard="false"
-                     style={{zIndex: 1045}}
-                    >
-                    <div className="modal-dialog modal-sm"
-                         style={{position: 'absolute', top: '30%', width: '400px', marginLeft: '25%'}}>
-                        <div className="modal-content"
-                             style={{position: 'relative', width: '400px', padding: '40px'}}>
-                            <div className="modal-body">
-                                <div className="modalEventDetail">
-                                    {mrs}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        }else{
+            contains=
+                <div>
+                    <Link to={window.App.getAppRoute() + "/competition"} id='showproject'>数据为空，请跳转到赛事模块</Link>
                 </div>
-                <div className="modal fade bs-example-modal-sm login-container"
-                     tabIndex="-1"
-                     role="dialog"
-                     aria-labelledby="myLargeModalLabel"
-                     aria-hidden="true"
-                     ref='doubleModal'
-                     data-keyboard="false"
-                     style={{zIndex: 1045}}
-                    >
-                    <div className="modal-dialog modal-sm"
-                         style={{position: 'relative', top: '30%', width: '400px', marginLeft: '25%'}}>
-                        <div className="modal-content"
-                             style={{position: 'relative', width: '400px', paddingBottom: '40%'}}>
-                            <div className="modal-body">
-                                <div className="modalEventDetail">
-                                    {drs}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
+        }
         return contains
 
     }

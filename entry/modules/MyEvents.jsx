@@ -94,14 +94,23 @@ var MyEvents = React.createClass({
                           <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
                             <tr>
                                 <td>名称：{item.eventName}</td>
-                                <td>简介：{item.eventBrief}</td>
-                                <td>时间：{item.eventTime}</td>
+                                {
+                                    item.isOutDate==1?<td>过期状态：已过期</td>:
+                                        <td>过期状态：未过期</td>
+                                }
+                                <td>状态：{ item.statusState}</td>
                             </tr>
                             <tr>
                                 <td>地点：{item.eventPlaceName}</td>
                                 <td>创建者：{item.eventManager}</td>
                                 <td>成员：{item.eventMember}</td>
                             </tr>
+                          <tr>
+                              <td>时间：{item.eventTime}</td>
+                              <td>简介：{item.eventBrief}</td>
+                              <td></td>
+                              <td></td>
+                          </tr>
                             {
                               item.remark==1?
                                   <tr>

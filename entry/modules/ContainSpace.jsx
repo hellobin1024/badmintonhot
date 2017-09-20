@@ -4,11 +4,151 @@ import '../../build/css/JFFormStyle-1.css';
 import '../../build/css/jquery-ui.css';
 import '../../build/css/style.css';
 import {Link} from 'react-router';
+import { connect } from 'react-redux';
+import { browserHistory ,hashHistory} from 'react-router';
+import RightSlide from './components/RightSilde'
+var Proxy = require('../../components/proxy/ProxyQ');
 var ContainSpace = React.createClass({
+    initialData:function(){
 
+        this.getAllCompetieionNews();
+        this.getAllCompetieion();
+
+    },
+    getInitialState: function () {
+        var token=this.props.token;
+        return ({token:token,data:null,news:null});
+    },
+    dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
+        return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
+    },
+    getAllCompetieionNews:function () {
+
+            var url = "/func/allow/getAllCompetieionNews";
+            var ref = this;
+            var newType="2";
+            var params = {
+                newsType:newType
+            };
+            Proxy.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (res) {
+                    var a = res.data;
+                    ref.setState({news: a});
+                },
+
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+
+    },
+    getAllCompetieion:function () {
+
+        if(this.state.token!==null&&this.state.token!==undefined) {
+
+            var url = "/func/competition/getCanJoinBadmintonCompetitionInfoList";
+            var ref = this;
+            var params = {};
+            Proxy.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (res) {
+                    var a = res.data;
+                    var competitionType2 = "";
+                    for (var i = 0; i < a.length; i++) {
+                        if (a[i].competitionType == "1") {
+                            competitionType2 = "公开";
+                        } else {
+
+                            competitionType2 = "委托";
+                        }
+                        a[i].startTime = ref.dateFormat(a[i].startTime);
+                        a[i].endTime = ref.dateFormat(a[i].endTime);
+
+                        a[i].competitionType2 = competitionType2;
+                    }
+
+                    ref.setState({data: a});
+                    var successModal = ref.refs['successModal'];
+                    $(successModal).modal('show');
+                },
+
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }
+    },
     render:function() {
         var contains = null;
         var a=1;
+        var trs = [];
+        var prs=[];
+        if((this.state.data!==null&&this.state.data!==undefined)) {
+
+            if(this.state.data!==null&&this.state.data!==undefined) {
+                var data = this.state.data;
+                data.map(function (item, i) {
+                    trs.push(
+                        <div key={i}>
+                            <div>
+                                <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223'}}>{item.competitionName}</h2>
+
+                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>介绍：</span>{item.breif}<span
+                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
+                                </p>
+
+                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>场地：</span> {item.unitName} <span
+                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>类型：</span> {item.competitionType2}
+                                </p>
+
+                                <p><span
+                                    style={{fontSize:'16px',color:'#8ecd4f'}}>时间：</span> {item.startTime}到{item.endTime}
+                                </p>
+                                <Link style={{fontSize:'17px',color:'#d91c62'}}
+                                      to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId}>报名</Link>
+                            </div>
+                        </div>
+                    )
+
+                })
+
+
+            }
+
+        }
+        else
+        {
+            this.initialData();
+        }
+        if(this.state.news!==null&&this.state.news!==undefined) {
+            var news = this.state.news;
+            news.map(function (item, i) {
+                prs.push(
+                    <div key={i}>
+
+
+                        <div>
+                            <h2 style={{marginTop:'5px'}}>{item.title}</h2>
+
+                            <p><span style={{fontSize:'12px',color:'#cd4f7e'}}>介绍：</span>{item.brief}
+                            </p>
+                        </div>
+                    </div>
+                )
+
+            })
+
+
+        }else{
+            this.initialData();
+        }
         contains =
             <div className="banner-bottom">
                 <div className="container">
@@ -229,15 +369,14 @@ var ContainSpace = React.createClass({
                         </div>
                         <div className="col-md-4 banner-bottom-grid">
                             <div className="choose-info">
-                                <h4>待定</h4>
+                                <h4>赛事</h4>
                             </div>
                             <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
                                 <a href="products.html">
                                     <img src={window.App.getResourceDeployPrefix()+"/images/a3.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
-                                        <h5>New Hotel Experiences at Your Favourite Destinations</h5>
-                                        <p>Integer eget aliquam nibh. Donec blandit volutpat libero id lacinia</p>
-                                        <p className="b-period">Book Period: Now - 7 September 2015 | Travel Period: Now - 31 October 2015 </p>
+                                        <h5>新一轮赛事信息</h5>
+                                        {prs}
                                     </div>
                                 </a>
                             </div>
@@ -277,7 +416,28 @@ var ContainSpace = React.createClass({
                         <div className="clearfix"> </div>
                     </div>
                 </div>
+                <div className="modal fade bs-example-modal-sm login-container"
+                     tabIndex="-1"
+                     role="dialog"
+                     aria-labelledby="myLargeModalLabel"
+                     aria-hidden="true"
+                     ref='successModal'
+                     data-keyboard="false"
+                     style={{zIndex: 1045}}
+                    >
+                    <div className="modal-dialog modal-sm"
+                         style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%',borderBottom:'1px dotted #5B6873'}}>
+                        <div className="modal-content"
+                             style={{position: 'relative', width: '60%', padding: '40px'}}>
 
+                            <div className="modal-body">
+                                <div className="modalEventDetail">
+                                    {trs}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         return contains;
     },
@@ -316,4 +476,12 @@ var ContainSpace = React.createClass({
         });
     }
 });
-module.exports = ContainSpace;
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+        loginName: state.userInfo.loginName,
+        personId:state.userInfo.personId,
+    }
+    return props
+}
+export default connect(mapStateToProps)(ContainSpace);

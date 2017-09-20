@@ -74,6 +74,7 @@ var Event = React.createClass({
     },
 
     eventSignUp:function (item) {
+        var ref=this;
         if(this.state.token!==null&&this.state.token!==undefined){
         var url = "/func/allow/eventSignUp";
         var param={
@@ -87,13 +88,12 @@ var Event = React.createClass({
             null,
             function (res) {
 
-                if(res.re==1||res.re=="1"){
+                if(res.re==-1||res.re=="-1"){
                     alert(res.data);
-                    ref.initialData();
+                    //ref.initialData();
                 }
-                // else {
-                //     alert(res.data);
-                // }
+                alert(res.data);
+                ref.getAllEvents();
                 ref.closeModal();
             },
 
@@ -123,9 +123,7 @@ var Event = React.createClass({
                         alert(res.data);
                         ref.initialData();
                     }
-                    // else {
-                    //     alert(res.data);
-                    // }
+
                     ref.closeModal();
                 },
 
@@ -144,8 +142,7 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
-            //var url = "/func/allow/getEvents";//未登录
-            alert("数据为空，请登录！");
+            var url = "/func/allow/getEvents";//未登录
         }
 
         var ref = this;
@@ -362,7 +359,7 @@ var Event = React.createClass({
 
 
                             {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
-                              <a onClick={this.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                              <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
                             {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null

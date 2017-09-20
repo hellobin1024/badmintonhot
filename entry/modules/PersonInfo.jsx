@@ -17,6 +17,8 @@ import CreateEvent from '../modules/CreateEvent.jsx';
 import CreateCLass from '../modules/CreateCLass.jsx';
 import showCompetitionGames from '../modules/showCompetitionGames.jsx';
 import DemandClass from '../modules/demandClass.jsx';
+import HistoryEvents from '../modules/HistoryEvents.jsx';
+import MyNotices from '../modules/MyNotices.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
@@ -100,11 +102,16 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
-            // case 'showCompetitionGames':
-            //     mainContent =(
-            //         <showCompetitionGames personId={personId} competitionId={competitionId}/>
-            //     );
-            //     break;
+            case 'historyEvents':
+                mainContent =(
+                    <HistoryEvents personId={personId} />
+                );
+                break;
+            case 'myNotices':
+                mainContent =(
+                    <MyNotices personId={personId} />
+                );
+                break;
 
         }
 
@@ -115,6 +122,10 @@ var PersonInfo = React.createClass({
                 <div id="pjax-container" className="person-container clearfix">
                     <div id="aside" className="l" style={{height:'800px',border: '1px solid #1C6'}}>
                         <dl className="st-dl">
+                            <dt><i className="icon-calendar" ></i>通知消息</dt>
+                            <dd className="my-group">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myNotices')}>我的消息</a></div>
+                            </dd>
                             <dt><i className="icon-user-md"></i>群圈</dt>
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyGroup')}>管理群圈</a></div>
@@ -128,6 +139,9 @@ var PersonInfo = React.createClass({
                             </dd>
                             <dd className="my-activity">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createEvent')}>创建活动</a></div>
+                            </dd>
+                            <dd className="my-activity">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'historyEvents')}>历史记录</a></div>
                             </dd>
                             <dt><i className="icon-user-md"></i>课程</dt>
                             <dd className="my-group">

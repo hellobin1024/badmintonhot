@@ -5,16 +5,15 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
 
-import '../../css/entry/modules/myCompetition.css';
+import '../../css/entry/modules/myEvents.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var ShowCompetitionGames = React.createClass({
+var HistoryEvents = React.createClass({
 
     initialData:function(){
-        var url="/func/competition/getBadmintonCompetitionGameListOfPerson";
+        var url="/func/allow/getMyEventsForHistory";
         var params={
-            personId:this.state.personId,
-            competitionId:this.state.competitionId,
+            personId:this.state.personId
         };
 
         ProxyQ.query(
@@ -39,12 +38,10 @@ var ShowCompetitionGames = React.createClass({
 
     getInitialState: function () {
         var personId = null;
-        var competitionId=null;
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
-            competitionId = this.props.competitionId;
         }
-        return ({personId: personId, competitionId: competitionId,data:null});
+        return ({personId: personId, data:null});
     },
 
     render:function(){
@@ -52,39 +49,57 @@ var ShowCompetitionGames = React.createClass({
         var data = this.state.data;
 
         var operate = this.operate;
-        var competitionGamesTable = [];
+        var historyEventsTable = [];
         var ins = this;
         if(data!==undefined && data!==null){
 
             data.map(function(item, i){
-                competitionGamesTable.push(
-                    <tbody  key={i} className="competition-table">
+                historyEventsTable.push(
+                    <tbody  key={i} className="event-table">
+
+                    <tr><td><h4 style={{marginTop:'15px'}}><strong>{item.eventNum}:</strong></h4></td></tr>
                     <tr>
-                        <td><h4 style={{marginTop:'15px'}}><strong>场次{i+1}</strong></h4></td>
-                        <td></td>
-                        <td></td>
+                        <td>名称：{item.eventName}</td>
+                        {
+                            item.isOutDate==1?<td>过期状态：已过期</td>:
+                                <td>过期状态：未过期</td>
+                        }
+                        <td>状态：{ item.statusState}</td>
                     </tr>
                     <tr>
-                        <td>比赛项目：{item.gameTypeName}</td>
-                        <td>开始时间：{item.startTime}</td>
-                        <td>结束时间：{item.endTime}</td>
+                        <td>地点：{item.eventPlaceName}</td>
+                        <td>创建者：{item.eventManager}</td>
+                        <td>成员：{item.eventMember}</td>
                     </tr>
                     <tr>
-                        <td>对阵：{item.personNameA1}&nbsp;{item.personNameA2}&nbsp;VS&nbsp;{item.personNameB1}&nbsp;{item.personNameB2}</td>
-                        <td>比&emsp;&emsp;分：{item.scoreA}&nbsp;:&nbsp;{item.scoreB}</td>
+                        <td>简介：{item.eventBrief}</td>
+                        <td>时间：{item.eventTime}</td>
                         <td></td>
                     </tr>
+
+                    {   /* {
+                        item.remark==1?
+                            <tr>
+                                <td></td>
+                                <td  style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag2,i)}>{item.operate2}</a></td>
+                                <td></td>
+                            </tr>:<div></div>
+
+                    }
                     <tr>
                         <td></td>
+                        <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
                         <td></td>
-                    </tr>
+                    </tr>*/}
+
+
                     </tbody>
+
                 );
             });
 
-
             mainContent=
-                <div id="competition" className="my-competition">
+                <div id="event" className="my-event">
                     <div className="widget-container fluid-height">
                         <div className="widget-content padded clearfix">
                             <table className="table table-striped invoice-table">
@@ -95,7 +110,8 @@ var ShowCompetitionGames = React.createClass({
                                     <th width="300"></th>
                                 </tr>
                                 </thead>
-                                {competitionGamesTable}
+
+                                {historyEventsTable}
 
                             </table>
                         </div>
@@ -111,6 +127,6 @@ var ShowCompetitionGames = React.createClass({
     },
 });
 
-module.exports=ShowCompetitionGames;
+module.exports=HistoryEvents;
 
 

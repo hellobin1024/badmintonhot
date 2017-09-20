@@ -151,6 +151,10 @@ var Competieion = React.createClass({
                         </div>
                     </div>
 
+
+
+
+
                 </div>
         }else{
             this.initialData();

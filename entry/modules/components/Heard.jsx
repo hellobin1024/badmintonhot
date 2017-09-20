@@ -88,11 +88,11 @@ var Heard = React.createClass({
                                         课程培训
                                     </Link>
                                 </li>
-                                <li ref="competition">
+                                {/*<li ref="competition">
                                     <Link to={window.App.getAppRoute() + "/competition"}>
                                         赛事
                                     </Link>
-                                </li>
+                                </li>*/}
                                 {/*<li ref="video"><a href="#">视频</a></li>
                                 <li ref="group"><a href="#">直播</a></li>
                                 <li ref="group"><a href="#">商城</a></li>*/}
