@@ -4,20 +4,18 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
-import ShowNotice from '../modules/ShowNotice.jsx';
 import '../../css/entry/modules/myCompetition.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
 var MyNotices = React.createClass({
 
-    tabChange:function(tab,Id){
-        this.setState({current:tab});
-        this.setState({noticeId:Id});
-    },
+    // tabChange:function(tab,Id){
+    //     this.setState({current:tab});
+    //     this.setState({noticeId:Id});
+    // },
 
     initialData:function(){
-        var url="/func/notices/getNoticesListOfPerson";
-        //var url="/func/competition/getMyBadmintonCompetitionInfoList";
+        var url="/func/notices/getNoticesInfo";
         var params={
             personId:this.state.personId
         };
@@ -41,6 +39,17 @@ var MyNotices = React.createClass({
         );
     },
 
+    showNotice:function (item) {
+
+        var ref = this;
+        ref.setState({modal: item});
+        var successModal = ref.refs['successModal'];
+        $(successModal).modal('show');
+    },
+    closeModal:function () {
+        var successModal = this.refs['successModal'];
+        $(successModal).modal('hide');
+    },
 
     getInitialState: function () {
         var personId = null;
@@ -54,32 +63,41 @@ var MyNotices = React.createClass({
         var mainContent = null;
         var data = this.state.data;
 
-
+        var mrs = [];
         var  noticesTable = [];
         var ins = this;
         if(data!==undefined && data!==null){
 
             data.map(function(item, i){
                 noticesTable.push(
-                    <tbody  key={i} >
+                    <tbody  key={i} className="competition-table">
                     <tr>
-                            <h3 style={{marginTop:'15px'}}>
+                            <td style={{marginTop:'15px'}}>
                                 消息{i+1}&ensp; :&ensp;
-                                <a data-pjax="true" onClick={ins.tabChange.bind(this,'showNotice',item.noticeId)}>{item.competitionName}</a>
-                            </h3>
+                                <a data-pjax="true" onClick={ins.showNotice.bind(null, item)}>{item.title}</a>
+                            </td>
+                        <td>时间&ensp; :&ensp;{item.createTime}</td>
+                        <td> </td>
                     </tr>
                     </tbody>
                 );
             });
 
-            if(this.state.current ==='showNotice'){
-                var noticeId=this.state.noticeId;
-                var personId=this.state.personId;
-                mainContent=(
-                    <ShowNotice  personId={personId} noticeId={noticeId}/>
-                );
-            }
-            else{
+            if(this.state.modal!==null&&this.state.modal!==undefined){
+            var array = this.state.modal;
+            mrs.push(
+                <div style={{textAlign: 'center'}} key='modal'>
+                    <div className="business">
+                        <h2 id="eventTitle"> 标题：{array.title} </h2>
+                        <h2 id="eventPlace"><span> 时间：</span>{array.createTime}</h2>
+                    </div>
+                    <div className="value">
+                        <p id="eventCreater"><span>内容：</span>{array.contents}</p>
+                    </div>
+                </div>
+            )
+        }
+
                 mainContent=(
                     <div id="competition" className="my-competition">
                         <div className="widget-container fluid-height">
@@ -98,8 +116,33 @@ var MyNotices = React.createClass({
                                 </table>
                             </div>
                         </div>
+
+
+                        <div className="modal fade bs-example-modal-sm login-container"
+                             tabIndex="-1"
+                             role="dialog"
+                             aria-labelledby="myLargeModalLabel"
+                             aria-hidden="true"
+                             ref='successModal'
+                             data-keyboard="false"
+                             style={{zIndex: 1045}}
+                        >
+                            <div className="modal-dialog modal-sm"
+                                 style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
+                                <div className="modal-content"
+                                     style={{position: 'relative', width: '100%', padding: '40px'}}>
+
+                                    <div className="modal-body">
+                                        <div className="modalEventDetail">
+                                            {mrs}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                )}
+                )
 
 
 
