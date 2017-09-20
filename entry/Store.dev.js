@@ -6,7 +6,7 @@ import { createStore, applyMiddleware,compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers/index.js';
 import DevTools from './DevTools.jsx'
-import { hashHistory } from 'react-router'
+import { hashHistory,browserHistory } from 'react-router'
 import { syncHistory } from 'react-router-redux'
 //import applyActionEmitters from './applyActionEmitters.js'
 //import ipcActionEmitter from '../ipc/ipcActionEmitter.js'
@@ -16,7 +16,7 @@ import { syncHistory } from 'react-router-redux'
 
 const middlewares = [thunk];
 const createLogger = require('redux-logger');
-const reduxRouterMiddleware = syncHistory(hashHistory)
+const reduxRouterMiddleware = syncHistory(browserHistory)
 const enhancer = compose(
     applyMiddleware(thunk, reduxRouterMiddleware),
     DevTools.instrument()

@@ -1,5 +1,6 @@
-
-import {render} from 'react-dom';
+var React = require('react');
+var ReactDOM = require('react-dom');
+import { render} from 'react-dom';
 import { connect } from 'react-redux';
 import { browserHistory ,hashHistory} from 'react-router';
 import '../../build/css/style.css'
@@ -8,12 +9,10 @@ import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import RightSlide from './components/RightSilde'
 import {Link} from 'react-router';
+import '../../css/entry/modules/myEvents.css'
 var Tips = require('../../components/basic/Tips');
 var Proxy = require('../../components/proxy/ProxyQ');
-var React = require('react');
-var ReactDOM = require('react-dom');
-import Header from './components/Heard.jsx';
-import '../../css/entry/modules/myEvents.css'
+
 var Class = React.createClass({
 
 
@@ -163,7 +162,7 @@ var Class = React.createClass({
 
                                     ref.closeModal();
                                     const path = "/personInfo";
-                                    hashHistory.push(path);
+                                    browserHistory.push(path);
 
                                     ref.sendMessage(coachPhone, "羽毛球热——注册会员'" + loginName + "'报名了您所开设的暑期课程'" + className + "'，请及时电话联系进行确认！联系电话：+" + myPhone);//给教练发消息
                                     ref.sendMessage(myPhone, "羽毛球热——感谢您报名我们的暑期课程，具体缴费，福利详情请与您的课程教练：" + coachName + " " + coachPhone + "联系确认");//给自己发消息

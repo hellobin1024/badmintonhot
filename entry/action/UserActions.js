@@ -88,7 +88,7 @@ export let logoutAction=function(){
                         var personId = null;
                         dispatch(getReCode(reCode,loginName,personId));
                         const path = "/";
-                        hashHistory.push(path);
+                        browserHistory.push(path);
                         flag=0;
                     }else {
                         var errorMsg = res.errorMessageList[1];
@@ -124,7 +124,7 @@ export let loginStateAction=function(path){
                         var personId = data.personId;
                         dispatch(getReCode(reCode,loginName,personId));
                         //const path = "/main";
-                        hashHistory.push(path);
+                        browserHistory.push(path);
                     }
                 }.bind(this),
                 function(xhr, status, err) {
