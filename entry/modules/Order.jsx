@@ -242,7 +242,7 @@ var Order = React.createClass({
                             alert(ob.data);
 
                             const path = "/personInfo";
-                            hashHistory.push(path);
+                            browserHistory.push(path);
                             ref.sendMessage(coachPhone,"羽毛球热——注册会员'"+loginName+"'报名了您所开设的暑期课程'"+className+"'，请及时电话联系进行确认！联系电话：+"+myPhone);//给教练发消息
                             ref.sendMessage(myPhone,"羽毛球热——感谢您报名我们的暑期课程，具体缴费，福利详情请与您的课程教练："+coachName+" "+coachPhone+"联系确认");//给自己发消息
 
