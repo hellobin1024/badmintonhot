@@ -102,20 +102,20 @@ var ContainSpace = React.createClass({
                                 <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223'}}>{item.competitionName}</h2>
                                 </div>
                                 <div className="constainValue">
-                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>介绍：</span>{item.breif}<span
-                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
+                                <p><span style={{fontSize:'16px',color:'#f5f5f5'}}>介绍：</span>{item.breif}<span
+                                    style={{fontSize:'16px',color:'#f5f5f5',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
                                 </p>
 
-                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>场地：</span> {item.unitName} <span
-                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>类型：</span> {item.competitionType2}
+                                <p><span style={{fontSize:'16px',color:'#f5f5f5'}}>场地：</span> {item.unitName} <span
+                                    style={{fontSize:'16px',color:'#f5f5f5',marginLeft:'5px'}}>类型：</span> {item.competitionType2}
                                 </p>
 
                                 <p><span
-                                    style={{fontSize:'16px',color:'#8ecd4f'}}>时间：</span> {item.startTime}到{item.endTime}
+                                    style={{fontSize:'16px',color:'#f5f5f5'}}>时间：</span> {item.startTime}到{item.endTime}
                                 </p>
                                 </div>
                                 <div className="buy-me">
-                                <Link style={{fontSize:'17px',color:'#d91c62'}}
+                                <Link style={{fontSize:'17px',color:'#f5f5f5'}}
                                       to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId}>报名</Link>
                                 </div>
                             </div>
