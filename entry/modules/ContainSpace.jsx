@@ -99,7 +99,7 @@ var ContainSpace = React.createClass({
                         <div key={i}>
                             <div>
                                 <div className="conStainbusiness">
-                                <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223'}}>{item.competitionName}</h2>
+                                <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223',textAlign:'center'}}>{item.competitionName}</h2>
                                 </div>
                                 <div className="constainValue">
                                 <p><span style={{fontSize:'16px',color:'#f5f5f5'}}>介绍：</span>{item.breif}<span
