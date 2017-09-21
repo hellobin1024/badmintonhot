@@ -46,6 +46,13 @@ var ContainSpace = React.createClass({
             );
 
     },
+    closeModel:function () {
+
+        var successModal = this.refs['successModal'];
+        $(successModal).modal('hide');
+
+
+    },
     getAllCompetieion:function () {
 
         if(this.state.token!==null&&this.state.token!==undefined) {
@@ -90,6 +97,7 @@ var ContainSpace = React.createClass({
         var a=1;
         var trs = [];
         var prs=[];
+        var ref=this;
         if((this.state.data!==null&&this.state.data!==undefined)) {
 
             if(this.state.data!==null&&this.state.data!==undefined) {
@@ -115,7 +123,7 @@ var ContainSpace = React.createClass({
                                 </p>
                                 </div>
                                 <div className="buy-me">
-                                <Link style={{fontSize:'17px',color:'#f5f5f5'}}
+                                <Link style={{fontSize:'17px',color:'#f5f5f5'}} onClick={ref.closeModel.bind(null)}
                                       to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId}>报名</Link>
                                 </div>
                             </div>
