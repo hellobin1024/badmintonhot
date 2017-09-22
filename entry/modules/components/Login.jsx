@@ -510,8 +510,7 @@ var Login=React.createClass({
                                             <table id="tableVerify" className="form-item">
                                                 <tbody>
                                                 <tr >
-                                                    <td>验证码: </td>
-                                                    <td><input type="text" name="verify" id="verify" className="passport-txt xl w-full" /></td>
+                                                    <td><input type="text" name="verify" id="verify" style={{width:'250px'}} className="passport-txt xl w-full" placeholder="请输入验证码" /></td>
                                                     <td><img style={{paddingLeft:'10px'}} id="validateImage" src="badmintonhot/validatecode.jpg" /></td>
                                                     <td><img style={{paddingLeft:'5px'}} onClick={this.repaintImage} src={window.App.getResourceDeployPrefix()+"/images/refresh1.png"} ></img></td>
                                                     <td><span id="verifyMsg" className="errorMessage"></span></td>
