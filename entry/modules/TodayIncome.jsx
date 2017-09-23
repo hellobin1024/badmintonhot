@@ -7,7 +7,7 @@ import { render} from 'react-dom';
 import '../../build/css/style.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var MyIncome = React.createClass({
+var TodayIncome = React.createClass({
 
     initialData:function(){
         var url="/func/notices/getNoticesInfo";
@@ -118,6 +118,6 @@ var MyIncome = React.createClass({
     },
 });
 
-module.exports=MyIncome;
+module.exports=TodayIncome;
 
 

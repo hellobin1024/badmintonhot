@@ -11,6 +11,7 @@ import AccountBind from '../modules/AccountBind.jsx';
 import MyGroup from '../modules/MyGroup.jsx';
 import MyEvents from '../modules/MyEvents.jsx';
 import MyCompetition from '../modules/MyCompetition.jsx';
+import MyHistoryCompetition from '../modules/MyHistoryCompetition.jsx';
 import MyClass from '../modules/MyClass';
 import CreateGroup from '../modules/CreateGroup.jsx';
 import CreateEvent from '../modules/CreateEvent.jsx';
@@ -19,7 +20,8 @@ import showCompetitionGames from '../modules/showCompetitionGames.jsx';
 import DemandClass from '../modules/demandClass.jsx';
 import HistoryEvents from '../modules/HistoryEvents.jsx';
 import MyNotices from '../modules/MyNotices.jsx';
-import MyNIncome from '../modules/MyIncome.jsx';
+import TodayIncome from '../modules/TodayIncome.jsx';
+import HistoryIncome from '../modules/HistoryIncome.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
@@ -103,6 +105,11 @@ var PersonInfo = React.createClass({
                     <MyCompetition personId={personId}/>
                 );
                 break;
+            case 'myHistoryCompetition':
+                mainContent =(
+                    <MyHistoryCompetition personId={personId}/>
+                );
+                break;
             case 'historyEvents':
                 mainContent =(
                     <HistoryEvents personId={personId} />
@@ -113,9 +120,13 @@ var PersonInfo = React.createClass({
                     <MyNotices personId={personId} />
                 );
                 break;
-            case 'myIncome':
+            case 'todayIncome':
                 mainContent =(
-                    <MyIncome personId={personId} />
+                    <TodayIncome personId={personId} />
+                );
+            case 'historyIncome':
+                mainContent =(
+                    <HistoryIncome personId={personId} />
                 );
                 break;
 
@@ -130,9 +141,12 @@ var PersonInfo = React.createClass({
                 <div id="pjax-container" className="person-container clearfix">
                     <div id="aside" className="l" style={{height:'800px',border: '1px solid #1C6'}}>
                         <dl className="st-dl">
-                            <dt><i className="icon-user-md"></i>收益</dt>
+                            <dt><i className="icon-user-md"></i>我的收益</dt>
                             <dd className="my-group">
-                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myIncome')}>我的收益</a></div>
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'todayIncome')}>今日收益</a></div>
+                            </dd>
+                            <dd className="my-group">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'historyIncome')}>历史记录</a></div>
                             </dd>
                             <dt><i className="icon-calendar" ></i>通知消息</dt>
                             <dd className="my-group">
@@ -168,6 +182,9 @@ var PersonInfo = React.createClass({
                             <dt><i className="icon-calendar"></i>赛事</dt>
                             <dd className="my-activity">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myCompetition')}>我的比赛</a></div>
+                            </dd>
+                            <dd className="my-activity">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myHistoryCompetition')}>历史记录</a></div>
                             </dd>
 
                             <dt><i className="icon-cog"></i>账号设置</dt>
