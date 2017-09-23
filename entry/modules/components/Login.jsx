@@ -546,8 +546,8 @@ var Login=React.createClass({
                         </div>
 
                         <div className="aside">
-                            <div className="passport-goto">没有账号?
-                                <a tabIndex="6" className="direct" onClick={this.viewSwitch.bind(this,'register')}>新用户注册</a>
+                            <div className="passport-goto">
+                                <a tabIndex="6" className="direct" style={{marginLeft:'30px'}} onClick={this.viewSwitch.bind(this,'register')}>新用户注册</a>
                             </div>
                             <div className="sendgift"></div>
                             <div className="passport-third">

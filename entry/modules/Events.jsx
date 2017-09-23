@@ -233,14 +233,14 @@ var Event = React.createClass({
                         trs.push(
                             <div className="basic_first" key={"event" + i}>
 
-                                <div className="business">
+                                <div className="business" onClick={ref.showEventsDetail.bind(null, item)}  >
                                     <h2>{item.eventName}</h2>
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
-                                <div className="value">
+                                <div className="value"  onClick={ref.showEventsDetail.bind(null, item)}  >
                                     <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
-                                <ul>
+                                <ul onClick={ref.showEventsDetail.bind(null, item)}  >
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
@@ -248,29 +248,52 @@ var Event = React.createClass({
 
                                 </ul>
                                 <div className="buy-me">
-                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
+                                    {/*   <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>*/}
+
+                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                                        <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                                    }
+                                    {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                                        <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
+                                    }
+                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                                        <a >您已报名</a>:null
+                                    }
+
+
                                 </div>
+
+
+
                             </div>
                         )
                     }
                     else {
                         trs.push(
                             <div className="basic" key={"event" + i}>
-                                <div className="business">
+                                <div className="business" onClick={ref.showEventsDetail.bind(null, item)} >
                                     <h2>{item.eventName}</h2>
                                     <p><span>地点：</span>{item.eventPlaceName}</p>
                                 </div>
-                                <div className="value">
+                                <div className="value" onClick={ref.showEventsDetail.bind(null, item)} >
                                     <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
-                                <ul>
+                                <ul onClick={ref.showEventsDetail.bind(null, item)} >
                                     <li><span>时间：</span> {item.startTimeStr}</li>
                                     <li><span>已报名：</span> {item.eventNowMemNum}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
+                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                                        <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                                    }
+                                    {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                                        <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
+                                    }
+                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                                        <a >您已报名</a>:null
+                                    }
                                 </div>
                             </div>
                         )
