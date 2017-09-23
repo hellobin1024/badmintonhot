@@ -4,15 +4,10 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
-import '../../css/entry/modules/myCompetition.css';
+import '../../build/css/style.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
 var MyNotices = React.createClass({
-
-    // tabChange:function(tab,Id){
-    //     this.setState({current:tab});
-    //     this.setState({noticeId:Id});
-    // },
 
     initialData:function(){
         var url="/func/notices/getNoticesInfo";
@@ -86,15 +81,16 @@ var MyNotices = React.createClass({
             if(this.state.modal!==null&&this.state.modal!==undefined){
             var array = this.state.modal;
             mrs.push(
-                <div style={{textAlign: 'center'}} key='modal'>
-                    <div className="business">
-                        <h2 id="eventTitle"> 标题：{array.title} </h2>
-                        <h2 id="eventPlace"><span> 时间：</span>{array.createTime}</h2>
+                <div >
+                    <div className="notice" style={{textAlign: 'center'}} key='modal'>
+                        <h2> 标题：{array.title} </h2>
+                        <h2><span> 时间：</span>{array.createTime}</h2>
                     </div>
-                    <div className="value">
-                        <p id="eventCreater"><span>内容：</span>{array.contents}</p>
+                    <div className="noticecontent">
+                        <p><span>消息内容：</span>{array.contents}</p>
                     </div>
                 </div>
+
             )
         }
 

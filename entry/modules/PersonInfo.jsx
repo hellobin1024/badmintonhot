@@ -19,6 +19,7 @@ import showCompetitionGames from '../modules/showCompetitionGames.jsx';
 import DemandClass from '../modules/demandClass.jsx';
 import HistoryEvents from '../modules/HistoryEvents.jsx';
 import MyNotices from '../modules/MyNotices.jsx';
+import MyNIncome from '../modules/MyIncome.jsx';
 import { connect } from 'react-redux';
 import '../../css/entry/modules/personCenter.css';
 var ProxyQ = require('../../components/proxy/ProxyQ')
@@ -112,9 +113,16 @@ var PersonInfo = React.createClass({
                     <MyNotices personId={personId} />
                 );
                 break;
+            case 'myIncome':
+                mainContent =(
+                    <MyIncome personId={personId} />
+                );
+                break;
+
 
         }
 
+       if(personId==4||personId==3)
         return(
             <div>
                 <Header path={path}/>
@@ -122,6 +130,10 @@ var PersonInfo = React.createClass({
                 <div id="pjax-container" className="person-container clearfix">
                     <div id="aside" className="l" style={{height:'800px',border: '1px solid #1C6'}}>
                         <dl className="st-dl">
+                            <dt><i className="icon-user-md"></i>收益</dt>
+                            <dd className="my-group">
+                                <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myIncome')}>我的收益</a></div>
+                            </dd>
                             <dt><i className="icon-calendar" ></i>通知消息</dt>
                             <dd className="my-group">
                                 <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myNotices')}>我的消息</a></div>
@@ -182,6 +194,74 @@ var PersonInfo = React.createClass({
             </div>
 
         );
+        else
+           return(
+               <div>
+                   <Header path={path}/>
+
+                   <div id="pjax-container" className="person-container clearfix">
+                       <div id="aside" className="l" style={{height:'800px',border: '1px solid #1C6'}}>
+                           <dl className="st-dl">
+                               <dt><i className="icon-calendar" ></i>通知消息</dt>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myNotices')}>我的消息</a></div>
+                               </dd>
+                               <dt><i className="icon-user-md"></i>群圈</dt>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyGroup')}>管理群圈</a></div>
+                               </dd>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createGroup')}>创建群圈</a></div>
+                               </dd>
+                               <dt><i className="icon-calendar"></i>活动</dt>
+                               <dd className="my-activity">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyEvents')}>管理活动</a></div>
+                               </dd>
+                               <dd className="my-activity">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createEvent')}>创建活动</a></div>
+                               </dd>
+                               <dd className="my-activity">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'historyEvents')}>历史记录</a></div>
+                               </dd>
+                               <dt><i className="icon-user-md"></i>课程</dt>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'manageMyClass')}>我的课程</a></div>
+                               </dd>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'createClass')}>课程定制</a></div>
+                               </dd>
+                               <dd className="my-group">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'demandClass')}>我的定制</a></div>
+                               </dd>
+                               <dt><i className="icon-calendar"></i>赛事</dt>
+                               <dd className="my-activity">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'myCompetition')}>我的比赛</a></div>
+                               </dd>
+
+                               <dt><i className="icon-cog"></i>账号设置</dt>
+                               <dd className="base-info">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'baseInfo')}>个人资料</a></div>
+                               </dd>
+                               <dd className="count-bind">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'accountBind')}>账号绑定</a></div>
+                               </dd>
+                               <dd className="modify-pwd">
+                                   <div><a data-pjax="true" onClick={this.tabChange.bind(this,'modifyPwd')}>修改密码</a></div>
+                               </dd>
+                           </dl>
+                       </div>
+
+
+                       <div id="content" className="r" data-tag="wallet-balance" data-title="" style={{height: '800px'}}>
+                           <div  id="balance">
+                               {mainContent}
+
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           );
     },
 });
 
