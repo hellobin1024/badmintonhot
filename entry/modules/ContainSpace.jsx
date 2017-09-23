@@ -46,6 +46,13 @@ var ContainSpace = React.createClass({
             );
 
     },
+    closeModel:function () {
+
+        var successModal = this.refs['successModal'];
+        $(successModal).modal('hide');
+
+
+    },
     getAllCompetieion:function () {
 
         if(this.state.token!==null&&this.state.token!==undefined) {
@@ -90,6 +97,7 @@ var ContainSpace = React.createClass({
         var a=1;
         var trs = [];
         var prs=[];
+        var ref=this;
         if((this.state.data!==null&&this.state.data!==undefined)) {
 
             if(this.state.data!==null&&this.state.data!==undefined) {
@@ -99,23 +107,23 @@ var ContainSpace = React.createClass({
                         <div key={i}>
                             <div>
                                 <div className="conStainbusiness">
-                                <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223'}}>{item.competitionName}</h2>
+                                <h2 style={{marginTop:'5px',fontSize:'16px',color:'#252223',textAlign:'center'}}>{item.competitionName}</h2>
                                 </div>
                                 <div className="constainValue">
-                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>介绍：</span>{item.breif}<span
-                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
+                                <p><span style={{fontSize:'16px',color:'#f5f5f5'}}>介绍：</span>{item.breif}<span
+                                    style={{fontSize:'16px',color:'#f5f5f5',marginLeft:'5px'}}>主办人：</span>{item.hostUnit}
                                 </p>
 
-                                <p><span style={{fontSize:'16px',color:'#8ecd4f'}}>场地：</span> {item.unitName} <span
-                                    style={{fontSize:'16px',color:'#8ecd4f',marginLeft:'5px'}}>类型：</span> {item.competitionType2}
+                                <p><span style={{fontSize:'16px',color:'#f5f5f5'}}>场地：</span> {item.unitName} <span
+                                    style={{fontSize:'16px',color:'#f5f5f5',marginLeft:'5px'}}>类型：</span> {item.competitionType2}
                                 </p>
 
                                 <p><span
-                                    style={{fontSize:'16px',color:'#8ecd4f'}}>时间：</span> {item.startTime}到{item.endTime}
+                                    style={{fontSize:'16px',color:'#f5f5f5'}}>时间：</span> {item.startTime}到{item.endTime}
                                 </p>
                                 </div>
                                 <div className="buy-me">
-                                <Link style={{fontSize:'17px',color:'#d91c62'}}
+                                <Link style={{fontSize:'17px',color:'#f5f5f5'}} onClick={ref.closeModel.bind(null)}
                                       to={window.App.getAppRoute() + "/ShowProject?competitionId="+item.competitionId}>报名</Link>
                                 </div>
                             </div>

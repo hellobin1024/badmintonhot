@@ -2259,7 +2259,7 @@ span.menu {
 .business {
     background:#344859;
     padding:1.5em 0em;
-    height: 116px;
+    height: 123px;
 }
 .business h2{
     font-size:22px;
@@ -2293,13 +2293,13 @@ span.menu {
 }
 
 .conStainbusiness {
-    background:#08d822;
+    background:#ddd;
     padding:1.5em 0em;
     height: 46px;
 }
 .conStainbusiness h2{
     font-size:16px;
-    color:#08d822;
+    color:#ddd;
     margin:0;
     font-family: 'Nunito', sans-serif;
 }
@@ -2312,7 +2312,7 @@ span.menu {
 
 .constainValue{
     padding:0.5em 0;
-    background:#0b7409;
+    background:#344859;
 }
 .constainValue p{
     color:#fff;

@@ -231,7 +231,7 @@ var CreateEvent = React.createClass({
                 eventPlaceId:eventPlaceId,
                 eventMaxMemNum:eventMaxMemNum2,
                 coachId:classTrainer,
-                SparringId:classSparring,
+                sparringId:classSparring,
                 groupId:eventGroup,
                 eventType:eventType,
                 startTime:startTime,
