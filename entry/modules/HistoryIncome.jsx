@@ -58,7 +58,7 @@ var HistoryIncome = React.createClass({
                     <tr>
                         <td style={{marginTop:'15px'}}>
                             消息{i+1}&ensp; :&ensp;
-                            <a data-pjax="true" onClick={ins.showNotice.bind(null, item)}>{item.title}</a>
+                            <a data-pjax="true" onClick={ins.showNotice.bind(null,item)}>{item.title}</a>
                         </td>
                         <td>时间&ensp; :&ensp;{item.createTime}</td>
                         <td> </td>

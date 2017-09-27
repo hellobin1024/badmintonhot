@@ -124,6 +124,7 @@ var PersonInfo = React.createClass({
                 mainContent =(
                     <TodayIncome personId={personId} />
                 );
+                break;
             case 'historyIncome':
                 mainContent =(
                     <HistoryIncome personId={personId} />

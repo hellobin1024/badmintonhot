@@ -171,46 +171,43 @@ var ShowProject = React.createClass({
     },
     doSerachGroupMember: function () {
         var name = document.getElementById("GroupMember").value;
-        if(name==this.props.loginName){
-            alert("不可以搜索自己");
-        }else {
-            var createGroup = this.refs['createGroup'];
-            var username = $(createGroup).find("input[name='GroupMember']").val();
-            var reg = new RegExp("^[0-9]*$");
-            if (username == "") {
+        var createGroup = this.refs['createGroup'];
+        var username = $(createGroup).find("input[name='GroupMember']").val();
+        var reg = new RegExp("^[0-9]*$");
+        if (username == "") {
                 Tips.showTips('请填写您要搜索的队友~');
             } else {
 
-                var url = "/func/allow/SerachGroupMemberDetail";
-                var params = {
+            var url = "/func/allow/SerachGroupMemberDetail";
+            var params = {
                     username: username
                 };
-                Proxy.query(
-                    'post',
-                    url,
-                    params,
-                    null,
-                    function (ob) {
-                        var reCode = ob.re;
-                        if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) { //操作失败
-                            return;
-                        }
-                        var member=ob.data;
-                        this.setState({member:member});
-                        var name=this.state.member;
-                        if(name!=="") {
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+                function (ob) {
+                    var reCode = ob.re;
+                    if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) { //操作失败
+                        return;
+                    }
+                    var member=ob.data;
+                    this.setState({member:member});
+                    var name=this.state.member;
+                    if(name!=="") {
                         this.setState({addPerson: member});
-                        }else
-                        {
+                    }else
+                    {
 
-                        }
+                    }
                     }.bind(this),
                     function (xhr, status, err) {
                         console.error(this.props.url, status, err.toString());
                     }.bind(this)
                 );
             }
-        }
+
     },
     doAddSignupPerson: function (projectId,type) {
         var doubleModal = this.refs['doubleModal'];

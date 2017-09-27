@@ -6,13 +6,14 @@ var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
 import '../../build/css/style.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
-
+var SyncStore = require('../../components/flux/stores/SyncStore');
+var UserActions=require('../action/UserActions');
 var TodayIncome = React.createClass({
 
     initialData:function(){
-        var url="/func/notices/getNoticesInfo";
+        var url="/func/pay/getPayFormListOfToday";
         var params={
-            personId:this.state.personId
+
         };
 
         ProxyQ.query(
@@ -25,94 +26,142 @@ var TodayIncome = React.createClass({
                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     return;
                 }
-                var data=ob.data;
-                this.setState({data:data});
+                var a=ob.data;
+                var sum1=0;
+                var sum2=0;
+                var pa=[];
+                var pb=[];
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].useType == "1") {
+                       sum1=sum1+a[i].payment;
+                        pa.push(a[i]);
+                    }
+                    else{
+
+                        sum2=sum2+a[i].payment;
+                        pb.push(a[i]);
+                    }
+                }
+                var p={};
+                p.sum1=sum1;
+                p.sum2=sum2;
+                p.pa=pa;
+                p.pb=pb;
+                this.setState({data:p});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         );
     },
-
-
+    viewSwitch:function(ob){
+        var view=ob;
+        this.setState({view:view});
+    },
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null});
+        return ({view:'all',personId: personId, data:null});
     },
 
     render:function(){
         var mainContent = null;
         var data = this.state.data;
-
-        var mrs = [];
-        var  incomeTable = [];
+        var view =this.state.view;
         var ins = this;
         if(data!==undefined && data!==null){
+            var nrs = [];
+            var trs = [];
 
-            data.map(function(item, i){
-                incomeTable.push(
-                    <tbody  key={i} className="competition-table">
-                    <tr>
-                        <td style={{marginTop:'15px'}}>
-                            消息{i+1}&ensp; :&ensp;
-                            <a data-pjax="true" onClick={ins.showNotice.bind(null, item)}>{item.title}</a>
-                        </td>
-                        <td>时间&ensp; :&ensp;{item.createTime}</td>
-                        <td> </td>
-                    </tr>
-                    </tbody>
-                );
-            });
+            switch(view) {
+                case 'all':
 
-            if(this.state.modal!==null&&this.state.modal!==undefined){
-                var array = this.state.modal;
-                mrs.push(
-                    <div >
-                        <div className="notice" style={{textAlign: 'center'}} key='modal'>
-                            <h2> 标题：{array.title} </h2>
-                            <h2><span> 时间：</span>{array.createTime}</h2>
+                    mainContent = (
+                        <div>
+                            <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(null,'shopDetail')}>详细：</span>
+                        <div ref="createEvent" className="c-block">
+                            <div className="common-line">
+                                <span className="common-label l-label">群活动今日总收益：{data.sum1}元</span><span>
+                        </span>
+
+                                <span className="common-label r-label">购物的今日总收益：{data.sum2}元</span>
+                        <span>
+                        </span>
+                            </div>
                         </div>
-                        <div className="noticecontent">
-                            <p><span>消息内容：</span>{array.contents}</p>
-                        </div>
-                    </div>
+                        </div>)
+                    break;
+                case 'shopDetail':
+                    if (data.pa !== null && data.pa !== undefined) {
 
-                )
+                        data.pa.map(function (item, i) {
+                            trs.push(
+                               <div>
+                                   <span style={{fontSize:'14px',marginRight:'5px'}}>金额：{item.payment}</span>
+                                   {
+                                       item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>微信</span>:
+                                           <span style={{fontSize:'14px',marginRight:'5px'}}>手机端</span>
+
+                                   }
+                                   <span style={{fontSize:'14px',marginRight:'5px'}}>时间：{item.payTimeStr}</span>
+                               </div>
+                            )
+                        })
+
+                    }
+                    mainContent = (
+                  <div>
+                      <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(this,'all')}>汇总：</span>
+                      <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(this,'groupDetail')}>群活动：</span>
+                        <div ref="createEvent" className="c-block">
+                            <div className="common-line">
+                                <span className="common-label l-label">购物：{trs}</span>
+                            </div>
+                        </div>
+                  </div>)
+                    break;
+                case 'groupDetail':
+                    if (data.pb !== null && data.pb !== undefined) {
+
+                        data.pb.map(function (item, i) {
+                            nrs.push(
+                                <div>
+                                    <span style={{fontSize:'14px',marginRight:'5px'}}>金额：{item.payment}</span>
+                                    {
+                                        item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>微信</span>:
+                                            <span style={{fontSize:'14px',marginRight:'5px'}}>手机端</span>
+
+                                    }
+
+
+                                    <span style={{fontSize:'14px',marginRight:'5px'}}>时间：{item.payTimeStr}</span>
+
+                                </div>
+                            )
+                        })
+
+                    }
+
+                    mainContent = (
+                        <div>
+                            <span className="common-label l-label" onClick={ins.viewSwitch.bind(this,'all')}>汇总：</span>
+                            <span className="common-label l-label" onClick={ins.viewSwitch.bind(this,'shopDetail')}>花销：</span>
+                            <div ref="createEvent" className="c-block">
+                                <div className="common-line">
+                                    <span className="common-label l-label">群活动：{nrs}</span>
+                                </div>
+                            </div>
+                        </div>)
+                    break;
+
             }
-
-            mainContent=(
-                <div id="competition" className="my-competition">
-                    <div className="widget-container fluid-height">
-                        <div className="widget-content padded clearfix">
-                            <table className="table table-striped invoice-table">
-                                <thead className="table-head">
-                                <tr>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                </tr>
-                                </thead>
-
-                                {incomeTable}
-
-                            </table>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            )
-
-
-
         }else{
 
             this.initialData();
         }
+
 
         return mainContent;
     },
