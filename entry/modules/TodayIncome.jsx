@@ -31,14 +31,18 @@ var TodayIncome = React.createClass({
                 var sum2=0;
                 var pa=[];
                 var pb=[];
+                var k=1;
+                var c=1;
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].useType == "1") {
                        sum1=sum1+a[i].payment;
+                        a[i].num=k++;
                         pa.push(a[i]);
                     }
                     else{
 
                         sum2=sum2+a[i].payment;
+                        a[i].num=c++;
                         pb.push(a[i]);
                     }
                 }
@@ -54,10 +58,6 @@ var TodayIncome = React.createClass({
             }.bind(this)
         );
     },
-    viewSwitch:function(ob){
-        var view=ob;
-        this.setState({view:view});
-    },
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
@@ -72,92 +72,134 @@ var TodayIncome = React.createClass({
         var view =this.state.view;
         var ins = this;
         if(data!==undefined && data!==null){
-            var nrs = [];
+            var ars = [];
+            var brs = [];
+            var crs = [];
             var trs = [];
-
-            switch(view) {
-                case 'all':
-
-                    mainContent = (
-                        <div>
-                            <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(null,'shopDetail')}>详细：</span>
-                        <div ref="createEvent" className="c-block">
-                            <div className="common-line">
-                                <span className="common-label l-label">群活动今日总收益：{data.sum1}元</span><span>
-                        </span>
-
-                                <span className="common-label r-label">购物的今日总收益：{data.sum2}元</span>
-                        <span>
-                        </span>
-                            </div>
-                        </div>
-                        </div>)
-                    break;
-                case 'shopDetail':
-                    if (data.pa !== null && data.pa !== undefined) {
+            var nrs = [];
+            if (data.pa !== null && data.pa !== undefined) {
 
                         data.pa.map(function (item, i) {
                             trs.push(
-                               <div>
-                                   <span style={{fontSize:'14px',marginRight:'5px'}}>金额：{item.payment}</span>
-                                   {
-                                       item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>微信</span>:
-                                           <span style={{fontSize:'14px',marginRight:'5px'}}>手机端</span>
+                         <tbody  key={i} className="event-table">
 
-                                   }
-                                   <span style={{fontSize:'14px',marginRight:'5px'}}>时间：{item.payTimeStr}</span>
-                               </div>
+                                <tr><td><h4 style={{marginTop:'15px'}}><strong>购物收益{item.num}:</strong></h4></td></tr>
+                                <tr>
+                                    <td>金额：{item.payment}元</td>
+                                    <td>{
+                                        item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：微信</span>:
+                                            <span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：手机端</span>
+
+                                    }</td>
+                                    <td>时间：{item.payTimeStr}</td>
+                                </tr>
+                             </tbody>
                             )
                         })
 
                     }
-                    mainContent = (
-                  <div>
-                      <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(this,'all')}>汇总：</span>
-                      <span className="common-label l-label" style={{cursor:'pointer'}} onClick={ins.viewSwitch.bind(this,'groupDetail')}>群活动：</span>
-                        <div ref="createEvent" className="c-block">
-                            <div className="common-line">
-                                <span className="common-label l-label">购物：{trs}</span>
+                  brs.push(
+                   <div>
+                       <div id="event" className="my-event">
+                           <div className="widget-container fluid-height">
+                               <div className="widget-content padded clearfix">
+                                   <table className="table table-striped invoice-table">
+                                               <thead className="table-head">
+                                               <tr>
+                                                   <th width="300"></th>
+                                                   <th width="300"></th>
+                                                   <th width="300"></th>
+                                               </tr>
+                                               </thead>
+
+                                               {trs}
+
+                                   </table>
+                               </div>
+                           </div>
+                       </div>
+                       <div>
+                         <span style={{color:'#000000',fontSize:'16px'}}>群活动今日总收益：{data.sum1}元</span>
+                       </div>
+                    </div>
+                  )
+            if (data.pb !== null && data.pb !== undefined) {
+                 data.pb.map(function (item, i) {
+                     nrs.push(
+                     <tbody  key={i} className="event-table">
+
+                            <tr><td><h4 style={{marginTop:'15px'}}><strong>群活动收益{item.num}:</strong></h4></td></tr>
+                            <tr>
+                            <td>金额：{item.payment}元</td>
+                            <td>{
+                                item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：微信</span>:
+                                <span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：手机端</span>
+
+                            }
+                            </td>
+                            <td>时间：{item.payTimeStr}</td>
+                            </tr>
+
+                        </tbody>
+                            )
+                        })
+
+                    }
+
+             crs.push(
+                 <div>
+                     <div id="event" className="my-event">
+                         <div className="widget-container fluid-height">
+                             <div className="widget-content padded clearfix">
+                                 <table className="table table-striped invoice-table">
+                                     <thead className="table-head">
+                                     <tr>
+                                         <th width="300"></th>
+                                         <th width="300"></th>
+                                         <th width="300"></th>
+                                     </tr>
+                                     </thead>
+
+                                     {nrs}
+
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
+                     <div>
+                         <span style={{color:'#000000',fontSize:'16px'}}>购物的今日总收益：{data.sum2}元</span>
+                     </div>
+                 </div>
+              )
+               mainContent=
+                <div>
+
+                    <div className="col-md-8 news_content">
+                        <ul id="myTab" className="nav nav-tabs">
+                            <li className="active" id="events" >
+                                <a href="#home"  data-toggle="tab" style={{textAlign:'center',fontSize:'15px',color: '#337ab7',backgroundColor: 'white'}}>
+                                    购物
+                                </a>
+                            </li>
+                            <li id="groups">
+                                <a href="#ios"  data-toggle="tab"  style={{textAlign:'center',fontSize:'15px',color:'#337ab7',backgroundColor: 'white'}}>
+                                    群活动
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" className="tab-content">
+                            <div className="tab-pane fade in active" id="home">
+                                {brs}
+                            </div>
+                            <div className="tab-pane fade" id="ios">
+                                {crs}
                             </div>
                         </div>
-                  </div>)
-                    break;
-                case 'groupDetail':
-                    if (data.pb !== null && data.pb !== undefined) {
+                    </div>
+               </div>
 
-                        data.pb.map(function (item, i) {
-                            nrs.push(
-                                <div>
-                                    <span style={{fontSize:'14px',marginRight:'5px'}}>金额：{item.payment}</span>
-                                    {
-                                        item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>微信</span>:
-                                            <span style={{fontSize:'14px',marginRight:'5px'}}>手机端</span>
-
-                                    }
-
-
-                                    <span style={{fontSize:'14px',marginRight:'5px'}}>时间：{item.payTimeStr}</span>
-
-                                </div>
-                            )
-                        })
-
-                    }
-
-                    mainContent = (
-                        <div>
-                            <span className="common-label l-label" onClick={ins.viewSwitch.bind(this,'all')}>汇总：</span>
-                            <span className="common-label l-label" onClick={ins.viewSwitch.bind(this,'shopDetail')}>花销：</span>
-                            <div ref="createEvent" className="c-block">
-                                <div className="common-line">
-                                    <span className="common-label l-label">群活动：{nrs}</span>
-                                </div>
-                            </div>
-                        </div>)
-                    break;
-
-            }
-        }else{
+        }
+        else{
 
             this.initialData();
         }
