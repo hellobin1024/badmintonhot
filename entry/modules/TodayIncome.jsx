@@ -119,7 +119,7 @@ var TodayIncome = React.createClass({
                            </div>
                        </div>
                        <div>
-                         <span style={{color:'#000000',fontSize:'16px'}}>群活动今日总收益：{data.sum1}元</span>
+                         <span style={{color:'#000000',fontSize:'16px'}}>购物今日总收益：{data.sum1}元</span>
                        </div>
                     </div>
                   )
@@ -167,7 +167,7 @@ var TodayIncome = React.createClass({
                          </div>
                      </div>
                      <div>
-                         <span style={{color:'#000000',fontSize:'16px'}}>购物的今日总收益：{data.sum2}元</span>
+                         <span style={{color:'#000000',fontSize:'16px'}}>群活动今日总收益：{data.sum2}元</span>
                      </div>
                  </div>
               )
