@@ -60,6 +60,21 @@ var TodayIncome = React.createClass({
             }.bind(this)
         );
     },
+
+    doSerachHistoryIncome: function () {
+        var date = document.getElementById("Date").value;
+        var url = "/func/allow/SerachHistoryIncomeByDate";
+        var params={
+            date:date
+        };
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+            )
+    },
+
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
@@ -175,7 +190,7 @@ var TodayIncome = React.createClass({
             )
             mainContent=
                 <div>
-
+                    <br> </br>
                     <div>
                         <ul id="myTab" className="nav nav-tabs">
                             <li className="active" id="events" >
@@ -191,9 +206,18 @@ var TodayIncome = React.createClass({
                         </ul>
                         <div id="myTabContent" className="tab-content">
                             <div className="tab-pane fade in active" id="home">
+                                <br> </br>
+                                <input style={{fontSize:'14px',width:'200px',height:'35px',marginLeft:'20px'}}
+                                       type="date" id="Date" name="Date" > </input>
+                                <button
+                                    style={{fontSize:'14px',color:'#11a669',width:'50px',height:'35px',marginLeft:'20px'}}
+                                    onClick={this.doSerachHistoryIncome} >搜索
+                                </button>
                                 {brs}
                             </div>
                             <div className="tab-pane fade" id="ios">
+                                <br> </br>
+                                <input type="date"> </input>
                                 {crs}
                             </div>
                         </div>
