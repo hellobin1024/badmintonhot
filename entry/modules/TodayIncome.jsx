@@ -173,17 +173,17 @@ var TodayIncome = React.createClass({
               )
                mainContent=
                 <div>
-
+                    <br> </br>
                     <div className="col-md-8 news_content">
                         <ul id="myTab" className="nav nav-tabs">
                             <li className="active" id="events" >
                                 <a href="#home"  data-toggle="tab" style={{textAlign:'center',fontSize:'15px',color: '#337ab7',backgroundColor: 'white'}}>
-                                    购物
+                                    购物收益
                                 </a>
                             </li>
                             <li id="groups">
                                 <a href="#ios"  data-toggle="tab"  style={{textAlign:'center',fontSize:'15px',color:'#337ab7',backgroundColor: 'white'}}>
-                                    群活动
+                                    群活动收益
                                 </a>
                             </li>
                         </ul>
