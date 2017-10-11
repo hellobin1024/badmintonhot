@@ -11,7 +11,9 @@ var UserActions=require('../action/UserActions');
 var TodayIncome = React.createClass({
 
     initialData:function(){
-        var url="/func/pay/getPayFormListOfToday";
+        var url="/func/pay/getPayFormListOfOutDate";
+        const Today=new Date();
+        var preDate = new Date(Today.getTime() - 24*60*60*1000); //前一天
         var params={
 
         };
