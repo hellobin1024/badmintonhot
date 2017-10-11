@@ -61,18 +61,55 @@ var TodayIncome = React.createClass({
         );
     },
 
-    doSerachHistoryIncome: function () {
+    doSerachHistoryIncome: function (useType) {
         var date = document.getElementById("Date").value;
-        var url = "/func/allow/SerachHistoryIncomeByDate";
+        var url = "/func/pay/getPayFormListOfOutDate";
         var params={
-            date:date
+            selectime:date,
+            useType:useType
         };
-            Proxy.query(
-                'post',
-                url,
-                params,
-                null,
-            )
+        ProxyQ.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
+                    return;
+                }
+                var a=ob.data;
+                var sum1=0;
+                var sum2=0;
+                var pa=[];
+                var pb=[];
+                var k=1;
+                var c=1;
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].useType == "1") {
+                        sum1=sum1+a[i].payment;
+                        a[i].num=k++;
+                        pa.push(a[i]);
+                    }
+                    else{
+
+                        sum2=sum2+a[i].payment;
+                        a[i].num=c++;
+                        pb.push(a[i]);
+                    }
+                }
+                var p={};
+                p.sum1=sum1;
+                p.sum2=sum2;
+                p.pa=pa;
+                p.pb=pb;
+                this.setState({data:p});
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+
     },
 
     getInitialState: function () {
@@ -211,13 +248,18 @@ var TodayIncome = React.createClass({
                                        type="date" id="Date" name="Date" > </input>
                                 <button
                                     style={{fontSize:'14px',color:'#11a669',width:'50px',height:'35px',marginLeft:'20px'}}
-                                    onClick={this.doSerachHistoryIncome} >搜索
+                                    onClick={this.doSerachHistoryIncome.bind(ins,"1")} >搜索
                                 </button>
                                 {brs}
                             </div>
                             <div className="tab-pane fade" id="ios">
                                 <br> </br>
-                                <input type="date"> </input>
+                                <input style={{fontSize:'14px',width:'200px',height:'35px',marginLeft:'20px'}}
+                                       type="date" id="Date" name="Date" > </input>
+                                <button
+                                    style={{fontSize:'14px',color:'#11a669',width:'50px',height:'35px',marginLeft:'20px'}}
+                                    onClick={this.doSerachHistoryIncome.bind(ins,"2")} >搜索
+                                </button>
                                 {crs}
                             </div>
                         </div>
