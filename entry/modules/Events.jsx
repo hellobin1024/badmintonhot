@@ -4,7 +4,7 @@ import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import { connect } from 'react-redux';
-
+import Calendar from './components/Calendar.jsx';
 
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');

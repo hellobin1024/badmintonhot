@@ -6,13 +6,14 @@ var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
 import '../../build/css/style.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
-
+var SyncStore = require('../../components/flux/stores/SyncStore');
+var UserActions=require('../action/UserActions');
 var TodayIncome = React.createClass({
 
     initialData:function(){
-        var url="/func/notices/getNoticesInfo";
+        var url="/func/pay/getPayFormListOfToday";
         var params={
-            personId:this.state.personId
+
         };
 
         ProxyQ.query(
@@ -25,94 +26,184 @@ var TodayIncome = React.createClass({
                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
                     return;
                 }
-                var data=ob.data;
-                this.setState({data:data});
+                var a=ob.data;
+                var sum1=0;
+                var sum2=0;
+                var pa=[];
+                var pb=[];
+                var k=1;
+                var c=1;
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].useType == "1") {
+                       sum1=sum1+a[i].payment;
+                        a[i].num=k++;
+                        pa.push(a[i]);
+                    }
+                    else{
+
+                        sum2=sum2+a[i].payment;
+                        a[i].num=c++;
+                        pb.push(a[i]);
+                    }
+                }
+                var p={};
+                p.sum1=sum1;
+                p.sum2=sum2;
+                p.pa=pa;
+                p.pb=pb;
+                this.setState({data:p});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         );
     },
-
-
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null});
+        return ({view:'all',personId: personId, data:null});
     },
 
     render:function(){
         var mainContent = null;
         var data = this.state.data;
-
-        var mrs = [];
-        var  incomeTable = [];
+        var view =this.state.view;
         var ins = this;
         if(data!==undefined && data!==null){
+            var ars = [];
+            var brs = [];
+            var crs = [];
+            var trs = [];
+            var nrs = [];
+            if (data.pa !== null && data.pa !== undefined) {
 
-            data.map(function(item, i){
-                incomeTable.push(
-                    <tbody  key={i} className="competition-table">
-                    <tr>
-                        <td style={{marginTop:'15px'}}>
-                            消息{i+1}&ensp; :&ensp;
-                            <a data-pjax="true" onClick={ins.showNotice.bind(null, item)}>{item.title}</a>
-                        </td>
-                        <td>时间&ensp; :&ensp;{item.createTime}</td>
-                        <td> </td>
-                    </tr>
-                    </tbody>
-                );
-            });
+                        data.pa.map(function (item, i) {
+                            trs.push(
+                         <tbody  key={i} className="event-table">
 
-            if(this.state.modal!==null&&this.state.modal!==undefined){
-                var array = this.state.modal;
-                mrs.push(
-                    <div >
-                        <div className="notice" style={{textAlign: 'center'}} key='modal'>
-                            <h2> 标题：{array.title} </h2>
-                            <h2><span> 时间：</span>{array.createTime}</h2>
-                        </div>
-                        <div className="noticecontent">
-                            <p><span>消息内容：</span>{array.contents}</p>
-                        </div>
-                    </div>
-
-                )
-            }
-
-            mainContent=(
-                <div id="competition" className="my-competition">
-                    <div className="widget-container fluid-height">
-                        <div className="widget-content padded clearfix">
-                            <table className="table table-striped invoice-table">
-                                <thead className="table-head">
+                                <tr><td><h4 style={{marginTop:'15px'}}><strong>购物收益{item.num}:</strong></h4></td></tr>
                                 <tr>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
+                                    <td>金额：{item.payment}元</td>
+                                    <td>{
+                                        item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：微信</span>:
+                                            <span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：手机端</span>
+
+                                    }</td>
+                                    <td>时间：{item.payTimeStr}</td>
                                 </tr>
-                                </thead>
+                             </tbody>
+                            )
+                        })
 
-                                {incomeTable}
+                    }
+                  brs.push(
+                   <div>
+                       <div id="event" className="my-event">
+                           <div className="widget-container fluid-height">
+                               <div className="widget-content padded clearfix">
+                                   <table className="table table-striped invoice-table">
+                                               <thead className="table-head">
+                                               <tr>
+                                                   <th width="300"></th>
+                                                   <th width="300"></th>
+                                                   <th width="300"></th>
+                                               </tr>
+                                               </thead>
 
-                            </table>
+                                               {trs}
+
+                                   </table>
+                               </div>
+                           </div>
+                       </div>
+                       <div>
+                         <span style={{color:'#000000',fontSize:'16px'}}>购物今日总收益：{data.sum1}元</span>
+                       </div>
+                    </div>
+                  )
+            if (data.pb !== null && data.pb !== undefined) {
+                 data.pb.map(function (item, i) {
+                     nrs.push(
+                     <tbody  key={i} className="event-table">
+
+                            <tr><td><h4 style={{marginTop:'15px'}}><strong>群活动收益{item.num}:</strong></h4></td></tr>
+                            <tr>
+                            <td>金额：{item.payment}元</td>
+                            <td>{
+                                item.payType == "1"?<span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：微信</span>:
+                                <span style={{fontSize:'14px',marginRight:'5px'}}>支付手段：手机端</span>
+
+                            }
+                            </td>
+                            <td>时间：{item.payTimeStr}</td>
+                            </tr>
+
+                        </tbody>
+                            )
+                        })
+
+                    }
+
+             crs.push(
+                 <div>
+                     <div id="event" className="my-event">
+                         <div className="widget-container fluid-height">
+                             <div className="widget-content padded clearfix">
+                                 <table className="table table-striped invoice-table">
+                                     <thead className="table-head">
+                                     <tr>
+                                         <th width="300"></th>
+                                         <th width="300"></th>
+                                         <th width="300"></th>
+                                     </tr>
+                                     </thead>
+
+                                     {nrs}
+
+                                 </table>
+                             </div>
+                         </div>
+                     </div>
+                     <div>
+                         <span style={{color:'#000000',fontSize:'16px'}}>群活动今日总收益：{data.sum2}元</span>
+                     </div>
+                 </div>
+              )
+               mainContent=
+                <div>
+                    <br> </br>
+                    <div className="col-md-8 news_content">
+                        <ul id="myTab" className="nav nav-tabs">
+                            <li className="active" id="events" >
+                                <a href="#home"  data-toggle="tab" style={{textAlign:'center',fontSize:'15px',color: '#337ab7',backgroundColor: 'white'}}>
+                                    购物收益
+                                </a>
+                            </li>
+                            <li id="groups">
+                                <a href="#ios"  data-toggle="tab"  style={{textAlign:'center',fontSize:'15px',color:'#337ab7',backgroundColor: 'white'}}>
+                                    群活动收益
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" className="tab-content">
+                            <div className="tab-pane fade in active" id="home">
+                                {brs}
+                            </div>
+                            <div className="tab-pane fade" id="ios">
+                                {crs}
+                            </div>
                         </div>
                     </div>
+               </div>
 
-
-
-                </div>
-            )
-
-
-
-        }else{
+        }
+        else{
 
             this.initialData();
         }
+
 
         return mainContent;
     },

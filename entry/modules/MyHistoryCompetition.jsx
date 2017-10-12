@@ -16,7 +16,7 @@ var MyHistoryCompetition = React.createClass({
     },
 
     initialData:function(){
-        var url="/func/competition/getMyBadmintonCompetitionInfoList";
+        var url="/func/competition/getMyBadmintonHistoryCompetitionInfoList";
         var params={
             personId:this.state.personId
         };

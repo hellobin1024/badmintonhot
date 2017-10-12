@@ -441,7 +441,7 @@ var ContainSpace = React.createClass({
                     <div className="modal-dialog modal-sm"
                          style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%',borderBottom:'1px dotted #5B6873'}}>
                         <div className="modal-content"
-                             style={{position: 'relative', width: '60%', padding: '40px'}}>
+                             style={{position: 'relative', width: '800px', padding: '40px'}}>
 
                             <div className="modal-body">
                                 <div className="modalEventDetail">
