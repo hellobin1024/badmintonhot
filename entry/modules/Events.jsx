@@ -215,6 +215,32 @@ var Event = React.createClass({
         }
        return type;
     },
+    test:function () {
+        var url = "/func/allow/testJp";
+        var ref = this;
+        var param={
+            value:'000',
+            label:'qd'
+        }
+        Proxy.query(
+            'POST',
+            url,
+            param,
+            null,
+            function (res) {
+                var a = res.data;
+                if(res.re==1) {
+                    alert(a);
+                }else{
+                    alert('fail');
+                }
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+    },
     render:function() {
         var contains = null;
 
@@ -423,8 +449,7 @@ var Event = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-
-
+                                        <button onClick={this.test}>test</button>
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
