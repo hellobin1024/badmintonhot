@@ -37,7 +37,7 @@ var TodayIncome = React.createClass({
                 var c=1;
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].useType == "1") {
-                        sum1=sum1+a[i].payment;
+                        sum1=(parseFloat(sum1)+parseFloat(a[i].payment)).toFixed(2);
                         a[i].num=k++;
                         pa.push(a[i]);
                     }
@@ -79,21 +79,21 @@ var TodayIncome = React.createClass({
                     return;
                 }
                 var a=ob.data;
-                var sum1=0;
-                var sum2=0;
+                var sum1;
+                var sum2;
                 var pa=[];
                 var pb=[];
                 var k=1;
                 var c=1;
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].useType == "1") {
-                        sum1=sum1+a[i].payment;
+                        sum1=parseFloat(sum1*1)+parseFloat(a[i].payment*1);
                         a[i].num=k++;
                         pa.push(a[i]);
                     }
                     else{
 
-                        sum2=sum2+a[i].payment;
+                        sum2=sum2+a[i].payment*1;
                         a[i].num=c++;
                         pb.push(a[i]);
                     }
@@ -173,7 +173,7 @@ var TodayIncome = React.createClass({
                         </div>
                     </div>
                     <div>
-                        <span style={{color:'#000000',fontSize:'16px',marginLeft:'20px'}}>群活动今日总收益：{data.sum1}元</span>
+                        <span style={{color:'#000000',fontSize:'16px',marginLeft:'20px'}}>群活动历史总收益：{data.sum1}元</span>
                     </div>
                 </div>
             )
@@ -221,7 +221,7 @@ var TodayIncome = React.createClass({
                         </div>
                     </div>
                     <div>
-                        <span style={{color:'#000000',fontSize:'16px',marginLeft:'20px'}}>购物的今日总收益：{data.sum2}元</span>
+                        <span style={{color:'#000000',fontSize:'16px',marginLeft:'20px'}}>购物的历史总收益：{data.sum2}元</span>
                     </div>
                 </div>
             )
