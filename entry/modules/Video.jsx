@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
+import QnyVideo from '../../components/basic/QnyVideo.jsx'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
 
@@ -128,6 +129,13 @@ var Video = React.createClass({
 
             contains =
                 <div>
+                    <QnyVideo option={{
+                        width:'600px',
+                        height:'400px',
+                        url:'/badmintonhot/video/test.mp4',
+                        type:'mp4',
+                        poster:'/badmintonhot/video/testpic.png'
+                    }}/>
                     <div className="banner-bottom">
                         <div className="container">
                             <div className="faqs-top-grids">
@@ -141,7 +149,6 @@ var Video = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-                                        <button onClick={this.test}>test</button>
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
