@@ -29,8 +29,8 @@ var TodayIncome = React.createClass({
                     return;
                 }
                 var a=ob.data;
-                var sum1=0;
-                var sum2=0;
+                var sum1=0.00;
+                var sum2=0.00;
                 var pa=[];
                 var pb=[];
                 var k=1;
