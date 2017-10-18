@@ -3,7 +3,7 @@
  <QnyVideo option={{
 width:'600px',
 height:'400px',
-url:'/badmintonhot/video/test.mp4',
+url:'http://114.215.99.2:8880/video/videoNum/test.mp4',
 type:'mp4',
 poster:'/badmintonhot/video/testpic.png'
                                         }}/>

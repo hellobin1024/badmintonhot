@@ -20,16 +20,7 @@ var Video = React.createClass({
         });
     },
     initialData:function(){
-        if(this.state.event!==null&&this.state.event!==undefined){
-            this.getAllLives();
-        }else {
-            this.getAllVideos();
-        }
-        if(this.state.group!==null&&this.state.group!==undefined) {
-            this.getAllLives();
-        }else {
-            this.getAllVideos();
-        }
+        this.getAllVideos();
     },
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
@@ -38,7 +29,7 @@ var Video = React.createClass({
 
     getAllVideos:function () {
 
-        var url = "/func/allow/getVideos";//未登录
+        var url = "/func/video/getVideos";//未登录
         var ref = this;
         Proxy.query(
             'POST',
@@ -92,50 +83,25 @@ var Video = React.createClass({
     render:function() {
         var contains = null;
 
-        if(this.state.event!==null&&this.state.event!==undefined
-            &&this.state.group!==null&&this.state.group!==undefined) {
-            var video = this.state.video;
-            var live = this.state.live;
             var trs = [];
             var grs = [];
             var ref = this;
-            if(video!=0) {
-                video.map(function (item, i) {
+            trs.push(
+                <div>
+                <QnyVideo option={{
+                        width:'600px',
+                        height:'400px',
+                        url:'http://114.215.99.2:8880/video/test.mp4',
+                        type:'mp4',
+                        poster:'/badmintonhot/video/testpic.png'
+                      }}/>
+                    </div>
+            )
 
-                        trs.push(
-                            <div className="basic_first" key={"video" + i}>
-                            </div>
-                        )
-            })
-            }
-            else{
-                trs.push(
-                    <div>暂无数据！</div>
-                )
-            }
-            if(live !=0) {
-                live.map(function (item, i) {
-                        grs.push(
-                            <div className="basic_first" key={"live" + i}>
-                            </div>
-                        )
-                })
-            }
-                  else {
-                grs.push(
-                    <div>暂无数据！</div>
-                )
-            }
+
 
             contains =
                 <div>
-                    <QnyVideo option={{
-                        width:'600px',
-                        height:'400px',
-                        url:'/badmintonhot/video/test.mp4',
-                        type:'mp4',
-                        poster:'/badmintonhot/video/testpic.png'
-                    }}/>
                     <div className="banner-bottom">
                         <div className="container">
                             <div className="faqs-top-grids">
@@ -144,9 +110,6 @@ var Video = React.createClass({
                                         <div id="myTabContent" className="tab-content">
                                             <div className="tab-pane fade in active" id="home">
                                                 {trs}
-                                            </div>
-                                            <div className="tab-pane fade" id="ios">
-                                                {grs}
                                             </div>
                                         </div>
                                     </div>
@@ -160,8 +123,7 @@ var Video = React.createClass({
 
                 </div>
 
- }
-        return contains;
+      return contains;
     },
 
 });
