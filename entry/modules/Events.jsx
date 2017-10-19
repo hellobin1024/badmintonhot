@@ -248,6 +248,7 @@ var Event = React.createClass({
         &&this.state.group!==null&&this.state.group!==undefined) {
             var event = this.state.event;
             var group = this.state.group;
+            var isLand=this.props.token;
             var trs = [];
             var grs = [];
             var ref = this;
@@ -345,10 +346,24 @@ var Event = React.createClass({
                                 <ul>
                                     <li><span>现有人数：</span> {item.groupNowMemNum}人</li>
                                     <li><span>简介：</span> {item.groupBrief}</li>
+                                    <li><span>成员：</span> {item.memberName}</li>
                                 </ul>
-                                <div className="buy-me">
-                                    <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
-                                </div>
+
+                                {
+                                    isLand!=null&&item.isSignUP==1?
+                                        <div className="buy-me">
+                                            <a >已加入</a>
+                                        </div>:null
+                                }
+                                {
+                                    isLand!=null&&item.isSignUP==0?
+                                        <div className="buy-me">
+                                            <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
+                                        </div>:null
+                                }
+
+
+
                             </div>
                         )
                     } else {
@@ -364,10 +379,21 @@ var Event = React.createClass({
                                 <ul>
                                     <li><span>现有人数：</span> {item.groupNowMemNum}人</li>
                                     <li><span>简介：</span> {item.groupBrief}</li>
+                                    <li><span>成员：</span> {item.memberName}</li>
                                 </ul>
-                                <div className="buy-me">
-                                    <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
-                                </div>
+
+                                {
+                                    isLand!=null&&item.isSignUP==1?
+                                        <div className="buy-me">
+                                            <a >已加入</a>
+                                        </div>:null
+                                }
+                                {
+                                    isLand!=null&&item.isSignUP==0?
+                                        <div className="buy-me">
+                                            <a onClick={ref.groupSignUp.bind(null, item.groupId)}>加入</a>
+                                        </div>:null
+                                }
                             </div>
                         )
                     }
@@ -449,7 +475,7 @@ var Event = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-                                        <button onClick={this.test}>test</button>
+                                        {  /*  <button onClick={this.test}>test</button>*/}
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
