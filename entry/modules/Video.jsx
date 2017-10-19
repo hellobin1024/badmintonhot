@@ -29,7 +29,7 @@ var Video = React.createClass({
 
     getAllVideos:function () {
 
-        var url = "/func/video/getVideos";//未登录
+        var url = "/func/allow/getVideos";
         var ref = this;
         Proxy.query(
             'POST',
@@ -38,11 +38,6 @@ var Video = React.createClass({
             null,
             function (res) {
                 var a = res.data;
-                var costType2="";
-                for (var i = 0; i < a.length; i++){
-                    costType2= ref.getStandard(a[i].costType);
-                    a[i].costType2=costType2;
-                }
                 if(res.re==1) {
                     ref.setState({video: a});
                 }else{
@@ -56,30 +51,6 @@ var Video = React.createClass({
             }
         );
     },
-    getAllLives:function () {
-        var url = "/func/allow/getLives";
-        var ref = this;
-        Proxy.query(
-            'POST',
-            url,
-            {},
-            null,
-            function (res) {
-                var a = res.data;
-                if(res.re==1) {
-                    ref.setState({live: a});
-                }else{
-                    ref.setState({live: 0});
-                }
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
-    },
-
-
     render:function() {
         var contains = null;
 
@@ -95,7 +66,12 @@ var Video = React.createClass({
                         type:'mp4',
                         poster:'/badmintonhot/video/testpic.png'
                       }}/>
-                    </div>
+                    {
+                    /*<div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：{data.title}元</span></div>
+                    <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：{data.brief}元</span></div>*/
+
+                    }
+                </div>
             )
 
 
