@@ -66,12 +66,12 @@ var Video = React.createClass({
                         url:'http://114.215.99.2:8880/video/test.mp4',
                         type:'mp4',
                         poster:'/badmintonhot/video/testpic.png'
-                      }}/>
-                    {
-                    /*<div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：{data.title}元</span></div>
-                    <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：{data.brief}元</span></div>*/
+                     } }/>
 
-                    }
+                    <div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：</span></div>
+                    <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：</span></div>
+
+
                 </div>
             )
 
