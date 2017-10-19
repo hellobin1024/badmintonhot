@@ -31,10 +31,12 @@ var Video = React.createClass({
 
         var url = "/func/allow/getVideos";
         var ref = this;
+        var params = {
+        };
         Proxy.query(
             'POST',
             url,
-            {},
+            params,
             null,
             function (res) {
                 var a = res.data;
