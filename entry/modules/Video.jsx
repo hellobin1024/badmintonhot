@@ -30,22 +30,21 @@ var Video = React.createClass({
     getAllVideos:function () {
 
         var url = "/func/allow/getVideos";
+        var param={
+        }
         var ref = this;
-        var params = {
-        };
         Proxy.query(
             'POST',
             url,
-            params,
+            param,
             null,
             function (res) {
-                var a = res.data;
-                if(res.re==1) {
-                    ref.setState({video: a});
-                }else{
-                    ref.setState({video: 0});
-                }
 
+                if(res.re==-1||res.re=="-1"){
+                    alert(res.data);
+                    //ref.initialData();
+                }
+                alert(res.data);
             },
 
             function (xhr, status, err) {
@@ -56,52 +55,52 @@ var Video = React.createClass({
     render:function() {
         var contains = null;
 
-            var trs = [];
-            var grs = [];
-            var ref = this;
-            trs.push(
-                <div>
+        var trs = [];
+        var grs = [];
+        var ref = this;
+        trs.push(
+            <div>
                 <QnyVideo option={{
-                        width:'600px',
-                        height:'400px',
-                        url:'http://114.215.99.2:8880/video/test.mp4',
-                        type:'mp4',
-                        poster:'/badmintonhot/video/testpic.png'
-                      }}/>
-                    {
-                    /*<div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：{data.title}元</span></div>
-                    <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：{data.brief}元</span></div>*/
+                    width:'600px',
+                    height:'400px',
+                    url:'http://114.215.99.2:8880/video/test.mp4',
+                    type:'mp4',
+                    poster:'/badmintonhot/video/testpic.png'
+                } }/>
 
-                    }
-                </div>
-            )
+                <div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：</span></div>
+                <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：</span></div>
 
 
+            </div>
+        )
 
-            contains =
-                <div>
-                    <div className="banner-bottom">
-                        <div className="container">
-                            <div className="faqs-top-grids">
-                                <div className="product-grids">
-                                    <div className="col-md-8 news_content">
-                                        <div id="myTabContent" className="tab-content">
-                                            <div className="tab-pane fade in active" id="home">
-                                                {trs}
-                                            </div>
+
+
+        contains =
+            <div>
+                <div className="banner-bottom">
+                    <div className="container">
+                        <div className="faqs-top-grids">
+                            <div className="product-grids">
+                                <div className="col-md-8 news_content">
+                                    <div id="myTabContent" className="tab-content">
+                                        <div className="tab-pane fade in active" id="home">
+                                            {trs}
                                         </div>
                                     </div>
-                                    <RightSlide/>
-                                    <div className="clearfix"></div>
                                 </div>
+                                <RightSlide/>
+                                <div className="clearfix"></div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
-      return contains;
+
+            </div>
+
+        return contains;
     },
 
 });
