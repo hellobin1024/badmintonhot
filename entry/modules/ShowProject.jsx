@@ -731,8 +731,8 @@ var ShowProject = React.createClass({
                                     <tr>
                                         <th width="150">项目名称</th>
                                         <th width="150">项目类型</th>
-                                        <th width="190">最大参赛队伍/人数</th>
-                                        <th width="230">已报名参赛队伍/人数</th>
+                                        <th width="190">最大参赛队伍</th>
+                                        <th width="230">已报名参赛队伍</th>
                                         <th width="150">队伍最大人数</th>
                                         <th width="300">已报名人员</th>
                                     </tr>

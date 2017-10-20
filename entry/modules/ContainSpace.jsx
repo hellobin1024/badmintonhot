@@ -12,7 +12,10 @@ var ContainSpace = React.createClass({
     initialData:function(){
 
         this.getAllCompetieionNews();
+        if(this.props.token!=null){
+
         this.getAllCompetieion();
+        }
         this.getRollingEvents();
         this.getHotVideos();
     },
@@ -116,6 +119,7 @@ var ContainSpace = React.createClass({
                 function (res) {
                     var a = res.data;
                     var competitionType2 = "";
+                    if(a!=null&&a!=""){
                     for (var i = 0; i < a.length; i++) {
                         if (a[i].competitionType == "1") {
                             competitionType2 = "公开";
@@ -128,10 +132,12 @@ var ContainSpace = React.createClass({
 
                         a[i].competitionType2 = competitionType2;
                     }
-
+                    }
                     ref.setState({data: a});
+                    if(a!=null&&a!=""){
                     var successModal = ref.refs['successModal'];
                     $(successModal).modal('show');
+                    }
                 },
 
                 function (xhr, status, err) {
@@ -152,9 +158,7 @@ var ContainSpace = React.createClass({
         var vrs = [];
         var nrs = []
         var ref=this;
-        if((this.state.data!==null&&this.state.data!==undefined)) {
-
-            if(this.state.data!==null&&this.state.data!==undefined) {
+        if(this.state.data!==null&&this.state.data!==undefined) {
                 var data = this.state.data;
                 data.map(function (item, i) {
                     trs.push(
@@ -185,9 +189,6 @@ var ContainSpace = React.createClass({
                     )
 
                 })
-
-
-            }
 
         }
 
