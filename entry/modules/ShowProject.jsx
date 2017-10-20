@@ -446,6 +446,7 @@ var ShowProject = React.createClass({
                 var trs = [];
                 var nrs = [];
                 var ttrs = [];
+                var sjrs=[];
                 data.map(function (item, i) {
 
                     if (item.projectType == "6") {
@@ -529,6 +530,16 @@ var ShowProject = React.createClass({
                     } else if (item.projectType == "1" || item.projectType == "2") {
                         {/*单人报名*/
                         }
+
+                        if (item.personList !== null && item.personList !== undefined) {
+
+                            item.personList.map(function (itema, j) {
+                                sjrs.push(
+                                    <span style={{fontSize:'14px',marginRight:'5px'}}>{itema}</span>
+                                )
+                            })
+
+                        }
                         trs.push(
                             <tbody key={i} className="group-table">
                             <tr>
@@ -537,7 +548,7 @@ var ShowProject = React.createClass({
                                 <td>{item.maxTeamNum}</td>
                                 <td>{item.nowTeamNum}</td>
                                 <td>{item.maxTeamPersonNum}</td>
-                                <td rowSpan={2}></td>
+                                <td rowSpan={2}>{sjrs}</td>
 
                                 {
                                     item.joinMark == 0 ?
@@ -720,8 +731,8 @@ var ShowProject = React.createClass({
                                     <tr>
                                         <th width="150">项目名称</th>
                                         <th width="150">项目类型</th>
-                                        <th width="190">最大参赛队伍/人数</th>
-                                        <th width="230">已报名参赛队伍/人数</th>
+                                        <th width="190">最大参赛队伍</th>
+                                        <th width="230">已报名参赛队伍</th>
                                         <th width="150">队伍最大人数</th>
                                         <th width="300">已报名人员</th>
                                     </tr>
