@@ -174,7 +174,7 @@ var TodayIncome = React.createClass({
                mainContent=
                 <div>
                     <br> </br>
-                    <div className="col-md-8 news_content">
+                    <div >
                         <ul id="myTab" className="nav nav-tabs">
                             <li className="active" id="events" >
                                 <a href="#home"  data-toggle="tab" style={{textAlign:'center',fontSize:'15px',color: '#337ab7',backgroundColor: 'white'}}>

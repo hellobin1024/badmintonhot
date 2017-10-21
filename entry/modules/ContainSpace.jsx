@@ -12,8 +12,12 @@ var ContainSpace = React.createClass({
     initialData:function(){
 
         this.getAllCompetieionNews();
-        this.getAllCompetieion();
+        if(this.props.token!=null){
 
+        this.getAllCompetieion();
+        }
+        this.getRollingEvents();
+        this.getHotVideos();
     },
     getInitialState: function () {
         var token=this.props.token;
@@ -46,6 +50,53 @@ var ContainSpace = React.createClass({
             );
 
     },
+
+    getRollingEvents:function () {
+
+        var url = "/func/allow/getRollingEvents";
+        var ref = this;
+        var params = {
+        };
+        Proxy.query(
+            'POST',
+            url,
+            params,
+            null,
+            function (res) {
+                var a = res.data;
+                ref.setState({events: a});
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+
+    },
+
+    getHotVideos:function () {
+
+        var url = "/func/allow/getHotVideos";
+        var ref = this;
+        var params = {
+        };
+        Proxy.query(
+            'POST',
+            url,
+            params,
+            null,
+            function (res) {
+                var a = res.data;
+                ref.setState({videos: a});
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+
+    },
+
     closeModel:function () {
 
         var successModal = this.refs['successModal'];
@@ -68,6 +119,7 @@ var ContainSpace = React.createClass({
                 function (res) {
                     var a = res.data;
                     var competitionType2 = "";
+
                     for (var i = 0; i < a.length; i++) {
                         if (a[i].competitionType == "1") {
                             competitionType2 = "公开";
@@ -82,8 +134,10 @@ var ContainSpace = React.createClass({
                     }
 
                     ref.setState({data: a});
+                    if(a!=null&&a!=""){
                     var successModal = ref.refs['successModal'];
                     $(successModal).modal('show');
+                    }
                 },
 
                 function (xhr, status, err) {
@@ -92,15 +146,19 @@ var ContainSpace = React.createClass({
             );
         }
     },
+
+
+
     render:function() {
         var contains = null;
         var a=1;
         var trs = [];
-        var prs=[];
+        var ers = [];
+        var prs = [];
+        var vrs = [];
+        var nrs = []
         var ref=this;
-        if((this.state.data!==null&&this.state.data!==undefined)) {
-
-            if(this.state.data!==null&&this.state.data!==undefined) {
+        if(this.state.data!==null&&this.state.data!==undefined) {
                 var data = this.state.data;
                 data.map(function (item, i) {
                     trs.push(
@@ -132,27 +190,36 @@ var ContainSpace = React.createClass({
 
                 })
 
-
-            }
-
         }
-        else
-        {
-            this.initialData();
-        }
+
         if(this.state.news!==null&&this.state.news!==undefined) {
             var news = this.state.news;
             news.map(function (item, i) {
                 prs.push(
                     <div key={i}>
-
-
-                        <div>
-                            <h2 style={{marginTop:'5px'}}>{item.title}</h2>
-
-                            <p><span style={{fontSize:'12px',color:'#cd4f7e'}}>介绍：</span>{item.brief}
+                        <Link style={{marginTop:'5px'}}
+                              to={window.App.getAppRoute() + "/competition"}>  {item.title}</Link>
+                            <p>
+                                <span style={{fontSize:'12px',color:'#cd4f7e'}}>介绍：</span>{item.brief}
                             </p>
+                    </div>
+                )
+            })
+        }
+
+
+        if(this.state.events!==null&&this.state.events!==undefined) {
+            var events = this.state.events;
+            events.map(function (item, i) {
+                ers.push(
+                    <div key={i}>
+                        <div className="date-text">
+                            <Link to={window.App.getAppRoute() + "/events"}>
+                                {item.startTimeStr}
+                            </Link>
+                            <p>{item.eventName}&nbsp; &nbsp;{item.eventBrief} </p>
                         </div>
+
                     </div>
                 )
 
@@ -162,6 +229,36 @@ var ContainSpace = React.createClass({
         }else{
             this.initialData();
         }
+
+        if(this.state.videos!==null&&this.state.videos!==undefined) {
+            var videos = this.state.videos;
+            videos.map(function (item, i) {
+                vrs.push(
+                    <div key={i}>
+                        <div className="td-grids">
+                            <div className="col-xs-3 td-left">
+                                {/*<img src={window.App.getResourceDeployPrefix()+"/images/t1.jpg"} alt="" />*/}
+                                    <a style={{background:'url('+item.img+') no-repeat 32px 32px',backgroundSize: 'cover'}}></a>
+                            </div>
+                            <div className="col-xs-7 td-middle">
+                                <Link to={window.App.getAppRoute() + "/video"}>
+                                    {item.title}
+                                </Link>
+                                <p>{item.brief}</p>
+                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </div>
+                            <div className="col-xs-2 td-right">
+                                <p>$190</p>
+                            </div>
+                            <div className="clearfix"> </div>
+                        </div>
+                    </div>
+                )
+            })
+        }
+
         contains =
             <div className="banner-bottom">
                 <div className="container">
@@ -311,72 +408,7 @@ var ContainSpace = React.createClass({
                                     <h4>最热视频</h4>
                                 </div>
                                 <div className="top-destinations-bottom">
-                                    <div className="td-grids">
-                                        <div className="col-xs-3 td-left">
-                                            <img src={window.App.getResourceDeployPrefix()+"/images/t1.jpg"} alt="" />
-                                        </div>
-                                        <div className="col-xs-7 td-middle">
-                                            <a href="products.html">Donec libero id lacinia</a>
-                                            <p>Dapibus eu purus vel libero in nunc</p>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        </div>
-                                        <div className="col-xs-2 td-right">
-                                            <p>$190</p>
-                                        </div>
-                                        <div className="clearfix"> </div>
-                                    </div>
-                                    <div className="td-grids">
-                                        <div className="col-xs-3 td-left">
-                                            <img src={window.App.getResourceDeployPrefix()+"/images/t2.jpg"} alt="" />
-                                        </div>
-                                        <div className="col-xs-7 td-middle">
-                                            <a href="products.html">Donec libero id lacinia</a>
-                                            <p>Dapibus eu purus vel libero in nunc</p>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        </div>
-                                        <div className="col-xs-2 td-right">
-                                            <p>$213</p>
-                                        </div>
-                                        <div className="clearfix"> </div>
-                                    </div>
-                                    <div className="td-grids">
-                                        <div className="col-xs-3 td-left">
-                                            <img src={window.App.getResourceDeployPrefix()+"/images/t3.jpg"} alt="" />
-                                        </div>
-                                        <div className="col-xs-7 td-middle">
-                                            <a href="products.html">Donec libero id lacinia</a>
-                                            <p>Dapibus eu purus vel libero in nunc</p>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        </div>
-                                        <div className="col-xs-2 td-right">
-                                            <p>$176</p>
-                                        </div>
-                                        <div className="clearfix"> </div>
-                                    </div>
-                                    <div className="td-grids">
-                                        <div className="col-xs-3 td-left">
-                                            <img src={window.App.getResourceDeployPrefix()+"/images/t4.jpg"} alt="" />
-                                        </div>
-                                        <div className="col-xs-7 td-middle">
-                                            <a href="products.html">Donec libero id lacinia</a>
-                                            <p>Dapibus eu purus vel libero in nunc</p>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                            <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                        </div>
-                                        <div className="col-xs-2 td-right">
-                                            <p>$490</p>
-                                        </div>
-                                        <div className="clearfix"> </div>
-                                    </div>
+                                    {vrs}
                                 </div>
                             </div>
                         </div>
@@ -385,42 +417,22 @@ var ContainSpace = React.createClass({
                                 <h4>赛事</h4>
                             </div>
                             <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
-                                <a href="products.html">
+
                                     <img src={window.App.getResourceDeployPrefix()+"/images/a3.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
                                         <h5>新一轮赛事信息</h5>
                                         {prs}
                                     </div>
-                                </a>
+
                             </div>
                             <div className="news-grids">
                                 <div className="news-grids-info">
                                     <h4>最新活动</h4>
                                 </div>
                                 <div className="news-grids-bottom">
-
                                     <div id="design" className="date">
                                         <div id="cycler">
-                                            <div className="date-text">
-                                                <a href="single.html">August 15,2015</a>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                            </div>
-                                            <div className="date-text">
-                                                <a href="single.html">July 08,2015</a>
-                                                <p>Nullam non turpis sit amet metus tristique egestas et et orci.</p>
-                                            </div>
-                                            <div className="date-text">
-                                                <a href="single.html">February 15,2015</a>
-                                                <p>Duis venenatis ac ipsum vel ultricies in placerat quam</p>
-                                            </div>
-                                            <div className="date-text">
-                                                <a href="single.html">January 15,2015</a>
-                                                <p>Pellentesque ullamcorper fringilla ipsum, ornare dapibus velit volutpat sit amet.</p>
-                                            </div>
-                                            <div className="date-text">
-                                                <a href="single.html">September 24,2014</a>
-                                                <p>In lobortis ipsum mi, ac imperdiet elit pellentesque at.</p>
-                                            </div>
+                                            {ers}
                                         </div>
                                     </div>
                                 </div>

@@ -12,6 +12,7 @@ import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import CostIntroduce from '../../modules/CostIntroduce.jsx';
 import Competieion from '../../modules/competition.jsx';
 import ShowProject from '../../modules/ShowProject.jsx';
+import Video from '../../modules/Video.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'
@@ -87,6 +88,9 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/ShowProject":
                     ctrl =<ShowProject/>
+                    break;
+                case App.getAppRoute() + "/video":
+                    ctrl =<Video/>
                     break;
                 default:
                     break;
