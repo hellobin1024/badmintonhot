@@ -309,26 +309,27 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="destinations" style={{ paddingTop:'15px' }}>
                                 <ul>
-                                    {nrs}
-                                    {/*<li className="button"><a href="#">资讯热点</a>*/}
-                                        {/*<li className="dropdown active">*/}
-                                            {/*<Link to={window.App.getAppRoute() + "/news"}>*/}
-                                                {/*<div className="destinations-grid">*/}
-                                                    {/*<img src={window.App.getResourceDeployPrefix()+"/images/a1.jpg"} alt="" />*/}
-                                                {/*</div>*/}
-                                                {/*<div className="destinations-grid-info">*/}
-                                                    {/*<div className="destinations-hotel">Lorem ipsum dolor sit amet , Goa</div>*/}
-                                                    {/*<div className="destinations-star">*/}
-                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
-                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
-                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
-                                                    {/*</div>*/}
-                                                    {/*<div className="destinations-price">$100</div>*/}
-                                                    {/*<div className="clearfix"> </div>*/}
-                                                {/*</div>*/}
-                                            {/*</Link>*/}
-                                        {/*</li>*/}
-                                    {/*</li>*/}
+
+                                    <li className="button"><a href="#">资讯热点</a>
+                                        <li className="dropdown active">
+                                            <Link to={window.App.getAppRoute() + "/news"}>
+                                                <div className="destinations-grid">
+                                                    <img src={window.App.getResourceDeployPrefix()+"/images/a1.jpg"} alt="" />
+                                                </div>
+                                                <div className="destinations-grid-info">
+                                                    <div className="destinations-hotel">Lorem ipsum dolor sit amet , Goa</div>
+                                                    <div className="destinations-star">
+                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                    </div>
+                                                    <div className="destinations-price">$100</div>
+                                                    <div className="clearfix"> </div>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    </li>
+                                    {/*{nrs}*/}
                                     {/*<li className="button"><a href="#">Bangalore Popular Hotels</a>*/}
                                         {/*<li className="dropdown">*/}
                                             {/*<a href="products.html">*/}
