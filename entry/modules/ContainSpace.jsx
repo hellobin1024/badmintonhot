@@ -520,7 +520,7 @@ var ContainSpace = React.createClass({
             });
 
         }
-        setTimeout( cycle($('#cycler div:first'),  $('#cycler')),10000);
+        cycle($('#cycler div:first'),  $('#cycler'));
 
         $(document).ready(function(){
             /* This code is executed after the DOM has been completely loaded */
