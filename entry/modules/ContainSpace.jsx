@@ -119,7 +119,7 @@ var ContainSpace = React.createClass({
                 function (res) {
                     var a = res.data;
                     var competitionType2 = "";
-                    if(a!=null&&a!=""){
+
                     for (var i = 0; i < a.length; i++) {
                         if (a[i].competitionType == "1") {
                             competitionType2 = "公开";
@@ -132,7 +132,7 @@ var ContainSpace = React.createClass({
 
                         a[i].competitionType2 = competitionType2;
                     }
-                    }
+
                     ref.setState({data: a});
                     if(a!=null&&a!=""){
                     var successModal = ref.refs['successModal'];
@@ -238,7 +238,7 @@ var ContainSpace = React.createClass({
                         <div className="td-grids">
                             <div className="col-xs-3 td-left">
                                 {/*<img src={window.App.getResourceDeployPrefix()+"/images/t1.jpg"} alt="" />*/}
-                                    <a style={{background:'url('+item.img+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
+                                    <a style={{background:'url('+item.img+') no-repeat 32px 32px',backgroundSize: 'cover'}}></a>
                             </div>
                             <div className="col-xs-7 td-middle">
                                 <Link to={window.App.getAppRoute() + "/video"}>
