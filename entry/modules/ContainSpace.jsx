@@ -417,13 +417,13 @@ var ContainSpace = React.createClass({
                                 <h4>赛事</h4>
                             </div>
                             <div className="banner-bottom-right" style={{paddingTop:'15px'}}>
-                                <a href="products.html">
+
                                     <img src={window.App.getResourceDeployPrefix()+"/images/a3.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
                                         <h5>新一轮赛事信息</h5>
                                         {prs}
                                     </div>
-                                </a>
+
                             </div>
                             <div className="news-grids">
                                 <div className="news-grids-info">
