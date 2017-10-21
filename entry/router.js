@@ -11,6 +11,7 @@ import PersonInfo from './modules/PersonInfo.jsx';
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
+
 import {Component} from 'react'
 
 class AppRouter extends Component {
@@ -37,6 +38,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/venueDetail"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/competition"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ShowProject"} component={MainSection}/>
+
                     <Route path={window.App.getAppRoute() + "/video"} component={MainSection}/>
                 </Route>
             </Router>

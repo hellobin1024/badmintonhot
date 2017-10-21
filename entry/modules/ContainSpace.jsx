@@ -18,6 +18,7 @@ var ContainSpace = React.createClass({
         }
         this.getRollingEvents();
         this.getHotVideos();
+        this.getHomepageNews();
     },
     getInitialState: function () {
         var token=this.props.token;
@@ -65,6 +66,29 @@ var ContainSpace = React.createClass({
             function (res) {
                 var a = res.data;
                 ref.setState({events: a});
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+
+    },
+
+    getHomepageNews:function () {
+
+        var url = "/func/allow/getHomepageNews";
+        var ref = this;
+        var params = {
+        };
+        Proxy.query(
+            'POST',
+            url,
+            params,
+            null,
+            function (res) {
+                var a = res.data;
+                ref.setState({informations: a});
             },
 
             function (xhr, status, err) {
@@ -156,7 +180,7 @@ var ContainSpace = React.createClass({
         var ers = [];
         var prs = [];
         var vrs = [];
-        var nrs = []
+        var nrs = [];
         var ref=this;
         if(this.state.data!==null&&this.state.data!==undefined) {
                 var data = this.state.data;
@@ -207,20 +231,40 @@ var ContainSpace = React.createClass({
             })
         }
 
+        if(this.state.informations!==null&&this.state.informations!==undefined) {
+            var informations = this.state.informations;
+            informations.map(function (item, i) {
+                nrs.push(
+                    <div key={i}>
+                        <li className="button"><a href="#">{item.title}</a>
+                            <li className="dropdown active">
+                                <Link to={window.App.getAppRoute() + "/news"}>
+                                    <div className="destinations-grid">
+                                        <img src={window.App.getResourceDeployPrefix()+item.img} alt="" />
+                                    </div>
+                                    <div className="destinations-grid-info">
+                                        <div className="destinations-hotel">{item.brief}</div>
+                                        <div className="destinations-price"> </div>
+                                        <div className="clearfix"> </div>
+                                    </div>
+                                </Link>
+                            </li>
+                        </li>
+                    </div>
+                )
+            })
+        }
 
         if(this.state.events!==null&&this.state.events!==undefined) {
             var events = this.state.events;
             events.map(function (item, i) {
                 ers.push(
-                    <div key={i}>
-                        <div className="date-text">
+                        <div className="date-text" key={i}>
                             <Link to={window.App.getAppRoute() + "/events"}>
                                 {item.startTimeStr}
                             </Link>
                             <p>{item.eventName}&nbsp; &nbsp;{item.eventBrief} </p>
                         </div>
-
-                    </div>
                 )
 
             })
@@ -237,20 +281,16 @@ var ContainSpace = React.createClass({
                     <div key={i}>
                         <div className="td-grids">
                             <div className="col-xs-3 td-left">
-                                {/*<img src={window.App.getResourceDeployPrefix()+"/images/t1.jpg"} alt="" />*/}
-                                    <a style={{background:'url('+item.img+') no-repeat 32px 32px',backgroundSize: 'cover'}}></a>
+                                <img src={window.App.getResourceDeployPrefix()+item.img} alt="" />
                             </div>
                             <div className="col-xs-7 td-middle">
                                 <Link to={window.App.getAppRoute() + "/video"}>
                                     {item.title}
                                 </Link>
                                 <p>{item.brief}</p>
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
                             </div>
                             <div className="col-xs-2 td-right">
-                                <p>$190</p>
+                                <p> </p>
                             </div>
                             <div className="clearfix"> </div>
                         </div>
@@ -269,9 +309,10 @@ var ContainSpace = React.createClass({
                             </div>
                             <div className="destinations" style={{ paddingTop:'15px' }}>
                                 <ul>
+
                                     <li className="button"><a href="#">资讯热点</a>
                                         <li className="dropdown active">
-                                            <a href="products.html">
+                                            <Link to={window.App.getAppRoute() + "/news"}>
                                                 <div className="destinations-grid">
                                                     <img src={window.App.getResourceDeployPrefix()+"/images/a1.jpg"} alt="" />
                                                 </div>
@@ -285,69 +326,70 @@ var ContainSpace = React.createClass({
                                                     <div className="destinations-price">$100</div>
                                                     <div className="clearfix"> </div>
                                                 </div>
-                                            </a>
+                                            </Link>
                                         </li>
                                     </li>
-                                    <li className="button"><a href="#">Bangalore Popular Hotels</a>
-                                        <li className="dropdown">
-                                            <a href="products.html">
-                                                <div className="destinations-grid">
-                                                    <img src={window.App.getResourceDeployPrefix()+"/images/a4.jpg"} alt="" />
-                                                </div>
-                                                <div className="destinations-grid-info">
-                                                    <div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangalore</div>
-                                                    <div className="destinations-star">
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                    </div>
-                                                    <div className="destinations-price">$100</div>
-                                                    <div className="clearfix"> </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </li>
-                                    <li className="button"><a href="#">Bangkok Popular Hotels</a>
-                                        <li className="dropdown">
-                                            <a href="products">
-                                                <div className="destinations-grid">
-                                                    <img src={window.App.getResourceDeployPrefix()+"/images/a3.jpg"} alt="" />
-                                                </div>
-                                                <div className="destinations-grid-info">
-                                                    <div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangkok</div>
-                                                    <div className="destinations-star">
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                    </div>
-                                                    <div className="destinations-price">$240</div>
-                                                    <div className="clearfix"> </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </li>
-                                    <li className="button"><a href="#">Malaysia Popular Hotels</a>
-                                        <li className="dropdown">
-                                            <a href="products.html">
-                                                <div className="destinations-grid">
-                                                    <img src={window.App.getResourceDeployPrefix()+"/images/a1.jpg"} alt="" />
-                                                </div>
-                                                <div className="destinations-grid-info">
-                                                    <div className="destinations-hotel">Lorem ipsum dolor sit amet , Malaysia</div>
-                                                    <div className="destinations-star">
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                    </div>
-                                                    <div className="destinations-price">$320</div>
-                                                    <div className="clearfix"> </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </li>
+                                    {/*{nrs}*/}
+                                    {/*<li className="button"><a href="#">Bangalore Popular Hotels</a>*/}
+                                        {/*<li className="dropdown">*/}
+                                            {/*<a href="products.html">*/}
+                                                {/*<div className="destinations-grid">*/}
+                                                    {/*<img src={window.App.getResourceDeployPrefix()+"/images/a4.jpg"} alt="" />*/}
+                                                {/*</div>*/}
+                                                {/*<div className="destinations-grid-info">*/}
+                                                    {/*<div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangalore</div>*/}
+                                                    {/*<div className="destinations-star">*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                    {/*</div>*/}
+                                                    {/*<div className="destinations-price">$100</div>*/}
+                                                    {/*<div className="clearfix"> </div>*/}
+                                                {/*</div>*/}
+                                            {/*</a>*/}
+                                        {/*</li>*/}
+                                    {/*</li>*/}
+                                    {/*<li className="button"><a href="#">Bangkok Popular Hotels</a>*/}
+                                        {/*<li className="dropdown">*/}
+                                            {/*<a href="products">*/}
+                                                {/*<div className="destinations-grid">*/}
+                                                    {/*<img src={window.App.getResourceDeployPrefix()+"/images/a3.jpg"} alt="" />*/}
+                                                {/*</div>*/}
+                                                {/*<div className="destinations-grid-info">*/}
+                                                    {/*<div className="destinations-hotel">Lorem ipsum dolor sit amet , Bangkok</div>*/}
+                                                    {/*<div className="destinations-star">*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                    {/*</div>*/}
+                                                    {/*<div className="destinations-price">$240</div>*/}
+                                                    {/*<div className="clearfix"> </div>*/}
+                                                {/*</div>*/}
+                                            {/*</a>*/}
+                                        {/*</li>*/}
+                                    {/*</li>*/}
+                                    {/*<li className="button"><a href="#">Malaysia Popular Hotels</a>*/}
+                                        {/*<li className="dropdown">*/}
+                                            {/*<a href="products.html">*/}
+                                                {/*<div className="destinations-grid">*/}
+                                                    {/*<img src={window.App.getResourceDeployPrefix()+"/images/a1.jpg"} alt="" />*/}
+                                                {/*</div>*/}
+                                                {/*<div className="destinations-grid-info">*/}
+                                                    {/*<div className="destinations-hotel">Lorem ipsum dolor sit amet , Malaysia</div>*/}
+                                                    {/*<div className="destinations-star">*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                        {/*<span className="glyphicon glyphicon-star" aria-hidden="true"></span>*/}
+                                                    {/*</div>*/}
+                                                    {/*<div className="destinations-price">$320</div>*/}
+                                                    {/*<div className="clearfix"> </div>*/}
+                                                {/*</div>*/}
+                                            {/*</a>*/}
+                                        {/*</li>*/}
+                                    {/*</li>*/}
                                 </ul>
                             </div>
                             <div className="choose">
@@ -469,6 +511,9 @@ var ContainSpace = React.createClass({
     componentDidMount(){
 
         function cycle($item, $cycler){
+            if($item.length==0){
+                $item=$('#cycler div:first');
+            }
             setTimeout(cycle, 2000, $item.next(), $cycler);
 
             $item.slideUp(1000,function(){

@@ -4,7 +4,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
-import ShowCompetitionGames from '../modules/showCompetitionGames.jsx';
+import ShowCompetitionGames from './ShowCompetitionGames.jsx';
 import '../../css/entry/modules/myCompetition.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
