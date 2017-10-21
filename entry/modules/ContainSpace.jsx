@@ -284,9 +284,10 @@ var ContainSpace = React.createClass({
                                 <img src={window.App.getResourceDeployPrefix()+item.img} alt="" />
                             </div>
                             <div className="col-xs-7 td-middle">
-                                <Link to={window.App.getAppRoute() + "/video"}>
+                                {/*<Link to={window.App.getAppRoute() + "/video"}>*/}
+                                <a href="#">
                                     {item.title}
-                                </Link>
+                                </a>
                                 <p>{item.brief}</p>
                             </div>
                             <div className="col-xs-2 td-right">
@@ -436,7 +437,7 @@ var ContainSpace = React.createClass({
                                 <h4>热卖推荐</h4>
                             </div>
                             <div className="banner-bottom-middle" style={{ paddingTop: '14px'}}>
-                                <a href="products.html">
+                                <a href="#">
                                     <img src={window.App.getResourceDeployPrefix()+"/images/a2.jpg"} alt="" />
                                     <div className="destinations-grid-info tours">
                                         <h5>Book your next Malaysia holiday!</h5>

@@ -89,9 +89,9 @@ var MainSection = React.createClass({
                 case App.getAppRoute() + "/ShowProject":
                     ctrl =<ShowProject/>
                     break;
-                case App.getAppRoute() + "/video":
-                    ctrl =<Video/>
-                    break;
+                // case App.getAppRoute() + "/video":
+                //     ctrl =<Video/>
+                //     break;
                 default:
                     break;
             }
