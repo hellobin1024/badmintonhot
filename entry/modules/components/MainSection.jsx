@@ -10,7 +10,7 @@ import Foot from '../components/Foot'
 import Events from '../../modules/Events'
 import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import CostIntroduce from '../../modules/CostIntroduce.jsx';
-import Competieion from '../.jsx';
+import Competieion from '../Competieion.jsx';
 import ShowProject from '../../modules/ShowProject.jsx';
 import Video from '../Video.jsx';
 import Main from './MainPage'
