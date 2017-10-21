@@ -11,7 +11,6 @@ import PersonInfo from './modules/PersonInfo.jsx';
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
-import Video from './modules/video'
 import {Component} from 'react'
 
 class AppRouter extends Component {
