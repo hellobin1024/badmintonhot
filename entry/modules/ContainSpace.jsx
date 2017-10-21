@@ -142,25 +142,27 @@ var ContainSpace = React.createClass({
                 null,
                 function (res) {
                     var a = res.data;
-                    var competitionType2 = "";
+                    if(a!=="null") {
+                        var competitionType2 = "";
+                        for (var i = 0; i < a.length; i++) {
+                            if (a[i].competitionType == "1") {
+                                competitionType2 = "公开";
+                            } else {
 
-                    for (var i = 0; i < a.length; i++) {
-                        if (a[i].competitionType == "1") {
-                            competitionType2 = "公开";
-                        } else {
+                                competitionType2 = "委托";
+                            }
+                            a[i].startTime = ref.dateFormat(a[i].startTime);
+                            a[i].endTime = ref.dateFormat(a[i].endTime);
 
-                            competitionType2 = "委托";
+                            a[i].competitionType2 = competitionType2;
                         }
-                        a[i].startTime = ref.dateFormat(a[i].startTime);
-                        a[i].endTime = ref.dateFormat(a[i].endTime);
 
-                        a[i].competitionType2 = competitionType2;
-                    }
 
-                    ref.setState({data: a});
-                    if(a!=null&&a!=""){
-                    var successModal = ref.refs['successModal'];
-                    $(successModal).modal('show');
+                        if (a != null && a != "") {
+                            ref.setState({data: a});
+                            var successModal = ref.refs['successModal'];
+                            $(successModal).modal('show');
+                        }
                     }
                 },
 
