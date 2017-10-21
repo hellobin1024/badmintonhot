@@ -284,9 +284,10 @@ var ContainSpace = React.createClass({
                                 <img src={window.App.getResourceDeployPrefix()+item.img} alt="" />
                             </div>
                             <div className="col-xs-7 td-middle">
-                                <Link to={window.App.getAppRoute() + "/video"}>
+                                {/*<Link to={window.App.getAppRoute() + "/video"}>*/}
+                                <a href="#">
                                     {item.title}
-                                </Link>
+                                </a>
                                 <p>{item.brief}</p>
                             </div>
                             <div className="col-xs-2 td-right">
