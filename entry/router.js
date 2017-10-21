@@ -12,8 +12,6 @@ import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
 
-import Video from './modules/Video'
-
 import {Component} from 'react'
 
 class AppRouter extends Component {
