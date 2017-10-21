@@ -448,9 +448,9 @@ var ContainSpace = React.createClass({
                                 <div className="top-destinations-info">
                                     <h4>最热视频</h4>
                                 </div>
-                                {/*<div className="top-destinations-bottom">*/}
-                                    {/*{vrs}*/}
-                                {/*</div>*/}
+                                <div className="top-destinations-bottom">
+                                    {vrs}
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-4 banner-bottom-grid">
