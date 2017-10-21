@@ -212,15 +212,12 @@ var ContainSpace = React.createClass({
             var events = this.state.events;
             events.map(function (item, i) {
                 ers.push(
-                    <div key={i}>
-                        <div className="date-text">
+                        <div className="date-text" key={i}>
                             <Link to={window.App.getAppRoute() + "/events"}>
                                 {item.startTimeStr}
                             </Link>
                             <p>{item.eventName}&nbsp; &nbsp;{item.eventBrief} </p>
                         </div>
-
-                    </div>
                 )
 
             })
@@ -407,9 +404,9 @@ var ContainSpace = React.createClass({
                                 <div className="top-destinations-info">
                                     <h4>最热视频</h4>
                                 </div>
-                                <div className="top-destinations-bottom">
-                                    {vrs}
-                                </div>
+                                {/*<div className="top-destinations-bottom">*/}
+                                    {/*{vrs}*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                         <div className="col-md-4 banner-bottom-grid">
@@ -469,6 +466,9 @@ var ContainSpace = React.createClass({
     componentDidMount(){
 
         function cycle($item, $cycler){
+            if($item.length==0){
+                $item=$('#cycler div:first');
+            }
             setTimeout(cycle, 2000, $item.next(), $cycler);
 
             $item.slideUp(1000,function(){
@@ -476,7 +476,7 @@ var ContainSpace = React.createClass({
             });
 
         }
-        cycle($('#cycler div:first'),  $('#cycler'));
+        setTimeout( cycle($('#cycler div:first'),  $('#cycler')),10000);
 
         $(document).ready(function(){
             /* This code is executed after the DOM has been completely loaded */
