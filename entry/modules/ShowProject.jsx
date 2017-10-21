@@ -452,6 +452,7 @@ var ShowProject = React.createClass({
                     if (item.projectType == "6") {
                         {/*Team报名*/
                         }
+                        ttrs = [];
                         if (item.personList !== null && item.personList !== undefined&&item.isTeamCreateor == 1) {
 
                             item.personList.map(function (itema, j) {
@@ -530,7 +531,7 @@ var ShowProject = React.createClass({
                     } else if (item.projectType == "1" || item.projectType == "2") {
                         {/*单人报名*/
                         }
-
+                        sjrs=[];
                         if (item.personList !== null && item.personList !== undefined) {
 
                             item.personList.map(function (itema, j) {
@@ -588,6 +589,7 @@ var ShowProject = React.createClass({
                     } else {
                         {/*两个人报名*/
                         }
+                        nrs=[];
                         if (item.personList !== null && item.personList !== undefined) {
 
                             item.personList.map(function (itema, j) {

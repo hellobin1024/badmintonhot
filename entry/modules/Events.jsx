@@ -80,6 +80,12 @@ var Event = React.createClass({
         var param={
             id:item
         }
+        var now=item.membernumber;
+        var max=item.eventMaxMemNum;
+
+        if(now+1>max){
+            alert("人数已满，不能报名！");
+        }
         var ref = this;
         Proxy.query(
             'POST',
