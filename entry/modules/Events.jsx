@@ -154,9 +154,16 @@ var Event = React.createClass({
             function (res) {
                 var a = res.data;
                 var costType2="";
+                var members=new Array();
                 for (var i = 0; i < a.length; i++){
                     costType2= ref.getStandard(a[i].costType);
                     a[i].costType2=costType2;
+                    members =a[i].eventMember.split(",");
+                    a[i].membernumber=members.length;
+                    if(members==""){
+                        a[i].membernumber=0;
+                    }
+
                 }
                 if(res.re==1) {
                     ref.setState({event: a});
@@ -269,7 +276,7 @@ var Event = React.createClass({
                                 </div>
                                 <ul onClick={ref.showEventsDetail.bind(null, item)}  >
                                     <li><span>时间：</span> {item.startTimeStr}</li>
-                                    <li><span>已报名：</span> {item.eventNowMemNum}人</li>
+                                    <li><span>已报名：</span> {item.membernumber}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
 
@@ -277,13 +284,13 @@ var Event = React.createClass({
                                 <div className="buy-me">
                                     {/*   <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>*/}
 
-                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
                                         <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                                     }
-                                    {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                                    {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
                                         <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
                                     }
-                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
                                         <a >您已报名</a>:null
                                     }
 
@@ -307,18 +314,18 @@ var Event = React.createClass({
                                 </div>
                                 <ul onClick={ref.showEventsDetail.bind(null, item)} >
                                     <li><span>时间：</span> {item.startTimeStr}</li>
-                                    <li><span>已报名：</span> {item.eventNowMemNum}人</li>
+                                    <li><span>已报名：</span> {item.membernumber}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
                                         <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                                     }
-                                    {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                                    {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
                                         <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
                                     }
-                                    {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
                                         <a >您已报名</a>:null
                                     }
                                 </div>
@@ -433,13 +440,13 @@ var Event = React.createClass({
                         <div className="buy-me">
 
 
-                            {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==0?
+                            {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
                               <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
-                            {item.eventMaxMemNum<item.eventNowMemNum&&item.isSignUp==0?
+                            {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
                             }
-                            {item.eventMaxMemNum>item.eventNowMemNum&&item.isSignUp==1?
+                            {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
                                 <a >您已报名</a>:null
                             }
 
