@@ -590,6 +590,7 @@ var ShowProject = React.createClass({
                         {/*两个人报名*/
                         }
                         nrs=[];
+                        
                         if (item.personList !== null && item.personList !== undefined) {
 
                             item.personList.map(function (itema, j) {
