@@ -157,12 +157,10 @@ var ContainSpace = React.createClass({
                             a[i].competitionType2 = competitionType2;
                         }
 
+                        ref.setState({data: a});
+                        var successModal = ref.refs['successModal'];
+                        $(successModal).modal('show');
 
-                        if (a != null && a != "") {
-                            ref.setState({data: a});
-                            var successModal = ref.refs['successModal'];
-                            $(successModal).modal('show');
-                        }
                     }
                 },
 
