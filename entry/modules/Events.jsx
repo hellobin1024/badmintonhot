@@ -169,6 +169,15 @@ var Event = React.createClass({
                     if(members==""){
                         a[i].membernumber=0;
                     }
+                    var b=[];
+                    var s="";
+                    b=a[i].placeYardStr.split(",");
+                    for(var j=0;j<b.length;j++)
+                    {
+                        s=s+"场地"+b[j]+" ";
+                    }
+                    a[i].eventPlaceName=a[i].eventPlaceName+" "+s;
+                    a[i].time=a[i].startTimeStr+"-"+a[i].endTimeStr.substring(10);
 
                 }
                 if(res.re==1) {
@@ -281,7 +290,7 @@ var Event = React.createClass({
                                     <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul onClick={ref.showEventsDetail.bind(null, item)}  >
-                                    <li><span>时间：</span> {item.startTimeStr}</li>
+                                    <li><span>时间：</span> {item.time}</li>
                                     <li><span>已报名：</span> {item.membernumber}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>

@@ -120,7 +120,13 @@ var CreateEvent = React.createClass({
         var createEvent = this.refs['createEvent'];
         var eventName = $(createEvent).find("input[name='eventName']").val();
         var eventBrief = $(createEvent).find("input[name='eventBrief']").val();
-        var yardNum = $(createEvent).find("input[name='fieldCount']").val();
+        var selected=$('#placeStr').val();
+        var select=selected.toString();
+        if(selected==""){
+            var yardNum=0;
+        }else{
+            var yardNum=selected.length;
+        }
         var chooseWeek = $('#chooseWeek option:selected').val();
         var eventPlace = $('#eventPlace option:selected').val();
         var eventGroup = $('#eventGroup option:selected').val();
@@ -245,7 +251,8 @@ var CreateEvent = React.createClass({
                 feeDes:"",
                 eventNowMemNum:eventNowMemNum2,
                 status:0,
-                costType:costType
+                costType:costType,
+                placeYardStr:select
 
             };
             ProxyQ.query(
@@ -280,11 +287,20 @@ var CreateEvent = React.createClass({
             function(ob) {
                 var reCode = ob.re;
                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
-                    alert(ob.response)
+                    alert(ob.response);
                     return;
                 }
                 var data=ob.data;
                 this.setState({data:data});
+                var a=data.listVenueUnit[0];
+                var yardTotal=a.yardTotal;
+                var yard=[];
+                //this.setState({yard:data[i].})
+                for(var i=1;i<=yardTotal;i++)
+                {
+                    yard[i-1]="场地"+i+"";
+                }
+                this.setState({yard:yard});
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -314,12 +330,26 @@ var CreateEvent = React.createClass({
 
         }
     },
+    yardPlaceSwitch:function(){
+        var eventPlace = $('#eventPlace option:selected').val();
+        var data=this.state.data;
+        var a=data.listVenueUnit[eventPlace-1];
+        var yardTotal=a.yardTotal;
+        var yard=[];
+        //this.setState({yard:data[i].})
+        for(var i=1;i<=yardTotal;i++)
+        {
+            yard[i-1]="场地"+i+"";
+        }
+        this.setState({yard:yard});
+
+    },
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null,addPerson:[]});
+        return ({personId: personId, data:null,addPerson:[],yard:[]});
     },
 
     render:function(){
@@ -329,14 +359,16 @@ var CreateEvent = React.createClass({
         var eventGroupList = [];
         var eventTrainerList = [];
         var weekList=[];
+        var YardPlace=[];
 
-
+          var ref=this;
         if(data!==undefined && data!==null){
 
             var data4=this.getWeek();
             var data1=data.listGroupInfo;
             var data2=data.listVenueUnit;
             var data3=data.listTrainer;
+            var data5=this.state.yard;
             data2.map(function(item, i){
                 eventPlaceList.push(<option key={i} value={item.unitId}>{item.name}</option>);
             });
@@ -348,6 +380,9 @@ var CreateEvent = React.createClass({
             });
             data4.map(function(item, i){
                 weekList.push(<option key={i} value={item.value}>{item.lable}</option>);
+            });
+            data5.map(function(item, i){
+                YardPlace.push(<option key={i} value={i+1}>{item}</option>);
             });
             mainContent=
                 <div ref="createEvent" className="c-block">
@@ -400,19 +435,24 @@ var CreateEvent = React.createClass({
 
                     <div className="common-line">
 
-                        <span className="common-label l-label" style={{}}>活动地点：</span>
+                        <span style={{float:'left'}} className="common-label l-label" >活动地点：</span>
                         <span>
-                            <select className="common-input" style={{color:'#000000!important',width:'190px',lineHeight:'16px'}} id="eventPlace">
+                            <select className="common-input" onClick={ref.yardPlaceSwitch.bind(null)} style={{color:'#000000!important',width:'190px',lineHeight:'16px',float:'left'}} id="eventPlace">
                                 {eventPlaceList}
                             </select>
                         </span>
-                        <span className="common-label r-label">需要场地数量：</span>
+                        <span style={{float:'left'}} className="common-label r-label">选择所需的场地：</span>
+
+                        {/*<select   size="6" multiple="true"  style={{color:'#000000!important',width:'210px',lineHeight:'10px'}} id="placeYard">
+                                {eventPlaceList}
+                            </select>*/}
                         <span>
-                            <input type="text" name="fieldCount" defaultValue="1" className="common-input" tabIndex="2"></input>
+                        <select  key='selectCompany' id="placeStr" style={{width:'190px',height:'30px',float:'left'}}  className="selectpicker show-tick form-control" multiple data-live-search="true">
+                            {YardPlace}
+                        </select>
                         </span>
-                    </div>
-
-
+                        <div className="clearfix"></div>
+                     </div>
                     <div className="common-line">
                         <span className="common-label l-label">最多人数：</span>
                         <span>
