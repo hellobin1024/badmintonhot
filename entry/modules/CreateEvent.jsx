@@ -301,6 +301,7 @@ var CreateEvent = React.createClass({
                     yard[i-1]="场地"+i+"";
                 }
                 this.setState({yard:yard});
+                this.componentDidMount();
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -360,8 +361,7 @@ var CreateEvent = React.createClass({
         var eventTrainerList = [];
         var weekList=[];
         var YardPlace=[];
-
-          var ref=this;
+        var ref=this;
         if(data!==undefined && data!==null){
 
             var data4=this.getWeek();
@@ -433,26 +433,7 @@ var CreateEvent = React.createClass({
                         <div className="clearfix"/>
                     </div>
 
-                    <div className="common-line">
 
-                        <span style={{float:'left'}} className="common-label l-label" >活动地点：</span>
-                        <span>
-                            <select className="common-input" onClick={ref.yardPlaceSwitch.bind(null)} style={{color:'#000000!important',width:'190px',lineHeight:'16px',float:'left'}} id="eventPlace">
-                                {eventPlaceList}
-                            </select>
-                        </span>
-                        <span style={{float:'left'}} className="common-label r-label">选择所需的场地：</span>
-
-                        {/*<select   size="6" multiple="true"  style={{color:'#000000!important',width:'210px',lineHeight:'10px'}} id="placeYard">
-                                {eventPlaceList}
-                            </select>*/}
-                        <span>
-                        <select  key='selectCompany' id="placeStr" style={{width:'190px',height:'30px',float:'left'}}  className="selectpicker show-tick form-control" multiple data-live-search="true">
-                            {YardPlace}
-                        </select>
-                        </span>
-                        <div className="clearfix"></div>
-                     </div>
                     <div className="common-line">
                         <span className="common-label l-label">最多人数：</span>
                         <span>
@@ -538,6 +519,23 @@ var CreateEvent = React.createClass({
                         </div>
                         <div className="clearfix"></div>
                     </div>
+                    <div className="common-line">
+
+                        <span style={{float:'left'}} className="common-label l-label" >活动地点：</span>
+                        <span>
+                            <select className="common-input" onClick={ref.yardPlaceSwitch.bind(null)} style={{color:'#000000!important',width:'190px',lineHeight:'16px',float:'left'}} id="eventPlace">
+                                {eventPlaceList}
+                            </select>
+                        </span>
+                        <span style={{float:'left',width:'115px'}} className="common-label r-label">选择所需的场地：</span>
+                        <span style={{width:'240px'}}>
+                            <select  id="placeStr"  style={{width:'240px'}} className="selectpicker show-tick form-control" multiple data-live-search="true">
+                                {YardPlace}
+                            </select>
+                        </span>
+                        <div className="clearfix"></div>
+                    </div>
+
                     <div className="save-line" style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
@@ -552,6 +550,8 @@ var CreateEvent = React.createClass({
         return mainContent;
     },
     componentDidMount:function () {
+        $('#placeStr').selectpicker('refresh');
+        $('#placeStr').selectpicker('show');
         $(document).click(function () {
             $('.clockpicker').clockpicker()
                 .find('input').change(function(){

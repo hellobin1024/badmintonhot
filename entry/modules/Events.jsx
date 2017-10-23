@@ -171,13 +171,22 @@ var Event = React.createClass({
                     }
                     var b=[];
                     var s="";
+                    if(a[i].placeYardStr!=""){
                     b=a[i].placeYardStr.split(",");
+
                     for(var j=0;j<b.length;j++)
                     {
                         s=s+"场地"+b[j]+" ";
                     }
                     a[i].eventPlaceName=a[i].eventPlaceName+" "+s;
-                    a[i].time=a[i].startTimeStr+"-"+a[i].endTimeStr.substring(10);
+
+                    }else{
+
+                    a[i].eventPlaceName=="";
+                    }
+                    var c=a[i].endTimeStr;
+                    var d=c.substring(11);
+                    a[i].time=(a[i].startTimeStr+"-"+d+"").substring(5);
 
                 }
                 if(res.re==1) {
@@ -328,7 +337,7 @@ var Event = React.createClass({
                                     <p><span>组织者：</span>{item.eventManagerLoginName}</p>
                                 </div>
                                 <ul onClick={ref.showEventsDetail.bind(null, item)} >
-                                    <li><span>时间：</span> {item.startTimeStr}</li>
+                                    <li><span>时间：</span> {item.time}</li>
                                     <li><span>已报名：</span> {item.membernumber}人</li>
                                     <li><span>简介：</span> {item.eventBrief}</li>
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
@@ -430,7 +439,8 @@ var Event = React.createClass({
             if(this.state.modal!==null&&this.state.modal!==undefined){
                 var item = this.state.modal;
                 mrs.push(
-                    <div style={{textAlign: 'center'}} key='modal'>
+                    <div>
+                    <div style={{textAlign: 'left'}} key='modal'>
                         <div className="business">
                             <h2 id="eventTitle">{item.eventName}</h2>
                             <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
@@ -439,7 +449,7 @@ var Event = React.createClass({
                             <p id="eventCreater"><span>组织者：</span>{item.eventManagerLoginName}</p>
                         </div>
                         <ul>
-                            <li id="eventTime"><span>时间：</span>{item.startTimeStr}</li>
+                            <li id="eventTime"><span>时间：</span>{item.time}</li>
                             <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
                             <li id="eventNum"><span>参与者：</span>{item.eventMember}</li>
                             <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
@@ -453,8 +463,6 @@ var Event = React.createClass({
 
                         </ul>
                         <div className="buy-me">
-
-
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
                               <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
@@ -467,7 +475,32 @@ var Event = React.createClass({
 
                         </div>
                     </div>
+                        <div style={{textAlign: 'right'}}>
+                            <table className="table table-striped invoice-table">
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                    <th width="300"></th>
+                                </tr>
+                                </thead>
+                                <tr><td><h4 style={{marginTop:'15px'}}><strong></strong></h4></td></tr>
+                                <tr>
+                                    <td>地点：{1}</td>
+                                    <td>创建者：{1}</td>
+                                    <td>状态：{ 1}</td>
+                                </tr>
+                                <tr>
+                                    <td>地点：{1}</td>
+                                    <td>创建者：{1}</td>
+                                    <td>成员：{1}</td>
+                                </tr>
 
+
+
+                            </table>
+                        </div>
+                    </div>
                 )
             }
             contains =
