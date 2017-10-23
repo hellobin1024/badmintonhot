@@ -440,31 +440,52 @@ var Event = React.createClass({
                 var item = this.state.modal;
                 mrs.push(
                     <div>
-                    <div style={{textAlign: 'left'}} key='modal'>
-                        <div className="business">
-                            <h2 id="eventTitle">{item.eventName}</h2>
-                            <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
-                        </div>
-                        <div className="value">
-                            <p id="eventCreater"><span>组织者：</span>{item.eventManagerLoginName}</p>
-                        </div>
-                        <ul>
-                            <li id="eventTime"><span>时间：</span>{item.time}</li>
-                            <li id="eventMaxNum"><span>最大需求人数：</span>{item.eventMaxMemNum}</li>
-                            <li id="eventNum"><span>参与者：</span>{item.eventMember}</li>
-                            <li id="eventBrief"><span>简介：</span>{item.eventBrief}</li>
-                            {/*<li id="costType"><span>收费标准：</span>{item.costType2}</li>
-                            <li id="cost"><span>花费：</span>{item.cost}</li>*/}
-                            <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
+                    <div style={{textAlign: 'center'}} key='modal'>
+                        <div style={{height: '30px',textAlign: 'center',background:'#344859'}}>
+                            <div id="eventMaxNum" style={{float: 'left',marginLeft:'150px'}}><span style={{fontSize: '14px'}} >最大需求人数：</span>{item.eventMaxMemNum}<span>  </span><span style={{fontSize: '14px'}} >参与者：</span>{item.eventMember}
+                            </div>
                             {
-                                item.money!=null? <li><span>缴费状态：</span>已缴费{item.money+"/元"}</li>:
-                                    <li><span>缴费状态：</span>未交费</li>
+                                item.money!=null? <div style={{float: 'left',fontSize: '14px',marginLeft:'5px'}}>
+                                    <span style={{float: 'left',fontSize: '14px',marginLeft:'5px'}}>缴费状态：</span>已缴费{item.money+"/元"}</div>:
+                                    <div style={{float: 'left',fontSize: '14px',marginLeft:'5px'}} ><span>缴费状态：</span>未交费</div>
                             }
 
-                        </ul>
+                        </div>
+                        <div>
+                            <table className="table table-striped invoice-table">
+                                <thead className="table-head">
+                                <tr>
+                                    <th width="200">场地编号</th>
+                                    <th width="150">8.00-9.00</th>
+                                    <th width="150">9.00-10.00</th>
+                                    <th width="150">10.00-11.00</th>
+                                    <th width="150">11.00-12.00</th>
+                                    <th width="150">12.00-13.00</th>
+                                    <th width="150">13.00-14.00</th>
+                                    <th width="150">14.00-15.00</th>
+                                    <th width="150">15.00-16.00</th>
+                                    <th width="150">16.00-17.00</th>
+                                </tr>
+                                </thead>
+                                <tr><td><h4 style={{marginTop:'15px'}}><strong></strong></h4></td></tr>
+                                <tr>
+                                    <td>场馆一</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+
+                            </table>
+                        </div>
                         <div className="buy-me">
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
-                              <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                                <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
                             {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
@@ -474,32 +495,8 @@ var Event = React.createClass({
                             }
 
                         </div>
-                    </div>
-                        <div style={{textAlign: 'right'}}>
-                            <table className="table table-striped invoice-table">
-                                <thead className="table-head">
-                                <tr>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                </tr>
-                                </thead>
-                                <tr><td><h4 style={{marginTop:'15px'}}><strong></strong></h4></td></tr>
-                                <tr>
-                                    <td>地点：{1}</td>
-                                    <td>创建者：{1}</td>
-                                    <td>状态：{ 1}</td>
-                                </tr>
-                                <tr>
-                                    <td>地点：{1}</td>
-                                    <td>创建者：{1}</td>
-                                    <td>成员：{1}</td>
-                                </tr>
+                      </div>
 
-
-
-                            </table>
-                        </div>
                     </div>
                 )
             }

@@ -124,6 +124,8 @@ var CreateEvent = React.createClass({
         var select=selected.toString();
         if(selected==""){
             var yardNum=0;
+            Tips.showTips("必须选择要场地~");
+            return;
         }else{
             var yardNum=selected.length;
         }
@@ -295,7 +297,6 @@ var CreateEvent = React.createClass({
                 var a=data.listVenueUnit[0];
                 var yardTotal=a.yardTotal;
                 var yard=[];
-                //this.setState({yard:data[i].})
                 for(var i=1;i<=yardTotal;i++)
                 {
                     yard[i-1]="场地"+i+"";
@@ -337,13 +338,12 @@ var CreateEvent = React.createClass({
         var a=data.listVenueUnit[eventPlace-1];
         var yardTotal=a.yardTotal;
         var yard=[];
-        //this.setState({yard:data[i].})
         for(var i=1;i<=yardTotal;i++)
         {
             yard[i-1]="场地"+i+"";
         }
         this.setState({yard:yard});
-
+        this.componentDidMount();
     },
     getInitialState: function () {
         var personId = null;
@@ -522,20 +522,23 @@ var CreateEvent = React.createClass({
                     <div className="common-line">
 
                         <span style={{float:'left'}} className="common-label l-label" >活动地点：</span>
-                        <span>
+                        <span >
                             <select className="common-input" onClick={ref.yardPlaceSwitch.bind(null)} style={{color:'#000000!important',width:'190px',lineHeight:'16px',float:'left'}} id="eventPlace">
                                 {eventPlaceList}
                             </select>
                         </span>
-                        <span style={{float:'left',width:'115px'}} className="common-label r-label">选择所需的场地：</span>
-                        <span style={{width:'240px'}}>
-                            <select  id="placeStr"  style={{width:'240px'}} className="selectpicker show-tick form-control" multiple data-live-search="true">
+                        <span style={{width:'115px',float:'left'}} className="common-label r-label">选择所需的场地：</span>
+                        <span style={{float:'left'}}>
+                            <select  id="placeStr" className="selectpicker show-tick form-control" multiple data-live-search="true">
                                 {YardPlace}
                             </select>
                         </span>
                         <div className="clearfix"></div>
                     </div>
+                    <div className="common-line">
 
+                        <div className="clearfix"></div>
+                    </div>
                     <div className="save-line" style={{position:'absolute'}}>
                         <span>
                             <button className="save-Btn" onClick={this.doSave}>保存</button>
