@@ -241,6 +241,7 @@ var Event = React.createClass({
             }
         );
     },
+
     render:function() {
         var contains = null;
 
@@ -475,10 +476,11 @@ var Event = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-                                        {  /*  <button onClick={this.test}>test</button>*/}
+                                        <button onClick={this.test}>test</button>
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
+
                                 </div>
                             </div>
                         </div>
