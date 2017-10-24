@@ -29,6 +29,7 @@ var Event = React.createClass({
         }else {
             this.getAllGroups();
         }
+
     },
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
@@ -60,6 +61,7 @@ var Event = React.createClass({
 
                 var successModal = ref.refs['successModal'];
                 $(successModal).modal('show');
+                this.componentDidMount();
             },
 
             function (xhr, status, err) {
@@ -483,7 +485,45 @@ var Event = React.createClass({
 
                             </table>
                         </div>
-                        <div className="buy-me">
+                        <div className="common-line">
+                        <span style={{float:'left'}} className="common-label l-label" >选择所需的场地：</span>
+                        <span style={{float:'left'}}>
+                            <select  id="placeStr" className="selectpicker show-tick form-control" multiple data-live-search="true">
+                                <option value={1}>按每人收费</option>
+                                <option value={2}>按每小时收费</option>
+                                <option value={3}>总费用</option>
+                            </select>
+                        </span>
+                            <div className="clearfix"></div>
+                        </div>
+                        <div className="common-line">
+                            <div style={{float:'left',width:'300px'}}>
+                                <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" style={{width:'100px'}} value="9:30"  name="startTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
+                        </span>
+
+                            </div>
+                            <div style={{float:'left',width:'300px'}}>
+                                <span className="common-label r-label" style={{float:'left'}}>结束时间：</span>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" value="11:30" style={{width:'100px'}} name="endTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
+                        </span>
+                            </div>
+
+
+                            <div className="clearfix"/>
+                        </div>
+                        <div>
+                        <div className="buy-me" style={{marginTop:'20px'}}>
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
                                 <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
                             }
@@ -493,7 +533,7 @@ var Event = React.createClass({
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
                                 <a >您已报名</a>:null
                             }
-
+                        </div>
                         </div>
                       </div>
 
@@ -565,6 +605,10 @@ var Event = React.createClass({
 
         return contains;
     },
+    componentDidMount:function () {
+        $('#placeStr').selectpicker('refresh');
+        $('#placeStr').selectpicker('show');
+    }
 
 });
 
