@@ -142,25 +142,25 @@ var ContainSpace = React.createClass({
                 null,
                 function (res) {
                     var a = res.data;
-                    var competitionType2 = "";
+                    if(a!=="null") {
+                        var competitionType2 = "";
+                        for (var i = 0; i < a.length; i++) {
+                            if (a[i].competitionType == "1") {
+                                competitionType2 = "公开";
+                            } else {
 
-                    for (var i = 0; i < a.length; i++) {
-                        if (a[i].competitionType == "1") {
-                            competitionType2 = "公开";
-                        } else {
+                                competitionType2 = "委托";
+                            }
+                            a[i].startTime = ref.dateFormat(a[i].startTime);
+                            a[i].endTime = ref.dateFormat(a[i].endTime);
 
-                            competitionType2 = "委托";
+                            a[i].competitionType2 = competitionType2;
                         }
-                        a[i].startTime = ref.dateFormat(a[i].startTime);
-                        a[i].endTime = ref.dateFormat(a[i].endTime);
 
-                        a[i].competitionType2 = competitionType2;
-                    }
-
-                    ref.setState({data: a});
-                    if (a != null && a != "") {
+                        ref.setState({data: a});
                         var successModal = ref.refs['successModal'];
                         $(successModal).modal('show');
+
                     }
                 },
 
@@ -274,9 +274,10 @@ test:function (e) {
                                 <img src={window.App.getResourceDeployPrefix() + item.img} alt=""/>
                             </div>
                             <div className="col-xs-7 td-middle">
-                                <Link to={window.App.getAppRoute() + "/video"}>
+                                {/*<Link to={window.App.getAppRoute() + "/video"}>*/}
+                                <a href="#">
                                     {item.title}
-                                </Link>
+                                </a>
                                 <p>{item.brief}</p>
                             </div>
                             <div className="col-xs-2 td-right">
@@ -287,11 +288,13 @@ test:function (e) {
                     </div>
                 )
             })
+
             contains =
                 <div className="banner-bottom">
                     <div className="container">
                         <div className="banner-bottom-grids">
                             <div className="col-md-4 banner-bottom-grid">
+
                                 <div className="choose-info">
                                     <h4>资讯热点</h4>
                                 </div>
@@ -359,6 +362,7 @@ test:function (e) {
                                         {vrs}
                                     </div>
                                 </div>
+
                             </div>
                             <div className="col-md-4 banner-bottom-grid">
                                 <div className="choose-info">
