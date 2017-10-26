@@ -216,7 +216,7 @@ test:function (e) {
                                             fontSize: '16px',
                                             color: '#f5f5f5',
                                             marginLeft: '5px'
-                                        }}>主办人：</span>{item.hostUnit}
+                                        }}>主办方：</span>{item.hostUnit}
                                     </p>
 
                                     <p><span style={{fontSize: '16px', color: '#f5f5f5'}}>场地：</span> {item.unitName}
