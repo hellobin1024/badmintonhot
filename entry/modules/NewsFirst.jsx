@@ -30,8 +30,7 @@ var NewsFirst = React.createClass({
                                 </div>
                                 <div className="destinations-grid-info">
                                     <div className="destinations-hotel">{item.brief}</div>
-                                    <div className="destinations-price"></div>
-                                    <div className="clearfix"></div>
+                                    <br> </br>
                                 </div>
                             </Link>
                         </li> :
