@@ -5,7 +5,7 @@ import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
-
+import MultipleSelect from './MultipleSelect';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
@@ -15,7 +15,7 @@ var Event = React.createClass({
     getInitialState: function () {
         var token=this.props.token;
         return ({
-            token:token
+            token:token,yard:[]
         });
     },
     initialData:function(){
@@ -61,7 +61,7 @@ var Event = React.createClass({
 
                 var successModal = ref.refs['successModal'];
                 $(successModal).modal('show');
-                this.componentDidMount();
+
             },
 
             function (xhr, status, err) {
@@ -150,6 +150,7 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
+
             var url = "/func/allow/getEvents";//未登录
         }
 
@@ -166,9 +167,13 @@ var Event = React.createClass({
                 for (var i = 0; i < a.length; i++){
                     costType2= ref.getStandard(a[i].costType);
                     a[i].costType2=costType2;
+                    if(a[i].eventMember!=""&&a[i].eventMember!=undefined){
                     members =a[i].eventMember.split(",");
                     a[i].membernumber=members.length;
                     if(members==""){
+                        a[i].membernumber=0;
+                    }
+                    }else{
                         a[i].membernumber=0;
                     }
                     var b=[];
@@ -181,6 +186,12 @@ var Event = React.createClass({
                         s=s+"场地"+b[j]+" ";
                     }
                     a[i].eventPlaceName=a[i].eventPlaceName+" "+s;
+                    var yard=[];
+                    for(var j=0;j<b.length;j++)
+                    {
+                            yard[j]="场地"+(j+1)+"";
+                    }
+                    ref.setState({yard:yard});
 
                     }else{
 
@@ -248,7 +259,7 @@ var Event = React.createClass({
         }
        return type;
     },
-    test:function () {
+    /* test:function () {
         var url = "/func/allow/testJp";
         var ref = this;
         var param={
@@ -273,7 +284,7 @@ var Event = React.createClass({
                 console.error(this.props.url, status, err.toString());
             }
         );
-    },
+    },*/
 
     render:function() {
         var contains = null;
@@ -283,6 +294,7 @@ var Event = React.createClass({
             var event = this.state.event;
             var group = this.state.group;
             var isLand=this.props.token;
+            var yardplace=this.state.yard;
             var trs = [];
             var grs = [];
             var ref = this;
@@ -458,19 +470,18 @@ var Event = React.createClass({
                             <table className="table table-striped invoice-table">
                                 <thead className="table-head">
                                 <tr>
-                                    <th width="200">场地编号</th>
-                                    <th width="150">8.00-9.00</th>
-                                    <th width="150">9.00-10.00</th>
-                                    <th width="150">10.00-11.00</th>
-                                    <th width="150">11.00-12.00</th>
-                                    <th width="150">12.00-13.00</th>
-                                    <th width="150">13.00-14.00</th>
-                                    <th width="150">14.00-15.00</th>
-                                    <th width="150">15.00-16.00</th>
-                                    <th width="150">16.00-17.00</th>
+                                    <th width="20%">场地编号</th>
+                                    <th width="15%">8.00-9.00</th>
+                                    <th width="15%">9.00-10.00</th>
+                                    <th width="15%">10.00-11.00</th>
+                                    <th width="15%">11.00-12.00</th>
+                                    <th width="15%">12.00-13.00</th>
+                                    <th width="15%">13.00-14.00</th>
+                                    <th width="15%">14.00-15.00</th>
+                                    <th width="15%">15.00-16.00</th>
+                                    <th width="15%">16.00-17.00</th>
                                 </tr>
                                 </thead>
-                                <tr><td><h4 style={{marginTop:'15px'}}><strong></strong></h4></td></tr>
                                 <tr>
                                     <td>场馆一</td>
                                     <td>2</td>
@@ -485,17 +496,6 @@ var Event = React.createClass({
                                 </tr>
 
                             </table>
-                        </div>
-                        <div className="common-line">
-                        <span style={{float:'left'}} className="common-label l-label" >选择所需的场地：</span>
-                        <span style={{float:'left'}}>
-                            <select  id="placeStr" className="selectpicker show-tick form-control" multiple data-live-search="true">
-                                <option value={1}>按每人收费</option>
-                                <option value={2}>按每小时收费</option>
-                                <option value={3}>总费用</option>
-                            </select>
-                        </span>
-                            <div className="clearfix"></div>
                         </div>
                         <div className="common-line">
                             <div style={{float:'left',width:'300px'}}>
@@ -522,6 +522,13 @@ var Event = React.createClass({
 
 
                             <div className="clearfix"/>
+                        </div>
+                        <div className="common-line">
+                            <span style={{float:'left'}} className="common-label l-label" >选择所需的场地：</span>
+                        <span style={{float:'left'}}>
+                             <MultipleSelect data={yardplace}/>
+                        </span>
+                            <div className="clearfix"></div>
                         </div>
                         <div>
                         <div className="buy-me" style={{marginTop:'20px'}}>
@@ -568,7 +575,7 @@ var Event = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-                                        <button onClick={this.test}>test</button>
+                                        {/*<button onClick={this.test}>test</button>*/}
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
@@ -589,7 +596,7 @@ var Event = React.createClass({
                         <div className="modal-dialog modal-sm"
                              style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
                             <div className="modal-content"
-                                 style={{position: 'relative', width: '100%', padding: '40px'}}>
+                                 style={{position: 'relative', width: '750px', padding: '40px'}}>
 
                                 <div className="modal-body">
                                     <div className="modalEventDetail">

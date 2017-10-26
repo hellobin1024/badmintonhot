@@ -43,7 +43,40 @@ var HistoryEvents = React.createClass({
         }
         return ({personId: personId, data:null});
     },
+    operate: function (ob,flag,index) {
+        var eventId=ob;
+        if(flag=="delete"){
+            var url="/func/allow/deleteHistoryMyEvents";
+        }else{
+            var url="/func/allow/quitEvents";
+        }
 
+        var params={
+            personId:this.state.personId,
+            eventId:eventId,
+        };
+
+        ProxyQ.query(
+            'post',
+            url,
+            params,
+            null,
+            function(ob) {
+                var reCode = ob.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                    alert("操作失败");
+                    return;
+                }
+                alert("操作成功");
+                var data = this.state.data;
+                data.splice(index,1);
+                this.setState({data:data});
+            }.bind(this),
+            function(xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }.bind(this)
+        );
+    },
     render:function(){
         var mainContent = null;
         var data = this.state.data;
@@ -77,7 +110,7 @@ var HistoryEvents = React.createClass({
                         <td></td>
                     </tr>
 
-                    {   /* {
+                    {
                         item.remark==1?
                             <tr>
                                 <td></td>
@@ -90,8 +123,7 @@ var HistoryEvents = React.createClass({
                         <td></td>
                         <td style={{textAlign:'center'}}><a className="operate" onClick={operate.bind(ins,item.eventId,item.flag,i)}>{item.operate}</a></td>
                         <td></td>
-                    </tr>*/}
-
+                    </tr>
 
                     </tbody>
 
