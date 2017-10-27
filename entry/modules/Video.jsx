@@ -27,54 +27,43 @@ var Video = React.createClass({
     },
 
 
-    getAllVideos:function () {
+    getAllVideos: function () {
 
-        var url = "/func/allow/getVideos";
-        var param={
-        }
+        var url = "/func/allow/getAllVideos";
         var ref = this;
+        var params = {};
         Proxy.query(
             'POST',
             url,
-            param,
+            params,
             null,
             function (res) {
-
-                if(res.re==-1||res.re=="-1"){
-                    alert(res.data);
-                    //ref.initialData();
-                }
-                alert(res.data);
+                var a = res.data;
+                ref.setState({videos: a});
             },
 
             function (xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
             }
         );
+
     },
     render:function() {
         var contains = null;
 
         var trs = [];
-        var grs = [];
         var ref = this;
-        trs.push(
-            <div>
-                <QnyVideo option={{
-                    width:'600px',
-                    height:'400px',
-                    url:'http://114.215.99.2:8880/video/test.mp4',
-                    type:'mp4',
-                    poster:'/badmintonhot/video/testpic.png'
-                }}/>
 
-                <div> <span style={{color:'#000000',fontSize:'16px'}}>视频标题：</span></div>
-                <div> <span style={{color:'#000000',fontSize:'16px'}}>视频简介：</span></div>
-
-
-            </div>
-        )
-
+        // var videos = this.state.videos;
+        // videos.map(function (item, i) {
+        //     trs.push(
+        //         <div key={i}>
+        //             <img src={window.App.getResourceDeployPrefix() + item.img} alt=""/>
+        //             <div><span style={{color: '#000000', fontSize: '16px'}}>视频标题：{item.title}</span></div>
+        //             <div><span style={{color: '#000000', fontSize: '16px'}}>视频简介：{item.brief}</span></div>
+        //         </div>
+        //     )
+        // })
 
 
         contains =
@@ -90,19 +79,14 @@ var Video = React.createClass({
                                         </div>
                                     </div>
                                 </div>
-                                <RightSlide/>
-                                <div className="clearfix"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
         return contains;
-    },
-
+    }
 });
 
 const mapStateToProps = (state, ownProps) => {
