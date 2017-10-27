@@ -121,13 +121,15 @@ var CreateEvent = React.createClass({
         var eventName = $(createEvent).find("input[name='eventName']").val();
         var eventBrief = $(createEvent).find("input[name='eventBrief']").val();
         var selected=$('#placeStr').val();
-        var select=selected.toString();
-        if(selected==""){
+        var isChooseYardTime="0";
+        if(selected==null){
             var yardNum=0;
-            Tips.showTips("必须选择要场地~");
-            return;
+            isChooseYardTime="0";
+            var select="";
         }else{
+            var select=selected.toString();
             var yardNum=selected.length;
+            isChooseYardTime="1";
         }
         var chooseWeek = $('#chooseWeek option:selected').val();
         var eventPlace = $('#eventPlace option:selected').val();
@@ -254,8 +256,8 @@ var CreateEvent = React.createClass({
                 eventNowMemNum:eventNowMemNum2,
                 status:0,
                 costType:costType,
-                placeYardStr:select
-
+                placeYardStr:select,
+                isChooseYardTime:isChooseYardTime
             };
             ProxyQ.query(
                 'post',
