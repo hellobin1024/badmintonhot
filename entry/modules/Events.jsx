@@ -57,8 +57,72 @@ var Event = React.createClass({
                     item.costType2=costType2;
                   }
                   item.member = member;
+                  if(item.placeYardStr!=""){
+                    var b=[];
+                    var c=[];
+                    b=item.placeYardStr.split(",");
+                    for(var j=0;j<b.length;j++)
+                    {
+                      var s="场地"+b[j]+"";
+                        c[j]=s;
+                    }
+                    item.yard=c;
+                 }
                   ref.setState({modal: item});
                 if(item.isChooseYardTime=="1"){
+
+                    var url="/func/allow/getAllVenueUnitTime";
+                    var params={
+                        unitId:item.eventPlaceId,
+                        placeYardStr:item.placeYardStr
+
+                    };
+
+                    Proxy.query(
+                        'post',
+                        url,
+                        params,
+                        null,
+                        function(ob) {
+                            var reCode = ob.re;
+                            if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
+                                return;
+                            }
+                            var data=ob.data;
+                            var unitperson =[];
+                            for (var i=0;i<data.length;i++){
+
+                                var a1="场地"+data[i].unitNum;
+                                var a2=data[i].timeInterval1;
+                                var a3=data[i].timeInterval2;
+                                var a4=data[i].timeInterval3;
+                                var a5=data[i].timeInterval4;
+                                var a6=data[i].timeInterval5;
+                                var a7=data[i].timeInterval6;
+                                var a8=data[i].timeInterval7;
+                                var a9=data[i].timeInterval8;
+                                var a10=data[i].timeInterval9;
+                                var b=[];
+                                b[0]=a1;
+                                b[1]=a2;
+                                b[2]=a3;
+                                b[3]=a4;
+                                b[4]=a5;
+                                b[5]=a6;
+                                b[6]=a7;
+                                b[7]=a8;
+                                b[8]=a9;
+                                b[9]=a10;
+                               unitperson.push(b);
+                            }
+                            ref.setState({unitperson:unitperson});
+                        }.bind(this),
+                        function(xhr, status, err) {
+                            console.error(this.props.url, status, err.toString());
+                        }.bind(this)
+                    );
+
+
                     var successModal = ref.refs['successModal'];
                     $(successModal).modal('show');
                 }else{
@@ -87,8 +151,7 @@ var Event = React.createClass({
         if(this.state.token!==null&&this.state.token!==undefined){
         var url = "/func/allow/eventSignUp";
         if(item.isChooseYardTime=="1"){
-            var selected=$('#placeStr').val();
-            var select=selected.toString();
+            var select = $('#yardplace option:selected').val();
             var a1=item.startTimeStr;
             var a2=a1.substring(0,11);
             var b1=item.endTimeStr;
@@ -469,8 +532,31 @@ var Event = React.createClass({
             }
 
             var mrs = [];
+            var yards=[];
             if(this.state.modal!==null&&this.state.modal!==undefined){
                 var item = this.state.modal;
+                if(item.yard!==null&&item.yard!==undefined){
+                    var yarde=item.yard;
+                    yarde.map(function(item, i){
+                        for(var j=0;j++;j<9)
+                        var time = "timeInterval"
+                        yards.push(<option key={i} value={i+1}>{item}}</option>);
+                    });
+                }
+                var brs=[];
+
+                if(this.state.unitperson!==null&&this.state.unitperson!==undefined){
+                    for(var i=0;i<this.state.unitperson.length;i++){
+                        var rs=[];
+
+                        this.state.unitperson[i].map(function(item, i){
+                            rs.push(<td key={i} value={i+1}>{item}</td>);
+                        });
+                        brs.push(<tr key={i} value={i+1}>{rs}</tr>);
+
+                    }
+
+                }
                 mrs.push(
                     <div ref="Event" >
                     <div style={{textAlign: 'center'}} key='modal'>
@@ -500,8 +586,7 @@ var Event = React.createClass({
                                     <th width="15%">16.00-17.00</th>
                                 </tr>
                                 </thead>
-                                <tr>
-                                    <td>场馆一</td>
+                                    { /*<td>场馆一</td>
                                     <td>2</td>
                                     <td>2</td>
                                     <td>2</td>
@@ -510,8 +595,9 @@ var Event = React.createClass({
                                     <td>0</td>
                                     <td>0</td>
                                     <td>0</td>
-                                    <td>0</td>
-                                </tr>
+                                    <td>0</td>*/}
+                                    {brs}
+
 
                             </table>
                         </div>
@@ -544,7 +630,9 @@ var Event = React.createClass({
                         <div className="common-line">
                             <span style={{float:'left'}} className="common-label l-label" >选择所需的场地：</span>
                         <span style={{float:'left'}}>
-                             <MultipleSelect data={yardplace}/>
+                              <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'16px'}} id="yardplace">
+                                  {yards}
+                              </select>
                         </span>
                             <div className="clearfix"></div>
                         </div>
