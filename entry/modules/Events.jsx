@@ -8,7 +8,7 @@ import Calendar from './components/Calendar.jsx';
 import MultipleSelect from './MultipleSelect';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
-
+var Tips = require('../../components/basic/Tips');
 var Event = React.createClass({
 
 
@@ -63,8 +63,8 @@ var Event = React.createClass({
                     b=item.placeYardStr.split(",");
                     for(var j=0;j<b.length;j++)
                     {
-                      var s="场地"+b[j]+"";
-                        c[j]=s;
+                      //var s="场地"+b[j]+"";
+                        c[j]=b[j];
                     }
                     item.yard=c;
                  }
@@ -159,6 +159,24 @@ var Event = React.createClass({
             var startTime = $(Event).find("input[name='startTime']").val();
             var endTime = $(Event).find("input[name='endTime']").val();
 
+            if(startTime.length==4){
+                startTime="0"+startTime;
+            }
+            if(endTime.length==4){
+                endTime="0"+endTime;
+            }
+            if(startTime>=endTime){
+                Tips.showTips("开始时间必须大于当前时间~");
+                return;
+            }
+            if(startTime<"09:00"){
+                Tips.showTips("开始时间必须大于9.00~");
+                return;
+            }
+            if(endTime>"17.00"){
+                Tips.showTips("结束时间必须小于17.00~");
+                return;
+            }
             var a3=a2+ startTime+":00";
             var b3=b2+ endTime+":00";
             var param={
@@ -166,7 +184,8 @@ var Event = React.createClass({
                 isChooseYardTime:item.isChooseYardTime,
                 placeYardStr:select,
                 startTime:a3,
-                endTime:b3
+                endTime:b3,
+                unitId:item.eventPlaceId,
             }
 
         }else{
@@ -175,7 +194,8 @@ var Event = React.createClass({
                 isChooseYardTime:item.isChooseYardTime,
                 placeYardStr: "",
                 startTime:"",
-                endTime:""
+                endTime:"",
+                unitId:""
             }
 
         }
@@ -538,9 +558,7 @@ var Event = React.createClass({
                 if(item.yard!==null&&item.yard!==undefined){
                     var yarde=item.yard;
                     yarde.map(function(item, i){
-                        for(var j=0;j++;j<9)
-                        var time = "timeInterval"
-                        yards.push(<option key={i} value={i+1}>{item}}</option>);
+                        yards.push(<option key={i} value={item}>{"场馆"+item}</option>);
                     });
                 }
                 var brs=[];
