@@ -46,7 +46,7 @@ var MyCompetition = React.createClass({
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null});
+        return ({personId: personId, data:null,current:null});
     },
 
     render:function(){
@@ -77,7 +77,7 @@ var MyCompetition = React.createClass({
                 );
             });
 
-            if(this.state.current ==='showCompetitionGames'){
+            if(this.state.current =='showCompetitionGames'){
                 var competitionId=this.state.competitionId;
                 var personId=this.state.personId;
                 mainContent=(

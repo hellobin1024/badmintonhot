@@ -57,7 +57,7 @@ var Event = React.createClass({
                     item.costType2=costType2;
                   }
                   item.member = member;
-                  if(item.placeYardStr!=""){
+                  if(item.placeYardStr!=""&&item.placeYardStr!=undefined){
                     var b=[];
                     var c=[];
                     b=item.placeYardStr.split(",");
@@ -296,7 +296,7 @@ var Event = React.createClass({
                     }
                     var b=[];
                     var s="";
-                    if(a[i].placeYardStr!=""){
+                    if(a[i].placeYardStr!=""&&a[i].placeYardStr!=undefined){
                     b=a[i].placeYardStr.split(",");
 
                     for(var j=0;j<b.length;j++)

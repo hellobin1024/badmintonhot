@@ -4,7 +4,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
-
+import MyClassRecord from './MyClassRecord.jsx';
 import '../../css/entry/modules/myEvents.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
@@ -61,13 +61,16 @@ var MyCLass = React.createClass({
             }.bind(this)
         );
     },
-
+    tabChange:function(tab,Id){
+        this.setState({current:tab});
+        this.setState({classId:Id});
+    },
     getInitialState: function () {
         var personId = null;
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null});
+        return ({personId: personId, data:null,current:null});
     },
 
     render:function(){
@@ -83,7 +86,9 @@ var MyCLass = React.createClass({
 
                         <tbody key={i} className="event-table">
                         <tr>
-                            <td>课程名称: {item.cLassName}</td>
+                            <td>课程名称:  <span
+                                style={{fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer'}}
+                                onClick={ins.tabChange.bind(this,'MyClassRecord',item.classId)}>{item.cLassName}</span></td>
                             <td>开课教员: {item.cLassCreateName}</td>
                         </tr>
                         <tr>
@@ -110,24 +115,31 @@ var MyCLass = React.createClass({
 
                 );
             });
-
-            mainContent=
-                <div id="event" className="my-event">
-                <div className="widget-container fluid-height">
-                    <div className="widget-content padded clearfix">
-                        <table className="table table-striped invoice-table">
-                            <thead className="table-head">
-                            <tr>
-                                <th width="300"></th>
-                                <th width="300"></th>
-                            </tr>
-                            </thead>
-                            {ClassTable}
-                        </table>
+            if(this.state.current =='MyClassRecord'){
+                var classId=this.state.classId;
+                var personId=this.state.personId;
+                mainContent=(
+                    <MyClassRecord  personId={personId} classId={classId}/>
+                );
+            }
+            else {
+                mainContent =
+                    <div id="event" className="my-event">
+                        <div className="widget-container fluid-height">
+                            <div className="widget-content padded clearfix">
+                                <table className="table table-striped invoice-table">
+                                    <thead className="table-head">
+                                    <tr>
+                                        <th width="300"></th>
+                                        <th width="300"></th>
+                                    </tr>
+                                    </thead>
+                                    {ClassTable}
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
+            }
 
         }else{
 
