@@ -8,7 +8,7 @@ import MyCLass from './MyCLass.jsx';
 import '../../css/entry/modules/myCompetition.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
-var MyClassRecord = React.createClass({
+var MyRecordOfClass = React.createClass({
 
     initialData:function(){
         var url="/func/allow/getMyClassRecord";
@@ -50,8 +50,6 @@ var MyClassRecord = React.createClass({
     render:function(){
         var mainContent = null;
         var data = this.state.data;
-
-        var operate = this.operate;
         var CLassTable = [];
         var ins = this;
         if(data!==undefined && data!==null){
@@ -103,6 +101,6 @@ var MyClassRecord = React.createClass({
     },
 });
 
-module.exports=MyClassRecord;
+module.exports=MyRecordOfClass;
 
 
