@@ -12,7 +12,7 @@ import TrainerIntroduce from '../../modules/TrainerIntroduce.jsx';
 import CostIntroduce from '../../modules/CostIntroduce.jsx';
 import Competieion from '../Competieion.jsx';
 import ShowProject from '../../modules/ShowProject.jsx';
-import Video from '../../modules/Video.jsx';
+import Video from '../VideoList.jsx';
 import Main from './MainPage'
 import Class from '../Class'
 import NewsContain from '../../modules/NewsContain'

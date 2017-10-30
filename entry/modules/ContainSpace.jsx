@@ -101,9 +101,14 @@ var ContainSpace = React.createClass({
 
     getHotVideos: function () {
 
-        var url = "/func/allow/getHotVideos";
+        var url = "/func/allow/getvideolistbytype";
         var ref = this;
-        var params = {};
+        var type = 1;
+        var num = 5;
+        var params = {
+            type : type,
+            num : num
+        };
         Proxy.query(
             'POST',
             url,
