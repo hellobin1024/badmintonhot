@@ -4,7 +4,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { render} from 'react-dom';
-import MyClassRecord from './MyClassRecord.jsx';
+import MyRecordOfClass from './MyRecordOfClass.jsx';
 import '../../css/entry/modules/myEvents.css';
 var ProxyQ = require('../../components/proxy/ProxyQ');
 
@@ -88,7 +88,7 @@ var MyCLass = React.createClass({
                         <tr>
                             <td>课程名称:  <span
                                 style={{fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer'}}
-                                onClick={ins.tabChange.bind(this,'MyClassRecord',item.classId)}>{item.cLassName}</span></td>
+                                onClick={ins.tabChange.bind(this,'MyRecordOfClass',item.classId)}>{item.cLassName}</span></td>
                             <td>开课教员: {item.cLassCreateName}</td>
                         </tr>
                         <tr>
@@ -115,11 +115,11 @@ var MyCLass = React.createClass({
 
                 );
             });
-            if(this.state.current =='MyClassRecord'){
+            if(this.state.current =='MyRecordOfClass'){
                 var classId=this.state.classId;
                 var personId=this.state.personId;
                 mainContent=(
-                    <MyClassRecord  personId={personId} classId={classId}/>
+                    <MyRecordOfClass  personId={personId} classId={classId}/>
                 );
             }
             else {
