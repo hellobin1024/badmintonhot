@@ -16,7 +16,7 @@ import { syncHistory } from 'react-router-redux'
 
 const middlewares = [thunk];
 const createLogger = require('redux-logger');
-const reduxRouterMiddleware = syncHistory(browserHistory)
+const reduxRouterMiddleware = syncHistory(hashHistory)
 const enhancer = compose(
     applyMiddleware(thunk, reduxRouterMiddleware),
     DevTools.instrument()

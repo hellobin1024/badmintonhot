@@ -124,7 +124,7 @@ export let loginStateAction=function(path){
                         var personId = data.personId;
                         dispatch(getReCode(reCode,loginName,personId));
                         //const path = "/main";
-                        browserHistory.push(path);
+                        hashHistory.push(path);
                     }
                 }.bind(this),
                 function(xhr, status, err) {
