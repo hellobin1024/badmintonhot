@@ -89,7 +89,7 @@ var Heard = React.createClass({
                                     </Link>
                                 </li>
                                 <li ref="video">
-                                    <Link to={window.App.getAppRoute() + "/video"}>
+                                    <Link to={window.App.getAppRoute() + "/videolist"}>
                                         直播/视频
                                     </Link>
                                 </li>
