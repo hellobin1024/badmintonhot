@@ -38,7 +38,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/venueDetail"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/competition"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ShowProject"} component={MainSection}/>
-                    <Route path={window.App.getAppRoute() + "/video"} component={MainSection}/>
+                    <Route path={window.App.getAppRoute() + "/videolist"} component={MainSection}/>
                 </Route>
             </Router>
         )

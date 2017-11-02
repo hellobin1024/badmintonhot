@@ -10,7 +10,7 @@ import Calendar from './components/Calendar.jsx';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
-var Video = React.createClass({
+var VideoList = React.createClass({
 
     initialData:function(){
         this.getAllVideos();
@@ -89,9 +89,11 @@ var Video = React.createClass({
                 videos.map(function (item, i) {
                     vrs.push(
                         <div key={i}>
+                            <a data-pjax="true" onClick={ins.tabChange.bind(this,'videoPlay',item.id)}>
                             <img src={window.App.getResourceDeployPrefix() + item.img} alt=""/>
                             <span>视频标题：{item.name}</span>
                             <span>视频简介：{item.brief}</span>
+                            </a>
                         </div>
                     )
                 })
@@ -142,6 +144,6 @@ const mapStateToProps = (state, ownProps) => {
     }
     return props
 }
-export default connect(mapStateToProps)(Video);
+export default connect(mapStateToProps)(VideoList);
 
 
