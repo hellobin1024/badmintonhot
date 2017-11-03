@@ -19,20 +19,15 @@ var VideoPlay = React.createClass({
     initialData:function(){
         var url="/func/allow/getvideobyid";
         var params={
-            Id:this.state.Id,
+            id:this.state.id,
         };
-
-        ProxyQ.query(
+        Proxy.query(
             'post',
             url,
             params,
             null,
             function(ob) {
-                var reCode = ob.re;
-                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
-                    return;
-                }
-                var data=ob.data;
+                var data=ob;
                 this.setState({data:data});
             }.bind(this),
             function(xhr, status, err) {
@@ -42,11 +37,12 @@ var VideoPlay = React.createClass({
     },
 
     getInitialState: function () {
-        var Id=null;
-        Id = this.props.Id;
-        return ({ Id: Id,data:null});
+        var id=null;
+        if(this.props.id!==undefined && this.props.id){
+            id = this.props.id;
+        }
+        return ({ id:id,data:null});
     },
-
 
     render:function(){
         var mainContent = null;
@@ -54,36 +50,27 @@ var VideoPlay = React.createClass({
         var video = [];
         if(data!==undefined && data!==null){
 
-            data.map(function(item, i){
-                video.push(
-                    <tbody  key={i} className="competition-table">
-                    <QnyVideo option={{
+
+            video.push(
+                <QnyVideo option={{
                         width:'600px',
                         height:'400px',
-                        url:'http://114.215.99.2:8880/video/videoNum/test.mp4',
+                        url:'http://114.215.99.2:8880/video/test.mp4',
                         type:'mp4',
                         poster:'/badmintonhot/video/testpic.png'
                     }}/>
-                    </tbody>
-                );
-            });
-
+            );
 
             mainContent=
-                <div id="competition" className="my-competition">
-                    <div className="widget-container fluid-height">
-                        <div className="widget-content padded clearfix">
-                            <table className="table table-striped invoice-table">
-                                <thead className="table-head">
-                                <tr>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                    <th width="300"></th>
-                                </tr>
-                                </thead>
+                <div className="banner-bottom">
+                    <div className="container">
+                        <div className="faqs-top-grids">
+                            <div className="product-grids">
+                                <div className="col-md-8 news_content">
                                 {video}
-
-                            </table>
+                                </div>
+                                <RightSlide/>
+                            </div>
                         </div>
                     </div>
                 </div>

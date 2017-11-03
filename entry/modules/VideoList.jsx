@@ -6,7 +6,7 @@ import '../../build/css/style.css'
 import QnyVideo from '../../components/basic/QnyVideo.jsx'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
-
+import VideoPlay from './VideoPlay.jsx';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 
@@ -19,7 +19,7 @@ var VideoList = React.createClass({
     getInitialState: function () {
         var token=this.props.token;
         return ({
-            token:token
+            token:token,current:null
         });
     },
 
@@ -54,34 +54,13 @@ var VideoList = React.createClass({
         );
 
     },
-
-    getAllLives: function () {
-
-        var url = "/func/allow/getAllLives";
-        var ref = this;
-        var params = {};
-        Proxy.query(
-            'POST',
-            url,
-            params,
-            null,
-            function (res) {
-                var a = res.data;
-                ref.setState({lives: a});
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
-
+    tabChange:function(tab,id){
+        this.setState({current:tab});
+        this.setState({id:id});
     },
-
     render:function() {
         var contains = null;
-
         var vrs = [];
-        var lrs = [];
         var ref = this;
         if ((this.state.videos !== null && this.state.videos !== undefined)) {
             var videos = this.state.videos;
@@ -89,45 +68,48 @@ var VideoList = React.createClass({
                 videos.map(function (item, i) {
                     vrs.push(
                         <div key={i}>
-                            <a data-pjax="true" onClick={ins.tabChange.bind(this,'videoPlay',item.id)}>
-                            <img src={window.App.getResourceDeployPrefix() + item.img} alt=""/>
-                            <span>视频标题：{item.name}</span>
-                            <span>视频简介：{item.brief}</span>
-                            </a>
+                            <div style={{marginTop:'10px'}}>
+                            <div style={{float:'left'}}>
+                                <span> <img onClick={ref.tabChange.bind(this,'VideoPlay',item.id)} style={{width:'350px',cursor:'pointer'}} src={window.App.getResourceDeployPrefix()+"/images/video.png"} alt=""/>
+                            </span>
+                            </div>
+                            <div style={{float:'left',width:"250px",marginLeft:'20px',fontSize:'13px'}}>
+                            <div>视频标题：{item.name}</div>
+                            <div>视频简介：{item.brief}</div>
+                            <div>作者：{item.author}</div>
+                            <div>浏览数：{item.browsecount}</div>
+                            <div>收藏数：{item.collectcount}</div>
+                            <div>分享数：{item.sharecount}</div>
+                            </div>
+                            <div className="clearfix"></div>
+                            </div>
                         </div>
                     )
                 })
             }
-
-            var lives = this.state.lives;
-            if (lives !== null && lives !== undefined) {
-                lives.map(function (item, i) {
-                    lrs.push(
-                        <div key={i}>
-                            <img src={window.App.getResourceDeployPrefix() + item.img} alt=""/>
-                            <span>主播：{item.name}</span>
-                            <span>标题：{item.brief}</span>
-                        </div>
-                    )
-                })
+            if(this.state.current =='VideoPlay'){
+                var id=this.state.id;
+                var personId=this.state.personId;
+                contains=(
+                    <VideoPlay  personId={personId} id={id}/>
+                );
             }
-
-
-            contains =
-                <div className="banner-bottom">
-                    <div className="container">
-                        <div className="faqs-top-grids">
-                            <div className="product-grids">
-                                                <h1 style={{textAlign:'center',fontSize:'25px'}}>正在直播</h1>
-                                                {lrs}
-                                                <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
-                                                {vrs}
-
+            else {
+                contains =
+                    <div className="banner-bottom">
+                        <div className="container">
+                            <div className="faqs-top-grids">
+                                <div className="product-grids">
+                                    <div className="col-md-8 news_content">
+                                    <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
+                                    {vrs}
+                                    </div>
+                                    <RightSlide/>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+            }
 
         }
         else {
