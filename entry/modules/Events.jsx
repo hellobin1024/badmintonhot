@@ -5,17 +5,17 @@ import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
-
+import MultipleSelect from './MultipleSelect';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
-
+var Tips = require('../../components/basic/Tips');
 var Event = React.createClass({
 
 
     getInitialState: function () {
         var token=this.props.token;
         return ({
-            token:token
+            token:token,yard:[]
         });
     },
     initialData:function(){
@@ -29,6 +29,7 @@ var Event = React.createClass({
         }else {
             this.getAllGroups();
         }
+
     },
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
@@ -56,10 +57,80 @@ var Event = React.createClass({
                     item.costType2=costType2;
                   }
                   item.member = member;
+                  if(item.placeYardStr!=""&&item.placeYardStr!=undefined){
+                    var b=[];
+                    var c=[];
+                    b=item.placeYardStr.split(",");
+                    for(var j=0;j<b.length;j++)
+                    {
+                      //var s="场地"+b[j]+"";
+                        c[j]=b[j];
+                    }
+                    item.yard=c;
+                 }
                   ref.setState({modal: item});
+                if(item.isChooseYardTime=="1"){
 
-                var successModal = ref.refs['successModal'];
-                $(successModal).modal('show');
+                    var url="/func/allow/getAllVenueUnitTime";
+                    var params={
+                        unitId:item.eventPlaceId,
+                        placeYardStr:item.placeYardStr
+
+                    };
+
+                    Proxy.query(
+                        'post',
+                        url,
+                        params,
+                        null,
+                        function(ob) {
+                            var reCode = ob.re;
+                            if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //数据获取失败
+                                return;
+                            }
+                            var data=ob.data;
+                            var unitperson =[];
+                            for (var i=0;i<data.length;i++){
+
+                                var a1="场地"+data[i].unitNum;
+                                var a2=data[i].timeInterval1;
+                                var a3=data[i].timeInterval2;
+                                var a4=data[i].timeInterval3;
+                                var a5=data[i].timeInterval4;
+                                var a6=data[i].timeInterval5;
+                                var a7=data[i].timeInterval6;
+                                var a8=data[i].timeInterval7;
+                                var a9=data[i].timeInterval8;
+                                var a10=data[i].timeInterval9;
+                                var b=[];
+                                b[0]=a1;
+                                b[1]=a2;
+                                b[2]=a3;
+                                b[3]=a4;
+                                b[4]=a5;
+                                b[5]=a6;
+                                b[6]=a7;
+                                b[7]=a8;
+                                b[8]=a9;
+                                b[9]=a10;
+                               unitperson.push(b);
+                            }
+                            ref.setState({unitperson:unitperson});
+                        }.bind(this),
+                        function(xhr, status, err) {
+                            console.error(this.props.url, status, err.toString());
+                        }.bind(this)
+                    );
+
+
+                    var successModal = ref.refs['successModal'];
+                    $(successModal).modal('show');
+                }else{
+                    var successModal2 = ref.refs['successModal2'];
+                    $(successModal2).modal('show');
+                }
+
+
             },
 
             function (xhr, status, err) {
@@ -71,15 +142,64 @@ var Event = React.createClass({
     closeModal:function () {
         var successModal = this.refs['successModal'];
         $(successModal).modal('hide');
+        var successModal2 = this.refs['successModal2'];
+        $(successModal2).modal('hide');
     },
 
     eventSignUp:function (item) {
         var ref=this;
         if(this.state.token!==null&&this.state.token!==undefined){
         var url = "/func/allow/eventSignUp";
-        var param={
-            id:item
+        if(item.isChooseYardTime=="1"){
+            var select = $('#yardplace option:selected').val();
+            var a1=item.startTimeStr;
+            var a2=a1.substring(0,11);
+            var b1=item.endTimeStr;
+            var b2=b1.substring(0,11);
+            var startTime = $(Event).find("input[name='startTime']").val();
+            var endTime = $(Event).find("input[name='endTime']").val();
+
+            if(startTime.length==4){
+                startTime="0"+startTime;
+            }
+            if(endTime.length==4){
+                endTime="0"+endTime;
+            }
+            if(startTime>=endTime){
+                Tips.showTips("开始时间必须大于当前时间~");
+                return;
+            }
+            if(startTime<"09:00"){
+                Tips.showTips("开始时间必须大于9.00~");
+                return;
+            }
+            if(endTime>"17.00"){
+                Tips.showTips("结束时间必须小于17.00~");
+                return;
+            }
+            var a3=a2+ startTime+":00";
+            var b3=b2+ endTime+":00";
+            var param={
+                id:item.eventId,
+                isChooseYardTime:item.isChooseYardTime,
+                placeYardStr:select,
+                startTime:a3,
+                endTime:b3,
+                unitId:item.eventPlaceId,
+            }
+
+        }else{
+            var param={
+                id:item.eventId,
+                isChooseYardTime:item.isChooseYardTime,
+                placeYardStr: "",
+                startTime:"",
+                endTime:"",
+                unitId:""
+            }
+
         }
+
         var now=item.membernumber;
         var max=item.eventMaxMemNum;
 
@@ -148,6 +268,7 @@ var Event = React.createClass({
             var url = "/func/allow/getCheckedEvents";//登录了以后
 
         }else{
+
             var url = "/func/allow/getEvents";//未登录
         }
 
@@ -161,27 +282,36 @@ var Event = React.createClass({
                 var a = res.data;
                 var costType2="";
                 var members=new Array();
-                for (var i = 0; i < a.length; i++) {
-                    costType2 = ref.getStandard(a[i].costType);
-                    a[i].costType2 = costType2;
-                    if (a[i].eventMember !== undefined && a[i].eventMember !== null) {
+                for (var i = 0; i < a.length; i++){
+                    costType2= ref.getStandard(a[i].costType);
+                    a[i].costType2=costType2;
+                    if(a[i].eventMember!=""&&a[i].eventMember!=undefined){
+                    members =a[i].eventMember.split(",");
+                    a[i].membernumber=members.length;
+                    if(members==""){
+                        a[i].membernumber=0;
+                    }
+                    }else{
+                        a[i].membernumber=0;
+                    }
+                    var b=[];
+                    var s="";
+                    if(a[i].placeYardStr!=""&&a[i].placeYardStr!=undefined){
+                    b=a[i].placeYardStr.split(",");
 
-                        members = a[i].eventMember.split(",");
-                        a[i].membernumber = members.length;
-                        if (members == "") {
-                            a[i].membernumber = 0;
-                        }
-                        var b = [];
-                        var s = "";
-                        if (a[i].placeYardStr != "") {
-                            b = a[i].placeYardStr.split(",");
+                    for(var j=0;j<b.length;j++)
+                    {
+                        s=s+"场地"+b[j]+" ";
+                    }
+                    a[i].eventPlaceName=a[i].eventPlaceName+" "+s;
+                    var yard=[];
+                    for(var j=0;j<b.length;j++)
+                    {
+                            yard[j]="场地"+(j+1)+"";
+                    }
+                    ref.setState({yard:yard});
 
-                            for (var j = 0; j < b.length; j++) {
-                                s = s + "场地" + b[j] + " ";
-                            }
-                            a[i].eventPlaceName = a[i].eventPlaceName + " " + s;
-
-                        } else {
+                    } else {
 
                             a[i].eventPlaceName == "";
                         }
@@ -195,7 +325,7 @@ var Event = React.createClass({
                     } else {
                         ref.setState({event: 0});
                     }
-                }
+
             },
 
             function (xhr, status, err) {
@@ -247,56 +377,6 @@ var Event = React.createClass({
         }
        return type;
     },
-    test:function () {
-        var url = "/func/allow/testQn";
-        var ref = this;
-        var param={
-        }
-        Proxy.query(
-            'POST',
-            url,
-            param,
-            null,
-            function (res) {
-                var a = res.data;
-                if(res.re==1) {
-                    alert(a);
-                }else{
-                    alert('fail');
-                }
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
-    },
-    test1:function () {
-        var url = "/func/allow/testQn1";
-        var ref = this;
-        var param={
-            value:'000',
-            label:'qd'
-        }
-        Proxy.query(
-            'POST',
-            url,
-            param,
-            null,
-            function (res) {
-                var a = res.data;
-                if(res.re==1) {
-                    ref.setState({test:a})
-                }else{
-                    alert('fail');
-                }
-            },
-
-            function (xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }
-        );
-    },
 
     render:function() {
         var contains = null;
@@ -306,8 +386,10 @@ var Event = React.createClass({
             var event = this.state.event;
             var group = this.state.group;
             var isLand=this.props.token;
+            var yardplace=this.state.yard;
             var trs = [];
             var grs = [];
+            var tmrs=[];
             var ref = this;
             if(event!=0) {
                 event.map(function (item, i) {
@@ -332,17 +414,7 @@ var Event = React.createClass({
 
                                 </ul>
                                 <div className="buy-me">
-                                    {/*   <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>*/}
-
-                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
-                                        <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
-                                    }
-                                    {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
-                                        <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
-                                    }
-                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
-                                        <a >您已报名</a>:null
-                                    }
+                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
 
 
                                 </div>
@@ -369,15 +441,7 @@ var Event = React.createClass({
                                     <li><span>收费标准：</span> {item.cost+"元/"+item.costType2}</li>
                                 </ul>
                                 <div className="buy-me">
-                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
-                                        <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
-                                    }
-                                    {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
-                                        <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
-                                    }
-                                    {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
-                                        <a >您已报名</a>:null
-                                    }
+                                    <a onClick={ref.showEventsDetail.bind(null, item)}>详情</a>
                                 </div>
                             </div>
                         )
@@ -462,10 +526,31 @@ var Event = React.createClass({
             }
 
             var mrs = [];
+            var yards=[];
             if(this.state.modal!==null&&this.state.modal!==undefined){
                 var item = this.state.modal;
+                if(item.yard!==null&&item.yard!==undefined){
+                    var yarde=item.yard;
+                    yarde.map(function(item, i){
+                        yards.push(<option key={i} value={item}>{"场馆"+item}</option>);
+                    });
+                }
+                var brs=[];
+
+                if(this.state.unitperson!==null&&this.state.unitperson!==undefined){
+                    for(var i=0;i<this.state.unitperson.length;i++){
+                        var rs=[];
+
+                        this.state.unitperson[i].map(function(item, i){
+                            rs.push(<td key={i} value={i+1}>{item}</td>);
+                        });
+                        brs.push(<tr key={i} value={i+1}>{rs}</tr>);
+
+                    }
+
+                }
                 mrs.push(
-                    <div>
+                    <div ref="Event" >
                     <div style={{textAlign: 'center'}} key='modal'>
                         <div style={{height: '30px',textAlign: 'center',background:'#344859'}}>
                             <div id="eventMaxNum" style={{float: 'left',marginLeft:'150px'}}><span style={{fontSize: '14px'}} >最大需求人数：</span>{item.eventMaxMemNum}<span>  </span><span style={{fontSize: '14px'}} >参与者：</span>{item.eventMember}
@@ -481,21 +566,19 @@ var Event = React.createClass({
                             <table className="table table-striped invoice-table">
                                 <thead className="table-head">
                                 <tr>
-                                    <th width="200">场地编号</th>
-                                    <th width="150">8.00-9.00</th>
-                                    <th width="150">9.00-10.00</th>
-                                    <th width="150">10.00-11.00</th>
-                                    <th width="150">11.00-12.00</th>
-                                    <th width="150">12.00-13.00</th>
-                                    <th width="150">13.00-14.00</th>
-                                    <th width="150">14.00-15.00</th>
-                                    <th width="150">15.00-16.00</th>
-                                    <th width="150">16.00-17.00</th>
+                                    <th width="20%">场地编号</th>
+                                    <th width="15%">8.00-9.00</th>
+                                    <th width="15%">9.00-10.00</th>
+                                    <th width="15%">10.00-11.00</th>
+                                    <th width="15%">11.00-12.00</th>
+                                    <th width="15%">12.00-13.00</th>
+                                    <th width="15%">13.00-14.00</th>
+                                    <th width="15%">14.00-15.00</th>
+                                    <th width="15%">15.00-16.00</th>
+                                    <th width="15%">16.00-17.00</th>
                                 </tr>
                                 </thead>
-                                <tr><td><h4 style={{marginTop:'15px'}}><strong></strong></h4></td></tr>
-                                <tr>
-                                    <td>场馆一</td>
+                                    { /*<td>场馆一</td>
                                     <td>2</td>
                                     <td>2</td>
                                     <td>2</td>
@@ -504,14 +587,51 @@ var Event = React.createClass({
                                     <td>0</td>
                                     <td>0</td>
                                     <td>0</td>
-                                    <td>0</td>
-                                </tr>
+                                    <td>0</td>*/}
+                                    {brs}
+
 
                             </table>
                         </div>
-                        <div className="buy-me">
+                        <div className="common-line">
+                            <div style={{float:'left',width:'300px'}}>
+                                <span className="common-label l-label" style={{float:'left'}} >开始时间：</span>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" style={{width:'100px'}} value="9:30"  name="startTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
+                        </span>
+
+                            </div>
+                            <div style={{float:'left',width:'300px'}}>
+                                <span className="common-label r-label" style={{float:'left'}}>结束时间：</span>
+                        <span className="input-group clockpicker" data-placement="right" data-align="top" data-autoclose="true" style={{width:'100px'}}>
+                            <input type="text" className="form-control" value="11:30" style={{width:'100px'}} name="endTime"/>
+                                            <span className="input-group-addon">
+                                                <span className="glyphicon glyphicon-time"></span>
+                                            </span>
+                             <div className="clearfix"/>
+                        </span>
+                            </div>
+
+
+                            <div className="clearfix"/>
+                        </div>
+                        <div className="common-line">
+                            <span style={{float:'left'}} className="common-label l-label" >选择所需的场地：</span>
+                        <span style={{float:'left'}}>
+                              <select className="common-input" style={{color:'#000000!important',width:'163px',lineHeight:'16px'}} id="yardplace">
+                                  {yards}
+                              </select>
+                        </span>
+                            <div className="clearfix"></div>
+                        </div>
+                        <div>
+                        <div className="buy-me" style={{marginTop:'20px'}}>
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
-                                <a onClick={ref.eventSignUp.bind(null,item.eventId)}>报名</a>:null
+                                <a onClick={ref.eventSignUp.bind(null,item)}>报名</a>:null
                             }
                             {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
                                 <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
@@ -519,11 +639,45 @@ var Event = React.createClass({
                             {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
                                 <a >您已报名</a>:null
                             }
-
+                        </div>
                         </div>
                       </div>
 
                     </div>
+                )
+            }
+            var tmrs = [];
+            if(this.state.modal!==null&&this.state.modal!==undefined){
+                var item = this.state.modal;
+                tmrs.push(
+                    <div style={{textAlign: 'center'}} key='modal' >
+                        <div className="business">
+                            <h2 id="CLassTitle">{item.eventName}</h2>
+                            <p id="eventPlace"><span>地点：</span>{item.eventPlaceName}</p>
+                        </div>
+                        <ul>
+                            <li id="eventTime"><span>最大活动人数:</span>{item.eventMaxMemNum}</li>
+                            <li id="eventMaxNum"><span>参与者:</span>{item.eventMember}</li>
+                            {
+                                item.money!=null? <li>
+                                    <span >缴费状态：</span>已缴费{item.money+"/元"}</li>:
+                                    <li><span>缴费状态：</span>未交费</li>
+                            }
+                        </ul>
+                        <div className="buy-me">
+                            {item.eventMaxMemNum>item.membernumber&&item.isSignUp==0?
+                                <a onClick={ref.eventSignUp.bind(null,item)}>报名</a>:null
+                            }
+                            {item.eventMaxMemNum<item.membernumber&&item.isSignUp==0?
+                                <a onClick={function(){alert("抱歉！您报名的活动已满员！")}}>人员已满</a>:null
+                            }
+                            {item.eventMaxMemNum>item.membernumber&&item.isSignUp==1?
+                                <a >您已报名</a>:null
+                            }
+                        </div>
+                    </div>
+
+
                 )
             }
             contains =
@@ -553,9 +707,6 @@ var Event = React.createClass({
                                                 {grs}
                                             </div>
                                         </div>
-                                        <button onClick={this.test}>test</button>
-                                        <button onClick={this.test1}>test1</button>
-
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>
@@ -571,16 +722,36 @@ var Event = React.createClass({
                          aria-hidden="true"
                          ref='successModal'
                          data-keyboard="false"
-                         style={{zIndex: 1045}}
-                    >
+                         style={{zIndex: 1045}}>
                         <div className="modal-dialog modal-sm"
                              style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
                             <div className="modal-content"
-                                 style={{position: 'relative', width: '100%', padding: '40px'}}>
+                                 style={{position: 'relative', width: '750px', padding: '40px'}}>
 
                                 <div className="modal-body">
                                     <div className="modalEventDetail">
                                         {mrs}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade bs-example-modal-sm login-container"
+                         tabIndex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
+                         ref='successModal2'
+                         data-keyboard="false"
+                         style={{zIndex: 1045}}>
+                        <div className="modal-dialog modal-sm"
+                             style={{position: 'absolute', top: '30%', width: '50%', marginLeft: '25%'}}>
+                            <div className="modal-content"
+                                 style={{position: 'relative', width: '750px', padding: '40px'}}>
+
+                                <div className="modal-body">
+                                    <div className="modalEventDetail">
+                                        {tmrs}
                                     </div>
                                 </div>
                             </div>
@@ -594,6 +765,10 @@ var Event = React.createClass({
 
         return contains;
     },
+    componentDidMount:function () {
+        $('#placeStr').selectpicker('refresh');
+        $('#placeStr').selectpicker('show');
+    }
 
 });
 
