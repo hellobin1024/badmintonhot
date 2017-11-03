@@ -161,40 +161,41 @@ var Event = React.createClass({
                 var a = res.data;
                 var costType2="";
                 var members=new Array();
-                for (var i = 0; i < a.length; i++){
-                    costType2= ref.getStandard(a[i].costType);
-                    a[i].costType2=costType2;
-                    members =a[i].eventMember.split(",");
-                    a[i].membernumber=members.length;
-                    if(members==""){
-                        a[i].membernumber=0;
+                for (var i = 0; i < a.length; i++) {
+                    costType2 = ref.getStandard(a[i].costType);
+                    a[i].costType2 = costType2;
+                    if (a[i].eventMember !== undefined && a[i].eventMember !== null) {
+
+                        members = a[i].eventMember.split(",");
+                        a[i].membernumber = members.length;
+                        if (members == "") {
+                            a[i].membernumber = 0;
+                        }
+                        var b = [];
+                        var s = "";
+                        if (a[i].placeYardStr != "") {
+                            b = a[i].placeYardStr.split(",");
+
+                            for (var j = 0; j < b.length; j++) {
+                                s = s + "场地" + b[j] + " ";
+                            }
+                            a[i].eventPlaceName = a[i].eventPlaceName + " " + s;
+
+                        } else {
+
+                            a[i].eventPlaceName == "";
+                        }
+                        var c = a[i].endTimeStr;
+                        var d = c.substring(11);
+                        a[i].time = (a[i].startTimeStr + "-" + d + "").substring(5);
+
                     }
-                    var b=[];
-                    var s="";
-                    if(a[i].placeYardStr!=""){
-                    b=a[i].placeYardStr.split(",");
-
-                    for(var j=0;j<b.length;j++)
-                    {
-                        s=s+"场地"+b[j]+" ";
+                    if (res.re == 1) {
+                        ref.setState({event: a});
+                    } else {
+                        ref.setState({event: 0});
                     }
-                    a[i].eventPlaceName=a[i].eventPlaceName+" "+s;
-
-                    }else{
-
-                    a[i].eventPlaceName=="";
-                    }
-                    var c=a[i].endTimeStr;
-                    var d=c.substring(11);
-                    a[i].time=(a[i].startTimeStr+"-"+d+"").substring(5);
-
                 }
-                if(res.re==1) {
-                    ref.setState({event: a});
-                }else{
-                    ref.setState({event: 0});
-                }
-
             },
 
             function (xhr, status, err) {
@@ -247,7 +248,31 @@ var Event = React.createClass({
        return type;
     },
     test:function () {
-        var url = "/func/allow/testJp";
+        var url = "/func/allow/testQn";
+        var ref = this;
+        var param={
+        }
+        Proxy.query(
+            'POST',
+            url,
+            param,
+            null,
+            function (res) {
+                var a = res.data;
+                if(res.re==1) {
+                    alert(a);
+                }else{
+                    alert('fail');
+                }
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+    },
+    test1:function () {
+        var url = "/func/allow/testQn1";
         var ref = this;
         var param={
             value:'000',
@@ -261,7 +286,7 @@ var Event = React.createClass({
             function (res) {
                 var a = res.data;
                 if(res.re==1) {
-                    alert(a);
+                    ref.setState({test:a})
                 }else{
                     alert('fail');
                 }
@@ -529,6 +554,8 @@ var Event = React.createClass({
                                             </div>
                                         </div>
                                         <button onClick={this.test}>test</button>
+                                        <button onClick={this.test1}>test1</button>
+
                                     </div>
                                     <RightSlide/>
                                     <div className="clearfix"></div>

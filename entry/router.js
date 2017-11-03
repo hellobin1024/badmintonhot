@@ -11,14 +11,14 @@ import PersonInfo from './modules/PersonInfo.jsx';
 import AD from './adModel/adPage'
 import AdText from './adModel/adText'
 import Order from './modules/Order'
-
+import LiveTele from '../components/basic/LiveTele'
 import {Component} from 'react'
 
 class AppRouter extends Component {
     render() {
 
         return (
-            <Router history={browserHistory}>
+            <Router history={hashHistory}>
                 <Route path={window.App.getAppRoute()} component={App}>
                     <IndexRoute  component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/"} component={MainSection}/>
@@ -39,7 +39,7 @@ class AppRouter extends Component {
                     <Route path={window.App.getAppRoute() + "/competition"} component={MainSection}/>
                     <Route path={window.App.getAppRoute() + "/ShowProject"} component={MainSection}/>
 
-                    {/*<Route path={window.App.getAppRoute() + "/video"} component={MainSection}/>*/}
+                    <Route path={window.App.getAppRoute() + "/live"} component={LiveTele}/>
                 </Route>
             </Router>
         )
