@@ -15,6 +15,7 @@ import ShowProject from '../../modules/ShowProject.jsx';
 import VideoList from '../VideoList.jsx';
 import Main from './MainPage'
 import Class from '../Class'
+import Mall from '../Mall'
 import NewsContain from '../../modules/NewsContain'
 import Login from '../components/Login';
 import VenueIntro from '../../modules/VenueIntro'
@@ -91,6 +92,9 @@ var MainSection = React.createClass({
                     break;
                 case App.getAppRoute() + "/videolist":
                     ctrl =<VideoList/>
+                    break;
+                case App.getAppRoute() + "/mall":
+                    ctrl =<Mall/>
                     break;
                 default:
                     break;
