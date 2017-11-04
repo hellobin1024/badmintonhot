@@ -3,7 +3,6 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
-import QnyVideo from '../../components/basic/QnyVideo.jsx'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
 import VideoPlay from './VideoPlay.jsx';
