@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import '../../build/css/JFFormStyle-1.css'
 import '../../build/css/jquery-ui.css'
 import '../../build/css/style.css'
-import QnyVideo from '../../components/basic/QnyVideo.jsx'
+import LiveTele from '../../components/basic/LiveTele.jsx'
 import { connect } from 'react-redux';
 import Calendar from './components/Calendar.jsx';
 
@@ -48,26 +48,56 @@ var VideoPlay = React.createClass({
         var mainContent = null;
         var data = this.state.data;
         var video = [];
+        var videodetail = [];
+        var dis=[];
         if(data!==undefined && data!==null){
-
-
             video.push(
-                <QnyVideo option={{
-                        width:'600px',
-                        height:'400px',
-                        url:'http://114.215.99.2:8880/video/test.mp4',
-                        type:'mp4',
-                        poster:'/badmintonhot/video/testpic.png'
-                    }}/>
+                <LiveTele option={{
+                    url:'http://114.215.99.2:8880/video/test.mp4',
+                    width:'600px',
+                    height:'400px',
+                    bufferTime:2,
+                    startLevel:0
+            }}/>
             );
+            videodetail = [];
+            var vide= data.video;
+            if(vide!==undefined && vide!==null){
+             videodetail.push(
+             <div>
+                    <div style={{float:'left',marginLeft:'20px',fontSize:'13px',charset:"utf-8" }}>
+                        <div>
+                        <span>视频标题：{vide.name}</span>
 
+                        <span>视频简介：{vide.brief}</span>
+
+                        <span>作者：{vide.author}</span>
+                        </div>
+                        <div>
+                        <span>浏览数：{vide.browsecount}</span>
+
+                        <span>收藏数：{vide.collectcount}</span>
+
+                        <span>分享数：{vide.sharecount}</span>
+                        </div>
+                    </div>
+                    <div className="clearfix"></div>
+             </div>
+            ) }
+            dis.push(
+                <div>
+                    <div> {video}</div>
+                    <div>  {videodetail}</div>
+
+                </div>
+            );
             mainContent=
                 <div className="banner-bottom">
                     <div className="container">
                         <div className="faqs-top-grids">
                             <div className="product-grids">
                                 <div className="col-md-8 news_content">
-                                {video}
+                                {dis}
                                 </div>
                                 <RightSlide/>
                             </div>
