@@ -38,7 +38,7 @@ var Mall = React.createClass({
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
     },
     getNewsList:function () {
-        var url = "/func/allow/getNewsList";
+        var url = "/func/allow/getGoodsList";
         var ref = this;
         var param={
         }
@@ -80,13 +80,11 @@ var Mall = React.createClass({
                             </div>
                             <div className="p-right">
                                 <div className="col-md-12 p-right-left" style={{paddingLeft: '30px'}}>
-                                    <a href={"http://114.215.99.2:8880/news/"+item.newsNum+"/index.html"} target="_Blank">
-                                        {item.title}
-                                    </a>
+                                        {item.name}
                                     <div className="newsContain">
-                                        <span className="icon-eye-open">{item.readCount + '  '}位看官</span>
-                                        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-                                        <span className="icon-calendar">{ref.dateFormat(item.createTime)}</span>
+                                        <span >价格：{item.price + '  '}</span>
+                                        <span >销量：{item.salesVolume + '  '}</span>
+                                        <span >库存：{item.inventoryNumber + '  '}</span>
                                     </div>
                                     <p>{item.brief}</p>
                                 </div>
