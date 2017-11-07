@@ -93,9 +93,11 @@ var Heard = React.createClass({
                                         直播/视频
                                     </Link>
                                 </li>
-                                {/*<li ref="video"><a href="#">视频</a></li>
-                                <li ref="group"><a href="#">直播</a></li>
-                                <li ref="group"><a href="#">商城</a></li>*/}
+                                <li ref="mall">
+                                    <Link to={window.App.getAppRoute() + "/mall"}>
+                                        商城
+                                    </Link>
+                                </li>
                             </ul>
                             <div className="clearfix"> </div>
                         </div>
