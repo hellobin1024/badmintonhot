@@ -87,6 +87,8 @@ var Mall = React.createClass({
                                         <span >库存：{item.inventoryNumber + '  '}</span>
                                     </div>
                                     <p>{item.brief}</p>
+                                    <br> </br>
+                                    <button style={{fontSize: '17px', color: '#31f535'}}>加入购物车</button>
                                 </div>
                                 <div className="clearfix"></div>
                             </div>
@@ -105,6 +107,7 @@ var Mall = React.createClass({
                     <div className="faqs-top-grids">
                         <div className="product-grids">
                             <div className="col-md-8 product-left">
+                                <link style={{textAlign:'left',fontSize:'25px'}}>我的购物车</link>
                                 {trs}
                                 <PageNavigator
                                     capacity={len}
