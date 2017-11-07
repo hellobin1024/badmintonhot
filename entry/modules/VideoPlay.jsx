@@ -29,6 +29,28 @@ var VideoPlay = React.createClass({
             function(ob) {
                 var data=ob;
                 this.setState({data:data});
+                if(data!=""||data!=null){
+                var urlb="/func/allow/getvideorecommendlist";
+                var id=data.video.id;
+                var paramsb={
+                     id:id,
+                };
+                Proxy.query(
+                    'post',
+                    urlb,
+                    paramsb,
+                    null,
+                    function(ob) {
+                        this.state.data.commendlist=ob.data;
+                        this.setState({data:data});
+                    }.bind(this),
+                    function(xhr, status, err) {
+                        console.error(this.props.url, status, err.toString());
+                    }.bind(this)
+                );
+
+                }
+
             }.bind(this),
             function(xhr, status, err) {
                 console.error(this.props.url, status, err.toString());
@@ -43,61 +65,74 @@ var VideoPlay = React.createClass({
         }
         return ({ id:id,data:null});
     },
-
+    videoSwitch:function (item) {
+        var id=item.id;
+        this.setState({id:id});
+        this.setState({data:null});
+    },
     render:function(){
         var mainContent = null;
         var data = this.state.data;
         var video = [];
-        var videodetail = [];
-        var dis=[];
+        var recommed=[];
+        var ref=this;
         if(data!==undefined && data!==null){
+            var vide= data.video;
             video.push(
-                <LiveTele option={{
+                <div>
+                    <LiveTele option={{
                     url:'http://114.215.99.2:8880/video/test.mp4',
                     width:'600px',
                     height:'400px',
                     bufferTime:2,
                     startLevel:0
-            }}/>
-            );
-            videodetail = [];
-            var vide= data.video;
-            if(vide!==undefined && vide!==null){
-             videodetail.push(
-             <div>
-                    <div style={{float:'left',marginLeft:'20px',fontSize:'13px',charset:"utf-8" }}>
-                        <div>
-                        <span>ÊÓÆµ±êÌâ£º{vide.name}</span>
-
-                        <span>ÊÓÆµ¼ò½é£º{vide.brief}</span>
-
-                        <span>×÷Õß£º{vide.author}</span>
+                 }}/>
+                    <div>
+                    <span style={{color:'#29440d'}}>è§†é¢‘æ ‡é¢˜ï¼š</span> {vide.name}&nbsp;&nbsp;&nbsp;
+                    <span style={{color:'#29440d'}}>è§†é¢‘ç®€ä»‹ï¼š</span> {vide.brief}&nbsp;&nbsp;&nbsp;
+                    <span style={{color:'#29440d'}}>ä½œè€…ï¼š</span> {vide.author}&nbsp;&nbsp;&nbsp;
                         </div>
-                        <div>
-                        <span>ä¯ÀÀÊı£º{vide.browsecount}</span>
-
-                        <span>ÊÕ²ØÊı£º{vide.collectcount}</span>
-
-                        <span>·ÖÏíÊı£º{vide.sharecount}</span>
-                        </div>
+                    <div>
+                    <span style={{color:'#29440d'}}>æµè§ˆæ•°ï¼š</span>{vide.browsecount}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style={{color:'#29440d'}}>æ”¶è—æ•°ï¼š</span>{vide.collectcount}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style={{color:'#29440d'}}>åˆ†äº«æ•°ï¼š</span>{vide.sharecount}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
-                    <div className="clearfix"></div>
-             </div>
-            ) }
-            dis.push(
-                <div>
-                    <div> {video}</div>
-                    <div>  {videodetail}</div>
-
                 </div>
             );
+            if(data.commendlist!==undefined && data.commendlist!==null){
+                data.commendlist.map(function (item, i) {
+                    recommed.push(
+                        <div style={{display:'inline',float:'left',marginLeft:"5px",width:'200px',height:'220px'}}>
+                            <div>
+                            <span>
+               <img  style={{width:'200px',cursor:'pointer'}} src={window.App.getResourceDeployPrefix()+"/images/video.png"} onClick={ref.videoSwitch.bind(null, item)}alt=""/>
+                            </span>
+                            </div>
+                            <div>
+                                <span style={{color:'#29440d'}}>è§†é¢‘æ ‡é¢˜ï¼š</span> {item.name}
+                            </div>
+                            <div>
+                                <span style={{color:'#29440d'}}>è§†é¢‘ç®€ä»‹ï¼š</span> {item.brief}
+                            </div>
+                       </div>
+
+
+                    )
+                })
+            }
             mainContent=
                 <div className="banner-bottom">
                     <div className="container">
                         <div className="faqs-top-grids">
                             <div className="product-grids">
                                 <div className="col-md-8 news_content">
-                                {dis}
+                                    {video}
+                                    <div  style={{marginTop:'30px'}}>
+                                    <span style={{color:'#29440d',fontSize:"20px"}}>æ¨èè§†é¢‘</span>
+                                        <div style={{marginTop:'10px'}} >
+                                    {recommed}
+                                        </div>
+                                    </div>
                                 </div>
                                 <RightSlide/>
                             </div>
