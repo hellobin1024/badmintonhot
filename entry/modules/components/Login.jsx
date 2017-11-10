@@ -592,7 +592,8 @@ var Login=React.createClass({
                                     </div>
                                     <div className="form-item">
                                         <div className="form-cont">
-                                            <input type="password" name="password" className="passport-txt xl w-full" tabIndex="2" autoComplete="off" onKeyUp={this.checkPasswordStatus} placeholder="请输入密码"/>
+                                            <span style={{color:'#29440d',marginBottom:"2px"}}>输入密码，默认为1</span>
+                                            <input type="password" name="password"  defaultValue="1" className="passport-txt xl w-full" tabIndex="2" autoComplete="off" onKeyUp={this.checkPasswordStatus} placeholder="请输入密码,默认为1"/>
                                             <ul className="passport-safely" ref="safely">
                                                 <li className="danger">弱</li>
                                                 <li className="general">中</li>
@@ -602,7 +603,8 @@ var Login=React.createClass({
                                     </div>
                                     <div className="form-item">
                                         <div className="form-cont">
-                                            <input type="password" name="ackPassword" className="passport-txt xl w-full" tabIndex="3" autoComplete="off" onBlur={this.ackPassword} placeholder="请再次输入密码"/>
+                                            <span style={{color:'#29440d',marginBottom:"2px"}}>再次输入密码，默认为1</span>
+                                            <input type="password" name="ackPassword"   defaultValue="1"  className="passport-txt xl w-full" tabIndex="3" autoComplete="off" onBlur={this.ackPassword} placeholder="请再次输入密码，默认为1"/>
                                         </div>
                                     </div>
 

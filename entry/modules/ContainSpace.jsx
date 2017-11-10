@@ -101,7 +101,7 @@ var ContainSpace = React.createClass({
 
     getHotVideos: function () {
 
-        var url = "/func/allow/getvideolistbytype";
+        var url = "/func/wechat/getvideolistbytype";
         var ref = this;
         var type = 1;
         var num = 5;
