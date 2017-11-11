@@ -7,7 +7,7 @@ var Proxy = require('../../components/proxy/ProxyQ');
 import PageNavigator from '../../components/basic/PageNavigator.jsx';
 
 var Page = require('../../components/basic/Page');
-var Mall = React.createClass({
+var ShoppingCart = React.createClass({
     paginationData:function (data,pageIndex) {
         let capacity=data.length;
         var slices=null;
@@ -37,9 +37,8 @@ var Mall = React.createClass({
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
     },
-    getGoodsList:function () {
-        var url = "/func/allow/getGoodsList";
-        var ref = this;
+    getShoppingCart:function () {
+        var url = "/func/allow/getShoppingCartByPersonId";
         var param={
         }
         Proxy.query(
@@ -59,11 +58,8 @@ var Mall = React.createClass({
     },
     initialData:function(){
 
-        this.getGoodsList();
+        this.getShoppingCart();
 
-    },
-
-    addShoppingCart:function(){
     },
     render: function () {
         var contains = null;
@@ -75,33 +71,6 @@ var Mall = React.createClass({
             data.map(function (item, i) {
                 trs.push(
                     <div className="product-right-grids" key={i}>
-                        <div className="product-right-top">
-                            <div className="p-left">
-                                <div className="p-right-img">
-                                    <a style={{background:'url('+item.img+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
-                                </div>
-                            </div>
-                            <div className="p-right">
-                                <div className="col-md-12 p-right-left" style={{paddingLeft: '30px'}}>
-                                        {item.name}
-                                    <div className="newsContain">
-                                        <span >价格：{item.price + '  '}</span>
-                                        <span >销量：{item.salesVolume + '  '}</span>
-                                        <span >库存：{item.inventoryNumber + '  '}</span>
-                                    </div>
-                                    <p>{item.brief}</p>
-                                    <br/>
-                                    <span > 数量：<input type="text" placeholder="1" size="5" title="请输入购买量"  id="mun" name="num"/></span>
-                                    <br/>
-                                    <span >
-                                        <button style={{fontSize: '17px', color: '#31f535'}} onClick={ref.addShoppingCart()}>加入购物车</button>
-                                    </span>
-                                </div>
-                                <div className="clearfix"></div>
-                            </div>
-                            <div className="clearfix"></div>
-                        </div>
-
                     </div>
                 )
             })
@@ -114,9 +83,7 @@ var Mall = React.createClass({
                     <div className="faqs-top-grids">
                         <div className="product-grids">
                             <div className="col-md-8 product-left">
-                                <Link to={window.App.getAppRoute() + "/ShoppingCart"}>
-                                    <h1 style={{textAlign:'right',fontSize:'20px',color: '#31f535'}}>我的购物车 &nbsp; </h1>
-                                </Link>
+                                    <h1 style={{textAlign:'center',fontSize:'20px',color: '#434d59'}}>我的购物车 &nbsp; </h1>
                                 {trs}
                                 <PageNavigator
                                     capacity={len}
@@ -144,4 +111,4 @@ var Mall = React.createClass({
     }
 
 });
-module.exports = Mall;
+module.exports = ShoppingCart;

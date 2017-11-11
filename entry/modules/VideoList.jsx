@@ -100,7 +100,7 @@ var VideoList = React.createClass({
                             <div className="faqs-top-grids">
                                 <div className="product-grids">
                                     <div className="col-md-8 news_content">
-                                    <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
+                                        <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
                                     {vrs}
                                     </div>
                                     <RightSlide/>
