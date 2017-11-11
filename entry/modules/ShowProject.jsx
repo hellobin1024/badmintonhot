@@ -12,6 +12,7 @@ import PageNavigator from '../../components/basic/PageNavigator.jsx';
 var Page = require('../../components/basic/Page');
 var UserActions=require('../action/UserActions');
 var PageActions=require('../action/PageActions');
+var Tips = require('../../components/basic/Tips');
 var ShowProject = React.createClass({
 
     getUrlParam :function(name) {
@@ -140,7 +141,7 @@ var ShowProject = React.createClass({
                     alert(ob.data);
                     return;
                 }
-                alert("报名成功！");
+                Tips.showTips("报名成功！");
                 var TeamModel = this.refs['TeamModel'];
                 $(TeamModel).modal('hide');
                 var a = ob.data;
@@ -222,6 +223,13 @@ var ShowProject = React.createClass({
 
         this.setState({TeamProject:projectId});
     },
+    doCreateNewTeamPerson: function () {
+        var doubleModal = this.refs['doubleModal'];
+        $(doubleModal).modal('hide');
+        var NewTeamPersonModel = this.refs['NewTeamPersonModel'];
+        $(NewTeamPersonModel).modal('show');
+
+    },
     doCancelPerson: function (name,projectId) {
         var projectId=projectId;
         var name=name;
@@ -247,7 +255,7 @@ var ShowProject = React.createClass({
                         return;
                     }
                     ref.setState({data:ob.data});
-                    alert("删除成功！");
+                    Tips.showTips("删除成功！");
                 }.bind(this),
                 function (xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
@@ -275,7 +283,7 @@ var ShowProject = React.createClass({
                     alert(ob.data);
                     return;
                 }
-                alert("退报成功！");
+                Tips.showTips("退报成功！");
                 var TeamModel = this.refs['TeamModel'];
                 $(TeamModel).modal('hide');
                 var a = ob.data;
@@ -364,7 +372,7 @@ var ShowProject = React.createClass({
                         a[i].projectType2 = projectType2;
                     }
                     ref.setState({data:a});
-                    alert("报名成功！");
+                    Tips.showTips("报名成功！");
                     var doubleModal = this.refs['doubleModal'];
                     $(doubleModal).modal('hide');
                     this.state.addPerson=null;
@@ -380,25 +388,8 @@ var ShowProject = React.createClass({
             var flag = 0;
             for (var i = 0; i < a.length; i++) {
                 if(a[i].projectId==projectId){
-
-                   addPerson=a[i].personList;
-                    if(addPerson!=null&&addPerson.length!=0){
-                   addPerson.map(function (item) {
-                        if (item == name) {
-                            flag = 1;
-                        }
-                    })
-                    if (flag == 1) {
-                        alert("已存在！");
-                        return;
-                    } else {
-                        addPerson.push(name);
-                    }
-
-                    }else{
-
-                        addPerson.push(name);
-                    }
+                    var personList = a[i].personList;
+                    var num = i;
                     Proxy.query(
                             'post',
                             url,
@@ -408,25 +399,104 @@ var ShowProject = React.createClass({
                                 var reCode = ob.re;
                                 if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) {
                                     alert(ob.data);
-                                    return;
+                                    flag=1;
                                 }
-                                alert(ob.data);
+                                if(personList!=null&&personList!=""){
+                                    personList.map(function (item) {
+                                        if (item == name) {
+                                            flag = 1;
+                                        }
+                                        addPerson.push(item);
+                                    })
+                                    if (flag==0) {
+                                        addPerson.push(name);
+                                        alert(ob.data);
+                                    }
+                                    personList=addPerson;
+                                }else{
+                                    if(flag==0){
+                                        addPerson.push(name);
+                                        alert(ob.data);
+                                    }
+                                    personList=addPerson;
+                                }
+                                a[num].personList = personList;
+                                ref.setState({data:a});
+                                var doubleModal = ref.refs['doubleModal'];
+                                $(doubleModal).modal('hide');
+                                ref.state.addPerson=null;
+                                $("#GroupMember").val("");
                             }.bind(this),
                             function(xhr, status, err) {
                                 console.error(this.props.url, status, err.toString());
                             }.bind(this)
                     );
-                    a[i].personList=addPerson;
-                    break;
+
                 }
             }
-            ref.setState({data:a});
-            var doubleModal = this.refs['doubleModal'];
-            $(doubleModal).modal('hide');
-            this.state.addPerson=null;
-            $("#GroupMember").val("");
+
         }
 
+    },
+    doSignupNewTeamPerson:function(){
+
+        var registerPage = this.refs['registerPage'];
+        var userName = $(registerPage).find("input[name='userName']").val();
+        var Trainer=0;
+        var ref=this;
+        if (userName == "") {
+            Tips.showTips('请填写用户名~');
+        } else{
+
+            var url = '/func/register/userRegister';
+            var params={
+                userName:userName,
+                password:"1",
+                phoneNum:"",
+                Trainer:Trainer
+            };
+            Proxy.query(
+                'POST',
+                url,
+                params,
+                null,
+                function (re) {
+                    var reCode = re.re;
+                    if(reCode==1 || reCode=='1'){
+                        Tips.showTips("注册成功！");
+                        var url = "/func/allow/SerachGroupMemberByName";
+                        var params = {
+                            username: userName
+                        };
+                        Proxy.query(
+                            'post',
+                            url,
+                            params,
+                            null,
+                            function (ob) {
+                                var reCode = ob.re;
+                                if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) { //操作失败
+                                    return;
+                                }
+                                var data=ob.data;
+                                var id=data.userid;
+                                ref.doAddMember(id,userName);
+                            }.bind(this),
+                            function (xhr, status, err) {
+                                console.error(this.props.url, status, err.toString());
+                            }.bind(this)
+                        );
+                        var NewTeamPersonModel = ref.refs['NewTeamPersonModel'];
+                        $(NewTeamPersonModel).modal('hide');
+                    }else{
+                        Tips.showTips("注册失败！");
+                    }
+                },
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }
+            );
+        }
     },
     test:function(){
         document.getElementById("showproject").click();
@@ -438,6 +508,8 @@ var ShowProject = React.createClass({
             var doCancelPerson = this.doCancelPerson;
             var doCancelTeam = this.doCancelTeam;
             var doAddSignupPerson = this.doAddSignupPerson;
+            var doCreateNewTeamPerson=this.doCreateNewTeamPerson;
+            var doSignupNewTeamPerson=this.doSignupNewTeamPerson;
             var doAddMember = this.doAddMember;
             var doCreateTeam = this.doCreateTeam;
             var ref = this;
@@ -668,6 +740,27 @@ var ShowProject = React.createClass({
                         </div>
                     </div>
                 )
+                var jrs=[];
+                jrs.push(
+                    <div ref="registerPage">
+                        <div className="common-line">
+                            <span className="common-label l-label">新队员名称：</span>
+                            <span>
+                            <input type="text" name="userName" className="common-input" tabIndex="1"></input>
+                            </span>
+                        </div>
+                        <div className="common-line">
+                            <span className="common-label l-label">默认密码为数字 1</span>
+                        </div>
+                        <div className="common-line">
+                            <button style={{fontSize:'14px',color:'#11a669',width:'60px',height:'30px'}}
+                                    onClick={doSignupNewTeamPerson}>保存
+                            </button>
+                        </div>
+                    </div>
+                )
+
+
                 if (this.state.addPerson !== null && this.state.addPerson !== undefined) {
                     var prs = [];
                     this.state.addPerson.map(function (item, i) {
@@ -700,6 +793,15 @@ var ShowProject = React.createClass({
                                     onClick={this.doSerachGroupMember}>搜索
                                 </button>
                             </div>
+                            <div style={{float:'left'}}>
+                                <button
+                                    style={{fontSize:'14px',color:'#11a669',width:'80px',height:'35px',marginLeft:'2px'}}
+                                    onClick={doCreateNewTeamPerson.bind(ref)}>注册新队员
+                                </button>
+                            </div>
+
+
+
                             <div className="clearfix"></div>
                         </div>
                         <div style={{height: '190px', overflowY: 'scroll'}}>
@@ -794,14 +896,35 @@ var ShowProject = React.createClass({
                          role="dialog"
                          aria-labelledby="myLargeModalLabel"
                          aria-hidden="true"
+                         ref='NewTeamPersonModel'
+                         data-keyboard="false"
+                         style={{zIndex: 1045}}
+                        >
+                        <div className="modal-dialog modal-sm"
+                             style={{position: 'absolute', top: '30%', width: '400px', marginLeft: '25%'}}>
+                            <div className="modal-content"
+                                 style={{position: 'relative', width: '400px', padding: '40px'}}>
+                                <div className="modal-body">
+                                    <div className="modalEventDetail">
+                                        {jrs}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade bs-example-modal-sm login-container"
+                         tabIndex="-1"
+                         role="dialog"
+                         aria-labelledby="myLargeModalLabel"
+                         aria-hidden="true"
                          ref='doubleModal'
                          data-keyboard="false"
                          style={{zIndex: 1045}}
                         >
                         <div className="modal-dialog modal-sm"
-                             style={{position: 'relative', top: '30%', width: '400px', marginLeft: '25%'}}>
+                             style={{position: 'relative', top: '30%', width: '450px', marginLeft: '25%'}}>
                             <div className="modal-content"
-                                 style={{position: 'relative', width: '400px'}}>
+                                 style={{position: 'relative', width: '450px'}}>
                                 <div className="modal-body">
                                     <div className="modalEventDetail">
                                         {drs}
