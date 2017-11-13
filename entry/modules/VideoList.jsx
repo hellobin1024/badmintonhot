@@ -95,7 +95,7 @@ var VideoList = React.createClass({
                             <div>浏览数：{item.browsecount}</div>
                             <div>收藏数：{item.collectcount}</div>
                             <div>分享数：{item.sharecount}</div>
-                                <img  style={{width:'100px',cursor:'pointer'}} src={window.App.getResourceDeployPrefix()+"/images/video.jpg"} alt=""/>
+                                <img  style={{width:'100px',cursor:'pointer'}} onClick={ref.tabChange.bind(this,'VideoPlay',item.id)} src={window.App.getResourceDeployPrefix()+"/images/video.jpg"} alt=""/>
                             </div>
                             <div className="clearfix"></div>
                             </div>
@@ -120,7 +120,7 @@ var VideoList = React.createClass({
                                     <div>浏览数：{item.browsecount}</div>
                                     <div>收藏数：{item.collectcount}</div>
                                     <div>分享数：{item.sharecount}</div>
-                                    <img  style={{width:'85px',cursor:'pointer'}} src={window.App.getResourceDeployPrefix()+"/images/music.jpg"} alt=""/>
+                                    <img  style={{width:'85px',cursor:'pointer'}} onClick={ref.tabChange.bind(this,'VideoPlay',item.id)} src={window.App.getResourceDeployPrefix()+"/images/music.jpg"} alt=""/>
 
                                 </div>
                                 <div className="clearfix"></div>
