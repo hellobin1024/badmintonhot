@@ -18,21 +18,13 @@ var ShoppingCart = React.createClass({
         );
         return slices;
     },
-    previousCb:function (index,isChange) { //向前跳页
-        this.setState({pageIndex:index,isChange:isChange});
-    },
 
-    pageCb:function(index,isChange) { //进入指定页的列表
-        this.setState({pageIndex:index,isChange:isChange});
-    },
-    nextCb:function(index,isChange){ //向后跳页,isChange为true
-        this.setState({pageIndex:index,isChange:isChange});
-    },
-    getInitialState:function () {
-        return ({
-            pageIndex: 0,
-            isChange: false,
-        });
+    getInitialState: function () {
+        var personId = null;
+        if(this.props.personId!==undefined && this.props.personId){
+            personId = this.props.personId;
+        }
+        return ({personId: personId, data:null,current:null});
     },
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
@@ -40,6 +32,7 @@ var ShoppingCart = React.createClass({
     getShoppingCart:function () {
         var url = "/func/allow/getShoppingCartByPersonId";
         var param={
+            personId:this.state.personId
         }
         Proxy.query(
             'POST',
@@ -71,6 +64,7 @@ var ShoppingCart = React.createClass({
             data.map(function (item, i) {
                 trs.push(
                     <div className="product-right-grids" key={i}>
+                        {item.name}
                     </div>
                 )
             })
