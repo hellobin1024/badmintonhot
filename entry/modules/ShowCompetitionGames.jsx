@@ -73,8 +73,13 @@ var ShowCompetitionGames = React.createClass({
                         <td>对阵：{item.personNameA1}&nbsp;{item.personNameA2}&nbsp;VS&nbsp;{item.personNameB1}&nbsp;{item.personNameB2}</td>
                         {item.scoreA != null ?
                             <td>比&emsp;&emsp;分：{item.scoreA}&nbsp;:&nbsp;{item.scoreB}</td>:<td> </td>}
-                        <td></td>
+                        <td> </td>
                     </tr>
+                    {/*<tr>*/}
+                        {/*<td>扣杀得分：{item.gameTypeName}</td>*/}
+                        {/*<td>发球得分：{item.startTime}</td>*/}
+                        {/*<td>失误：{item.endTime}</td>*/}
+                    {/*</tr>*/}
                     <tr>
                         <td></td>
                         <td></td>
