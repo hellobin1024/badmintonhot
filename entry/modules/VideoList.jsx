@@ -44,6 +44,19 @@ var VideoList = React.createClass({
             null,
             function (res) {
                 var a = res.data;
+                if(a!=""){
+                    var as=[];
+                    var bs=[];
+                   for(var i=0;i<a.length;i++){
+                       if(a[i].isVideo=="1"){
+                           as.push(a[i]);
+                       }else{
+                           bs.push(a[i]);
+                       }
+                   }
+                }
+                a.video=as;
+                a.audio=bs;
                 ref.setState({videos: a});
             },
 
@@ -59,12 +72,15 @@ var VideoList = React.createClass({
     },
     render:function() {
         var contains = null;
-        var vrs = [];
+        var vrs=[];
+        var crs=[];
         var ref = this;
         if ((this.state.videos !== null && this.state.videos !== undefined)) {
             var videos = this.state.videos;
-            if (videos !== null && videos !== undefined) {
-                videos.map(function (item, i) {
+
+            if (videos.video !== null && videos.video !== undefined) {
+                vrs = [];
+                videos.video.map(function (item, i) {
                     vrs.push(
                         <div key={i}>
                             <div style={{marginTop:'10px'}}>
@@ -86,6 +102,30 @@ var VideoList = React.createClass({
                     )
                 })
             }
+            if (videos.audio !== null && videos.audio !== undefined) {
+                crs=[];
+                videos.audio.map(function (item, i) {
+                    crs.push(
+                        <div key={i}>
+                            <div style={{marginTop:'10px'}}>
+                                <div style={{float:'left'}}>
+                                <span> <img onClick={ref.tabChange.bind(this,'VideoPlay',item.id)} style={{width:'350px',cursor:'pointer'}} src={window.App.getResourceDeployPrefix()+"/images/video.png"} alt=""/>
+                            </span>
+                                </div>
+                                <div style={{float:'left',width:"250px",marginLeft:'20px',fontSize:'13px'}}>
+                                    <div>音频标题：{item.name}</div>
+                                    <div>音频简介：{item.brief}</div>
+                                    <div>作者：{item.author}</div>
+                                    <div>浏览数：{item.browsecount}</div>
+                                    <div>收藏数：{item.collectcount}</div>
+                                    <div>分享数：{item.sharecount}</div>
+                                </div>
+                                <div className="clearfix"></div>
+                            </div>
+                        </div>
+                    )
+                })
+            }
             if(this.state.current =='VideoPlay'){
                 var id=this.state.id;
                 var personId=this.state.personId;
@@ -96,12 +136,32 @@ var VideoList = React.createClass({
             else {
                 contains =
                     <div className="banner-bottom">
-                        <div className="container">
+                        <div className="container" style={{backgroundColor:'#FFFFFF'}}>
                             <div className="faqs-top-grids">
                                 <div className="product-grids">
                                     <div className="col-md-8 news_content">
-                                        <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
-                                    {vrs}
+                                        <ul id="myTab" className="nav nav-tabs">
+                                            <li className="active" id="events" >
+                                                <a href="#home"  data-toggle="tab" style={{textAlign:'center',fontSize:'15px',color: '#337ab7',backgroundColor: 'white'}}>
+                                                    视频推荐
+                                                </a>
+                                            </li>
+                                            <li id="groups">
+                                                <a href="#ios"  data-toggle="tab"  style={{textAlign:'center',fontSize:'15px',color:'#337ab7',backgroundColor: 'white'}}>
+                                                    音频推荐
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" className="tab-content">
+                                            <div className="tab-pane fade in active" id="home">
+                                                <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩视频</h1>
+                                                {vrs}
+                                            </div>
+                                            <div className="tab-pane fade" id="ios">
+                                                <h1 style={{textAlign:'center',fontSize:'25px'}}>精彩音频</h1>
+                                                {crs}
+                                            </div>
+                                        </div>
                                     </div>
                                     <RightSlide/>
                                 </div>
