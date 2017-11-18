@@ -24,15 +24,17 @@ var ShoppingCart = React.createClass({
         if(this.props.personId!==undefined && this.props.personId){
             personId = this.props.personId;
         }
-        return ({personId: personId, data:null,current:null});
+        return ({personId: personId, data:null,current:null,pageIndex: 0,
+            isChange: false});
     },
     dateFormat:function (date) {//object时间转时间格式"yyyy-mm-dd hh:mm:ss"
         return (new Date(date)).toLocaleDateString() + " " + (new Date(date)).toLocaleTimeString();
     },
     getShoppingCart:function () {
-        var url = "/func/allow/getShoppingCartByPersonId";
+        var url = "/func/allow/getGoodsCartList";
+        var ref=this;
         var param={
-            personId:this.state.personId
+
         }
         Proxy.query(
             'POST',
@@ -49,6 +51,43 @@ var ShoppingCart = React.createClass({
             }
         );
     },
+    doCancelMallCart: function (id,index) {
+        var id=id;
+        var Str="你确定要删除该商品么？";
+        var ref=this;
+        if(window.confirm(Str)) {
+
+            var url = "/func/allow/deleteMallCart";
+            var params = {
+                id:id,
+            };
+
+            Proxy.query(
+                'post',
+                url,
+                params,
+                null,
+                function (ob) {
+                    var reCode = ob.re;
+                    if (reCode !== undefined && reCode !== null && (reCode == -1 || reCode == "-1")) {
+                        alert(ob.data);
+                        return;
+                    }
+                    var data = this.state.data;
+                    data.splice(index,1);
+                    this.setState({data:data});
+
+
+                    alert.showTips("删除成功！");
+                }.bind(this),
+                function (xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            );
+        }else{
+            return;
+        }
+    },
     initialData:function(){
 
         this.getShoppingCart();
@@ -56,16 +95,54 @@ var ShoppingCart = React.createClass({
     },
     render: function () {
         var contains = null;
+        var doCancelMallCart = this.doCancelMallCart;
         if(this.state.data!==null&&this.state.data!==undefined) {
             var data = this.paginationData(this.state.data, this.state.pageIndex);
             var len = this.state.data.length;
             var trs = [];
             var ref=this;
             data.map(function (item, i) {
+
                 trs.push(
-                    <div className="product-right-grids" key={i}>
-                        {item.name}
-                    </div>
+
+                        <tbody key={i} className="group-table"style={{backgroundColor:"#FFFFFF"}}>
+                        <tr>
+                            <td >
+                            <div className="p-left" style={{width:'100%',height:'100%'}}>
+                                <div className="p-right-img">
+                                    <a style={{background:'url('+item.img+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
+                                </div>
+                            </div>
+                            </td>
+                            <td>
+                                <span  style={{textAlign:'center'}}>
+                              {item.name}
+                                </span>
+                            </td>
+                            <td >
+                                <span  style={{textAlign:'center'}}>
+                                  {item.price}
+                                </span>
+                            </td>
+
+                            <td >
+                                <span  style={{textAlign:'center'}}>
+                                   {item.salesNumber}
+                                </span>
+                            </td>
+                            <td >
+                                <span  style={{extAlign:'center'}}>
+                                    {item.sum}
+                                </span>
+                            </td>
+                            <td style={{textAlign:'left'}}>
+                               <span  onClick={ref.doCancelMallCart.bind(ref,item.id,i)}
+                                      style={{textAlign:'center',fontSize:'14px',marginRight:'5px',textDecoration:'underline',cursor:'pointer',color:'#054c61'}}>
+                                  删除
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
                 )
             })
         }else{
@@ -76,9 +153,21 @@ var ShoppingCart = React.createClass({
                 <div className="container">
                     <div className="faqs-top-grids">
                         <div className="product-grids">
-                            <div className="col-md-8 product-left">
-                                    <h1 style={{textAlign:'center',fontSize:'20px',color: '#434d59'}}>我的购物车 &nbsp; </h1>
-                                {trs}
+                            <div >
+                               <h1 style={{textAlign:'center',fontSize:'20px',color: '#434d59'}}>我的购物车 &nbsp; </h1>
+                                <table className="table table-striped invoice-table">
+                                    <thead className="table-head">
+                                    <tr>
+                                        <th width="350">商品照片</th>
+                                        <th width="150">商品</th>
+                                        <th width="150">单价</th>
+                                        <th width="150">数量</th>
+                                        <th width="150">金额</th>
+                                        <th width="150">操作</th>
+                                    </tr>
+                                    </thead>
+                                    {trs}
+                                </table>
                                 <PageNavigator
                                     capacity={len}
                                     threshold={5}
@@ -91,7 +180,6 @@ var ShoppingCart = React.createClass({
                                     paginate={Page}
                                 />
                             </div>
-                            <RightSlide/>
                             <div className="clearfix"></div>
                         </div>
                     </div>

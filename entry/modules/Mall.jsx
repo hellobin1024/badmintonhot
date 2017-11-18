@@ -1,11 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
-
+import { connect } from 'react-redux';
 import {Link} from 'react-router';
 import RightSlide from './components/RightSilde'
 var Proxy = require('../../components/proxy/ProxyQ');
 import PageNavigator from '../../components/basic/PageNavigator.jsx';
-
+var Tips = require('../../components/basic/Tips');
 var Page = require('../../components/basic/Page');
 var Mall = React.createClass({
     paginationData:function (data,pageIndex) {
@@ -29,7 +29,13 @@ var Mall = React.createClass({
         this.setState({pageIndex:index,isChange:isChange});
     },
     getInitialState:function () {
-        return ({
+        var personId=null;
+        if(this.props.personId!==undefined && this.props.personId){
+            personId = this.props.personId;
+        }
+        return (
+        {
+            personId: personId,
             pageIndex: 0,
             isChange: false,
         });
@@ -63,7 +69,59 @@ var Mall = React.createClass({
 
     },
 
-    addShoppingCart:function(){
+    addShoppingCart:function(item){
+
+    if(this.props.token!=null){
+
+        var mallShop = this.refs['mallShop'];
+        var number = $(mallShop).find("input[name='number']").val();
+        if(number==""){
+            number=1;
+        }
+        if(number>item.inventoryNumber){
+            Tips.showTips("库存不足~");
+            return;
+        }
+        var url = "/func/allow/addMallShopCart";
+        var ref = this;
+        var param={
+
+            goodsId:item.id,
+            number:parseInt(number),
+        }
+        Proxy.query(
+            'POST',
+            url,
+            param,
+            null,
+            function (res) {
+                var reCode = res.re;
+                if(reCode!==undefined && reCode!==null && (reCode ==-1 || reCode =="-1")) { //操作失败
+                    alert("购买失败");
+                    return;
+                }
+                var a=ref.state.data;
+                for(var i=0;i<a.length;i++){
+
+                    if(a[i].id=item.id){
+                        var b=a[i].inventoryNumber;
+                        var c=b-number;
+                        a[i].inventoryNumber=c;
+                        break;
+                    }
+                }
+                ref.setState({data:a});
+                alert("购买成功");
+            },
+
+            function (xhr, status, err) {
+                console.error(this.props.url, status, err.toString());
+            }
+        );
+        }else{
+            Tips.showTips("请登录~");
+        }
+
     },
     render: function () {
         var contains = null;
@@ -74,15 +132,15 @@ var Mall = React.createClass({
             var ref=this;
             data.map(function (item, i) {
                 trs.push(
-                    <div className="product-right-grids" key={i}>
+                    <div className="product-right-grids" key={i} ref="mallShop"  >
                         <div className="product-right-top">
                             <div className="p-left">
                                 <div className="p-right-img">
                                     <a style={{background:'url('+item.img+') no-repeat 0px 0px',backgroundSize: 'cover'}}></a>
                                 </div>
                             </div>
-                            <div className="p-right">
-                                <div className="col-md-12 p-right-left" style={{paddingLeft: '30px'}}>
+                            <div className="p-right"  >
+                                <div className="col-md-12 p-right-left"  style={{paddingLeft: '30px'}}>
                                         {item.name}
                                     <div className="newsContain">
                                         <span >价格：{item.price + '  '}</span>
@@ -91,10 +149,10 @@ var Mall = React.createClass({
                                     </div>
                                     <p>{item.brief}</p>
                                     <br/>
-                                    <span > 数量：<input type="text" placeholder="1" size="5" title="请输入购买量"  id="mun" name="num"/></span>
+                                    <span> 数量：<input type="text" size="5" title="请输入购买量" name="number" placeholder="1"/></span>
                                     <br/>
-                                    <span >
-                                        <button style={{fontSize: '17px', color: '#31f535'}} onClick={ref.addShoppingCart()}>加入购物车</button>
+                                    <span>
+                                        <button style={{fontSize: '17px', color: '#31f535'}} onClick={ref.addShoppingCart.bind(null,item)}>加入购物车</button>
                                     </span>
                                 </div>
                                 <div className="clearfix"></div>
@@ -144,4 +202,10 @@ var Mall = React.createClass({
     }
 
 });
-module.exports = Mall;
+const mapStateToProps = (state, ownProps) => {
+    const props = {
+        token: state.userInfo.accessToken,
+    }
+    return props
+}
+export default connect(mapStateToProps)(Mall);

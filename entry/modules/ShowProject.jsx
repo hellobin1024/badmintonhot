@@ -799,9 +799,6 @@ var ShowProject = React.createClass({
                                     onClick={doCreateNewTeamPerson.bind(ref)}>注册新队员
                                 </button>
                             </div>
-
-
-
                             <div className="clearfix"></div>
                         </div>
                         <div style={{height: '190px', overflowY: 'scroll'}}>
