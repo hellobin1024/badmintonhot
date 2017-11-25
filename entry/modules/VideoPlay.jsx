@@ -17,7 +17,7 @@ var VideoPlay = React.createClass({
         this.setState({Id:Id});
     },
     initialData:function(){
-        var url="/func/wechat/getvideobyid";
+        var url="/func/allow/getvideobyid";
         var params={
             id:this.state.id,
         };
@@ -30,7 +30,7 @@ var VideoPlay = React.createClass({
                 var data=ob;
                 this.setState({data:data});
                 if(data!=""||data!=null){
-                var urlb="/func/wechat/getvideorecommendlist";
+                var urlb="/func/allow/getvideorecommendlist";
                 var id=data.video.id;
                 var paramsb={
                      id:id,

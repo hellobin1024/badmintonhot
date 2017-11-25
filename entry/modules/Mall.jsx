@@ -111,7 +111,7 @@ var Mall = React.createClass({
                     }
                 }
                 ref.setState({data:a});
-                alert("购买成功");
+                alert("加入购物车成功");
             },
 
             function (xhr, status, err) {
@@ -152,7 +152,13 @@ var Mall = React.createClass({
                                     <span> 数量：<input type="text" size="5" title="请输入购买量" name="number" placeholder="1"/></span>
                                     <br/>
                                     <span>
-                                        <button style={{fontSize: '17px', color: '#31f535'}} onClick={ref.addShoppingCart.bind(null,item)}>加入购物车</button>
+                                        <span>
+                                        <button style={{fontSize: '17px', color: '#129736'}} >购买</button>
+                                        </span>
+                                        <span> </span>
+                                        <span  style={{mariginLeft:'10px'}}>
+                                        <button style={{fontSize: '17px', color: '#129736'}} onClick={ref.addShoppingCart.bind(null,item)}>加入购物车</button>
+                                        </span>
                                     </span>
                                 </div>
                                 <div className="clearfix"></div>
@@ -173,7 +179,7 @@ var Mall = React.createClass({
                         <div className="product-grids">
                             <div className="col-md-8 product-left">
                                 <Link to={window.App.getAppRoute() + "/ShoppingCart"}>
-                                    <h1 style={{textAlign:'right',fontSize:'20px',color: '#31f535'}}>我的购物车 &nbsp; </h1>
+                                    <h1 style={{textAlign:'right',fontSize:'20px',color: '#0c89d2'}}>我的购物车 &nbsp; </h1>
                                 </Link>
                                 {trs}
                                 <PageNavigator

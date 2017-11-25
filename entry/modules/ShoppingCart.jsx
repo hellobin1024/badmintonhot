@@ -179,6 +179,9 @@ var ShoppingCart = React.createClass({
                                     isChange={this.state.isChange}
                                     paginate={Page}
                                 />
+                                <div>
+                                    <a  style={{textAlign:'right',fontSize:'24px',color:'#1b58d3',marginLeft:'90%'}}>结算</a>
+                                </div>
                             </div>
                             <div className="clearfix"></div>
                         </div>

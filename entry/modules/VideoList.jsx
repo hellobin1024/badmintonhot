@@ -29,7 +29,7 @@ var VideoList = React.createClass({
 
     getAllVideos: function () {
 
-        var url = "/func/wechat/getvideolistbytype";
+        var url = "/func/allow/getvideolistbytype";
         var ref = this;
         var type = 1;
         var num = 10;
