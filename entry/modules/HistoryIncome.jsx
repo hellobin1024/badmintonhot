@@ -18,6 +18,7 @@ var TodayIncome = React.createClass({
 
         };
 
+
         ProxyQ.query(
             'post',
             url,
